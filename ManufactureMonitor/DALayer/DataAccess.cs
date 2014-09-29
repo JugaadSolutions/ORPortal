@@ -54,8 +54,31 @@ namespace ManufactureMonitor.DALayer
             DataTable dt = new DataTable();
             dt.Load(dr);
             dr.Close();
+            cn.Close();
             return dt;
 
         }
+        public DataTable GetMachineName(int MachineGroup_ID)
+        {
+            SqlConnection cn;
+            SqlCommand cmd;
+
+            cn = new SqlConnection(connection);
+            String query = @" Select Name 
+                              from Machines where (Machines.MachineGroupId={0})";
+            query = String.Format(query, MachineGroup_ID);
+
+            cn.Open();
+            cmd = new SqlCommand(query, cn);
+
+            SqlDataReader dr = cmd.ExecuteReader();
+            DataTable dt = new DataTable();
+            dt.Load(dr);
+            dr.Close();
+            cn.Close();
+            return dt;
+
+        }
+        
     }
 }
