@@ -21,9 +21,60 @@
         <tr>
             <td style="text-align: center; width: 449px;">&nbsp;</td>
             <td style="background-color: #99CCFF; text-align: center; width: 408px;">
-                <asp:ListView ID="ListView1" runat="server">
-                    <ItemTemplate><div><%# Eval("Name") %>  </div></ItemTemplate>
+                 <table style="width: 100%; border-collapse: collapse; background-color: #99CCFF">
+                    <tr>
+                        <td>
+                <asp:ListView ID="ListView1" runat="server" OnSelectedIndexChanged="ListView1_SelectedIndexChanged" OnSelectedIndexChanging="ListView1_SelectedIndexChanging" textalign="center" Position="Absolute">
+                    <LayoutTemplate>  
+                <table id="Itemplaceholder" runat="server" textalign="center">  
+                      <tr>
+                        <td id="Td1" runat="server">Machine:</td>  
+                          
+                     </tr>
+                   
+                    </table>
+                    </LayoutTemplate>
+                    <ItemTemplate>  
+                <tr >  
+                    <td>  
+                        <asp:Label   
+                            ID="Label1"  
+                            runat="server"  
+                            Text='<%# Eval("Machines")%>' 
+                            textalign="center" 
+                            >  
+                        </asp:Label>  
+                    </td>
+                    <td>
+                        <asp:Button
+                            ID="Button1"
+                            runat="server"
+                            Font-Bold="true"
+                            CommandName="Select"
+                            Text="Show"
+                            Forecolour="White">
+
+                        </asp:Button>
+                    </td>  
+                </tr>                  
+            </ItemTemplate> 
+                <SelectedItemTemplate>
+                    <tr >  
+                    <td style="background-color:blue" >  
+                        <asp:Label   
+                            ID="Label1"  
+                            runat="server"  
+                            Text='<%# Eval("Machines")%>' 
+                            textalign="center" 
+                            >  
+                        </asp:Label>  
+                    </td>  
+                </tr>             
+                </SelectedItemTemplate> 
                 </asp:ListView>
+                        </td>
+                    </tr>
+                </table>
             </td>
             <td style="text-align: center">&nbsp;</td>
         </tr>
@@ -35,8 +86,7 @@
         <tr>
             <td style="text-align: center; width: 449px;">&nbsp;</td>
             <td style="background-color: #99CCFF; text-align: center; width: 408px;">
-                <asp:Button ID="Button1" runat="server" BorderColor="Gray" BorderStyle="Outset" BorderWidth="3px" Font-Names="Calibri" Font-Size="Medium" Height="38px" Text="ENTER" Width="103px" OnClick="Button1_Click" />
-            </td>
+                &nbsp;</td>
             <td style="text-align: center">&nbsp;</td>
         </tr>
         <tr>

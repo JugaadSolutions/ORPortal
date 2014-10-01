@@ -105,13 +105,6 @@ D:\ideonics\Repository\ORPortal\ManufactureMonitor\bin\ManufactureMonitor.dll
 D:\ideonics\Repository\ORPortal\ManufactureMonitor\bin\ManufactureMonitor.pdb
 D:\ideonics\Repository\ORPortal\ManufactureMonitor\bin\Microsoft.Web.Infrastructure.dll
 D:\ideonics\Repository\ORPortal\ManufactureMonitor\bin\Microsoft.Web.Infrastructure.xml
-D:\ideonics\Repository\ORPortal\ManufactureMonitor\bin\EntityFramework.xml
-D:\ideonics\Repository\ORPortal\ManufactureMonitor\bin\DotNetOpenAuth.Core.xml
-D:\ideonics\Repository\ORPortal\ManufactureMonitor\bin\DotNetOpenAuth.OAuth.xml
-D:\ideonics\Repository\ORPortal\ManufactureMonitor\bin\DotNetOpenAuth.OAuth.Consumer.xml
-D:\ideonics\Repository\ORPortal\ManufactureMonitor\bin\DotNetOpenAuth.OpenId.xml
-D:\ideonics\Repository\ORPortal\ManufactureMonitor\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
-D:\ideonics\Repository\ORPortal\ManufactureMonitor\bin\DotNetOpenAuth.AspNet.xml
 D:\ideonics\Repository\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.csprojResolveAssemblyReference.cache
 D:\ideonics\Repository\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.dll
 D:\ideonics\Repository\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.pdb

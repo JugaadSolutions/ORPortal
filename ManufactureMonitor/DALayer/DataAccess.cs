@@ -58,13 +58,13 @@ namespace ManufactureMonitor.DALayer
             return dt;
 
         }
-        public DataTable GetMachineName(int MachineGroup_ID)
+        public DataTable GetMachines(int MachineGroup_ID)
         {
             SqlConnection cn;
             SqlCommand cmd;
 
             cn = new SqlConnection(connection);
-            String query = @" Select Name 
+            String query = @" Select Name  as Machines,Id
                               from Machines where (Machines.MachineGroupId={0})";
             query = String.Format(query, MachineGroup_ID);
 

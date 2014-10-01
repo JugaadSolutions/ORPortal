@@ -11,7 +11,7 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="2" style="height: 23px; text-align: center">
+                <td colspan="2" style="height: 23px; text-align: left">
                     <asp:GridView ID="GridView1" runat="server" CellPadding="3" AutoGenerateColumns="true" BackColor="#DEBA84" BorderColor="#DEBA84" BorderStyle="None" BorderWidth="1px" CellSpacing="2" ShowHeaderWhenEmpty="True" Width="1119px" style="margin-left:100px">
                        
                         <FooterStyle BackColor="#F7DFB5" ForeColor="#8C4510" />

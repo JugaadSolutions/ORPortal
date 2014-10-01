@@ -187,6 +187,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="DisplayActualState.aspx" />
     <Content Include="DisplayParameters.aspx" />
     <Content Include="Images\Home.jpg" />
     <Content Include="InputFromMachines_Show.aspx" />
@@ -341,6 +342,13 @@
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
     <Compile Include="DALayer\DataAccess.cs" />
+    <Compile Include="DisplayActualState.aspx.cs">
+      <DependentUpon>DisplayActualState.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DisplayActualState.aspx.designer.cs">
+      <DependentUpon>DisplayActualState.aspx</DependentUpon>
+    </Compile>
     <Compile Include="DisplayParameters.aspx.cs">
       <DependentUpon>DisplayParameters.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
