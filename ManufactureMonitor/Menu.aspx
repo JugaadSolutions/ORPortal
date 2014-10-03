@@ -44,7 +44,7 @@
                 &nbsp;&nbsp;
                 <div id="Div6" onmouseover="Dark('Div6')" onmouseout="Light('Div6')" style="width: 200px; height: 30px; margin-left: 6px; text-align:center">
                 <asp:Button ID="Button6" runat="server" BackColor="#FF9966" BorderColor="#CC6666" BorderStyle="Solid" BorderWidth="3px" Height="30px" Text="Parameters-Display" Width="200px" OnClick="Button6_Click" />
-            </td>
+           </div> </td>
         </tr>
         <tr>
             <td style="text-align: center; width: 303px; height: 38px;">

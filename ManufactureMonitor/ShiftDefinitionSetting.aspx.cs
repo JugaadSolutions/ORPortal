@@ -16,17 +16,17 @@ namespace ManufactureMonitor
 
         protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
         {
-            Response.Redirect("~/Menu.aspx");
+            Response.Redirect("~/Menu.aspx?MachineGroup=" + Request.QueryString["MachineGroupId"]);
         }
 
         protected void Button4_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/ShiftSetting_Add.aspx");
+            Response.Redirect("~/ShiftSetting_Add.aspx?Id=" + Request.QueryString["MachineGroupId"]);
         }
 
         protected void Button5_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/ShiftSetting_Timepoints.aspx");
+            Response.Redirect("~/ShiftSetting_Timepoints.aspx?Id=" + Request.QueryString["MachineGroupId"]);
         }
     }
 }

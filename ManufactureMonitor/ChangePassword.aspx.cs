@@ -9,14 +9,15 @@ namespace ManufactureMonitor
 {
     public partial class ChangePassword : System.Web.UI.Page
     {
+        
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
         {
-            Response.Redirect("PasswordChange.aspx");
+            Response.Redirect("~/Menu.aspx?MachineGroup=" + Request.QueryString["Id"]);
         }
     }
 }

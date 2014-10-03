@@ -10,7 +10,7 @@
 namespace ManufactureMonitor {
     
     
-    public partial class PasswordChange {
+    public partial class UserLogin {
         
         /// <summary>
         /// TextBox1 control.

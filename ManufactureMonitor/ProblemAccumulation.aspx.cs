@@ -16,12 +16,12 @@ namespace ManufactureMonitor
 
         protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
         {
-            Response.Redirect("~/Menu.aspx");
+            Response.Redirect("~/Menu.aspx?MachineGroup=" + Request.QueryString["MachineGroupId"]);
         }
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/ProblemAccumulation_Show.aspx");
+            Response.Redirect("~/ProblemAccumulation_Show.aspx?MachineGroupId=" + Request.QueryString["MachineGroupId"]);
         }
     }
 }

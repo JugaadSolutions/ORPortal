@@ -25,12 +25,12 @@ namespace ManufactureMonitor
 
         protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
         {
-            Response.Redirect("~/Menu.aspx");
+            Response.Redirect("~/Menu.aspx?MachineGroup=" + Request.QueryString["MachineGroupId"]);
         }
 
         protected void ListView1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Response.Redirect("~/ParameterSetting_Show.aspx?Id=" + dt.Rows[ListView1.SelectedIndex]["Id"]);
+            Response.Redirect("~/ParameterSetting_Show.aspx?Id=" + dt.Rows[ListView1.SelectedIndex]["Id"] + "&MachineGroupId=" + Request.QueryString["MachineGroupId"]);
         }
         protected void ListView1_SelectedIndexChanging(object sender, ListViewSelectEventArgs e)
         {

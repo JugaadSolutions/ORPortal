@@ -16,7 +16,7 @@ namespace ManufactureMonitor
 
         protected void BackButton_Click(object sender, ImageClickEventArgs e)
         {
-            Response.Redirect("~/ORandMOR1.aspx");
+            Response.Redirect("~/Menu.aspx?MachineGroup=" + Request.QueryString["MachineGroupId"]);
         }
     }
 }

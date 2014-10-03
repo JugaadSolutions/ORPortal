@@ -11,12 +11,11 @@ namespace ManufactureMonitor
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            
         }
-
         protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
         {
-            Response.Redirect("~/M_off_setting.aspx");
+            Response.Redirect("~/Menu.aspx?MachineGroup=" + Request.QueryString["MachineGroupId"]);
         }
     }
 }
