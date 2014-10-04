@@ -431,8 +431,6 @@ fieldset {
     input[type="submit"],
     input[type="button"],
     button {
-        background-color: #d3dce0;
-        border: 1px solid #787878;
         cursor: p
 
     td input[type="submit"],
@@ -730,4 +728,7 @@ tr.pager td {
             margin: 0;
         }
 }
-/* END: Mobile Styles */
+/* END: Mobile Styles */;
+    border: 1px solid #787878;
+    background-color: #d3dce0;;
+        

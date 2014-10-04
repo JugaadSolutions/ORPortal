@@ -24,7 +24,7 @@
                  <table style="width: 100%; border-collapse: collapse; background-color: #99CCFF">
                     <tr>
                         <td>
-                <asp:ListView ID="ListView1" runat="server" OnSelectedIndexChanged="ListView1_SelectedIndexChanged" OnSelectedIndexChanging="ListView1_SelectedIndexChanging" textalign="center" Position="Absolute">
+                <%--<asp:ListView ID="ListView1" runat="server" OnSelectedIndexChanged="ListView1_SelectedIndexChanged" OnSelectedIndexChanging="ListView1_SelectedIndexChanging" textalign="center" Position="Absolute">
                     <LayoutTemplate>  
                 <table id="Itemplaceholder" runat="server" textalign="center">  
                       <tr>
@@ -71,7 +71,8 @@
                     </td>  
                 </tr>             
                 </SelectedItemTemplate> 
-                </asp:ListView>
+                </asp:ListView>--%>
+                            <asp:ListBox ID ="MachineSelectionListBox" runat="server"  SelectionMode="Single"/>
                         </td>
                     </tr>
                 </table>
@@ -85,7 +86,8 @@
         <tr>
             <td style="width: 450px; height: 40px;"></td>
             <td style="background-color: #99CCFF; text-align: center; width: 358px; height: 40px;">
-                &nbsp;</td>
+                <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Enter" Width="66px" />
+            </td>
             <td style="text-align: center; height: 40px;"></td>
         </tr>
         <tr>

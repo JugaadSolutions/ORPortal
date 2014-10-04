@@ -18,8 +18,12 @@ namespace ManufactureMonitor
             {
                 DataAccess da = new DataAccess();
                 dt = da.GetMachines(Convert.ToInt32(Request.QueryString["MachineGroupId"]));
-                ListView1.DataSource = dt;
-                ListView1.DataBind();
+                //ListView1.DataSource = dt;
+                //ListView1.DataBind();
+
+                MachineSelectionListBox.DataSource = dt.DefaultView;
+                MachineSelectionListBox.DataValueField = "Machines";
+                MachineSelectionListBox.DataBind();
             }   
         }
 
@@ -28,13 +32,9 @@ namespace ManufactureMonitor
             Response.Redirect("~/Menu.aspx?MachineGroup=" + Request.QueryString["MachineGroupId"]);
         }
 
-        protected void ListView1_SelectedIndexChanged(object sender, EventArgs e)
+        protected void Button1_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/ParameterSetting_Show.aspx?Id=" + dt.Rows[ListView1.SelectedIndex]["Id"] + "&MachineGroupId=" + Request.QueryString["MachineGroupId"]);
-        }
-        protected void ListView1_SelectedIndexChanging(object sender, ListViewSelectEventArgs e)
-        {
-
+            Response.Redirect("~/ParameterSetting_Show.aspx?Id=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"] + "&MachineGroupId=" + Request.QueryString["MachineGroupId"]);
         }
         
     }
