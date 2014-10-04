@@ -10,7 +10,7 @@ namespace ManufactureMonitor.DALayer
 {
     public class DataAccess
     {
-        String connection = @"Data Source=.\SQLEXPRESS;Initial Catalog=IOR;Persist Security Info=True;User ID=sa;Password=ide123$%^";
+        String connection = @"Data Source=.\SQLEXPRESS;Initial Catalog=IOR;Persist Security Info=True;User ID=sa;Password=sushma";
 
 
         public DataTable GetStopProblems(int MachineGroup_ID)

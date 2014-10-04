@@ -21,12 +21,12 @@ namespace ManufactureMonitor
 
         protected void Button4_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/ShiftSetting_Add.aspx?Id=" + Request.QueryString["MachineGroupId"]);
+            Response.Redirect("~/ShiftSetting_Add.aspx?MachineGroupId=" + Request.QueryString["MachineGroupId"]);
         }
 
         protected void Button5_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/ShiftSetting_Timepoints.aspx?Id=" + Request.QueryString["MachineGroupId"]);
+            Response.Redirect("~/ShiftSetting_Timepoints.aspx?MachineGroupId=" + Request.QueryString["MachineGroupId"]);
         }
     }
 }

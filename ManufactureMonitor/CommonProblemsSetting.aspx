@@ -23,7 +23,7 @@
         <tr>
             <td style="text-align: center; width: 415px;" rowspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
             <td style="background-color: #99CCFF; text-align: center; width: 490px;" rowspan="2">
-                <asp:TextBox ID="TextBox2" runat="server" Height="165px" TextMode="MultiLine" Width="340px"></asp:TextBox>
+                <asp:ListBox ID="MachineSelectionListBox" runat="server" SelectionMode="Single" />
             </td>
             <td style="text-align: left; height: 29px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <asp:Button ID="Button2" runat="server" BorderStyle="Outset" Height="37px" Text="Edit" Width="80px" />

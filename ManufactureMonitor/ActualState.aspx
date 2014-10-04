@@ -17,17 +17,17 @@
         </tr>
         <tr>
             <td style="text-align: center; width: 399px;">&nbsp;</td>
-            <td style="background-color: #3366FF; color: #FFFFFF; font-size: medium; text-align: center; width: 435px;">Machine Selection</td>
+            <td style="background-color: #3366FF; color: #FFFFFF; font-size: medium; text-align: center; width: 350px;">Machine Selection</td>
             <td style="text-align: center">
                 &nbsp;</td>
         </tr>
         <tr>
             <td style="text-align: center; width: 399px;">&nbsp;</td>
-            <td style="background-color: #99CCFF; text-align: center; width: 435px;" rowspan="3">
+            <td style="background-color: #99CCFF; text-align: center; width: 350px;" rowspan="3">
                 <table style="width: 100%; border-collapse: collapse; background-color: #99CCFF">
                     <tr>
                         <td>
-                <asp:ListView ID="ListView1" runat="server" OnSelectedIndexChanged="ListView1_SelectedIndexChanged" OnSelectedIndexChanging="ListView1_SelectedIndexChanging" textalign="center" Position="Absolute">
+                <%--<asp:ListView ID="ListView1" runat="server" OnSelectedIndexChanged="ListView1_SelectedIndexChanged" OnSelectedIndexChanging="ListView1_SelectedIndexChanging" textalign="center" Position="Absolute">
                     <LayoutTemplate>  
                 <table id="Itemplaceholder" runat="server" textalign="center">  
                       <tr>
@@ -74,12 +74,13 @@
                     </td>  
                 </tr>             
                 </SelectedItemTemplate> 
-                </asp:ListView>
+                </asp:ListView>--%>
+                            <asp:ListBox ID ="MachineSelectionListBox" runat="server"  SelectionMode="Single"/>
                         </td>
                     </tr>
                 </table>
             </td>
-            <td style="text-align: center">&nbsp;</td>
+            <td style="text-align: center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;</td>
         </tr>
         <tr>
             <td style="text-align: center; width: 399px; height: 45px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;</td>
@@ -91,14 +92,16 @@
         </tr>
         <tr>
             <td style="text-align: center; width: 399px;">&nbsp;</td>
-            <td style="background-color: #99CCFF; text-align: center; width: 435px;">
-                &nbsp;</td>
+            <td style="background-color: #99CCFF; text-align: center; width: 350px;">
+                <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Enter" Width="66px" />
+            </td>
             <td style="text-align: center">&nbsp;</td>
         </tr>
-        <tr>
-            <td style="text-align: center; height: 30px; width: 399px;"></td>
-            <td style="background-color: #99CCFF; text-align: center; width: 435px; height: 30px;"></td>
-            <td style="text-align: center; height: 30px"></td>
+         <tr>
+            <td style="width: 450px; height: 40px;"></td>
+            <td style="background-color: #99CCFF; text-align: center; width: 350px; height: 40px;">
+                &nbsp;</td>
+            <td style="text-align: center; height: 40px;"></td>
         </tr>
         <tr>
             <td colspan="3" style="text-align: center">&nbsp;</td>
