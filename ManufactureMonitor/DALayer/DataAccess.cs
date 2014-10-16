@@ -20,9 +20,15 @@ namespace ManufactureMonitor.DALayer
 
             cn = new SqlConnection(connection);
 
-            String query = @" Select Code as No,[Description]
-                            From SpecificProblems INNER JOIN Machines ON(Machines.ID=SpecificProblems.Machine_ID) 
-                        AND (Machines.MachineGroupId={0})";
+            String query = @"  select
+            [Description] as [Problem description] ,
+            [Code] as [No], 
+            (Case when CommonProblems.[Type]=1 then 'yes' else '-' end) as [Non-Operation Time1],
+            (Case when CommonProblems.[Type]=2 then 'yes' else '-' end) as [Non-Operation Time2],
+            (Case when CommonProblems.[Type]=3 then 'yes' else '-' end) as [Non-Operation Time3]
+            From 
+            CommonProblems";
+
             query = String.Format(query, MachineGroup_ID);
 
             cn.Open();
@@ -205,5 +211,161 @@ namespace ManufactureMonitor.DALayer
 
 
         }
+        public bool SetPassword(String name,String password,String password1)
+        {
+            SqlConnection cn,cn1;
+            SqlCommand cmd,cmd1;
+
+            cn = new SqlConnection(connection);
+            String query = @" select Password from Users 
+                            where Name='{0}'";
+            query = String.Format(query,name, password);
+            cn.Open();
+            cmd = new SqlCommand(query, cn);
+            SqlDataReader dr = cmd.ExecuteReader();
+            if (dr.Read())
+            {
+                
+                if (password == dr["Password"].ToString())
+                {
+                    //cn.Open();
+                    dr.Close();
+                    cn1 = new SqlConnection(connection);
+                    cn1.Open();
+                    cmd1 = new SqlCommand("update Users set Password= '" + password1 + "' where Name='" + name + "'", cn1);
+                    
+                    cmd1.ExecuteNonQuery();
+                    
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+            cn.Close();
+            return false;
+            
+
+        }
+        public DataTable GetCommonProblems()
+        {
+            SqlConnection cn;
+            SqlCommand cmd;
+
+            cn = new SqlConnection(connection);
+            String query = @" Select Description,code,type 
+                              from CommonProblems ";
+            query = String.Format(query, cn);
+
+            cn.Open();
+            cmd = new SqlCommand(query, cn);
+
+            SqlDataReader dr = cmd.ExecuteReader();
+            DataTable dt = new DataTable();
+            dt.Load(dr);
+            dr.Close();
+            cn.Close();
+            return dt;
+
+        }
+        public bool AddProblems(String description, String code, String type)
+        {
+            SqlConnection cn;
+            SqlCommand cmd;
+            try
+                {
+                    
+                        cn = new SqlConnection(connection);
+                        String query = @"insert into CommonProblems(Description,Code,Type) values('{0}','{1}','{2}')";
+                        query = String.Format(query, description, code, type);
+                        cn.Open();
+                        cmd = new SqlCommand(query, cn);
+                        cmd.ExecuteNonQuery();
+                        cn.Close();
+                        return true;
+                    
+                }
+
+                catch( Exception)
+                {
+                    return false;
+
+
+                }
+               
+       }
+
+        public DataTable SelectCommonProblems(String code)
+        {
+            SqlConnection cn;
+            SqlCommand cmd;
+
+            cn = new SqlConnection(connection);
+            String query = @" Select Description,code,type 
+                              from CommonProblems where Code='{0}'";
+            query = String.Format(query, code);
+
+            cn.Open();
+            cmd = new SqlCommand(query, cn);
+
+            SqlDataReader dr = cmd.ExecuteReader();
+            DataTable dt = new DataTable();
+            dt.Load(dr);
+            dr.Close();
+            cn.Close();
+            return dt;
+
+        }
+        public void UpdateProblems(String code,String description,String type)
+        {
+            SqlConnection cn;
+            SqlCommand cmd;
+
+            cn = new SqlConnection(connection);
+            String query = @" Update CommonProblems SET Description='{1}',Type='{2}'
+                            where (Code='{0}')";
+            query = String.Format(query, code, description, type);
+            cn.Open();
+            cmd = new SqlCommand(query, cn);
+
+            cmd.ExecuteNonQuery();
+
+            cn.Close();
+
+        }
+        public DataTable DisplayProblems()
+        {
+            SqlConnection cn;
+            SqlCommand cmd;
+
+            cn = new SqlConnection(connection);
+
+            String query = @"  select
+            [Description] as [Problem description] ,
+            [Code] as [No], 
+            (Case when CommonProblems.[Type]=1 then 'yes' else '-' end) as [Non-Operation Time1],
+            (Case when CommonProblems.[Type]=2 then 'yes' else '-' end) as [Non-Operation Time2],
+            (Case when CommonProblems.[Type]=3 then 'yes' else '-' end) as [Non-Operation Time3]
+            From 
+            CommonProblems";
+
+            query = String.Format(query,cn);
+
+            cn.Open();
+            cmd = new SqlCommand(query, cn);
+
+            SqlDataReader dr = cmd.ExecuteReader();
+            DataTable dt = new DataTable();
+            dt.Load(dr);
+            dr.Close();
+
+            cn.Close();
+
+            return dt;
+
+        }
+        
     }
 }

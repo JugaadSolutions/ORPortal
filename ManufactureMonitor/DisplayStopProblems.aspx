@@ -11,8 +11,8 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="2" style="height: 23px; text-align: left">
-                    <asp:GridView ID="GridView1" runat="server" CellPadding="3" AutoGenerateColumns="true" BackColor="#DEBA84" BorderColor="#DEBA84" BorderStyle="None" BorderWidth="1px" CellSpacing="2" ShowHeaderWhenEmpty="True" Width="1119px" style="margin-left:100px">
+                <td colspan="2" style="height: 23px; text-align: center">
+                    <asp:GridView ID="GridView1" runat="server" CellPadding="3" BackColor="#DEBA84" BorderColor="#8C4510" BorderStyle="Groove" BorderWidth="1px" CellSpacing="2" ShowHeaderWhenEmpty="True" Width="673px" style="margin-left:320px" OnDataBound="GridView1_DataBound">
                        
                         <FooterStyle BackColor="#F7DFB5" ForeColor="#8C4510" />
                         <HeaderStyle BackColor="#FF9966" Font-Bold="True" ForeColor="White" />

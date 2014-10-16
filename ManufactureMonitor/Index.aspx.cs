@@ -17,16 +17,19 @@ namespace ManufactureMonitor
         protected void Button1_Click(object sender, EventArgs e)
         {
             Response.Redirect("Menu.aspx?Machinegroup="+1);
+            Session["Machinegroup"] = 1;
         }
 
         protected void Button3_Click(object sender, EventArgs e)
         {
             Response.Redirect("Menu.aspx?Machinegroup=" +2);
+            Session["Machinegroup"] =2;
         }
 
         protected void Button2_Click(object sender, EventArgs e)
         {
             Response.Redirect("Menu.aspx?Machinegroup=" +3);
+            Session["Machinegroup"] = 3;
         }
 
         protected void Button4_Click(object sender, EventArgs e)

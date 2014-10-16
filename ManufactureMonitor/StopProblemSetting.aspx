@@ -18,8 +18,8 @@
             <td style="text-align: center">&nbsp;</td>
         </tr>
         <tr>
-            <td style="text-align: center; width: 518px;">&nbsp;</td>
-            <td style="background-color: #99CCFF; text-align: center; width: 280px;">
+            <td style="text-align: center; width: 518px;" rowspan="2">&nbsp;</td>
+            <td style="background-color: #99CCFF; text-align: center; width: 280px;" rowspan="2">
                 <table style="width: 100%; border-collapse: collapse; background-color: #99CCFF">
                     <tr>
                         <td>
@@ -28,8 +28,16 @@
                     </tr>
                 </table>
             </td>
-                &nbsp;</td>
-            <td style="text-align: center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
+                
+            <td style="text-align: left">
+                <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Add" Width="66px" />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
+        </tr>
+        <tr>
+                
+            <td style="text-align: left">
+                <asp:Button ID="Button2" runat="server" OnClick="Button1_Click" Text="Edit" Width="66px" />
+            </td>
         </tr>
         <tr>
             <td style="height: 23px; width: 518px;"></td>
@@ -39,8 +47,7 @@
         <tr>
             <td style="text-align: center; width: 518px;">&nbsp;</td>
             <td style="background-color: #99CCFF; text-align: center; width: 280px;">
-                <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Enter" Width="66px" />
-            </td>
+                &nbsp;</td>
             <td style="text-align: center">&nbsp;</td>
         </tr>
         <tr>

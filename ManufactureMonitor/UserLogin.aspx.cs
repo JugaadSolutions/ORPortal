@@ -25,13 +25,14 @@ namespace ManufactureMonitor
         {
             DataAccess da = new DataAccess();
             bool b =da.Login(TextBox2.Text,TextBox3.Text);
+            Session["User"] = TextBox2.Text;
             if (b == true)
             {
                 switch (Request.QueryString["Source"])
                 {
                     case "ChangePassword":
 
-                        Response.Redirect("~/ChangePassword.aspx?Id=" + Request.QueryString["MachineGroupId"]);
+                        Response.Redirect("~/ChangePassword.aspx?MachineGroupId=" + Request.QueryString["MachineGroupId"]);
                             break;
                         
                     case "StopProblemSetting":
@@ -53,8 +54,10 @@ namespace ManufactureMonitor
                     case"ShiftDefinitionSetting":
                         Response.Redirect("~/ShiftDefinitionSetting.aspx?MachineGroupId=" + Request.QueryString["MachineGroupId"]);
                             break;
+                            
 
                 }
+                
             }
             else
             {

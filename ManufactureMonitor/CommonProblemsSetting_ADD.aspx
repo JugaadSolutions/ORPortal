@@ -40,7 +40,10 @@
             <td style="text-align: center; width: 245px; height: 30px;"></td>
             <td style="background-color: #99CCFF; text-align: left; width: 266px; height: 30px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Type:</td>
             <td style="background-color: #99CCFF; height: 30px; width: 336px; ">
-                <asp:RadioButtonList ID="RadioButtonList1" runat="server" Width="320px">
+                <asp:RadioButtonList ID="RadioButtonList1" runat="server" Width="497px" RepeatDirection="Horizontal">
+                    <asp:ListItem Value=" 1">Non-Operation time 1</asp:ListItem>
+                    <asp:ListItem Value=" 2">Non-Operation time 2</asp:ListItem>
+                    <asp:ListItem Value=" 3">Idle Time</asp:ListItem>
                 </asp:RadioButtonList>
             </td>
             <td style="background-color: #FFFFCC; height: 30px;"></td>
@@ -48,18 +51,17 @@
         <tr>
             <td style="text-align: center; height: 30px; width: 245px;"></td>
             <td style="background-color: #99CCFF; text-align: left; width: 266px; height: 30px;">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Valid:</td>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
             <td style="background-color: #99CCFF; width: 336px; ">
-                <asp:CheckBox ID="CheckBox1" runat="server" />
-            </td>
+                &nbsp;</td>
             <td style="background-color: #FFFFCC;">&nbsp;</td>
         </tr>
         <tr>
             <td style="text-align: center; height: 30px; width: 245px;">&nbsp;</td>
             <td style="background-color: #99CCFF; text-align: center; height: 30px;" colspan="2">
-                <asp:Button ID="Button1" runat="server" BorderColor="Gray" BorderStyle="Outset" BorderWidth="3px" Font-Names="Calibri" Font-Size="Medium" Height="45px" Text="Save" Width="103px" />
+                <asp:Button ID="Button1" runat="server" BorderColor="Gray" BorderStyle="Outset" BorderWidth="3px" Font-Names="Calibri" Font-Size="Medium" Height="45px" Text="Save" Width="103px" OnClick="Button1_Click" />
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <asp:Button ID="Button2" runat="server" BorderColor="Gray" BorderStyle="Outset" BorderWidth="3px" Font-Names="Calibri" Font-Size="Medium" Height="42px" Text="Don't Save" Width="125px" />
+                <asp:Button ID="Button2" runat="server" BorderColor="Gray" BorderStyle="Outset" BorderWidth="3px" Font-Names="Calibri" Font-Size="Medium" Height="42px" Text="Cancel" Width="125px" OnClick="Button2_Click" />
             </td>
             <td style="background-color: #FFFFCC;">&nbsp;</td>
         </tr>

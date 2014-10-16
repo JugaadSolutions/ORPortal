@@ -33,8 +33,17 @@
             </td>
             <td style="background-color: #99CCFF; text-align: center; width: 801px; " rowspan="6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Day of Shift Beginning:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 &nbsp;<span style="font-size: large"> </span>
-                <asp:CheckBoxList ID="CheckBoxList1" runat="server" Height="169px" TextAlign="Left" Width="90px">
+                <div style="text-align: right">
+                <asp:CheckBoxList ID="CheckBoxList1" runat="server" Height="169px" TextAlign="Left" Width="115px">
+                    <asp:ListItem>Monday</asp:ListItem>
+                    <asp:ListItem>Tuesday</asp:ListItem>
+                    <asp:ListItem>Wednesday</asp:ListItem>
+                    <asp:ListItem>Thursday</asp:ListItem>
+                    <asp:ListItem>Friday</asp:ListItem>
+                    <asp:ListItem>Saturday</asp:ListItem>
+                    <asp:ListItem>Sunday</asp:ListItem>
                 </asp:CheckBoxList>
+                </div>
             </td>
             <td style="text-align: center; height: 30px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
         </tr>

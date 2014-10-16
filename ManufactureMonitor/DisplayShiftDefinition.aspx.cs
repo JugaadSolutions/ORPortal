@@ -17,7 +17,7 @@ namespace ManufactureMonitor
         {
             DataAccess da = new DataAccess();
 
-            DataTable dt = da.GetSchedule(Convert.ToInt32(Request.QueryString["Machine_Id"]));
+            DataTable dt = da.GetSchedule(Convert.ToInt32(Request.QueryString["MachineGroupId"]));
             GridView1.DataSource = dt;
             GridView1.DataBind();
         }

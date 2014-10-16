@@ -47,13 +47,13 @@ namespace ManufactureMonitor
              da.UpdateParameters(Convert.ToInt32(Request.QueryString["Id"]),
                 Convert.ToDouble(TextBox2.Text), TextBox3.Text, TextBox4.Text, Convert.ToDouble(TextBox5.Text), Convert.ToDouble(TextBox6.Text), Convert.ToDouble(TextBox7.Text), Convert.ToDouble(TextBox8.Text), 
                 Convert.ToDouble(TextBox9.Text), Convert.ToDouble(TextBox10.Text));
-             //Response.Write("<script>alert('Parameters Updated...');if(alert){ window.location='~/ParameterSetting.aspx';}</script>");
+             //Response.Write("<script>alert('Parameters Updated...');if(alert){ window.location='~/ParameterSetting.aspx?MachineGroupId=' + Request.QueryString["MachineGroupId"]+"&Id="+ Request.QueryString["Id"]';}</script>");
              Response.Redirect("~/ParameterSetting.aspx?MachineGroupId=" + Request.QueryString["MachineGroupId"]+"&Id="+ Request.QueryString["Id"]);
         }
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/ParameterSetting.aspx?MachineGroup=" + Request.QueryString["MachineGroupId"]);
+            Response.Redirect("~/ParameterSetting.aspx?MachineGroupId=" + Request.QueryString["MachineGroupId"] + "&Id=" + Request.QueryString["Id"]);
         }
 
        
