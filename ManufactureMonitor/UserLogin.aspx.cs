@@ -52,7 +52,7 @@ namespace ManufactureMonitor
                             Response.Redirect("~/ProjectSetting.aspx?MachineGroupId=" + Request.QueryString["MachineGroupId"]);
                             break;
                     case"ShiftDefinitionSetting":
-                        Response.Redirect("~/ShiftDefinitionSetting.aspx?MachineGroupId=" + Request.QueryString["MachineGroupId"]);
+                            Response.Redirect("~/ShiftDefintionSetting1.aspx?MachineGroupId=" + Request.QueryString["MachineGroupId"]);
                             break;
                             
 

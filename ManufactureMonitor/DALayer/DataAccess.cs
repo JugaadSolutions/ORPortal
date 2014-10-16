@@ -366,6 +366,175 @@ namespace ManufactureMonitor.DALayer
             return dt;
 
         }
-        
+        public void DeleteProblem(int code)
+        {
+            SqlConnection cn;
+            SqlCommand cmd;
+
+            cn = new SqlConnection(connection);
+            String query = @" Delete From CommonProblems 
+                            where (Code={0})";
+            query = String.Format(query, code);
+            cn.Open();
+            cmd = new SqlCommand(query, cn);
+
+            cmd.ExecuteNonQuery();
+
+            cn.Close();
+        }
+        public DataTable GetShifts(int Id)
+        {
+            SqlConnection cn;
+            SqlCommand cmd;
+
+            cn = new SqlConnection(connection);
+            String query = @"select Convert(varchar(5),CONVERT(TIME(0),Shifts.Start,0),20)   
+                            +'-'+Convert(varchar(5),CONVERT(TIME(0),Shifts.[End],0),20)
+                            +'   '
+                            +(case when ShiftMachines.Monday=1 Then 'Mon' else ' '  End)+','
+                            +(case when ShiftMachines.Tuesday=1 Then 'Tue' else ' ' End)+','
+                            +(case when ShiftMachines.Wednesday=1 Then 'Wed'else ' '  End)+','
+                            +(case when ShiftMachines.Thursday=1 Then 'Thu' else ' ' End)+','
+                            +(case when ShiftMachines.Friday=1 Then 'Fri' else ' ' End)+','
+                            +(case when ShiftMachines.Saturday=1 Then 'Sat' else ' ' End)+','
+                            +(case when ShiftMachines.Sunday=1 Then 'Sun' else ' ' End) as shifts,Id
+                             from 
+                             Shifts inner Join ShiftMachines on Shifts.Id=ShiftMachines.Shift_Id
+                             where
+                             ShiftMachines.Machine_Id={0}";
+            query = String.Format(query, Id);
+            cn.Open();
+            cmd = new SqlCommand(query, cn);
+            SqlDataReader dr = cmd.ExecuteReader();
+            DataTable dt = new DataTable();
+            dt.Load(dr);
+            dr.Close();
+            cn.Close();
+            return dt;
+
+        }
+        public void DeleteShift(int Shift_Id)
+        {
+            SqlConnection cn;
+            SqlCommand cmd;
+
+            cn = new SqlConnection(connection);
+            String query = @" Delete From ShiftMachines 
+                            where (Shift_Id={0})";
+            query = String.Format(query, Shift_Id);
+            cn.Open();
+            cmd = new SqlCommand(query, cn);
+
+            cmd.ExecuteNonQuery();
+
+            cn.Close();
+        }
+        public DataTable SelectShift(int Shift_Id)
+        {
+            SqlConnection cn;
+            SqlCommand cmd;
+
+            cn = new SqlConnection(connection);
+            String query = @" Select DatePart(Hour,Start) as [SHours],DatePart(Hour,[End]) as [EHours],
+                              DatePart(Minute,Start) as [SMinutes],DatePart(Minute,[End]) as [EMinutes],Id
+                            from 
+                            Shifts 
+                            where 
+                            Id={0}";
+            query = String.Format(query, Shift_Id);
+
+            cn.Open();
+            cmd = new SqlCommand(query, cn);
+
+            SqlDataReader dr = cmd.ExecuteReader();
+            DataTable dt = new DataTable();
+            dt.Load(dr);
+            dr.Close();
+            cn.Close();
+            return dt;
+
+        }
+        public void UpdateShift(int Id, String from, String to)
+        {
+            SqlConnection cn;
+            SqlCommand cmd;
+
+            cn = new SqlConnection(connection);
+            String query = @" Update Shifts SET Start='{1}',[End]='{2}'
+                            where (Id='{0}')";
+            query = String.Format(query, Id, from, to);
+            cn.Open();
+            cmd = new SqlCommand(query, cn);
+
+            cmd.ExecuteNonQuery();
+
+            cn.Close();
+
+        }
+//         public DataTable ConvertData(int shour, int smin,int ehour,int emin,int Id)
+//        {
+//            SqlConnection cn;
+//            SqlCommand cmd;
+
+//            cn = new SqlConnection(connection);
+//            String query = @" Select DatePart(HOUR,{0})+''+DatePart(Minute,{1}) as[From],DatePart(HOUR,{2})+''+DatePart(Minute,{3}) as[To]
+//                            from Shifts
+//                            where Id=1
+//                            where (Code='{4}')";
+//            query = String.Format(query, shour, smin, ehour, emin, Id);
+//            cn.Open();
+//            cmd = new SqlCommand(query, cn);
+
+//            SqlDataReader dr = cmd.ExecuteReader();
+//            DataTable dt = new DataTable();
+//            dt.Load(dr);
+//            dr.Close();
+//            cn.Close();
+//            return dt;
+
+
+//        }
+         public void UpdateShiftday(int MId,int Id,bool mon,bool tue,bool wed,bool thu,bool fri,bool sat,bool sun)
+         {
+             SqlConnection cn;
+             SqlCommand cmd;
+
+             cn = new SqlConnection(connection);
+             String query = @" Update ShiftMachines SET Monday='{2}',Tuesday='{3}',
+                               Wednesday='{4}',Thursday='{5}',Friday='{6}',Saturday='{7}',Sunday='{8}'
+                               where 
+                              (Machine_Id={0} AND Shift_Id={1} )";
+             query = String.Format(query,MId,Id,mon,tue,wed,thu,fri,sat,sun);
+             cn.Open();
+             cmd = new SqlCommand(query, cn);
+
+             cmd.ExecuteNonQuery();
+
+             cn.Close();
+
+         }
+         public DataTable Selectday(int Id,int MId)
+         {
+             SqlConnection cn;
+             SqlCommand cmd;
+
+             cn = new SqlConnection(connection);
+             String query = @"Select Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday 
+                              From ShiftMachines
+                            where 
+                            Shift_Id={0} AND Machine_Id={1}";
+             query = String.Format(query, Id, MId);
+
+             cn.Open();
+             cmd = new SqlCommand(query, cn);
+
+             SqlDataReader dr = cmd.ExecuteReader();
+             DataTable dt = new DataTable();
+             dt.Load(dr);
+             dr.Close();
+             cn.Close();
+             return dt;
+
+         }
     }
 }

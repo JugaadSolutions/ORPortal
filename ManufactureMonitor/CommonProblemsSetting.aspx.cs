@@ -41,5 +41,13 @@ namespace ManufactureMonitor
             Response.Redirect("~/CommonProblemsSetting_ADD.aspx?Code=" + dt.Rows[ProblemSelectionListBox.SelectedIndex]["Code"]);
 
         }
+
+        protected void Button4_Click(object sender, EventArgs e)
+        {
+
+            DataAccess da = new DataAccess();
+            da.DeleteProblem((Int32)dt.Rows[ProblemSelectionListBox.SelectedIndex]["Code"]);
+            Response.Write("<script>alert('Problem Delected Successfully..');if(alert){ window.location='../CommonProblemsSetting.aspx';}</script>");
+        }
     }
 }

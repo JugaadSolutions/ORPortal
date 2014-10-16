@@ -146,7 +146,7 @@ namespace ManufactureMonitor
             }
             else
             {
-                Response.Redirect("~/ShiftDefinitionSetting.aspx?MachineGroupId=" + Request.QueryString["MachineGroup"]);
+                Response.Redirect("~/ShiftDefinitionSetting1.aspx?MachineGroupId=" + Request.QueryString["MachineGroup"]);
             }
 
         }

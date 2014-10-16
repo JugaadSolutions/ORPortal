@@ -205,6 +205,7 @@
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="ParameterSetting.aspx" />
     <Content Include="ParameterSetting_Show.aspx" />
+    <Content Include="ShiftDefintionSetting1.aspx" />
     <Content Include="UserLogin.aspx" />
     <Content Include="ProblemAccumulation.aspx" />
     <Content Include="ProblemAccumulation_Show.aspx" />
@@ -443,6 +444,13 @@
     </Compile>
     <Compile Include="ParameterSetting_Show.aspx.designer.cs">
       <DependentUpon>ParameterSetting_Show.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ShiftDefintionSetting1.aspx.cs">
+      <DependentUpon>ShiftDefintionSetting1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ShiftDefintionSetting1.aspx.designer.cs">
+      <DependentUpon>ShiftDefintionSetting1.aspx</DependentUpon>
     </Compile>
     <Compile Include="UserLogin.aspx.cs">
       <DependentUpon>UserLogin.aspx</DependentUpon>

@@ -46,10 +46,9 @@
         </tr>
         <tr>
             <td style="text-align: center; height: 30px; width: 200px;"></td>
-            <td style="background-color: #99CCFF; text-align: left; width: 266px; height: 30px;"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Valid:</strong></td>
+            <td style="background-color: #99CCFF; text-align: left; width: 266px; height: 30px;"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></td>
             <td style="background-color: #99CCFF; width: 48px;">
-                <asp:CheckBox ID="CheckBox1" runat="server" />
-            </td>
+                &nbsp;</td>
             <td style="background-color: #FFFFCC;">&nbsp;</td>
         </tr>
         <tr>
