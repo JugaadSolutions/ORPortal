@@ -33,7 +33,16 @@ namespace ManufactureMonitor
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/StopProblemSetting_Enter.aspx?Id=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]+"&MachineGroupId=" + Request.QueryString["MachineGroupId"]);
+            Response.Redirect("~/StopProblemSetting_Enter.aspx?MachineId=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
+                +"&MachineGroupId=" + Request.QueryString["MachineGroupId"]);
+        }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            if (MachineSelectionListBox.SelectedIndex == -1)
+                return;
+            Response.Redirect("~/StopProblemSetting_Enter.aspx?MachineId=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"] 
+                + "&MachineGroupId=" + Request.QueryString["MachineGroupId"]);
         }
     }
 }

@@ -156,6 +156,11 @@ namespace ManufactureMonitor
             Response.Redirect("~/TimeSequence1.aspx?MachineGroupId=" + Request.QueryString["MachineGroup"]);
         }
 
+        protected void Button17_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/InputFromMachines1.aspx?MachineGroupId=" + Request.QueryString["MachineGroup"]);
+        }
+
        
 
     }

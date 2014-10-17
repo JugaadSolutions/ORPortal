@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="DisplayStopProblems.aspx.cs" Inherits="ManufactureMonitor.DisplayStopProblems" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <p style="background-color: #FFFFCC">
-        <table style="width: 100%; border-collapse: collapse">
+    
+        <table style="width: 100%; border-collapse: collapse;background-color: #FFFFCC">
             <tr>
                 <td style="text-align: right; width: 960px">
                     <asp:TextBox ID="TextBox1" runat="server" Width="600px" BorderColor="#333333" BorderStyle="Solid" BorderWidth="3px" Font-Bold="True" ForeColor="Black" Height="30px" style="font-size: large">                                        Reprentation of Project List</asp:TextBox>
@@ -28,5 +28,5 @@
             </tr>
         </table>
         <br />
-    </p>
+    
 </asp:Content>

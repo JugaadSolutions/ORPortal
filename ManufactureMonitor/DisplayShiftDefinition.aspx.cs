@@ -27,6 +27,36 @@ namespace ManufactureMonitor
             Response.Redirect("~/Menu.aspx?MachineGroup=" + Request.QueryString["MachineGroupId"]);
         }
 
+        protected void GridView1_DataBound(object sender, EventArgs e)
+        {
+            int no_rows = GridView1.Rows.Count;
+
+            for (int i = 0; i < no_rows; i++)
+            {
+                GridView1.Rows[i].Cells[0].Width = new Unit("30px");
+                GridView1.Rows[i].Cells[1].Width = new Unit("30px");
+                GridView1.Rows[i].Cells[2].Width = new Unit("30px");
+                GridView1.Rows[i].Cells[3].Width = new Unit("30px");
+                GridView1.Rows[i].Cells[4].Width = new Unit("30px");
+                GridView1.Rows[i].Cells[5].Width = new Unit("30px");
+                GridView1.Rows[i].Cells[6].Width = new Unit("30px");
+                GridView1.Rows[i].Cells[7].Width = new Unit("30px");
+                GridView1.Rows[i].Cells[8].Width = new Unit("30px");
+                GridView1.Rows[i].Cells[9].Width = new Unit("30px");
+                GridView1.Rows[i].Cells[10].Width = new Unit("30px");
+                GridView1.Rows[i].Cells[11].Width = new Unit("30px");
+                GridView1.Rows[i].Cells[12].Width = new Unit("30px");
+                GridView1.Rows[i].Cells[13].Width = new Unit("30px");
+                GridView1.Rows[i].Cells[14].Width = new Unit("30px");
+                GridView1.Rows[i].Cells[15].Width = new Unit("30px");
+                GridView1.Rows[i].Cells[16].Width = new Unit("30px");
+                GridView1.Rows[i].Cells[17].Width = new Unit("30px");
+                GridView1.Rows[i].Cells[18].Width = new Unit("30px");
+
+            }
+
+            
+        }
         
     }
 }

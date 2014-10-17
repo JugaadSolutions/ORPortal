@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace ManufactureMonitor
 {
-    public partial class StopTimes2 : System.Web.UI.Page
+    public partial class ProjectSetting_Enter_Add : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -18,11 +18,5 @@ namespace ManufactureMonitor
         {
             Response.Redirect("~/Menu.aspx?MachineGroup=" + Request.QueryString["MachineGroupId"]);
         }
-
-        protected void Button1_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("~/StopTimes2_show.aspx?MachineGroupId=" + Request.QueryString["MachineGroupId"]);
-        }
-
     }
 }

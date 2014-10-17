@@ -21,7 +21,7 @@ namespace ManufactureMonitor
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Scrap_show.aspx?MachineGroupId=" + Request.QueryString["Id"]);
+            Response.Redirect("~/Scrap_show.aspx?MachineGroupId=" + Request.QueryString["MachineGroupId"]);
         }
     }
 }

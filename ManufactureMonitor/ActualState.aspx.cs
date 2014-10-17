@@ -37,7 +37,9 @@ namespace ManufactureMonitor
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/DisplayActualState.aspx?Id=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"] + " &MachineGroup=" + Request.QueryString["MachineGroupId"]);
+            if (MachineSelectionListBox.SelectedIndex == -1)
+                return;
+            Response.Redirect("~/ActualState_Show.aspx?MachineId=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"] + " &MachineGroupId=" + Request.QueryString["MachineGroupId"]);
         }
 
        

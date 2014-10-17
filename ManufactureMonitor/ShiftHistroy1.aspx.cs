@@ -21,7 +21,7 @@ namespace ManufactureMonitor
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/SH_show.aspx?MachineGroupId=" + Request.QueryString["MachineGroup"]);
+            Response.Redirect("~/ShiftHistroy_Show.aspx?MachineGroupId=" + Request.QueryString["MachineGroupId"]);
         }
     }
 }

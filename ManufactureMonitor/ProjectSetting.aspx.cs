@@ -33,7 +33,7 @@ namespace ManufactureMonitor
        
         protected void Button1_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/ProjectSetting_Show.aspx?Id=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]+"&MachineGroup=" + Request.QueryString["MachineGroupId"]);
+            Response.Redirect("~/ProjectSetting_Enter.aspx?MachineId=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]+"&MachineGroupId=" + Request.QueryString["MachineGroupId"]);
         }
     }
 }

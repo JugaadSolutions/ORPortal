@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ProjectSetting_Show_Add.aspx.cs" Inherits="ManufactureMonitor.ProjectSetting_Show" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ProjectSetting_Enter_Add.aspx.cs" Inherits="ManufactureMonitor.ProjectSetting_Enter_Add" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <table style="width: 100%; border-collapse: collapse">
         <tr>
@@ -57,7 +57,7 @@
                 <asp:Button ID="Button1" runat="server" BorderColor="Gray" BorderStyle="Outset" BorderWidth="3px" Font-Names="Calibri" Font-Size="Medium" Height="45px" Text="Save" Width="103px" />
             </td>
             <td style="background-color: #99CCFF; width: 48px;">
-                <asp:Button ID="Button2" runat="server" BorderColor="Gray" BorderStyle="None" BorderWidth="3px" Font-Names="Calibri" Font-Size="Medium" Height="42px" Text="Don't Save" Width="125px" />
+                <asp:Button ID="Button2" runat="server" BorderColor="Gray" BorderStyle="Outset" BorderWidth="3px" Font-Names="Calibri" Font-Size="Medium" Height="45px" Text="Don't Save" Width="103px" />
             </td>
             <td style="background-color: #FFFFCC;">&nbsp;</td>
         </tr>

@@ -7,16 +7,11 @@ using System.Web.UI.WebControls;
 
 namespace ManufactureMonitor
 {
-    public partial class ProjectSetting_Show : System.Web.UI.Page
+    public partial class ActualState_Show : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
 
-        }
-
-        protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
-        {
-            Response.Redirect("~/Menu.aspx?MachineGroup=" + Request.QueryString["MachineGroupId"]);
         }
     }
 }

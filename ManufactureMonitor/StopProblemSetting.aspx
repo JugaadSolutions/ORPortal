@@ -22,22 +22,34 @@
             <td style="background-color: #99CCFF; text-align: center; width: 280px;" rowspan="2">
                 <table style="width: 100%; border-collapse: collapse; background-color: #99CCFF">
                     <tr>
-                        <td>
+                        <td rowspan="2" style="width: 166px">
                             <asp:ListBox ID="MachineSelectionListBox" runat="server" SelectionMode="Single" />
                         </td>
+                        <td>
+                <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Add" Width="66px" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Edit" Width="66px" style="height: 26px" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 166px">
+                            &nbsp;</td>
+                        <td>
+                            &nbsp;</td>
                     </tr>
                 </table>
             </td>
                 
             <td style="text-align: left">
-                <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Add" Width="66px" />
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
         </tr>
         <tr>
                 
             <td style="text-align: left">
-                <asp:Button ID="Button2" runat="server" OnClick="Button1_Click" Text="Edit" Width="66px" />
-            </td>
+                &nbsp;</td>
         </tr>
         <tr>
             <td style="height: 23px; width: 518px;"></td>

@@ -102,7 +102,7 @@
             </td>
             <td style="text-align: left; height: 30px; width: 399px;">
                 <div id="Div15" onmouseover="Dark('Div15')" onmouseout="Light('Div15')" style="width: 200px; height: 30px; margin-left: 6px; text-align:center">
-                <asp:Button ID="Button17" runat="server" BackColor="#FF9966" BorderColor="#CC6666" BorderStyle="Solid" BorderWidth="3px" Height="30px" Text="Inputs from machines" Width="200px" style="margin-left: 0px" />
+                <asp:Button ID="Button17" runat="server" BackColor="#FF9966" BorderColor="#CC6666" BorderStyle="Solid" BorderWidth="3px" Height="30px" Text="Inputs from machines" Width="200px" style="margin-left: 0px" OnClick="Button17_Click" />
             </div></td>
         </tr>
         <tr>

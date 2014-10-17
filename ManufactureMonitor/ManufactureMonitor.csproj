@@ -128,6 +128,7 @@
     <Content Include="Account\Register.aspx" />
     <Content Include="Account\RegisterExternalLogin.aspx" />
     <Content Include="ActualState.aspx" />
+    <Content Include="ActualState_Show.aspx" />
     <Content Include="ChangePassword.aspx" />
     <Content Include="CommonProblemsSetting.aspx" />
     <Content Include="CommonProblemsSetting_ADD.aspx" />
@@ -187,9 +188,9 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
-    <Content Include="DisplayActualState.aspx" />
     <Content Include="DisplayParameters.aspx" />
     <Content Include="Images\Home.jpg" />
+    <Content Include="InputFromMachines1.aspx" />
     <Content Include="InputFromMachines_Show.aspx" />
     <Content Include="Menu.aspx" />
     <Content Include="DisplayProject.aspx" />
@@ -205,14 +206,16 @@
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="ParameterSetting.aspx" />
     <Content Include="ParameterSetting_Show.aspx" />
+    <Content Include="ProjectSetting_Enter.aspx" />
     <Content Include="ShiftDefintionSetting1.aspx" />
+    <Content Include="ShiftHistroy_Show.aspx" />
     <Content Include="UserLogin.aspx" />
     <Content Include="ProblemAccumulation.aspx" />
     <Content Include="ProblemAccumulation_Show.aspx" />
     <Content Include="ProjectAssignment.aspx" />
     <Content Include="ProjectAssignment_Show.aspx" />
     <Content Include="ProjectSetting.aspx" />
-    <Content Include="ProjectSetting_Show_Add.aspx" />
+    <Content Include="ProjectSetting_Enter_Add.aspx" />
     <Content Include="ProjectSummary.aspx" />
     <Content Include="ProjectSummary_Show.aspx" />
     <Content Include="Scrap1.aspx" />
@@ -252,7 +255,6 @@
     <Content Include="ShiftSetting_Add.aspx" />
     <Content Include="ShiftSetting_Timepoints.aspx" />
     <Content Include="ShiftSetting_TP_Add.aspx" />
-    <Content Include="SH_show.aspx" />
     <Content Include="StopProblemSetting.aspx" />
     <Content Include="StopProblemSetting_Enter.aspx" />
     <Content Include="StopTimes2.aspx" />
@@ -269,6 +271,13 @@
     </Compile>
     <Compile Include="ActualState.aspx.designer.cs">
       <DependentUpon>ActualState.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ActualState_Show.aspx.cs">
+      <DependentUpon>ActualState_Show.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ActualState_Show.aspx.designer.cs">
+      <DependentUpon>ActualState_Show.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
@@ -343,13 +352,6 @@
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
     <Compile Include="DALayer\DataAccess.cs" />
-    <Compile Include="DisplayActualState.aspx.cs">
-      <DependentUpon>DisplayActualState.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="DisplayActualState.aspx.designer.cs">
-      <DependentUpon>DisplayActualState.aspx</DependentUpon>
-    </Compile>
     <Compile Include="DisplayParameters.aspx.cs">
       <DependentUpon>DisplayParameters.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -358,6 +360,13 @@
       <DependentUpon>DisplayParameters.aspx</DependentUpon>
     </Compile>
     <Compile Include="Entity\Parameter.cs" />
+    <Compile Include="InputFromMachines1.aspx.cs">
+      <DependentUpon>InputFromMachines1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InputFromMachines1.aspx.designer.cs">
+      <DependentUpon>InputFromMachines1.aspx</DependentUpon>
+    </Compile>
     <Compile Include="InputFromMachines_Show.aspx.cs">
       <DependentUpon>InputFromMachines_Show.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -445,12 +454,26 @@
     <Compile Include="ParameterSetting_Show.aspx.designer.cs">
       <DependentUpon>ParameterSetting_Show.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ProjectSetting_Enter.aspx.cs">
+      <DependentUpon>ProjectSetting_Enter.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProjectSetting_Enter.aspx.designer.cs">
+      <DependentUpon>ProjectSetting_Enter.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ShiftDefintionSetting1.aspx.cs">
       <DependentUpon>ShiftDefintionSetting1.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ShiftDefintionSetting1.aspx.designer.cs">
       <DependentUpon>ShiftDefintionSetting1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ShiftHistroy_Show.aspx.cs">
+      <DependentUpon>ShiftHistroy_Show.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ShiftHistroy_Show.aspx.designer.cs">
+      <DependentUpon>ShiftHistroy_Show.aspx</DependentUpon>
     </Compile>
     <Compile Include="UserLogin.aspx.cs">
       <DependentUpon>UserLogin.aspx</DependentUpon>
@@ -494,12 +517,12 @@
     <Compile Include="ProjectSetting.aspx.designer.cs">
       <DependentUpon>ProjectSetting.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ProjectSetting_Show_Add.aspx.cs">
-      <DependentUpon>ProjectSetting_Show_Add.aspx</DependentUpon>
+    <Compile Include="ProjectSetting_Enter_Add.aspx.cs">
+      <DependentUpon>ProjectSetting_Enter_Add.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="ProjectSetting_Show_Add.aspx.designer.cs">
-      <DependentUpon>ProjectSetting_Show_Add.aspx</DependentUpon>
+    <Compile Include="ProjectSetting_Enter_Add.aspx.designer.cs">
+      <DependentUpon>ProjectSetting_Enter_Add.aspx</DependentUpon>
     </Compile>
     <Compile Include="ProjectSummary.aspx.cs">
       <DependentUpon>ProjectSummary.aspx</DependentUpon>
@@ -564,13 +587,6 @@
     </Compile>
     <Compile Include="ShiftSetting_TP_Add.aspx.designer.cs">
       <DependentUpon>ShiftSetting_TP_Add.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="SH_show.aspx.cs">
-      <DependentUpon>SH_show.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SH_show.aspx.designer.cs">
-      <DependentUpon>SH_show.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>

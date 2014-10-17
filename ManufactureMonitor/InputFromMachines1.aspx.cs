@@ -7,11 +7,16 @@ using System.Web.UI.WebControls;
 
 namespace ManufactureMonitor
 {
-    public partial class InputFromMachines_Show : System.Web.UI.Page
+    public partial class InputFromMachines1 : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
 
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/InputFromMachines_Show.aspx?MachineGroupId=" + Request.QueryString["MachineGroupId"]);
         }
 
         protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
