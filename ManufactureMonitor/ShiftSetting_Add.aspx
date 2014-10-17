@@ -142,7 +142,8 @@
             <td style="background-color: #99CCFF; text-align: center; height: 30px;" colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;<asp:Button ID="Button1" runat="server" BorderColor="Gray" BorderStyle="Outset" BorderWidth="3px" Font-Names="Calibri" Font-Size="Medium" Height="45px" Text="Save" Width="103px" OnClick="Button1_Click" />
             </td>
             <td style="background-color: #99CCFF; text-align: center; width: 621px; height: 30px;">
-                <asp:Button ID="Button2" runat="server" BorderColor="Gray" BorderStyle="Outset" BorderWidth="3px" Font-Names="Calibri" Font-Size="Medium" Height="45px" Text="Cancel" Width="103px" OnClick="Button1_Click" />
+                <asp:Button ID="Button2" runat="server" BorderColor="Gray" BorderStyle="Outset" BorderWidth="3px" 
+                    Font-Names="Calibri" Font-Size="Medium" Height="45px" Text="Cancel" Width="103px" OnClick="Button2_Click" />
             </td>
             <td style="background-color: #99CCFF; text-align: center; width: 801px; height: 30px;">&nbsp;</td>
             <td style="text-align: center; height: 30px">&nbsp;</td>

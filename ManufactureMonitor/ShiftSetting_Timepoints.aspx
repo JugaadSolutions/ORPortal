@@ -21,16 +21,16 @@
         <tr>
             <td style="width: 316px;" rowspan="2">&nbsp;</td>
             <td style="background-color: #99CCFF; text-align: center; width: 350px;" rowspan="4">
-                <asp:TextBox ID="TextBox2" runat="server" Height="165px" Width="74px"></asp:TextBox>
+                <asp:ListBox ID="SessionSelectionListBox" runat="server" SelectionMode="Single" />
             </td>
             <td style="background-color: #99CCFF; text-align: left; width: 350px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <asp:Button ID="Button2" runat="server" Text="Edit" />
+                <asp:Button ID="Button2" runat="server" Text="Edit" OnClick="Button2_Click" />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
             <td style="text-align: center" rowspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;</td>
         </tr>
         <tr>
             <td style="background-color: #99CCFF; text-align: left; width: 350px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <asp:Button ID="Button3" runat="server" Text="Delete" />
+                <asp:Button ID="Button3" runat="server" Text="Delete" OnClick="Button3_Click" />
             </td>
         </tr>
         <tr>

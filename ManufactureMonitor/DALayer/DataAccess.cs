@@ -413,15 +413,15 @@ namespace ManufactureMonitor.DALayer
             return dt;
 
         }
-        public void DeleteShift(int Shift_Id)
+        public void DeleteShift(int Shift_Id,int Machine_Id)
         {
             SqlConnection cn;
             SqlCommand cmd;
 
             cn = new SqlConnection(connection);
             String query = @" Delete From ShiftMachines 
-                            where (Shift_Id={0})";
-            query = String.Format(query, Shift_Id);
+                            where (Shift_Id={0} AND Machine_Id={1})";
+            query = String.Format(query, Shift_Id,Machine_Id);
             cn.Open();
             cmd = new SqlCommand(query, cn);
 
@@ -471,29 +471,29 @@ namespace ManufactureMonitor.DALayer
             cn.Close();
 
         }
-//         public DataTable ConvertData(int shour, int smin,int ehour,int emin,int Id)
-//        {
-//            SqlConnection cn;
-//            SqlCommand cmd;
+         public DataTable ConvertData(int shour, int smin,int ehour,int emin,int Id)
+        {
+            SqlConnection cn;
+            SqlCommand cmd;
 
-//            cn = new SqlConnection(connection);
-//            String query = @" Select DatePart(HOUR,{0})+''+DatePart(Minute,{1}) as[From],DatePart(HOUR,{2})+''+DatePart(Minute,{3}) as[To]
-//                            from Shifts
-//                            where Id=1
-//                            where (Code='{4}')";
-//            query = String.Format(query, shour, smin, ehour, emin, Id);
-//            cn.Open();
-//            cmd = new SqlCommand(query, cn);
+            cn = new SqlConnection(connection);
+            String query = @" Select DatePart(HOUR,{0})+''+DatePart(Minute,{1}) as[From],DatePart(HOUR,{2})+''+DatePart(Minute,{3}) as[To]
+                            from Shifts
+                            where Id=1
+                            where (Code='{4}')";
+            query = String.Format(query, shour, smin, ehour, emin, Id);
+            cn.Open();
+            cmd = new SqlCommand(query, cn);
 
-//            SqlDataReader dr = cmd.ExecuteReader();
-//            DataTable dt = new DataTable();
-//            dt.Load(dr);
-//            dr.Close();
-//            cn.Close();
-//            return dt;
+            SqlDataReader dr = cmd.ExecuteReader();
+            DataTable dt = new DataTable();
+            dt.Load(dr);
+            dr.Close();
+            cn.Close();
+            return dt;
 
 
-//        }
+        }
          public void UpdateShiftday(int MId,int Id,bool mon,bool tue,bool wed,bool thu,bool fri,bool sat,bool sun)
          {
              SqlConnection cn;
@@ -535,6 +535,167 @@ namespace ManufactureMonitor.DALayer
              cn.Close();
              return dt;
 
+         }
+         public int AddShift( DateTime start, DateTime end)
+         {
+             SqlConnection cn;
+             SqlCommand cmd,cmd1;
+             SqlDataReader dr;
+             try
+             {
+
+                 cn = new SqlConnection(connection);
+                 String query = @"insert into Shifts(Start,[End]) values('{0}','{1}') ";
+                 query = String.Format(query, start, end);
+                 cn.Open();
+                 cmd = new SqlCommand(query, cn);
+                 cmd.ExecuteNonQuery();
+                 cmd1 = new SqlCommand("select max(Id) from Shifts", cn);
+                 dr = cmd1.ExecuteReader();
+                 DataTable dt = new DataTable();
+                 dt.Load(dr);
+                 dr.Close();
+                 cn.Close();
+
+                 if (dt.Rows.Count > 0)
+                 {
+                     int ShiftId = (int)dt.Rows[0][0];
+                     return ShiftId;
+
+                 }
+
+              
+                 return -1;
+
+             }
+
+             catch (Exception)
+             {
+                 return -1;
+
+
+             }
+
+         }
+         public void AddShiftday(int MId, int SId ,bool mon, bool tue, bool wed, bool thu, bool fri, bool sat, bool sun)
+         {
+             SqlConnection cn;
+             SqlCommand cmd;
+
+             cn = new SqlConnection(connection);
+             String query = @" Insert Into ShiftMachines(Machine_Id,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday,Shift_Id)
+                                Values({0},'{1}','{2}','{3}','{4}','{5}','{6}','{7}',{8})";
+             query = String.Format(query, MId, mon, tue, wed, thu, fri, sat, sun, SId);
+             cn.Open();
+             cmd = new SqlCommand(query, cn);
+
+             cmd.ExecuteNonQuery();
+
+             cn.Close();
+
+         }
+         public void AddBreaks(int MId, int SId, DateTime start, DateTime end,String name)
+         {
+             SqlConnection cn;
+             SqlCommand cmd;
+
+             cn = new SqlConnection(connection);
+             String query = @" Insert Into Breaks(Machine_Id,Shift_Id,Start,[End],Name)
+                                Values({0},'{1}','{2}','{3}','{4}')";
+             query = String.Format(query, MId, SId, start,end,name);
+             cn.Open();
+             cmd = new SqlCommand(query, cn);
+
+             cmd.ExecuteNonQuery();
+
+             cn.Close();
+
+         }
+
+         public  void UpdateBreaks(int p, int Shift_Id, DateTime BreakS, DateTime BreakE,String name)
+         {
+             SqlConnection cn;
+             SqlCommand cmd;
+
+             cn = new SqlConnection(connection);
+             String query = @" Update Breaks SET Start='{2}',[End]='{3}'
+                               where 
+                              (Machine_Id={0} AND Shift_Id={1},Name='{4}' )";
+             query = String.Format(query, p,Shift_Id,BreakS,BreakE,name);
+             cn.Open();
+             cmd = new SqlCommand(query, cn);
+
+             cmd.ExecuteNonQuery();
+
+             cn.Close();
+
+         }
+
+         public void DeleteBreaks(int p, int Shift_Id)
+         {
+             SqlConnection cn;
+             SqlCommand cmd;
+
+             cn = new SqlConnection(connection);
+             String query = @" Delete from Breaks 
+                               where 
+                              (Machine_Id={0} AND Shift_Id={1} )";
+             query = String.Format(query, p, Shift_Id);
+             cn.Open();
+             cmd = new SqlCommand(query, cn);
+
+             cmd.ExecuteNonQuery();
+
+             cn.Close();
+         }
+         public DataTable SelectBreak(int Shift_Id,int Machine_Id)
+         {
+             SqlConnection cn;
+             SqlCommand cmd;
+
+             cn = new SqlConnection(connection);
+             String query = @" Select DatePart(Hour,Start) as [SHours],DatePart(Hour,[End]) as [EHours],
+                              DatePart(Minute,Start) as [SMinutes],DatePart(Minute,[End]) as [EMinutes]
+                            from 
+                            Breaks 
+                            where 
+                            Shift_Id={0} AND Machine_Id={1}";
+             query = String.Format(query, Shift_Id, Machine_Id);
+
+             cn.Open();
+             cmd = new SqlCommand(query, cn);
+
+             SqlDataReader dr = cmd.ExecuteReader();
+             DataTable dt = new DataTable();
+             dt.Load(dr);
+             dr.Close();
+             cn.Close();
+             return dt;
+
+         }
+
+         public DataTable GetSessions(int Shift_Id, int Machine_Id)
+         {
+             SqlConnection cn;
+             SqlCommand cmd;
+
+             cn = new SqlConnection(connection);
+             String query = @" Select[End],Id
+                            from 
+                            Sessions 
+                            where 
+                            Shift_Id={0} AND Machine_Id={1}";
+             query = String.Format(query, Shift_Id, Machine_Id);
+
+             cn.Open();
+             cmd = new SqlCommand(query, cn);
+
+             SqlDataReader dr = cmd.ExecuteReader();
+             DataTable dt = new DataTable();
+             dt.Load(dr);
+             dr.Close();
+             cn.Close();
+             return dt;
          }
     }
 }

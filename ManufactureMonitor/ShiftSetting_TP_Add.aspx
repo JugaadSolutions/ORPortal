@@ -36,7 +36,7 @@
         <tr>
             <td style="width: 445px;">&nbsp;</td>
             <td style="background-color: #99CCFF; text-align: center; width: 263px;">
-                <asp:Button ID="Button1" runat="server" BorderColor="Gray" BorderStyle="Outset" BorderWidth="3px" Font-Names="Calibri" Font-Size="Medium" Height="38px" Text="Save" Width="103px" />
+                <asp:Button ID="Button1" runat="server" BorderColor="Gray" BorderStyle="Outset" BorderWidth="3px" Font-Names="Calibri" Font-Size="Medium" Height="38px" Text="Save" Width="103px" OnClick="Button1_Click" />
             </td>
             <td style="background-color: #99CCFF; text-align: center; width: 189px;">
                 <asp:Button ID="Button2" runat="server" BorderColor="Gray" BorderStyle="Outset" BorderWidth="3px" Font-Names="Calibri" Font-Size="Medium" Height="38px" Text="Don't Save" Width="103px" />
