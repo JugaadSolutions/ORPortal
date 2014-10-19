@@ -13,9 +13,9 @@
         </tr>
         <tr>
             <td style="height: 23px; width: 42px">&nbsp;</td>
-            <td style="height: 23px; width: 429px;">Date From:</td>
-            <td style="height: 23px; width: 277px;">Date To:</td>
-            <td style="height: 23px; width: 256px;">Shifts:</td>
+            <td style="height: 23px; width: 429px;"><strong>Date From:</strong></td>
+            <td style="height: 23px; width: 277px;"><strong>Date To:</strong></td>
+            <td style="height: 23px; width: 256px;"><strong>Shifts:</strong></td>
             <td style="height: 23px; " colspan="2">&nbsp;</td>
             <td style="height: 23px; width: 172px;"></td>
         </tr>
@@ -48,23 +48,23 @@
                 </asp:DropDownList>
             </td>
             <td style="height: 42px; width: 143px;">
-                <asp:CheckBoxList ID="CheckBoxList1" runat="server" Height="16px" Width="166px">
-                    <asp:ListItem>Weekends</asp:ListItem>
-                </asp:CheckBoxList>
-            </td>
-            <td style="height: 42px; text-align: left;">
                 <asp:Button ID="Button1" runat="server" BorderColor="Gray" BorderStyle="Outset" BorderWidth="2px" Text="Show" Height="46px" Width="80px" OnClick="Button1_Click" />
             </td>
+            <td style="height: 42px; text-align: left;">
+                &nbsp;</td>
             <td style="height: 42px; width: 172px;">
                 &nbsp;</td>
         </tr>
         <tr>
-            <td colspan="7" style="height: 1px">
+            <td colspan="7" style="height: 81px">
                 <div style="text-align: left">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    Machine:</div>
+                    &nbsp;&nbsp;<strong>Machine:</strong></div>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <asp:CheckBoxList ID="CheckBoxList2" runat="server" Height="71px" Width="133px">
+                </asp:CheckBoxList>
+                <div style="text-align: left">
+                    <strong>Project:</strong></div>
+                <asp:CheckBoxList ID="CheckBoxList3" runat="server" Height="71px" Width="133px">
                 </asp:CheckBoxList>
             </td>
         </tr>

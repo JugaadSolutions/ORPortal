@@ -37,7 +37,7 @@ namespace ManufactureMonitor
                         
                     case "StopProblemSetting":
                         
-                            Response.Redirect("~/StopProblemSetting.aspx?MachineGroupId=" + Request.QueryString["MachineGroupId"]);
+                            Response.Redirect("~/StopProblemSetting1.aspx?MachineGroupId=" + Request.QueryString["MachineGroupId"]);
                             break;
                     case "ProjectAssignment":
                             Response.Redirect("~/ProjectAssignment.aspx?MachineGroupId=" + Request.QueryString["MachineGroupId"]);

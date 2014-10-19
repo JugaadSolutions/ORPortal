@@ -14,6 +14,9 @@
             <td style="width: 273px; height: 25px;"></td>
             <td style="background-color: #0053A6; color: #FFFFFF; font-size: medium; text-align: center; width: 435px; " rowspan="2">
                 <asp:GridView ID="GridView1" runat="server" BackColor="White" BorderColor="#3366CC" BorderStyle="None" BorderWidth="1px" CellPadding="4" Width="809px" Height="179px">
+                    <Columns>
+                        <asp:HyperLinkField Text="Update" />
+                    </Columns>
                     <FooterStyle BackColor="#99CCCC" ForeColor="#003399" />
                     <HeaderStyle BackColor="#003399" Font-Bold="True" ForeColor="#CCCCFF" />
                     <PagerStyle BackColor="#99CCCC" ForeColor="#003399" HorizontalAlign="Left" />

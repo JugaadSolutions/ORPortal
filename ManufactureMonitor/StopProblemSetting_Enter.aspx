@@ -11,7 +11,7 @@
         </tr>
         <tr>
             <td style="text-align: center; width: 245px;">&nbsp;</td>
-            <td style="background-color: #3366FF; color: #FFFFFF; font-size: medium; text-align: center; " colspan="2">Commom Problem Definition</td>
+            <td style="background-color: #3366FF; color: #FFFFFF; font-size: medium; text-align: center; " colspan="2">Common Problem Definition</td>
             <td style="background-color: #FFFFCC; ">&nbsp;</td>
         </tr>
         <tr>
@@ -59,9 +59,9 @@
         <tr>
             <td style="text-align: center; height: 30px; width: 245px;">&nbsp;</td>
             <td style="background-color: #99CCFF; text-align: center; height: 30px;" colspan="2">
-                <asp:Button ID="Button1" runat="server" BorderColor="Gray" BorderStyle="Outset" BorderWidth="3px" Font-Names="Calibri" Font-Size="Medium" Height="45px" Text="Save" Width="103px"  />
+                <asp:Button ID="Button1" runat="server" BorderColor="Gray" BorderStyle="Outset" BorderWidth="3px" Font-Names="Calibri" Font-Size="Medium" Height="45px" Text="Save" Width="103px" OnClick="Button1_Click"  />
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <asp:Button ID="Button2" runat="server" BorderColor="Gray" BorderStyle="Outset" BorderWidth="3px" Font-Names="Calibri" Font-Size="Medium" Height="42px" Text="Cancel" Width="125px"  />
+                <asp:Button ID="Button2" runat="server" BorderColor="Gray" BorderStyle="Outset" BorderWidth="3px" Font-Names="Calibri" Font-Size="Medium" Height="42px" Text="Cancel" Width="125px" OnClick="Button2_Click"  />
             </td>
             <td style="background-color: #FFFFCC;">&nbsp;</td>
         </tr>

@@ -10,7 +10,7 @@
             </td>
         </tr>
         <tr>
-            <td style="text-align: center; background-color: #C0C0C0;"><strong>Shifts:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <td style="text-align: center; background-color: #C0C0C0;"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <asp:Label ID="MachineSelectedLabel" runat="server"></asp:Label>
                 </strong></td>
         </tr>

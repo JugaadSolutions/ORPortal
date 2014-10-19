@@ -401,7 +401,7 @@ namespace ManufactureMonitor.DALayer
                              from 
                              Shifts inner Join ShiftMachines on Shifts.Id=ShiftMachines.Shift_Id
                              where
-                             ShiftMachines.Machine_Id={0}";
+                             ShiftMachines.Machine_Id={0} order by Shifts asc";
             query = String.Format(query, Id);
             cn.Open();
             cmd = new SqlCommand(query, cn);
@@ -680,7 +680,7 @@ namespace ManufactureMonitor.DALayer
              SqlCommand cmd;
 
              cn = new SqlConnection(connection);
-             String query = @" Select[End],Id
+             String query = @" Select Convert(varchar(5),CONVERT(TIME(0),[End],0),20) as [End],Id
                             from 
                             Sessions 
                             where 
@@ -696,6 +696,347 @@ namespace ManufactureMonitor.DALayer
              dr.Close();
              cn.Close();
              return dt;
+         }
+         public DataTable GetShiftTimings(int Machine_ID, int Shift_Id)
+         {
+             SqlConnection cn;
+             SqlCommand cmd;
+
+             cn = new SqlConnection(connection);
+             String query = @" Select Machines.Name+'-'+' '+Convert(varchar(5),CONVERT(TIME(0),Shifts.Start,0),20)   
+                               +'-'+Convert(varchar(5),CONVERT(TIME(0),Shifts.[End],0),20)
+                               as shifts
+                                 from Machines
+                                 Join ShiftMachines on Machines.Id=ShiftMachines.Machine_Id 
+                                 Join Shifts on Shifts.Id=ShiftMachines.Shift_Id
+                                 where
+                                 ShiftMachines.Machine_Id={0} AND ShiftMachines.Shift_Id={1} ";
+             query = String.Format(query, Machine_ID, Shift_Id);
+             cn.Open();
+             cmd = new SqlCommand(query, cn);
+             SqlDataReader dr = cmd.ExecuteReader();
+             DataTable dt = new DataTable();
+             dt.Load(dr);
+             dr.Close();
+             cn.Close();
+             return dt;
+
+         }
+         public void DeleteSession(int Machine_Id, int Shift_Id)
+         {
+             SqlConnection cn;
+             SqlCommand cmd;
+
+             cn = new SqlConnection(connection);
+             String query = @" Delete from Sessions 
+                               where 
+                              (Machine_Id={0} AND Shift_Id={1} )";
+             query = String.Format(query, Machine_Id, Shift_Id);
+             cn.Open();
+             cmd = new SqlCommand(query, cn);
+
+             cmd.ExecuteNonQuery();
+
+             cn.Close();
+         }
+         public DataTable GetSpecificProblems(int Machine_Id)
+         {
+             SqlConnection cn;
+             SqlCommand cmd;
+
+             cn = new SqlConnection(connection);
+             String query = @" Select Description,code,type 
+                              from SpecificProblems where Machine_Id='{0}'";
+             query = String.Format(query, Machine_Id);
+
+             cn.Open();
+             cmd = new SqlCommand(query, cn);
+
+             SqlDataReader dr = cmd.ExecuteReader();
+             DataTable dt = new DataTable();
+             dt.Load(dr);
+             dr.Close();
+             cn.Close();
+             return dt;
+
+         }
+
+         public DataTable SelectSpecificProblems(int code,int Machine_Id)
+         {
+             SqlConnection cn;
+             SqlCommand cmd;
+
+             cn = new SqlConnection(connection);
+             String query = @" Select Description,code,type 
+                              from SpecificProblems where Code={0} AND Machine_Id={1}";
+             query = String.Format(query, code, Machine_Id);
+
+             cn.Open();
+             cmd = new SqlCommand(query, cn);
+
+             SqlDataReader dr = cmd.ExecuteReader();
+             DataTable dt = new DataTable();
+             dt.Load(dr);
+             dr.Close();
+             cn.Close();
+             return dt;
+         }
+         public void UpdateSpecificProblems(String code, String description, String type)
+         {
+             SqlConnection cn;
+             SqlCommand cmd;
+
+             cn = new SqlConnection(connection);
+             String query = @" Update SpecificProblems SET Description='{1}',Type='{2}'
+                            where (Code='{0}')";
+             query = String.Format(query, code, description, type);
+             cn.Open();
+             cmd = new SqlCommand(query, cn);
+
+             cmd.ExecuteNonQuery();
+
+             cn.Close();
+
+         }
+
+         public bool AddSpecificProblem(string description, string code, string type,int Machine_Id)
+         {
+             SqlConnection cn;
+             SqlCommand cmd;
+             try
+             {
+
+                 cn = new SqlConnection(connection);
+                 String query = @"insert into SpecificProblems(Description,Code,Type,Machine_Id) values('{0}','{1}','{2}',{3})";
+                 query = String.Format(query, description, code, type, Machine_Id);
+                 cn.Open();
+                 cmd = new SqlCommand(query, cn);
+                 cmd.ExecuteNonQuery();
+                 cn.Close();
+                 return true;
+
+             }
+
+             catch (Exception)
+             {
+                 return false;
+
+
+             }
+               
+         }
+         public DataTable DisplaySpecificProblems(int Machine_Id)
+         {
+             SqlConnection cn;
+             SqlCommand cmd;
+
+             cn = new SqlConnection(connection);
+
+             String query = @"  select
+            [Description] as [Problem Description] ,
+            [Code] as [No], 
+            (Case when SpecificProblems.[Type]=1 then 'yes' else '-' end) as [Non-Operation Time1],
+            (Case when SpecificProblems.[Type]=2 then 'yes' else '-' end) as [Non-Operation Time2],
+            (Case when SpecificProblems.[Type]=3 then 'yes' else '-' end) as [Non-Operation Time3]
+            From 
+            SpecificProblems 
+            where Machine_Id={0}";
+
+             query = String.Format(query, Machine_Id);
+
+             cn.Open();
+             cmd = new SqlCommand(query, cn);
+
+             SqlDataReader dr = cmd.ExecuteReader();
+             DataTable dt = new DataTable();
+             dt.Load(dr);
+             dr.Close();
+
+             cn.Close();
+
+             return dt;
+
+         }
+         public DataTable GetProjects(int Machine_Id)
+         {
+             SqlConnection cn;
+             SqlCommand cmd;
+
+             cn = new SqlConnection(connection);
+             String query = @"Select Projects.Name as Projects,Projects.Id
+             from ProjectMachines join Projects on ProjectMachines.Project_Id=Projects.Id
+             where Machine_Id='{0}'";
+             query = String.Format(query, Machine_Id);
+
+             cn.Open();
+             cmd = new SqlCommand(query, cn);
+
+             SqlDataReader dr = cmd.ExecuteReader();
+             DataTable dt = new DataTable();
+             dt.Load(dr);
+             dr.Close();
+             cn.Close();
+             return dt;
+
+         }
+         public void AddProjects(int MId, int SId, DateTime start, DateTime end, String name)
+         {
+             SqlConnection cn;
+             SqlCommand cmd;
+
+             cn = new SqlConnection(connection);
+             String query = @" Insert Into Breaks(Machine_Id,Shift_Id,Start,[End],Name)
+                                Values({0},'{1}','{2}','{3}','{4}')";
+             query = String.Format(query, MId, SId, start, end, name);
+             cn.Open();
+             cmd = new SqlCommand(query, cn);
+
+             cmd.ExecuteNonQuery();
+
+             cn.Close();
+
+         }
+         public int AddProjects(String name,float time)
+         {
+             SqlConnection cn;
+             SqlCommand cmd, cmd1;
+             SqlDataReader dr;
+             try
+             {
+
+                 cn = new SqlConnection(connection);
+                 String query = @"insert into Projects(Name,CycleTime) values('{0}',{1}) ";
+                 query = String.Format(query, name, time);
+                 cn.Open();
+                 cmd = new SqlCommand(query, cn);
+                 cmd.ExecuteNonQuery();
+                 cmd1 = new SqlCommand("select max(Id) from Projects", cn);
+                 dr = cmd1.ExecuteReader();
+                 DataTable dt = new DataTable();
+                 dt.Load(dr);
+                 dr.Close();
+                 cn.Close();
+
+                 if (dt.Rows.Count > 0)
+                 {
+                     int ProjectId = (int)dt.Rows[0][0];
+                     return ProjectId;
+
+                 }
+
+
+                 return -1;
+
+             }
+
+             catch (Exception)
+             {
+                 return -1;
+
+
+             }
+
+         }
+         public bool AddProjectId(int Project_Id, int Machine_Id)
+         {
+             SqlConnection cn;
+             SqlCommand cmd;
+             try
+             {
+                 cn = new SqlConnection(connection);
+                 String query = @" Insert Into ProjectMachines(Project_Id,Machine_Id)
+                                    Values({0},{1})";
+                 query = String.Format(query, Project_Id, Machine_Id);
+                 cn.Open();
+                 cmd = new SqlCommand(query, cn);
+
+                 cmd.ExecuteNonQuery();
+
+                 cn.Close();
+                 return true;
+             }
+             catch (Exception)
+             {
+                 return false;
+
+             }
+
+
+         }
+         public void UpdateProjects(int ProjectId, String name,float time)
+         {
+             SqlConnection cn;
+             SqlCommand cmd;
+
+             cn = new SqlConnection(connection);
+             String query = @" Update Projects SET Name='{1}',CycleTime={2}
+                               where 
+                              (Id={0} )";
+             query = String.Format(query, ProjectId, name, time);
+             cn.Open();
+             cmd = new SqlCommand(query, cn);
+
+             cmd.ExecuteNonQuery();
+
+             cn.Close();
+
+         }
+         public DataTable SelectProject(int Project_Id, int Machine_Id)
+         {
+             SqlConnection cn;
+             SqlCommand cmd;
+
+             cn = new SqlConnection(connection);
+             String query = @"Select Projects.Name as Projects,Projects.CycleTime as Time
+                            from ProjectMachines 
+                            join Projects on ProjectMachines.Project_Id=Projects.Id
+                            where ProjectMachines.Machine_Id={1} AND ProjectMachines.Project_Id={0}";
+             query = String.Format(query, Project_Id, Machine_Id);
+
+             cn.Open();
+             cmd = new SqlCommand(query, cn);
+
+             SqlDataReader dr = cmd.ExecuteReader();
+             DataTable dt = new DataTable();
+             dt.Load(dr);
+             dr.Close();
+             cn.Close();
+             return dt;
+         }
+
+         public void DeleteProject(int Project_Id)
+         {
+             SqlConnection cn;
+             SqlCommand cmd;
+
+             cn = new SqlConnection(connection);
+             String query = @" Delete from Projects 
+                               where 
+                              (Id={0} )";
+             query = String.Format(query, Project_Id);
+             cn.Open();
+             cmd = new SqlCommand(query, cn);
+
+             cmd.ExecuteNonQuery();
+
+             cn.Close();
+         }
+         public void DeleteProjectId(int Project_Id, int Machine_Id)
+         {
+             SqlConnection cn;
+             SqlCommand cmd;
+
+             cn = new SqlConnection(connection);
+             String query = @" Delete from ProjectMachines 
+                               where 
+                              (Project_Id={0} AND Machine_Id={1} )";
+             query = String.Format(query, Project_Id,Machine_Id);
+             cn.Open();
+             cmd = new SqlCommand(query, cn);
+
+             cmd.ExecuteNonQuery();
+
+             cn.Close();
          }
     }
 }

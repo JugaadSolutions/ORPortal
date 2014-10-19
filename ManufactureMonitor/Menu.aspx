@@ -62,13 +62,13 @@
         <tr>
             <td style="text-align: center; width: 303px; height: 2px;">
                 <div id="Div8" onmouseover="Dark('Div8')" onmouseout="Light('Div8')" style="width: 200px; height: 30px; margin-left: 96px; text-align:center">
-                <asp:Button ID="Button8" runat="server" BackColor="#FF9966" BorderColor="#CC6666" BorderStyle="Solid" BorderWidth="3px" Height="30px" Text="OR and MOR accumulation" Width="200px" OnClick="Button8_Click" style="margin-left: 0px" />
+                <asp:Button ID="Button8" runat="server" BackColor="#FF9966" BorderColor="#CC6666" BorderStyle="Solid" BorderWidth="3px" Height="30px" Text="OR and OA accumulation" Width="200px" OnClick="Button8_Click" style="margin-left: 0px" />
             </div></td>
         </tr>
         <tr>
             <td style="text-align: center; width: 303px; height: 22px;">
                 <div id="Div9" onmouseover="Dark('Div9')" onmouseout="Light('Div9')" style="width: 200px; height: 30px; margin-left: 94px; text-align:center">
-                <asp:Button ID="Button9" runat="server" BackColor="#FF9966" BorderColor="#CC6666" BorderStyle="Solid" BorderWidth="3px" Height="30px" Text="Project Summary" Width="200px" OnClick="Button9_Click" />
+                <asp:Button ID="Button9" runat="server" BackColor="#FF9966" BorderColor="#CC6666" BorderStyle="Solid" BorderWidth="3px" Height="30px" Text="Summary Report" Width="200px" OnClick="Button9_Click" />
             </div></td>
             <td style="width: 313px; text-align: center; height: 22px;">
                 <div id="Div10" onmouseover="Dark('Div10')" onmouseout="Light('Div10')" style="width: 200px; height: 30px; margin-left: 69px; text-align:center">

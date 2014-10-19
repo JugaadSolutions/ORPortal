@@ -58,7 +58,9 @@ namespace ManufactureMonitor
             if (ShiftSelectionListBox.SelectedIndex == -1)
                 return;
             DataAccess da = new DataAccess();
+            da.DeleteBreaks(Convert.ToInt32(Request.QueryString["MachineId"]),(int) dt.Rows[ShiftSelectionListBox.SelectedIndex]["Id"]);
             da.DeleteShift((Int32)dt.Rows[ShiftSelectionListBox.SelectedIndex]["Id"], Convert.ToInt32(Request.QueryString["MachineGroupId"]));
+            da.DeleteSession(Convert.ToInt32(Request.QueryString["MachineId"]), (int)dt.Rows[ShiftSelectionListBox.SelectedIndex]["Id"]);
             Response.Write("<script>alert('Problem Deleted Successfully..');if(alert){ window.location='../Menu.aspx';}</script>");
        
            // Response.Redirect("~/ShiftSetting_Add.aspx?MachineGroupId=" + Request.QueryString["MachineGroupId"]);

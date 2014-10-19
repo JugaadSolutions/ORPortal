@@ -34,7 +34,7 @@
                     </tr>
                     <tr>
                         <td style="width: 105px; height: 42px">
-                            <asp:DropDownList ID="DropDownList1" runat="server" Width="163px" Height="39px">
+                            <asp:DropDownList ID="MachineSelectionDropDown" runat="server" Width="163px" Height="39px">
                                 <asp:ListItem>All Machines</asp:ListItem>
                             </asp:DropDownList>
                         </td>
@@ -61,7 +61,7 @@
                             </asp:Calendar>
                         </td>
                         <td style="height: 42px; width: 398px;">
-                            <asp:DropDownList ID="DropDownList2" runat="server" Width="130px">
+                            <asp:DropDownList ID="ShiftSelectionDropDown" runat="server" Width="130px">
                             </asp:DropDownList>
                         </td>
                         <td style="height: 42px; width: 276px;">

@@ -17,7 +17,7 @@ namespace ManufactureMonitor
             if (!Page.IsPostBack)
             {
                 DataAccess da = new DataAccess();
-                dt = da.GetSessions(Convert.ToInt32(Request.QueryString["MachineId"]),Convert.ToInt32(Request.QueryString["Shift_Id"]));
+                dt = da.GetSessions(Convert.ToInt32(Request.QueryString["ShiftId"]),Convert.ToInt32(Request.QueryString["MachineId"]));
                 SessionSelectionListBox.DataSource = dt.DefaultView;
                 SessionSelectionListBox.DataValueField = "End";
                 SessionSelectionListBox.DataBind();

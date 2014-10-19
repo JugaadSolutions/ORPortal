@@ -20,7 +20,7 @@
         </tr>
         <tr>
             <td style="width: 406px; height: 30px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
-            <td style="background-color: #99CCFF; text-align: center; width: 213px; height: 30px;">Time to Stop[s]:</td>
+            <td style="background-color: #99CCFF; text-align: center; width: 213px; height: 30px;">Time to Stop[%]:</td>
             <td style="background-color: #99CCFF; text-align: center; width: 232px; height: 30px;">
                 <asp:TextBox ID="TextBox2" runat="server" Width="30px"></asp:TextBox>
             </td>
@@ -81,6 +81,19 @@
             <td style="background-color: #99CCFF; text-align: center; width: 232px; height: 30px;">
                 <asp:TextBox ID="TextBox10" runat="server" Width="30px"></asp:TextBox>
             </td>
+            <td style="text-align: center; height: 30px">&nbsp;</td>
+        </tr>
+        <tr>
+            <td style="height: 30px; width: 406px;">&nbsp;</td>
+            <td style="background-color: #99CCFF; text-align: center; width: 213px; height: 30px;">Man Power Input Delay[mins]:</td>
+            <td style="background-color: #99CCFF; text-align: center; width: 232px; height: 30px;">
+                <asp:TextBox ID="TextBox11" runat="server" Width="30px"></asp:TextBox>
+            </td>
+            <td style="text-align: center; height: 30px">&nbsp;</td>
+        </tr>
+        <tr>
+            <td style="height: 30px; width: 406px;">&nbsp;</td>
+            <td style="background-color: #99CCFF; text-align: center; height: 30px;" colspan="2">&nbsp;</td>
             <td style="text-align: center; height: 30px">&nbsp;</td>
         </tr>
         <tr>

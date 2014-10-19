@@ -21,7 +21,7 @@
         <tr>
             <td style="width: 316px;" rowspan="2">&nbsp;</td>
             <td style="background-color: #99CCFF; text-align: center; width: 350px;" rowspan="4">
-                <asp:ListBox ID="SessionSelectionListBox" runat="server" SelectionMode="Single" />
+                <asp:ListBox ID="SessionSelectionListBox" runat="server" SelectionMode="Single" Height="200px" Width="100px" />
             </td>
             <td style="background-color: #99CCFF; text-align: left; width: 350px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <asp:Button ID="Button2" runat="server" Text="Edit" OnClick="Button2_Click" />

@@ -47,7 +47,7 @@ namespace ManufactureMonitor
 
         protected void Button20_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/DisplayStopProblems.aspx?MachineGroupId=" + Request.QueryString["MachineGroup"]);
+            Response.Redirect("~/DisplayStopProblems1.aspx?MachineGroupId=" + Request.QueryString["MachineGroup"]);
         }
 
         protected void Button13_Click(object sender, EventArgs e)
@@ -78,7 +78,7 @@ namespace ManufactureMonitor
             }
             else
             {
-                Response.Redirect("~/StopProblemSetting.aspx?MachineGroupId=" + Request.QueryString["MachineGroup"]);
+                Response.Redirect("~/StopProblemSetting1.aspx?MachineGroupId=" + Request.QueryString["MachineGroup"]);
             }
         }
 

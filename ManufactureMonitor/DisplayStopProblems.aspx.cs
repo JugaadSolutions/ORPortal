@@ -16,20 +16,11 @@ namespace ManufactureMonitor
         protected void Page_Load(object sender, EventArgs e)
         {
             
-            if (Request.QueryString["MachineGroupId"] != null)
+            if (!Page.IsPostBack)
             {
                 DataAccess da = new DataAccess();
 
-                DataTable dt = da.GetStopProblems(Convert.ToInt32(Request.QueryString["MachineGroupId"]));
-                GridView1.DataSource = dt;
-                GridView1.DataBind();
-                
-            }
-            else
-            {
-                DataAccess da = new DataAccess();
-
-                DataTable dt = da.DisplayProblems();
+                DataTable dt = da.DisplaySpecificProblems(Convert.ToInt32(Request.QueryString["MachineId"]));
                 GridView1.DataSource = dt;
                 GridView1.DataBind();
             }

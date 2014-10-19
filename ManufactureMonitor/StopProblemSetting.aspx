@@ -9,12 +9,12 @@
         </tr>
         <tr>
             <td style="text-align: center; width: 518px;">&nbsp;</td>
-            <td style="background-color: #3366FF; color: #FFFFFF; font-size: medium; text-align: center; width: 280px;">Machine Selection</td>
+            <td style="background-color: #3366FF; color: #FFFFFF; font-size: medium; text-align: center; width: 280px;">Problem Selection</td>
             <td style="text-align: center">&nbsp;</td>
         </tr>
         <tr>
             <td style="text-align: center; width: 518px;">&nbsp;</td>
-            <td style="background-color: #99CCFF; text-align: left; width: 280px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Machine:</td>
+            <td style="background-color: #99CCFF; text-align: left; width: 280px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
             <td style="text-align: center">&nbsp;</td>
         </tr>
         <tr>
@@ -23,7 +23,7 @@
                 <table style="width: 100%; border-collapse: collapse; background-color: #99CCFF">
                     <tr>
                         <td rowspan="2" style="width: 166px">
-                            <asp:ListBox ID="MachineSelectionListBox" runat="server" SelectionMode="Single" />
+                            <asp:ListBox ID="ShiftSelectionListBox" runat="server" SelectionMode="Single" />
                         </td>
                         <td>
                 <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Add" Width="66px" />

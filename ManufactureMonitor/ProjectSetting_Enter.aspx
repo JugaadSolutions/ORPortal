@@ -21,23 +21,24 @@
         </tr>
         <tr>
             <td style="text-align: center; width: 422px;" rowspan="2">&nbsp;</td>
-            <td style="background-color: #99CCFF; text-align: center; width: 203px;" rowspan="2">
-                <asp:ListBox ID="ProjectSelectionListBox" runat="server" SelectionMode="Single" />
+            <td style="background-color: #99CCFF; text-align: center; width: 203px;" rowspan="3">
+                <asp:ListBox ID="ProjectSelectionListBox" runat="server" SelectionMode="Single" Height="200px" Width="100px" />
             </td>
             <td style="background-color: #99CCFF; text-align: center; width: 197px;">
-                <asp:Button ID="EditButton" runat="server" OnClick="Button1_Click" Text="Edit" Width="66px" />
+                <asp:Button ID="EditButton" runat="server" OnClick="EditButton_Click" Text="Edit" Width="66px" />
             </td>
             <td style="text-align: center" rowspan="2">&nbsp;</td>
         </tr>
         <tr>
             <td style="background-color: #99CCFF; text-align: center; width: 197px;">
-                <asp:Button ID="AddButton" runat="server" OnClick="Button1_Click" Text="Add" Width="66px" />
+                <asp:Button ID="AddButton" runat="server" OnClick="AddButton_Click" Text="Add" Width="66px" />
             </td>
         </tr>
         <tr>
             <td style="height: 23px; width: 422px;"></td>
-            <td style="background-color: #99CCFF; width: 203px; text-align: center;">&nbsp;</td>
-            <td style="background-color: #99CCFF; width: 197px; text-align: center;">&nbsp;</td>
+            <td style="background-color: #99CCFF; width: 197px; text-align: center;">
+                <asp:Button ID="DeleteButton" runat="server" OnClick="DeleteButton_Click" Text="Delete" Width="66px" />
+            </td>
             <td style="height: 23px"></td>
         </tr>
         <tr>

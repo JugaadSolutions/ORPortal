@@ -17,10 +17,10 @@ namespace ManufactureMonitor
             if (!Page.IsPostBack)
             {
                 DataAccess da = new DataAccess();
-                dt = da.GetMachines(Convert.ToInt32(Request.QueryString["MachineGroupId"]));
-                MachineSelectionListBox.DataSource = dt.DefaultView;
-                MachineSelectionListBox.DataValueField = "Machines";
-                MachineSelectionListBox.DataBind();
+                dt = da.GetSpecificProblems(Convert.ToInt32(Request.QueryString["MachineId"]));
+                ShiftSelectionListBox.DataSource = dt.DefaultView;
+                ShiftSelectionListBox.DataValueField = "Description";
+                ShiftSelectionListBox.DataBind();
             }   
         }
 
@@ -33,16 +33,16 @@ namespace ManufactureMonitor
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/StopProblemSetting_Enter.aspx?MachineId=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
-                +"&MachineGroupId=" + Request.QueryString["MachineGroupId"]);
+            Response.Redirect("~/StopProblemSetting_Enter.aspx?MachineGroupId=" + Request.QueryString["MachineGroupId"]
+                + "&MachineId=" + Request.QueryString["MachineId"]);
         }
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-            if (MachineSelectionListBox.SelectedIndex == -1)
+            if (ShiftSelectionListBox.SelectedIndex == -1)
                 return;
-            Response.Redirect("~/StopProblemSetting_Enter.aspx?MachineId=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"] 
-                + "&MachineGroupId=" + Request.QueryString["MachineGroupId"]);
+            Response.Redirect("~/StopProblemSetting_Enter.aspx?Code=" + dt.Rows[ShiftSelectionListBox.SelectedIndex]["Code"]
+                + "&MachineGroupId=" + Request.QueryString["MachineGroupId"] + "&MachineId=" + Request.QueryString["MachineId"]);
         }
     }
 }
