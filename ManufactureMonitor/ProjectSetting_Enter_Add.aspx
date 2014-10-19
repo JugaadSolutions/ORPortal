@@ -56,7 +56,7 @@
                 <asp:Button ID="Button1" runat="server" BorderColor="Gray" BorderStyle="Outset" BorderWidth="3px" Font-Names="Calibri" Font-Size="Medium" Height="45px" Text="Save" Width="103px" OnClick="Button1_Click" />
             </td>
             <td style="background-color: #99CCFF; ">
-                <asp:Button ID="Button2" runat="server" BorderColor="Gray" BorderStyle="Outset" BorderWidth="3px" Font-Names="Calibri" Font-Size="Medium" Height="45px" Text="Don't Save" Width="103px" />
+                <asp:Button ID="DontSaveButton" runat="server" BorderColor="Gray" BorderStyle="Outset" BorderWidth="3px" Font-Names="Calibri" Font-Size="Medium" Height="45px" Text="Don't Save" Width="103px" OnClick="DontSaveButton_Click" />
             </td>
             <td style="background-color: #FFFFCC;">&nbsp;</td>
         </tr>

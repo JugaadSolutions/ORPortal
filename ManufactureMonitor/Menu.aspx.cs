@@ -42,7 +42,7 @@ namespace ManufactureMonitor
 
         protected void Button12_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/DisplayProject.aspx?MachineGroupId=" + Request.QueryString["MachineGroup"]);
+            Response.Redirect("~/DisplayProject1.aspx?MachineGroupId=" + Request.QueryString["MachineGroup"]);
         }
 
         protected void Button20_Click(object sender, EventArgs e)

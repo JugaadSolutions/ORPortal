@@ -12,7 +12,7 @@
             <td colspan="6" style="background-color: #FFAF37; height: 32px; text-align: left;"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Selection Parameters</strong></td>
         </tr>
         <tr>
-            <td style="height: 23px; width: 18px">&nbsp;</td>
+            <td style="height: 23px; width: 18px">Machine:</td>
             <td style="height: 23px; width: 248px;">Date From:</td>
             <td style="height: 23px; width: 277px;">Date To:</td>
             <td style="height: 23px; width: 63px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Shifts:</td>
@@ -20,7 +20,10 @@
             <td style="height: 23px"></td>
         </tr>
         <tr>
-            <td style="width: 18px; height: 42px">&nbsp;</td>
+            <td style="width: 18px; height: 42px">
+                <asp:ListBox ID="MachineSelectionListBox" runat="server" Height="150px" OnSelectedIndexChanged="MachineSelectionListBox_SelectedIndexChanged"
+                     Width="200px" AutoPostBack="true"></asp:ListBox>
+            </td>
             <td style="height: 42px; width: 248px;">
                 <asp:Calendar ID="Calendar1" runat="server" BackColor="#FFFFCC" BorderColor="#FFCC66" BorderWidth="1px" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="#663399" Height="140px" ShowGridLines="True" Width="195px" style="margin-left: 34px">
                     <DayHeaderStyle BackColor="#FFCC66" Font-Bold="True" Height="1px" />
@@ -44,8 +47,7 @@
                 </asp:Calendar>
             </td>
             <td style="height: 42px; width: 63px;">
-                <asp:DropDownList ID="DropDownList2" runat="server" Width="130px" style="margin-left: 0px">
-                </asp:DropDownList>
+                <asp:ListBox ID="ShiftSelectionListBox" runat="server" Height="150px" Width="150px"></asp:ListBox>
             </td>
             <td style="height: 42px; width: 221px;">
                 <asp:CheckBoxList ID="CheckBoxList1" runat="server" Height="16px" Width="166px" style="margin-left: 33px">
@@ -59,9 +61,7 @@
         <tr>
             <td colspan="6" style="height: 1px">
                 <div style="text-align: left">
-                    Machine:</div>
-                <asp:CheckBoxList ID="CheckBoxList2" runat="server" Height="71px" Width="133px">
-                </asp:CheckBoxList>
+                    </div>
             </td>
         </tr>
         <tr>

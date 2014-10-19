@@ -11,23 +11,17 @@ namespace ManufactureMonitor
 {
     public partial class ShiftHistroy1 : System.Web.UI.Page
     {
-        static DataTable dt;
+        static DataTable dt,dt1;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
             {
                 DataAccess da = new DataAccess();
                 dt = da.GetMachines(Convert.ToInt32(Request.QueryString["MachineGroupId"]));
-                MachineSelectionDropDown.DataSource = dt.DefaultView;
-                MachineSelectionDropDown.DataValueField = "Machines";
-                MachineSelectionDropDown.DataBind();
-                if (MachineSelectionDropDown.SelectedIndex == -1)
-                    return;
-                dt = da.GetShifts(Convert.ToInt32(dt.Rows[MachineSelectionDropDown.SelectedIndex]["Id"]));
-                ShiftSelectionDropDown.DataSource = dt.DefaultView;
-                ShiftSelectionDropDown.DataValueField = "shifts";
-                ShiftSelectionDropDown.DataBind();
-                
+                MachineSelectionListBox.DataSource = dt.DefaultView;
+                MachineSelectionListBox.DataValueField = "Machines";
+                MachineSelectionListBox.DataBind();
+               
             }
         }
 
@@ -39,8 +33,20 @@ namespace ManufactureMonitor
         protected void Button1_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/ShiftHistroy_Show.aspx?MachineGroupId=" + Request.QueryString["MachineGroupId"]
-                 + "&MachineId=" + MachineSelectionDropDown.SelectedIndex
-                 + "&ShiftId=" + ShiftSelectionDropDown.SelectedIndex);
+                 + "&MachineId=" + (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
+                 + "&ShiftId=" + (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"]);
+        }
+
+        protected void MachineSelectionListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DataAccess da = new DataAccess();
+            if (MachineSelectionListBox.SelectedIndex == -1)
+                return;
+            dt1 = da.GetShiftTimings(Convert.ToInt32(dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]));
+            ShiftSelectionListBox.DataSource = dt.DefaultView;
+            ShiftSelectionListBox.DataValueField = "shifts";
+            ShiftSelectionListBox.DataBind();
+                
         }
     }
 }

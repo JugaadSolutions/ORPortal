@@ -31,13 +31,13 @@ namespace ManufactureMonitor {
         protected global::System.Web.UI.WebControls.ImageButton ImageButton1;
         
         /// <summary>
-        /// MachineDropDown control.
+        /// MachineSelectionListBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList MachineDropDown;
+        protected global::System.Web.UI.WebControls.ListBox MachineSelectionListBox;
         
         /// <summary>
         /// Calendar1 control.
@@ -49,13 +49,13 @@ namespace ManufactureMonitor {
         protected global::System.Web.UI.WebControls.Calendar Calendar1;
         
         /// <summary>
-        /// TimeIntervalDropDown control.
+        /// ShiftSelectionListBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList TimeIntervalDropDown;
+        protected global::System.Web.UI.WebControls.ListBox ShiftSelectionListBox;
         
         /// <summary>
         /// Button1 control.

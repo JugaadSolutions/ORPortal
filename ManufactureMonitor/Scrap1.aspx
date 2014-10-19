@@ -5,11 +5,11 @@
             <td>
                 <table style="width: 100%; border-collapse: collapse">
                     <tr>
-                        <td style="width: 174px">&nbsp;</td>
-                        <td colspan="5" style="text-align: center; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <asp:TextBox ID="TextBox1" runat="server" BorderColor="Gray" BorderStyle="Solid" BorderWidth="3px" Font-Bold="True" Width="600px" style="font-size: medium" Height="33px">                                               Production -Scraps Report</asp:TextBox>
+                        <td style="width: 174px; height: 46px;"></td>
+                        <td colspan="5" style="text-align: center; height: 46px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <asp:TextBox ID="TextBox1" runat="server" BorderColor="Gray" BorderStyle="Solid" BorderWidth="3px" Font-Bold="True" Width="600px" style="font-size: medium" Height="33px">                                               Production -Scraps Report</asp:TextBox>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         </td>
-                        <td style="text-align: center">&nbsp; <asp:ImageButton ID="ImageButton1" runat="server" Height="25px" ImageAlign="Middle" ImageUrl="~/Images/return.jpg" Width="25px" OnClick="ImageButton1_Click" />
+                        <td style="text-align: center; height: 46px;">&nbsp; <asp:ImageButton ID="ImageButton1" runat="server" Height="25px" ImageAlign="Middle" ImageUrl="~/Images/return.jpg" Width="25px" OnClick="ImageButton1_Click" />
                                         </td>
                     </tr>
                     <tr>
@@ -27,9 +27,9 @@
                     </tr>
                     <tr>
                         <td style="width: 174px; height: 135px;"></td>
-                        <td style="width: 241px; background-color: #FFFFCC; height: 135px;">
-                            <asp:DropDownList ID="DropDownList1" runat="server" Height="40px" Width="162px">
-                            </asp:DropDownList>
+                        <td style="width: 241px; background-color: #FFFFCC; height: 135px; text-align: center;">
+                            <asp:ListBox ID="MachineSelectionListBox" runat="server" Height="150px" OnSelectedIndexChanged="MachineSelectionListBox_SelectedIndexChanged" 
+                                Width="200px" AutoPostBack="true"></asp:ListBox>
                         </td>
                         <td style="width: 200px; background-color: #FFFFCC; text-align: center; height: 135px;">
                             <asp:Calendar ID="Calendar1" runat="server" BackColor="#FFFFCC" BorderColor="#FFCC66" BorderWidth="1px" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="#663399" Height="100px" Width="160px" style="margin-left: 18px" ShowGridLines="True">
@@ -54,8 +54,7 @@
                             </asp:Calendar>
                         </td>
                         <td style="width: 244px; background-color: #FFFFCC; height: 135px;">
-                            <asp:DropDownList ID="DropDownList2" runat="server" Height="40px" Width="162px">
-                            </asp:DropDownList>
+                            <asp:ListBox ID="ShiftSelectionListBox" runat="server" Height="150px" Width="150px"></asp:ListBox>
                         </td>
                         <td style="width: 60px; background-color: #FFFFCC; height: 135px;">
                             <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Show" />

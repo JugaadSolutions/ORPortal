@@ -63,5 +63,10 @@ namespace ManufactureMonitor
                 Response.Write("<script>alert('Problem Updated..');if(alert){ window.location='../Index.aspx';}</script>");
             }
         }
+
+        protected void DontSaveButton_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Menu.aspx?MachineGroup=" + Request.QueryString["MachineGroupId"]);
+        }
     }
 }

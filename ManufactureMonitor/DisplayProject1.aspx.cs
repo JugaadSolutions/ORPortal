@@ -1,15 +1,15 @@
-﻿using System;
+﻿using ManufactureMonitor.DALayer;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using ManufactureMonitor.DALayer;
-using System.Data;
 
 namespace ManufactureMonitor
 {
-    public partial class M_off_setting : System.Web.UI.Page
+    public partial class DisplayProject1 : System.Web.UI.Page
     {
         static DataTable dt;
         protected void Page_Load(object sender, EventArgs e)
@@ -18,8 +18,6 @@ namespace ManufactureMonitor
             {
                 DataAccess da = new DataAccess();
                 dt = da.GetMachines(Convert.ToInt32(Request.QueryString["MachineGroupId"]));
-                //ListView1.DataSource = dt;
-                //ListView1.DataBind();
                 MachineSelectionListBox.DataSource = dt.DefaultView;
                 MachineSelectionListBox.DataValueField = "Machines";
                 MachineSelectionListBox.DataBind();
@@ -31,13 +29,10 @@ namespace ManufactureMonitor
             Response.Redirect("~/Menu.aspx?MachineGroup=" + Request.QueryString["MachineGroupId"]);
         }
 
-        
-
         protected void Button1_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/M_off_setting_show.aspx?MachineId=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"] 
-                + "&MachineGroupId=" + Request.QueryString["MachineGroupId"]);
+            Response.Redirect("~/DisplayProject.aspx?MachineGroupId=" + Request.QueryString["MachineGroupId"]
+                + "&MachineId=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]);
         }
-
     }
 }

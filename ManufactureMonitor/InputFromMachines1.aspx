@@ -22,8 +22,9 @@
         <tr>
             <td style="width: 42px; height: 42px">&nbsp;</td>
             <td style="height: 42px; width: 429px;">
-                <asp:DropDownList ID="MachineDropDown" runat="server" Width="130px">
-                </asp:DropDownList>
+                <asp:ListBox ID="MachineSelectionListBox" runat="server" Height="150px" 
+                    OnSelectedIndexChanged="MachineSelectionListBox_SelectedIndexChanged"
+                    AutoPostBack="true" Width="200px"></asp:ListBox>
             </td>
             <td style="height: 42px; width: 277px;">
                 <asp:Calendar ID="Calendar1" runat="server" BackColor="#FFFFCC" BorderColor="#FFCC66" BorderWidth="1px" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="#663399" Height="140px" ShowGridLines="True" Width="195px" style="margin-left: 20px">
@@ -37,8 +38,7 @@
                 </asp:Calendar>
             </td>
             <td style="height: 42px; width: 256px;">
-                <asp:DropDownList ID="TimeIntervalDropDown" runat="server" Width="130px">
-                </asp:DropDownList>
+                <asp:ListBox ID="ShiftSelectionListBox" runat="server" Height="150px" Width="100px"></asp:ListBox>
             </td>
             <td style="height: 42px; width: 143px;">
                 <asp:Button ID="Button1" runat="server" BorderColor="Gray" BorderStyle="Outset" BorderWidth="2px" Text="Show" Height="46px" Width="80px" OnClick="Button1_Click" />

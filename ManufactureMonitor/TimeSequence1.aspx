@@ -23,9 +23,9 @@
         </tr>
         <tr>
             <td style="width: 168px; height: 42px">
-                <asp:DropDownList ID="DropDownList1" runat="server" Width="163px" Height="39px" style="margin-left: 43px">
-                    <asp:ListItem>All Machines</asp:ListItem>
-                </asp:DropDownList>
+                <asp:ListBox ID="MachineSelectionListBox" runat="server" Height="150px" 
+                    OnSelectedIndexChanged="MachineSelectionListBox_SelectedIndexChanged" 
+                    Width="200px" AutoPostBack="true"></asp:ListBox>
             </td>
             <td style="height: 42px; width: 140px;">
                
@@ -59,8 +59,7 @@
             <td style="height: 42px; width: 259px; text-align: left;">
                 Shifts:<br />
                 <br />
-                <asp:DropDownList ID="DropDownList2" runat="server" Width="130px">
-                </asp:DropDownList>
+                <asp:ListBox ID="ShiftSelectionListBox" runat="server" Height="150px" Width="150px"></asp:ListBox>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <br />
                 <br />

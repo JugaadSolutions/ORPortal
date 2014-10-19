@@ -25,9 +25,9 @@
         </tr>
         <tr>
             <td style="width: 130px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;</td>
-            <td style="width: 363px; background-color: #99CCFF;">
-                <asp:DropDownList ID="DropDownList1" runat="server" Height="40px" Width="162px" style="margin-left: 34px">
-                </asp:DropDownList>
+            <td style="width: 363px; background-color: #99CCFF; text-align: center;">
+                <asp:ListBox ID="MachineSelectionListBox" runat="server" Height="150px" OnSelectedIndexChanged="MachineSelectionListBox_SelectedIndexChanged" 
+                    Width="200px" AutoPostBack="true"></asp:ListBox>
             </td>
             <td style="width: 368px; background-color: #99CCFF; text-align: center;">
                 <asp:Calendar ID="Calendar1" runat="server" BackColor="White" BorderColor="#3366CC" BorderWidth="1px" CellPadding="1" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="#003399" Height="100px" Width="160px" style="margin-left: 18px">
@@ -42,8 +42,7 @@
                 </asp:Calendar>
             </td>
             <td style="width: 555px; background-color: #99CCFF;">
-                <asp:DropDownList ID="DropDownList2" runat="server" Height="40px" Width="162px">
-                </asp:DropDownList>
+                <asp:ListBox ID="ShiftSelectionListBox" runat="server" Height="150px" Width="150px"></asp:ListBox>
             </td>
             <td style="width: 817px; background-color: #99CCFF; text-align: center;">
                 <asp:Button ID="Button1" runat="server" Text="Show" OnClick="Button1_Click" />

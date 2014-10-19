@@ -189,7 +189,10 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="DisplayParameters.aspx" />
+    <Content Include="DisplayProject1.aspx" />
     <Content Include="DisplayStopProblems1.aspx" />
+    <Content Include="EnterCodeComment.aspx" />
+    <Content Include="GridDisplay.ascx" />
     <Content Include="Images\Home.jpg" />
     <Content Include="InputFromMachines1.aspx" />
     <Content Include="InputFromMachines_Show.aspx" />
@@ -361,6 +364,13 @@
     <Compile Include="DisplayParameters.aspx.designer.cs">
       <DependentUpon>DisplayParameters.aspx</DependentUpon>
     </Compile>
+    <Compile Include="DisplayProject1.aspx.cs">
+      <DependentUpon>DisplayProject1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DisplayProject1.aspx.designer.cs">
+      <DependentUpon>DisplayProject1.aspx</DependentUpon>
+    </Compile>
     <Compile Include="DisplayStopProblems1.aspx.cs">
       <DependentUpon>DisplayStopProblems1.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -368,7 +378,21 @@
     <Compile Include="DisplayStopProblems1.aspx.designer.cs">
       <DependentUpon>DisplayStopProblems1.aspx</DependentUpon>
     </Compile>
+    <Compile Include="EnterCodeComment.aspx.cs">
+      <DependentUpon>EnterCodeComment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EnterCodeComment.aspx.designer.cs">
+      <DependentUpon>EnterCodeComment.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Entity\Parameter.cs" />
+    <Compile Include="GridDisplay.ascx.cs">
+      <DependentUpon>GridDisplay.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GridDisplay.ascx.designer.cs">
+      <DependentUpon>GridDisplay.ascx</DependentUpon>
+    </Compile>
     <Compile Include="InputFromMachines1.aspx.cs">
       <DependentUpon>InputFromMachines1.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

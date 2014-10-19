@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <table  style="border: thin solid #FFAF37; width: 100%; text-align:center; height: 300px;">
         <tr>
-            <td colspan="6" style="background-color: #FFFFCC; height: 32px; text-align: center;"><strong>
+            <td colspan="7" style="background-color: #FFFFCC; height: 32px; text-align: center;"><strong>
                 <asp:TextBox ID="TextBox1" runat="server" Height="30px" style="font-weight: bold; font-size: medium; margin-left: 372px" Width="550px">                              Stop time problem accumulation - all shifts</asp:TextBox>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </strong>
@@ -10,10 +10,11 @@
             </td>
         </tr>
         <tr>
-            <td colspan="6" style="background-color: #FFAF37; height: 32px;"><strong>Selection Parameters</strong></td>
+            <td colspan="7" style="background-color: #FFAF37; height: 32px;"><strong>Selection Parameters</strong></td>
         </tr>
         <tr>
-            <td style="height: 23px; width: 167px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Date From:</td>
+            <td style="height: 23px; width: 167px">&nbsp;&nbsp;&nbsp;&nbsp;Machine:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
+            <td style="height: 23px; width: 167px">Date From:</td>
             <td style="height: 23px; width: 70px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Date To:</td>
             <td style="height: 23px; width: 84px;" colspan="2">Shifts:</td>
             <td style="height: 23px; text-align: left;">OFF:</td>
@@ -21,7 +22,11 @@
         </tr>
         <tr>
             <td style="width: 167px; height: 42px">
-                <asp:Calendar ID="Calendar1" runat="server" BackColor="#FFFFCC" BorderColor="#FFCC66" BorderWidth="1px" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="#663399" Height="140px" ShowGridLines="True" Width="200px" style="margin-left:77px">
+                <asp:ListBox ID="MachineSelectionListBox" runat="server" Height="150px" OnSelectedIndexChanged="MachineSelectionListBox_SelectedIndexChanged"
+                     Width="200px" AutoPostBack="true"></asp:ListBox>
+            </td>
+            <td style="width: 167px; height: 42px">
+                <asp:Calendar ID="Calendar1" runat="server" BackColor="#FFFFCC" BorderColor="#FFCC66" BorderWidth="1px" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="#663399" Height="140px" ShowGridLines="True" Width="200px" style="margin-left:12px">
                     <DayHeaderStyle BackColor="#FFCC66" Font-Bold="True" Height="1px" />
                     <NextPrevStyle Font-Size="9pt" ForeColor="#FFFFCC" />
                     <OtherMonthDayStyle ForeColor="#CC9966" />
@@ -43,8 +48,7 @@
                 </asp:Calendar>
             </td>
             <td style="height: 42px; width: 84px;" colspan="2">
-                <asp:DropDownList ID="DropDownList2" runat="server" Width="130px">
-                </asp:DropDownList>
+                <asp:ListBox ID="ShiftSelectionListBox" runat="server" Height="150px" Width="150px"></asp:ListBox>
             </td>
             <td style="height: 42px; text-align: left;">
                 <asp:DropDownList ID="DropDownList3" runat="server" Width="130px">
@@ -56,12 +60,10 @@
             </td>
         </tr>
         <tr>
-            <td colspan="6" style="height: 1px; text-align: left">Machine:</td>
+            <td colspan="7" style="height: 1px; text-align: left">&nbsp;</td>
         </tr>
         <tr>
-            <td colspan="3" style="text-align: left; height: 29px; width: 400px;"><asp:CheckBoxList ID="CheckBoxList1" runat="server" Width="100px">
-                </asp:CheckBoxList>
-            </td>
+            <td colspan="4" style="text-align: left; height: 29px; width: 400px;">&nbsp;</td>
             <td colspan="3" style="text-align: left; height: 29px;">&nbsp;</td>
         </tr>
     </table>
