@@ -43,7 +43,7 @@ namespace ManufactureMonitor
             if (MachineSelectionListBox.SelectedIndex == -1)
                 return;
             dt1 = da.GetShiftTimings(Convert.ToInt32(dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]));
-            ShiftSelectionListBox.DataSource = dt.DefaultView;
+            ShiftSelectionListBox.DataSource = dt1.DefaultView;
             ShiftSelectionListBox.DataValueField = "shifts";
             ShiftSelectionListBox.DataBind();
                 
