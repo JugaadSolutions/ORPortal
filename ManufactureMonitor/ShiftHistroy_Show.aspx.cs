@@ -28,9 +28,9 @@ namespace ManufactureMonitor
             MachineSelectedLabel.Text = (dt.Rows[0]["shifts"]).ToString();
             
 
-            dt = da.GetParameters(Convert.ToInt32(Request.QueryString["MachineGroupId"]));
-            GridView1.DataSource = dt;
-            GridView1.DataBind();
+        //    dt = da.GetParameters(Convert.ToInt32(Request.QueryString["MachineGroupId"]));
+        //    GridView1.DataSource = dt;
+        //    GridView1.DataBind();
         }
 
         protected void BackButton_Click(object sender, ImageClickEventArgs e)

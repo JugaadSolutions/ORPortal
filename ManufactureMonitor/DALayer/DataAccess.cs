@@ -52,7 +52,8 @@ namespace ManufactureMonitor.DALayer
             SqlCommand cmd;
 
             cn = new SqlConnection(connection);
-            String query = @" Select Name as Machine, TOS as [time to stop(s)], (Pulses+':'+Pieces) as [Pulses:Pieces],Rmin as [OR red MIN(%)],Rmax as [OR red MAX(%)],Omin as [OR orange MIN(%)],Omax as [OR orange MAX(%)],Gmin as [OR green MIN(%)],Gmax as [OR green MAX(%)]
+            String query = @" Select Name as Machine, TOS as [time to stop(s)], Convert(nvarchar,Pulses,0)+':'+
+            Convert(nvarchar,Pieces,0) as [Pulses:Pieces],Rmin as [OR red MIN(%)],Rmax as [OR red MAX(%)],Omin as [OR orange MIN(%)],Omax as [OR orange MAX(%)],Gmin as [OR green MIN(%)],Gmax as [OR green MAX(%)]
                             from Machines where (Machines.MachineGroupId={0})";
             query = String.Format(query, MachineGroup_ID);
 

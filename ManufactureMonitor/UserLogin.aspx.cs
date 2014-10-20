@@ -54,6 +54,9 @@ namespace ManufactureMonitor
                     case"ShiftDefinitionSetting":
                             Response.Redirect("~/ShiftDefintionSetting1.aspx?MachineGroupId=" + Request.QueryString["MachineGroupId"]);
                             break;
+                    case "CommonProblemSetting":
+                            Response.Redirect("~/CommonProblemsSetting.aspx");
+                            break;
                     
                             
 

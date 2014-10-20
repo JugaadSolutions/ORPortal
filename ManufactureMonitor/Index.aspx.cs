@@ -34,12 +34,19 @@ namespace ManufactureMonitor
 
         protected void Button4_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/CommonProblemsSetting.aspx");
+            if (Session["User"] == null)
+            {
+                Response.Redirect("~/UserLogin.aspx?Source=CommonProblemSetting");
+            }
+            else
+            {
+                Response.Redirect("~/CommonProblemsSetting.aspx");
+            }
         }
 
         protected void Button5_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/DisplayStopProblems.aspx");
+            Response.Redirect("~/DisplayStopProblems.aspx?Source=Common");
         }
     }
 }

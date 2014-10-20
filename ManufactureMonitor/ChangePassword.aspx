@@ -13,7 +13,7 @@
         </tr>
         <tr>
             <td style="width: 289px">&nbsp;</td>
-            <td style="background-color: #3366FF; color: #FFFFFF; font-size: medium; text-align: center; " colspan="2">User Identification</td>
+            <td style="background-color: #FFAF37; color: #000000; font-size: medium; text-align: center; font-weight: 700;" colspan="2">User Identification</td>
         </tr>
         <tr>
             <td style="width: 289px; height: 19px;"></td>

@@ -207,6 +207,7 @@
     <Content Include="ORandMOR1.aspx" />
     <Content Include="ORandMOR1_Show.aspx" />
     <Content Include="packages.config" />
+    <None Include="Properties\PublishProfiles\ORPortal_V1.0.pubxml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="ParameterSetting.aspx" />
     <Content Include="ParameterSetting_Show.aspx" />
