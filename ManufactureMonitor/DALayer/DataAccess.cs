@@ -52,7 +52,8 @@ namespace ManufactureMonitor.DALayer
             SqlCommand cmd;
 
             cn = new SqlConnection(connection);
-            String query = @" Select Name as Machine, TOS as [time to stop(s)], (Pulses+':'+Pieces) as [Pulses:Pieces],Rmin as [OR red MIN(%)],Rmax as [OR red MAX(%)],Omin as [OR orange MIN(%)],Omax as [OR orange MAX(%)],Gmin as [OR green MIN(%)],Gmax as [OR green MAX(%)]
+            String query = @" Select Name as Machine, TOS as [time to stop(s)], Convert(nvarchar,Pulses,0)+':'+
+            Convert(nvarchar,Pieces,0) as [Pulses:Pieces],Rmin as [OR red MIN(%)],Rmax as [OR red MAX(%)],Omin as [OR orange MIN(%)],Omax as [OR orange MAX(%)],Gmin as [OR green MIN(%)],Gmax as [OR green MAX(%)]
                             from Machines where (Machines.MachineGroupId={0})";
             query = String.Format(query, MachineGroup_ID);
 
@@ -617,6 +618,47 @@ namespace ManufactureMonitor.DALayer
              cn.Close();
 
          }
+
+         public ShiftCollection getShifts(int machine)
+         {
+             SqlConnection con = new SqlConnection(connection);
+             con.Open();
+
+             ShiftCollection shifts = new ShiftCollection();
+
+             String qry = String.Empty;
+             qry = @"SELECT Shifts.ID,Shifts.Name,Shifts.[Start],Shifts.[End],
+                    Sunday, Monday, Tuesday, Wednesday,Thursday, Friday, Saturday FROM shifts
+                    inner join ShiftMachines on Shifts.Id = ShiftMachines.Shift_Id
+                    where ShiftMachines.Machine_Id = {0} 
+                    ORDER BY id";
+
+             qry = String.Format(qry, machine);
+
+             SqlCommand cmd = new SqlCommand(qry, con);
+             SqlDataReader dr = cmd.ExecuteReader();
+             DataTable dt = new DataTable();
+             dt.Load(dr);
+             dr.Close();
+             cmd.Dispose();
+
+             for (int i = 0; i < dt.Rows.Count; i++)
+             {
+                 
+                 shifts.Add(new Shift((int)dt.Rows[i]["id"], (string)dt.Rows[i]["name"],
+                    ((DateTime)dt.Rows[i]["Start"]), ((DateTime)dt.Rows[i]["End"]),
+                    (Boolean)dt.Rows[i]["Sunday"], (Boolean)dt.Rows[i]["Monday"], 
+                    (Boolean)dt.Rows[i]["Tuesday"],
+                    (Boolean)dt.Rows[i]["Wednesday"], 
+                    (Boolean)dt.Rows[i]["Thursday"], 
+                    (Boolean)dt.Rows[i]["Friday"], 
+                    (Boolean)dt.Rows[i]["Saturday"]));
+             }
+
+             con.Close();
+             con.Dispose();
+             return shifts;
+         }
          public void AddBreaks(int MId, int SId, DateTime start, DateTime end,String name)
          {
              SqlConnection cn;
@@ -1166,7 +1208,7 @@ namespace ManufactureMonitor.DALayer
              cn.Close();
              return dt;
          }
-         public DataTable GetStopDetails(int Machine_Id, int Shift_Id, String from, String to)
+         public DataTable GetStopDetails(int Machine_Id, int Shift_Id, String from, String to,bool Speedloss)
          {
 
              SqlConnection cn;
@@ -1197,35 +1239,38 @@ namespace ManufactureMonitor.DALayer
 
 
              cn = new SqlConnection(connection);
-             query = @"  select Start as [From],[End] as [To],
+             query = @"  select  CONVERT(TIME(0), [Start],0)  as [From], CONVERT(TIME(0),[End],0) as [To],
                         datediff(second,0,[End]-[Start]) as 'Duration[s]',
                         (Case when CommonProblems.[Type]=3 then 'OFF' else 'STOP' end) as 'Stop Type',
                         Convert(nvarchar,CommonProblems.Code,0)+':'+[Description] as Problem,
                         Comment
                         from Stops                           
                         inner join CommonProblems on CommonProblems.Code = Stops.Code
-                        where [Start] >= '{1}' and [End] < '{2}' 
+                        where [Start] >= '{1}' and [Start] < '{2}' 
                         union
-                        select Start as [From],[End] as [To],datediff(second,0,[End]-[Start]) as 'Duration[s]', 
+                        select CONVERT(TIME(0), [Start],0)  as [From], CONVERT(TIME(0),[End],0) as [To],
+                        datediff(second,0,[End]-[Start]) as 'Duration[s]', 
                         (Case when SpecificProblems.[Type]=3 then 'OFF' else 'STOP' end) as 'Stop Type', 
                         Convert(nvarchar,SpecificProblems.Code,0)+':'+[Description] as Problem,
                         Comment 
                         from Stops                               
                         inner join SpecificProblems on SpecificProblems.Code = Stops.Code
 
-                            where [Start] >= '{1}' and [End] < '{2}' and SpecificProblems.Machine_Id={0}
+                            where [Start] >= '{1}' and [Start] < '{2}' and SpecificProblems.Machine_Id={0}
                             union
  
-                            select Start as [From],[End] as [To],datediff(second,0,[End]-[Start]) as 'Duration[s]', 
+                            select CONVERT(TIME(0), [Start],0)  as [From], CONVERT(TIME(0),[End],0) as [To],
+                        datediff(second,0,[End]-[Start]) as 'Duration[s]', 
                         (Case when SpecificProblems.[Type]=3 then 'OFF' else 'STOP' end) as 'Stop Type', 
                         Convert(nvarchar,SpecificProblems.Code,0)+':'+[Description] as Problem,
                         Comment 
                         from OFFs                               
                         inner join SpecificProblems on SpecificProblems.Code = OFFs.Code
 
-                            where [Start] >= '{1}' and [End] < '{2}' and SpecificProblems.Machine_Id={0}
+                            where [Start] >= '{1}' and [Start] < '{2}' and SpecificProblems.Machine_Id={0}
                             union
-                            select Start as [From],[End] as [To],datediff(second,0,[End]-[Start]) as 'Duration[s]', 
+                            select CONVERT(TIME(0), [Start],0)  as [From], CONVERT(TIME(0),[End],0) as [To],
+                            datediff(second,0,[End]-[Start]) as 'Duration[s]', 
                         (Case when CommonProblems.[Type]=3 then 'OFF' else 'STOP' end) as 'Stop Type', 
                         Convert(nvarchar,CommonProblems.Code,0)+':'+[Description] as Problem,
                         Comment 
@@ -1235,7 +1280,7 @@ namespace ManufactureMonitor.DALayer
                             where [Start] >= '{1}' and [End] < '{2}' 
                             union
  
-                            select Start as [From],[End] as [To],
+                            select CONVERT(TIME(0), [Start],0)  as [From], CONVERT(TIME(0),[End],0) as [To],
                         datediff(second,0,[End]-[Start]) as 'Duration[s]',
                         '',
                         [Status] as Problem,
@@ -1253,6 +1298,49 @@ namespace ManufactureMonitor.DALayer
              dr.Close();
              cn.Close();
              return dt;
+         }
+
+         internal DataTable GetModels(int p)
+         {
+             SqlConnection cn;
+             SqlCommand cmd;
+
+             cn = new SqlConnection(connection);
+             String query = @" Select Projects.ID, Name+'-'+Convert(nvarchar,CycleTime,0) as [Models]
+                              from ProjectMachines 
+                                inner join Projects on Projects.id=ProjectMachines.Project_Id
+                                where Machine_Id={0}";
+             query = String.Format(query, p);
+
+             cn.Open();
+             cmd = new SqlCommand(query, cn);
+
+             SqlDataReader dr = cmd.ExecuteReader();
+             DataTable dt = new DataTable();
+             dt.Load(dr);
+             dr.Close();
+             cn.Close();
+             return dt;
+         }
+
+         public List<OR> GetOR(int MachineId, DateTime from, DateTime to)
+         {
+
+             List<OR> ORList = new List<OR>();
+
+             List<Session> ORSessions = new List<Session>();
+
+             ShiftCollection shifts = getShifts(MachineId);
+
+             Shift curShift = shifts.getCurrentShift(from, to);
+             if (curShift == null) return null;
+
+
+             DateTime startPoint = from;
+
+
+
+
          }
     }
 }

@@ -29,7 +29,7 @@ namespace ManufactureMonitor
             if (MachineSelectionListBox.SelectedIndex == -1)
                 return;
             Response.Redirect("~/DisplayStopProblems.aspx?MachineGroupId=" + Request.QueryString["MachineGroupId"]
-                +"&MachineId="+dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]);
+                +"&MachineId="+dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]+"&Source=Specific");
         }
 
         protected void ImageButton1_Click(object sender, ImageClickEventArgs e)

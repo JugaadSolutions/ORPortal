@@ -1,0 +1,6 @@
+C:\Ideonics\Dev_proj\ORPortal\ManufactureMonitor\bin\ManufactureMonitor.dll
+C:\Ideonics\Dev_proj\ORPortal\ManufactureMonitor\bin\ManufactureMonitor.pdb
+C:\Ideonics\Dev_proj\ORPortal\ManufactureMonitor\bin\Microsoft.Web.Infrastructure.dll
+C:\Ideonics\Dev_proj\ORPortal\ManufactureMonitor\bin\Microsoft.Web.Infrastructure.xml
+C:\Ideonics\Dev_proj\ORPortal\ManufactureMonitor\obj\Release\ManufactureMonitor.dll
+C:\Ideonics\Dev_proj\ORPortal\ManufactureMonitor\obj\Release\ManufactureMonitor.pdb

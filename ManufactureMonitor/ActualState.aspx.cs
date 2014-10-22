@@ -42,6 +42,8 @@ namespace ManufactureMonitor
             Response.Redirect("~/ActualState_Show.aspx?MachineId=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"] + " &MachineGroupId=" + Request.QueryString["MachineGroupId"]);
         }
 
+        
+
        
     }
 }

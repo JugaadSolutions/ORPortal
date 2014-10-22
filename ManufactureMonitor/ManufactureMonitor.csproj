@@ -44,6 +44,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.DataVisualization" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
@@ -196,6 +197,7 @@
     <Content Include="Images\Home.jpg" />
     <Content Include="InputFromMachines1.aspx" />
     <Content Include="InputFromMachines_Show.aspx" />
+    <Content Include="LossHourGraph.aspx" />
     <Content Include="Menu.aspx" />
     <Content Include="DisplayProject.aspx" />
     <Content Include="DisplayShiftDefinition.aspx" />
@@ -206,7 +208,9 @@
     <Content Include="M_off_setting_show.aspx" />
     <Content Include="ORandMOR1.aspx" />
     <Content Include="ORandMOR1_Show.aspx" />
+    <Content Include="OR_OAGraph.aspx" />
     <Content Include="packages.config" />
+    <None Include="Properties\PublishProfiles\ORPortal_V1.0.pubxml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="ParameterSetting.aspx" />
     <Content Include="ParameterSetting_Show.aspx" />
@@ -385,7 +389,11 @@
     <Compile Include="EnterCodeComment.aspx.designer.cs">
       <DependentUpon>EnterCodeComment.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Entity\OR.cs" />
     <Compile Include="Entity\Parameter.cs" />
+    <Compile Include="Entity\Project.cs" />
+    <Compile Include="Entity\Session.cs" />
+    <Compile Include="Entity\Shift.cs" />
     <Compile Include="GridDisplay.ascx.cs">
       <DependentUpon>GridDisplay.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -406,6 +414,13 @@
     </Compile>
     <Compile Include="InputFromMachines_Show.aspx.designer.cs">
       <DependentUpon>InputFromMachines_Show.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="LossHourGraph.aspx.cs">
+      <DependentUpon>LossHourGraph.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LossHourGraph.aspx.designer.cs">
+      <DependentUpon>LossHourGraph.aspx</DependentUpon>
     </Compile>
     <Compile Include="Menu.aspx.cs">
       <DependentUpon>Menu.aspx</DependentUpon>
@@ -472,6 +487,13 @@
     </Compile>
     <Compile Include="ORandMOR1_Show.aspx.designer.cs">
       <DependentUpon>ORandMOR1_Show.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OR_OAGraph.aspx.cs">
+      <DependentUpon>OR_OAGraph.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OR_OAGraph.aspx.designer.cs">
+      <DependentUpon>OR_OAGraph.aspx</DependentUpon>
     </Compile>
     <Compile Include="ParameterSetting.aspx.cs">
       <DependentUpon>ParameterSetting.aspx</DependentUpon>

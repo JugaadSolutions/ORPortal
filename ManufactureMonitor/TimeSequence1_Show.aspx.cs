@@ -24,6 +24,7 @@ namespace ManufactureMonitor
 
             DateTime fromDate = DateTime.Parse(Request.QueryString["datefrom"]);
             DateTime toDate = DateTime.Parse(Request.QueryString["dateto"]);
+            toDate = toDate.AddDays(1);
 
             while (fromDate < toDate )
             {
@@ -40,8 +41,9 @@ namespace ManufactureMonitor
 
 
                 dt = da.GetShiftTimings(machineId, ShiftId);
-                Duration.Text = (dt.Rows[0]["shifts"]).ToString();
-                dt1 = da.GetStopDetails(machineId, ShiftId, fromDate.ToShortDateString(), toDate.ToShortDateString());
+                Duration.Text = fromDate.ToShortDateString() +":"+ (dt.Rows[0]["shifts"]).ToString();
+                dt1 = da.GetStopDetails(machineId, ShiftId, fromDate.ToShortDateString(), toDate.ToShortDateString(),
+                    Convert.ToBoolean(Request.QueryString["SpeedLoss"]));
 
                 GridView g = new GridView();
                 g.AutoGenerateColumns = true;

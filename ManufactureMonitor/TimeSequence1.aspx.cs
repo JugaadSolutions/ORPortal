@@ -45,7 +45,8 @@ namespace ManufactureMonitor
 
                 Response.Redirect("~/TimeSequence1_Show.aspx?MachineGroupId=" + Request.QueryString["MachineGroupId"]
                     + "&MachineId=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
-                     + "&ShiftId=" + dt.Rows[ShiftSelectionListBox.SelectedIndex]["Id"] + "&datefrom=" + datefrom + "&dateto=" + dateto);
+                     + "&ShiftId=" + dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"] + "&datefrom=" + datefrom + "&dateto=" + dateto
+                     +"&SpeedLoss="+CheckBoxList1.Items[0].Selected);
             }
         }
 

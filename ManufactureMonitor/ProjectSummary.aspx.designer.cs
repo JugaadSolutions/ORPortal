@@ -40,22 +40,22 @@ namespace ManufactureMonitor {
         protected global::System.Web.UI.WebControls.ListBox MachineSelectionListBox;
         
         /// <summary>
-        /// Calendar1 control.
+        /// datefrom control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Calendar Calendar1;
+        protected global::System.Web.UI.WebControls.Calendar datefrom;
         
         /// <summary>
-        /// Calendar2 control.
+        /// dateto control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Calendar Calendar2;
+        protected global::System.Web.UI.WebControls.Calendar dateto;
         
         /// <summary>
         /// ShiftSelectionListBox control.
@@ -67,13 +67,31 @@ namespace ManufactureMonitor {
         protected global::System.Web.UI.WebControls.ListBox ShiftSelectionListBox;
         
         /// <summary>
-        /// CheckBoxList1 control.
+        /// ModelSelectionListBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBoxList CheckBoxList1;
+        protected global::System.Web.UI.WebControls.ListBox ModelSelectionListBox;
+        
+        /// <summary>
+        /// Button3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button3;
+        
+        /// <summary>
+        /// Button2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button2;
         
         /// <summary>
         /// Button1 control.

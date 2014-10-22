@@ -37,8 +37,13 @@ namespace ManufactureMonitor
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-
+            if (ProblemSelectionListBox.SelectedIndex == -1)
+                return;
+            else
+            {
             Response.Redirect("~/CommonProblemsSetting_ADD.aspx?Code=" + dt.Rows[ProblemSelectionListBox.SelectedIndex]["Code"]);
+            }
+
 
         }
 

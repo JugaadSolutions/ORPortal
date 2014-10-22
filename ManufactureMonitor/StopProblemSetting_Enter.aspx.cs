@@ -28,6 +28,7 @@ namespace ManufactureMonitor
                     TextBox2.Text = (dt.Rows[0]["Code"]).ToString();
                     RadioButtonList1.SelectedIndex = (int)(dt.Rows[0]["Type"]) - 1;
                 }
+                OperationTime2ListBox.Visible = false;
             }
             
         }
@@ -66,6 +67,15 @@ namespace ManufactureMonitor
         protected void Button2_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Menu.aspx?MachineGroup=" + Request.QueryString["MachineGroupId"]);
+        }
+
+        protected void RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (RadioButtonList1.SelectedIndex == 1)
+            {
+                OperationTime2ListBox.Visible = true;
+            }
+            else OperationTime2ListBox.Visible = false;
         }
     }
 }

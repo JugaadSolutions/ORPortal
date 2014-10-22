@@ -8,48 +8,49 @@
                 <asp:ImageButton ID="ImageButton1" runat="server" Height="25px" ImageAlign="Middle" ImageUrl="~/Images/return.jpg" Width="25px" OnClick="ImageButton1_Click" />
             </td>
         </tr>
+
         <tr>
-            <td style="text-align: center; width: 422px;">&nbsp;</td>
-            <td style="background-color: #3366FF; color: #FFFFFF; font-size: medium; text-align: center; " colspan="2">Project Selection</td>
+            <td style="text-align: center; width: 392px;">&nbsp;</td>
+            <td style="background-color: #FFAF37; color: #000000; font-size: medium; text-align: center; font-weight: 700;" colspan="2">Project Selection</td>
             <td style="text-align: center">&nbsp;</td>
         </tr>
         <tr>
-            <td style="text-align: center; width: 422px;">&nbsp;</td>
-            <td style="background-color: #99CCFF; text-align: left; width: 203px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Project Assigned:</td>
-            <td style="background-color: #99CCFF; text-align: left; width: 197px;">New Project:</td>
+            <td style="text-align: center; width: 392px;">&nbsp;</td>
+            <td style="background-color: #FFFFCC; width: 127px;"> <b>Project Assigned:</b></td>
+            <td style="background-color: #FFFFCC; width: 90px;"><b>New Project:</b></td>
             <td style="text-align: center">&nbsp;</td>
         </tr>
         <tr>
-            <td style="text-align: center; width: 422px;">&nbsp;</td>
-            <td style="background-color: #99CCFF; text-align: center; width: 203px;">
+            <td style="text-align: center; width: 392px;">&nbsp;</td>
+            <td style="background-color: #FFFFCC; width: 127px;">
                  
                 <asp:Label ID="ProjectAssignedLabel" runat="server"></asp:Label>
                  
             </td>
-            <td style="background-color: #99CCFF; text-align: center; width: 197px;">
+            <td style="background-color: #FFFFCC; width: 90px;">
                             <asp:ListBox ID="MachineSelectionListBox" runat="server" SelectionMode="Single" />
             </td>
             <td style="text-align: center">&nbsp;</td>
         </tr>
         <tr>
-            <td style="height: 23px; width: 422px;"></td>
-            <td style="background-color: #99CCFF; width: 203px; text-align: center;">
+            <td style="height: 23px; width: 392px;"></td>
+            <td style="background-color: #FFFFCC; width: 127px; text-align: center;">
                 <asp:Button ID="SaveButton" runat="server" OnClick="Button1_Click" Text="Save" Width="66px" />
             </td>
-            <td style="background-color: #99CCFF; width: 197px; text-align: center;">
+            <td style="background-color: #FFFFCC; width: 90px;">
                 <asp:Button ID="DontSaveButton" runat="server" OnClick="Button1_Click" Text="Don'tSave" Width="66px" />
             </td>
             <td style="height: 23px"></td>
         </tr>
         <tr>
-            <td style="text-align: center; width: 422px;">&nbsp;</td>
-            <td style="background-color: #99CCFF; text-align: center; " colspan="2">
+            <td style="text-align: center; width: 392px;">&nbsp;</td>
+            <td style="background-color: #FFFFCC; " colspan="2">
                 &nbsp;</td>
             <td style="text-align: center">&nbsp;</td>
         </tr>
         <tr>
-            <td style="text-align: center; height: 30px; width: 422px;"></td>
-            <td style="background-color: #99CCFF; text-align: center; height: 30px;" colspan="2"></td>
+            <td style="text-align: center; height: 30px; width: 392px;"></td>
+            <td style="background-color: #FFFFCC; " colspan="2"></td>
             <td style="text-align: center; height: 30px"></td>
         </tr>
         <tr>

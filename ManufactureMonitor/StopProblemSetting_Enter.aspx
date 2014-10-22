@@ -40,10 +40,11 @@
             <td style="text-align: center; width: 245px; height: 30px;"></td>
             <td style="background-color: #99CCFF; text-align: left; width: 266px; height: 30px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Type:</td>
             <td style="background-color: #99CCFF; height: 30px; width: 336px; ">
-                <asp:RadioButtonList ID="RadioButtonList1" runat="server" Width="497px" RepeatDirection="Horizontal">
-                    <asp:ListItem Value=" 1">Non-Operation time 1</asp:ListItem>
-                    <asp:ListItem Value=" 2">Non-Operation time 2</asp:ListItem>
-                    <asp:ListItem Value=" 3">Non-Operation time 3</asp:ListItem>
+                <asp:RadioButtonList ID="RadioButtonList1" runat="server" Width="497px" RepeatDirection="Horizontal"  AutoPostBack="true"
+                    OnSelectedIndexChanged="RadioButtonList1_SelectedIndexChanged">
+                    <asp:ListItem Value="1">Non-Operation time 1</asp:ListItem>
+                    <asp:ListItem Value="2">Non-Operation time 2</asp:ListItem>
+                    <asp:ListItem Value="3">Idle time</asp:ListItem>
                 </asp:RadioButtonList>
             </td>
             <td style="background-color: #FFFFCC; height: 30px;"></td>
@@ -53,7 +54,15 @@
             <td style="background-color: #99CCFF; text-align: left; width: 266px; height: 30px;">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
             <td style="background-color: #99CCFF; width: 336px; ">
-                &nbsp;</td>
+                <asp:ListBox ID="OperationTime2ListBox" runat="server" style="margin-left: 148px" Width="212px" Enabled="false" 
+                    SelectionMode="Single" >
+                    <asp:ListItem Text ="Unknown(Speed Loss)" />
+                    <asp:ListItem Text ="Change Over Loss" />
+                    <asp:ListItem Text ="Defects & Rework Loss" />
+                    <asp:ListItem Text ="Other Loss" />
+
+                </asp:ListBox>
+            </td>
             <td style="background-color: #FFFFCC;">&nbsp;</td>
         </tr>
         <tr>

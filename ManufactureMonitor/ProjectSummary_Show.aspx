@@ -10,7 +10,7 @@
             </td>
         </tr>
         <tr>
-            <td colspan="2" style="height: 23px; text-align: center">&nbsp;&nbsp;&nbsp;&nbsp;
+            <td colspan="2" style="height: 178px; text-align: center">&nbsp;&nbsp;&nbsp;&nbsp;
                 <asp:GridView ID="GridView1" runat="server" HorizontalAlign="Center" CellPadding="3" BackColor="#DEBA84" BorderColor="#DEBA84" BorderStyle="None" BorderWidth="1px" CellSpacing="2" ShowHeaderWhenEmpty="True" Width="870px">
                     <FooterStyle BackColor="#F7DFB5" ForeColor="#8C4510" />
                     <HeaderStyle BackColor="#FF9966" Font-Bold="True" ForeColor="White" />
@@ -22,6 +22,13 @@
                     <SortedDescendingCellStyle BackColor="#F1E5CE" />
                     <SortedDescendingHeaderStyle BackColor="#93451F" />
                 </asp:GridView>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="height: 23px; text-align: center; margin:10px;">
+                <asp:Button ID="Button3" runat="server" Text="OR / OA" />
+                <asp:Button ID="Button2" runat="server" Text="Production Progress" />
+                <asp:Button ID="Button1" runat="server" Text="Loss Hour" />
             </td>
         </tr>
     </table>

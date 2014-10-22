@@ -20,7 +20,19 @@ namespace ManufactureMonitor
             {
                 DataAccess da = new DataAccess();
 
-                DataTable dt = da.DisplaySpecificProblems(Convert.ToInt32(Request.QueryString["MachineId"]));
+                String source = Request.QueryString["Source"];
+                DataTable dt = null ;
+                switch (source)
+                {
+                    case "Common":
+                        dt = da.DisplayProblems();
+                        break;
+                    case "Specific":
+                       dt = da.DisplaySpecificProblems(Convert.ToInt32(Request.QueryString["MachineId"]));
+                        break;
+                }
+
+
                 GridView1.DataSource = dt;
                 GridView1.DataBind();
             }
@@ -29,7 +41,17 @@ namespace ManufactureMonitor
 
         protected void BackButton_Click(object sender, ImageClickEventArgs e)
         {
-            Response.Redirect("~/Menu.aspx?MachineGroup=" + Request.QueryString["MachineGroupId"]);
+            String source = Request.QueryString["Source"];
+            switch (source)
+            {
+                case "Common":
+                    Response.Redirect("~/Index.aspx");
+                    break;
+                case "Specific":
+                    Response.Redirect("~/Menu.aspx?MachineGroup=" + Request.QueryString["MachineGroupId"]);
+                    break;
+            }
+            
         }
 
         protected void GridView1_DataBound(object sender, EventArgs e)

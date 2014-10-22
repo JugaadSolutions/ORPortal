@@ -11,7 +11,7 @@ namespace ManufactureMonitor
 {
     public partial class ProjectSummary : System.Web.UI.Page
     {
-        static DataTable dt, dt1;
+        static DataTable dt, dt1,dt2;
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -48,6 +48,19 @@ namespace ManufactureMonitor
             ShiftSelectionListBox.DataSource = dt1.DefaultView;
             ShiftSelectionListBox.DataValueField = "shifts";
             ShiftSelectionListBox.DataBind();
+
+            dt2 = da.GetModels((int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]);
+            ModelSelectionListBox.DataSource = dt2.DefaultView;
+            ModelSelectionListBox.DataValueField = "Models";
+            ModelSelectionListBox.DataBind();
+        }
+
+        protected void Button1_Click1(object sender, EventArgs e)
+        {
+            Response.Redirect("~/LossHourGraph.aspx?Id=" + Request.QueryString["MachineGroupId"]
+                 + "&MachineId=" + (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
+                 + "&ShiftId=" + (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"] 
+                 + "&datefrom=" + datefrom.SelectedDate.ToShortDateString() + "&dateto=" + dateto.SelectedDate.ToShortDateString());
         }
     }
 }

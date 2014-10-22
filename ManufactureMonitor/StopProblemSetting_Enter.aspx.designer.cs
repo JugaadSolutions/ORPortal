@@ -58,6 +58,15 @@ namespace ManufactureMonitor {
         protected global::System.Web.UI.WebControls.RadioButtonList RadioButtonList1;
         
         /// <summary>
+        /// OperationTime2ListBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListBox OperationTime2ListBox;
+        
+        /// <summary>
         /// Button1 control.
         /// </summary>
         /// <remarks>
