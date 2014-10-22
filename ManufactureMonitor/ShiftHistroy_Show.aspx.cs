@@ -26,7 +26,7 @@ namespace ManufactureMonitor
             MachineSelectedLabel.Text = (dt.Rows[0]["shifts"]).ToString();
             
 
-        
+
         }
 
         protected void BackButton_Click(object sender, ImageClickEventArgs e)

@@ -10,6 +10,8 @@
         <tr>
             <td>
                 <table style="border: thin solid #FFAF37; width: 21%; border-collapse: collapse; height: 168px; margin-left: 481px; border-color= #FFAF37;" border="1">
+
+               
                     <tr>
                         <td style="background-color: #FFAF37; text-align: center;"><strong>Machine Selection</strong></td>
                     </tr>
