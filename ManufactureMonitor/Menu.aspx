@@ -1,16 +1,16 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Menu.aspx.cs" Inherits="ManufactureMonitor.Menu" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <table style="border: 3px solid #CC6666; width: 76%; border-collapse: collapse; background-color: #FFFFCC; height: 472px; margin-left: 83px;">
+    <table style="border: 3px solid #CC6666; width: 100%; border-collapse: collapse; background-color: #FFFFCC; height: 400px; margin-left: 1%;">
         <tr>
             <td style="text-align: center; width: 303px; height: 38px;">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
-                <asp:TextBox ID="TextBox1" runat="server" Height="30px" Width="200px" BorderColor="#CC0000" BorderStyle="Solid" BorderWidth="3px" Font-Bold="True">                 Shift Data</asp:TextBox>
+                <asp:TextBox ID="TextBox1" runat="server" Height="30px" Width="200px" BorderColor="#CC0000" BorderStyle="Solid" BorderWidth="3px" Font-Bold="True" Enabled="False">                 Shift Data</asp:TextBox>
             </td>
             <td style="width: 313px; text-align: center; height: 38px;">
-                <asp:TextBox ID="TextBox2" runat="server" Height="30px" Width="200px" BorderColor="#CC0000" BorderStyle="Solid" BorderWidth="3px" Font-Bold="True" style="margin-left:13px">                   Settings</asp:TextBox>
+                <asp:TextBox ID="TextBox2" runat="server" Height="30px" Width="200px" BorderColor="#CC0000" BorderStyle="Solid" BorderWidth="3px" Font-Bold="True" style="margin-left:13px" Enabled="False">                   Settings</asp:TextBox>
             </td>
             <td style="text-align: left; width: 399px; height: 38px;">
-                <asp:TextBox ID="TextBox3" runat="server" Height="30px" Width="200px" BorderColor="#CC0000" BorderStyle="Solid" BorderWidth="3px" Font-Bold="True">                Parameters</asp:TextBox>
+                <asp:TextBox ID="TextBox3" runat="server" Height="30px" Width="200px" BorderColor="#CC0000" BorderStyle="Solid" BorderWidth="3px" Font-Bold="True" Enabled="False">                Parameters</asp:TextBox>
             </td>
         </tr>
         <tr>
@@ -49,14 +49,14 @@
         <tr>
             <td style="text-align: center; width: 303px; height: 38px;">
                 <div id="Div7" onmouseover="Dark('Div7')" onmouseout="Light('Div7')" style="width: 200px; height: 30px; margin-left: 93px; text-align:center">
-                <asp:Button ID="Button7" runat="server" BackColor="#FF9966" BorderColor="#CC6666" BorderStyle="Solid" BorderWidth="3px" Height="30px" Text="Scarps" Width="200px" OnClick="Button7_Click" style="margin-left: 0px" />
+                <asp:Button ID="Button7" runat="server" BackColor="#FF9966" BorderColor="#CC6666" BorderStyle="Solid" BorderWidth="3px" Height="30px" Text="Scraps" Width="200px" OnClick="Button7_Click" style="margin-left: 0px" />
             </div></td>
             <td rowspan="2" style="width: 313px; text-align: center">
                 &nbsp;&nbsp;
-                <asp:TextBox ID="TextBox4" runat="server" Height="30px" Width="200px" BorderColor="#CC0000" BorderStyle="Solid" BorderWidth="3px" Font-Bold="True" style="margin-left: 3px">                   Projects</asp:TextBox>
+                <asp:TextBox ID="TextBox4" runat="server" Height="30px" Width="200px" BorderColor="#CC0000" BorderStyle="Solid" BorderWidth="3px" Font-Bold="True" style="margin-left: 3px" Enabled="False">                   Projects</asp:TextBox>
             </td>
             <td rowspan="2" style="text-align: left; width: 399px;">
-                <asp:TextBox ID="TextBox5" runat="server" Height="30px" Width="200px" BorderColor="#CC0000" BorderStyle="Solid" BorderWidth="3px" Font-Bold="True">                    Shifts</asp:TextBox>
+                <asp:TextBox ID="TextBox5" runat="server" Height="30px" Width="200px" BorderColor="#CC0000" BorderStyle="Solid" BorderWidth="3px" Font-Bold="True" Enabled="False">                    Shifts</asp:TextBox>
             </td>
         </tr>
         <tr>
@@ -68,20 +68,23 @@
         <tr>
             <td style="text-align: center; width: 303px; height: 22px;">
                 <div id="Div9" onmouseover="Dark('Div9')" onmouseout="Light('Div9')" style="width: 200px; height: 30px; margin-left: 94px; text-align:center">
-                <asp:Button ID="Button9" runat="server" BackColor="#FF9966" BorderColor="#CC6666" BorderStyle="Solid" BorderWidth="3px" Height="30px" Text="Summary Report" Width="200px" OnClick="Button9_Click" />
+                <asp:Button ID="Button9" runat="server" BackColor="#FF9966" BorderColor="#CC6666" BorderStyle="Solid" BorderWidth="3px" Height="30px" Text="Summary Report" Width="201px" OnClick="Button9_Click" />
             </div></td>
             <td style="width: 313px; text-align: center; height: 22px;">
                 <div id="Div10" onmouseover="Dark('Div10')" onmouseout="Light('Div10')" style="width: 200px; height: 30px; margin-left: 69px; text-align:center">
                 <asp:Button ID="Button10" runat="server" BackColor="#FF9966" BorderColor="#CC6666" BorderStyle="Solid" BorderWidth="3px" Height="30px" Text="Projects-Setting" Width="200px" OnClick="Button10_Click" style="margin-left: 0px" />
             </div></td>
-            <td style="text-align: center; width: 399px; height: 22px;">
-                <div id="Div11" onmouseover="Dark('Div11')" onmouseout="Light('Div11')" style="width: 200px; height: 30px; margin-left: 6px; text-align:center">
-                <asp:Button ID="Button11" runat="server" BackColor="#FF9966" BorderColor="#CC6666" BorderStyle="Solid" BorderWidth="3px" Height="30px" Text="Shift Definition-Setting" Width="200px" OnClick="Button11_Click"/>
-           </div> </td>
+            <td style="text-align: left; width: 399px; height: 22px;">
+                <div id="Div11" onmouseover="Dark('Div11')" onmouseout="Light('Div11')" style="width: 200px; height: 30px;  text-align:left">
+                <asp:Button ID="Button11" runat="server" BackColor="#FF9966" BorderColor="#CC6666" BorderStyle="Solid" BorderWidth="3px" Height="30px" 
+                    Text="Shift Definition-Setting" Width="200px" OnClick="Button11_Click"/>
+           </div> 
+
+            </td>
         </tr>
         <tr>
             <td style="text-align: center; width: 303px; height: 26px;">
-                <asp:TextBox ID="TextBox6" runat="server" Height="30px" Width="200px" BorderColor="#CC0000" BorderStyle="Solid" BorderWidth="3px" Font-Bold="True" style="margin-left: 86px">                Stop Times</asp:TextBox>
+                <asp:TextBox ID="TextBox6" runat="server" Height="30px" Width="200px" BorderColor="#CC0000" BorderStyle="Solid" BorderWidth="3px" Font-Bold="True" style="margin-left: 86px" Enabled="False">                Stop Times</asp:TextBox>
             </td>
             <td style="width: 313px; text-align: center; height: 26px;">
                 <div id="Div12" onmouseover="Dark('Div12')" onmouseout="Light('Div12')" style="width: 200px; height: 30px; margin-left: 67px; text-align:center">
@@ -98,7 +101,7 @@
                 <asp:Button ID="Button14" runat="server" BackColor="#FF9966" BorderColor="#CC6666" BorderStyle="Solid" BorderWidth="3px" Height="30px" Text="Time sequence" Width="200px" OnClick="Button14_Click" style="margin-left: 0px" />
             </div></td>
             <td style="width: 313px; text-align: center; height: 30px;">
-                <asp:TextBox ID="TextBox7" runat="server" Height="30px" Width="200px" BorderColor="#CC0000" BorderStyle="Solid" BorderWidth="3px" Font-Bold="True" style="margin-left: 7px">                  Problems</asp:TextBox>
+                <asp:TextBox ID="TextBox7" runat="server" Height="30px" Width="200px" BorderColor="#CC0000" BorderStyle="Solid" BorderWidth="3px" Font-Bold="True" style="margin-left: 7px" Enabled="False">                  Problems</asp:TextBox>
             </td>
             <td style="text-align: left; height: 30px; width: 399px;">
                 <div id="Div15" onmouseover="Dark('Div15')" onmouseout="Light('Div15')" style="width: 200px; height: 30px; margin-left: 6px; text-align:center">

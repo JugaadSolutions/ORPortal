@@ -16,37 +16,40 @@ namespace ManufactureMonitor
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            Response.Redirect("Menu.aspx?Machinegroup="+1);
             Session["Machinegroup"] = 1;
+            Response.Redirect("Menu.aspx");
+            
         }
 
         protected void Button3_Click(object sender, EventArgs e)
         {
-            Response.Redirect("Menu.aspx?Machinegroup=" +2);
-            Session["Machinegroup"] =2;
+            Session["Machinegroup"] = 2;
+            Response.Redirect("Menu.aspx");
+           
         }
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-            Response.Redirect("Menu.aspx?Machinegroup=" +3);
             Session["Machinegroup"] = 3;
+            Response.Redirect("Menu.aspx");
+           
         }
 
         protected void Button4_Click(object sender, EventArgs e)
         {
             if (Session["User"] == null)
             {
-                Response.Redirect("~/UserLogin.aspx?Source=CommonProblemSetting");
+                Response.Redirect("~/Users/UserLogin.aspx?Source=CommonProblemSetting");
             }
             else
             {
-                Response.Redirect("~/CommonProblemsSetting.aspx");
+                Response.Redirect("~/Problems/CommonProblemsSetting.aspx");
             }
         }
 
         protected void Button5_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/DisplayStopProblems.aspx?Source=Common");
+            Response.Redirect("~/Problems/DisplayStopProblems.aspx?Source=Common");
         }
     }
 }

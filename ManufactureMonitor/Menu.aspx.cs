@@ -13,94 +13,94 @@ namespace ManufactureMonitor
         protected void Page_Load(object sender, EventArgs e)
         {
             //Session["User"] = TextBox1.Text;
-            //MachineGroupId = Request.QueryString["MachineGroup"];
+            //MachineGroupId = Session["MachineGroup"];
         }
 
         protected void Button1_Click(object sender, EventArgs e)
         {
            
-                Response.Redirect("~/ActualState.aspx?MachineGroupId=" + Request.QueryString["MachineGroup"]);
+                Response.Redirect("~/ActualState/ActualState.aspx" );
             
         }
 
         protected void Button4_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/ShiftHistroy1.aspx?MachineGroupId=" + Request.QueryString["MachineGroup"]);
+            Response.Redirect("~/ShiftHistory/ShiftHistroy1.aspx" );
         }
 
         protected void Button2_Click(object sender, EventArgs e)
         {
             if (Session["User"] == null)
             {
-                Response.Redirect("~/UserLogin.aspx?Source=ProjectAssignment&MachineGroupId=" + Request.QueryString["MachineGroup"]);
+                Response.Redirect("~/Users/UserLogin.aspx?Source=ProjectAssignment" );
             }
             else
             {
-                Response.Redirect("~/ProjectAssignment.aspx?MachineGroupId=" + Request.QueryString["MachineGroup"]);
+                Response.Redirect("~/Projects/ProjectAssignment.aspx"  );
             }
         }
 
         protected void Button12_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/DisplayProject1.aspx?MachineGroupId=" + Request.QueryString["MachineGroup"]);
+            Response.Redirect("~/Projects/DisplayProject1.aspx"  );
         }
 
         protected void Button20_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/DisplayStopProblems1.aspx?MachineGroupId=" + Request.QueryString["MachineGroup"]);
+            Response.Redirect("~/Problems/DisplayStopProblems1.aspx"  );
         }
 
         protected void Button13_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/DisplayShiftDefinition.aspx?MachineGroupId=" + Request.QueryString["MachineGroup"]);
+            Response.Redirect("~/Shifts/DisplayShiftDefinition.aspx"  );
         }
 
         protected void Button6_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/DisplayParameters.aspx?MachineGroupId=" + Request.QueryString["MachineGroup"]);
+            Response.Redirect("~/Parameters/DisplayParameters.aspx"  );
         }
 
         protected void Button19_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/ChangePassword.aspx?MachineGroupId=" + Request.QueryString["MachineGroup"]);
+            Response.Redirect("~/Users/ChangePassword.aspx"  );
         }
 
         protected void Button7_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Scrap1.aspx?MachineGroupId=" + Request.QueryString["MachineGroup"]);
+            Response.Redirect("~/Scraps/Scrap1.aspx"  );
         }
 
         protected void Button18_Click(object sender, EventArgs e)
         {
             if (Session["User"] == null)
             {
-                Response.Redirect("~/UserLogin.aspx?Source=StopProblemSetting&MachineGroupId=" + Request.QueryString["MachineGroup"]);
+                Response.Redirect("~/Users/UserLogin.aspx?Source=StopProblemSetting"  );
             }
             else
             {
-                Response.Redirect("~/StopProblemSetting1.aspx?MachineGroupId=" + Request.QueryString["MachineGroup"]);
+                Response.Redirect("~/Problems/StopProblemSetting1.aspx"  );
             }
         }
 
         protected void Button15_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/StopTimes2.aspx?MachineGroupId=" + Request.QueryString["MachineGroup"]);
+            Response.Redirect("~/EnterCodeComment/StopTimes2.aspx"  );
         }
 
         protected void Button16_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/ProblemAccumulation.aspx?MachineGroupId=" + Request.QueryString["MachineGroup"]);
+            Response.Redirect("~/ProblemAccumulation/ProblemAccumulation.aspx"  );
         }
 
         protected void Button10_Click(object sender, EventArgs e)
         {
             if (Session["User"] == null)
             {
-                Response.Redirect("~/UserLogin.aspx?Source=ProjectSetting&MachineGroupId=" + Request.QueryString["MachineGroup"]);
+                Response.Redirect("~/Users/UserLogin.aspx?Source=ProjectSetting"  );
             }
             else
             {
-                Response.Redirect("~/ProjectSetting.aspx?MachineGroupId=" + Request.QueryString["MachineGroup"]);
+                Response.Redirect("~/Projects/ProjectSetting.aspx"  );
             }
         }
 
@@ -108,57 +108,57 @@ namespace ManufactureMonitor
         {
             if (Session["User"] == null)
             {
-                Response.Redirect("~/UserLogin.aspx?Source=M_off_setting&MachineGroupId=" + Request.QueryString["MachineGroup"]);
+                Response.Redirect("~/Users/UserLogin.aspx?Source=M_off_setting"  );
             }
             else
             {
-                Response.Redirect("~/M_off_setting.aspx?MachineGroupId=" + Request.QueryString["MachineGroup"]);
+                Response.Redirect("~/MachineOff/M_off_setting.aspx"  );
             }
         }
 
         protected void Button8_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/ORandMOR1.aspx?MachineGroupId=" + Request.QueryString["MachineGroup"]);
+            Response.Redirect("~/OR_OA/ORandMOR1.aspx"  );
         }
 
         protected void Button3_Click(object sender, EventArgs e)
         {
             if (Session["User"] == null)
             {
-                Response.Redirect("~/UserLogin.aspx?Source=ParameterSetting&MachineGroupId=" + Request.QueryString["MachineGroup"]);
+                Response.Redirect("~/Users/UserLogin.aspx?Source=ParameterSetting");
             }
             else
             {
-                Response.Redirect("~/ParameterSetting.aspx?MachineGroupId=" + Request.QueryString["MachineGroup"]);
+                Response.Redirect("~/Parameters/ParameterSetting.aspx"  );
             }
         }
 
         protected void Button9_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/ProjectSummary.aspx?MachineGroupId=" + Request.QueryString["MachineGroup"]);
+            Response.Redirect("~/Projects/ProjectSummary.aspx"  );
         }
 
         protected void Button11_Click(object sender, EventArgs e)
         {
             if (Session["User"] == null)
             {
-                Response.Redirect("~/UserLogin.aspx?Source=ShiftDefinitionSetting&MachineGroupId=" + Request.QueryString["MachineGroup"]);
+                Response.Redirect("~/Users/UserLogin.aspx?Source=ShiftDefinitionSetting"  );
             }
             else
             {
-                Response.Redirect("~/ShiftDefintionSetting1.aspx?MachineGroupId=" + Request.QueryString["MachineGroup"]);
+                Response.Redirect("~/Shifts/ShiftDefintionSetting1.aspx"  );
             }
 
         }
 
         protected void Button14_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/TimeSequence1.aspx?MachineGroupId=" + Request.QueryString["MachineGroup"]);
+            Response.Redirect("~/TimeSequence/TimeSequence1.aspx"  );
         }
 
         protected void Button17_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/InputFromMachines1.aspx?MachineGroupId=" + Request.QueryString["MachineGroup"]);
+            Response.Redirect("~/MachineInputs/InputFromMachines1.aspx"  );
         }
 
        

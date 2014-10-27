@@ -3,7 +3,7 @@
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     
-    <table style="width: 99%; border-collapse: collapse; background-color: #FFFFCC; height: 407px; margin-top: 0em; margin-right: 0px; " >
+    <table style="width: 99%; border-collapse: collapse; background-color: #FFFFCC; height: 400px; margin-top: 0em; margin-right: 0px; " >
     <tr>
         <td style="width: 1044px; height: 428px;">
             <table style="border: 3px solid #CC6666; width: 938px; border-collapse: collapse; margin-left: 167px; margin-top: 0em; height: 426px;">

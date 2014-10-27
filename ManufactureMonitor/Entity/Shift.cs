@@ -167,13 +167,14 @@ namespace ManufactureMonitor.Entity
         public double getSessionDuration(Session s)
         {
             double duration = s.getDuration();
-            foreach( Session b in Breaks )
+            foreach (Session b in Breaks)
             {
-                if( IsWithin(b,s))
+                if (IsWithin(b, s))
                     duration -= b.getDuration();
             }
             return duration;
         }
+        
 
         public bool inBreak()
         {
@@ -227,6 +228,19 @@ namespace ManufactureMonitor.Entity
 
         }
 
+
+       //public double getActiveDuration(DateTime start , DateTime end )
+       //{
+       //    double duration = (end -start).TotalSeconds;
+
+       //    foreach(Session b in Breaks)
+       //    {
+       //        if( b.IsWithin(start) )
+       //        {
+       //            DateTime temp = DateTime.Parse(b.StartTime);
+
+       //            DateTime breakStart = new DateTime(start.Year,start.Month,start.Day,temp.Hour,temp.Minute,temp.Second);
+       //            duration -= breakStart - start 
 
             //DateTime currentTime = new DateTime(endTime.Year, endTime.Month, endTime.Day, ts.Hour, ts.Minute, ts.Second);
 
@@ -283,7 +297,7 @@ namespace ManufactureMonitor.Entity
 
 
 
-        internal Shift getCurrentShift(DateTime from, DateTime to)
+        public Shift getShift(DateTime from, DateTime to)
         {
             IEnumerator<Shift> enumerator = this.GetEnumerator();
 

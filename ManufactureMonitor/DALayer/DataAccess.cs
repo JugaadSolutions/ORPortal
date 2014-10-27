@@ -112,16 +112,17 @@ namespace ManufactureMonitor.DALayer
 
         }
         public void  UpdateParameters(int Id,double TOS,
-            String Pulses, String Pieces, double Rmin, double Rmax, double Omin, double Omax, double Gmin, double Gmax)
+            String Pulses, String Pieces, double Rmin, double Rmax, double Omin, double Omax, double Gmin, double Gmax,
+            double MPDuration, double StopClose)
         {
             SqlConnection cn;
             SqlCommand cmd;
 
             cn = new SqlConnection(connection);
             String query = @" Update Machines SET TOS={0},Pulses='{1}',Pieces='{2}',Rmin={3},Rmax={4},Omin={5},
-                                    Omax={6},Gmin={7},Gmax={8} 
-                            where (Machines.Id={9})";
-            query = String.Format(query,TOS,Pulses,Pieces,Rmin,Rmax,Omin,Omax,Gmin,Gmax,Id );
+                                    Omax={6},Gmin={7},Gmax={8} ,MPDuration={9},StopCloseDuration={10}
+                            where (Machines.Id={11})";
+            query = String.Format(query,TOS,Pulses,Pieces,Rmin,Rmax,Omin,Omax,Gmin,Gmax,MPDuration,StopClose,Id );
             cn.Open();
             cmd = new SqlCommand(query, cn);
 
@@ -136,7 +137,7 @@ namespace ManufactureMonitor.DALayer
             SqlCommand cmd;
 
             cn = new SqlConnection(connection);
-            String query = @" Select Name as Machine,TOS,Pulses,Pieces,Rmin,Rmax,Omin,Omax,Gmin,Gmax
+            String query = @" Select *
                             from Machines where Id={0}";
             query = String.Format(query, ID);
 
@@ -202,23 +203,23 @@ namespace ManufactureMonitor.DALayer
                             (Case When ShiftMachines.Sunday=0 Then 'No' else 'Yes' End) 
                             from Shifts LEFT Outer Join ShiftMachines on (Shifts.Id=ShiftMachines.Shift_Id)
                             LEFT Outer join 
-                            (select Breaks.Shift_Id, [start] , [end]  from Breaks where Name='FIRST REST' and Machine_Id=1) 
+                            (select Breaks.Shift_Id, [start] , [end]  from Breaks where Name='FIRST' and Machine_Id=1) 
                                 as FirstBreak on FirstBreak.Shift_Id = Shifts.Id
 
                             LEFT Outer join 
-                            (select Breaks.Shift_Id, [start] , [end]  from Breaks where Name='SECOND REST'and Machine_Id=1) 
+                            (select Breaks.Shift_Id, [start] , [end]  from Breaks where Name='SECOND'and Machine_Id=1) 
                             as SecondBreak on SecondBreak.Shift_Id = Shifts.Id
 
                             LEFT Outer join 
-                            (select Breaks.Shift_Id, [start], [end]  from Breaks where Name='THIRD REST'and Machine_Id=1) 
+                            (select Breaks.Shift_Id, [start], [end]  from Breaks where Name='THIRD'and Machine_Id=1) 
                             as ThirdBreak on ThirdBreak.Shift_Id = Shifts.Id
 
                             LEFT Outer join 
-                            (select Breaks.Shift_Id, [start] , [end] from Breaks where Name='FOURTH REST'and Machine_Id=1) 
+                            (select Breaks.Shift_Id, [start] , [end] from Breaks where Name='FOURTH'and Machine_Id=1) 
                             as FourthBreak on FourthBreak.Shift_Id = Shifts.Id
 
                             LEFT Outer join 
-                            (select Breaks.Shift_Id, [start] , [end]  from Breaks where Name='FIFTH REST'and Machine_Id=1) 
+                            (select Breaks.Shift_Id, [start] , [end]  from Breaks where Name='FIFTH'and Machine_Id=1) 
                             as FifthBreak on FifthBreak.Shift_Id = Shifts.Id
                             where ShiftMachines.Machine_Id = {0}";
             query = String.Format(query, Machine_ID);
@@ -279,7 +280,7 @@ namespace ManufactureMonitor.DALayer
             SqlCommand cmd;
 
             cn = new SqlConnection(connection);
-            String query = @" Select Description,code,type 
+            String query = @" Select Convert(nvarchar,code,0)+':'+ Description as [Description],code,type 
                               from CommonProblems ";
             query = String.Format(query, cn);
 
@@ -294,30 +295,46 @@ namespace ManufactureMonitor.DALayer
             return dt;
 
         }
-        public bool AddProblems(String description, String code, String type)
+        public bool AddProblems(String description, int code, int type,int subType)
         {
             SqlConnection cn;
             SqlCommand cmd;
             try
+            {
+
+                cn = new SqlConnection(connection);
+                String query;
+
+
+                if (subType <= 0)
                 {
-                    
-                        cn = new SqlConnection(connection);
-                        String query = @"insert into CommonProblems(Description,Code,Type) values('{0}','{1}','{2}')";
-                        query = String.Format(query, description, code, type);
-                        cn.Open();
-                        cmd = new SqlCommand(query, cn);
-                        cmd.ExecuteNonQuery();
-                        cn.Close();
-                        return true;
-                    
-                }
+                    query = @"insert into CommonProblems(Description,Code,Type)
+                    values('{0}',{1},{2})";
 
-                catch( Exception)
+                    query = String.Format(query, description, code, type);
+                }
+                else
                 {
-                    return false;
+                    query = @"insert into CommonProblems(Description,Code,Type,SubType)
+                    values('{0}',{1},{2},{3})";
 
-
+                    query = String.Format(query, description, code, type, subType);
                 }
+                cn.Open();
+                cmd = new SqlCommand(query, cn);
+                cmd.ExecuteNonQuery();
+                cn.Close();
+                return true;
+
+            }
+
+            catch (Exception)
+            {
+                return false;
+
+
+            }
+              
                
        }
 
@@ -327,7 +344,7 @@ namespace ManufactureMonitor.DALayer
             SqlCommand cmd;
 
             cn = new SqlConnection(connection);
-            String query = @" Select Description,code,type 
+            String query = @" Select  Description,code,type,subType
                               from CommonProblems where Code='{0}'";
             query = String.Format(query, code);
 
@@ -342,15 +359,26 @@ namespace ManufactureMonitor.DALayer
             return dt;
 
         }
-        public void UpdateProblems(String code,String description,String type)
+        public void UpdateProblems(int code,String description,int type,int subtype)
         {
             SqlConnection cn;
             SqlCommand cmd;
 
             cn = new SqlConnection(connection);
-            String query = @" Update CommonProblems SET Description='{1}',Type='{2}'
-                            where (Code='{0}')";
-            query = String.Format(query, code, description, type);
+            String query;
+            if (subtype <= 0)
+            {
+                query = @" Update CommonProblems SET Description='{1}',Type={2}
+                            where (Code={0})";
+                query = String.Format(query, code, description, type);
+            }
+            else
+            {
+                query = @" Update CommonProblems SET Description='{1}',Type={2}, SubType={3}
+                            where (Code={0})";
+                query = String.Format(query, code, description, type, subtype);
+            }
+
             cn.Open();
             cmd = new SqlCommand(query, cn);
 
@@ -478,6 +506,49 @@ namespace ManufactureMonitor.DALayer
             return dt;
 
         }
+        public DataTable SelectSession(int SessionId)
+        {
+            SqlConnection cn;
+            SqlCommand cmd;
+
+            cn = new SqlConnection(connection);
+            String query = @" Select DatePart(Hour,Start) as [SHours],DatePart(Hour,[End]) as [EHours],
+                              DatePart(Minute,Start) as [SMinutes],DatePart(Minute,[End]) as [EMinutes],Id
+                            from 
+                            Sessions 
+                            where 
+                            Id={0}";
+            query = String.Format(query, SessionId);
+
+            cn.Open();
+            cmd = new SqlCommand(query, cn);
+
+            SqlDataReader dr = cmd.ExecuteReader();
+            DataTable dt = new DataTable();
+            dt.Load(dr);
+            dr.Close();
+            cn.Close();
+            return dt;
+        }
+
+        public void UpdateSession(int machine,int shift,int Id, String from, String to)
+        {
+            SqlConnection cn;
+            SqlCommand cmd;
+
+            cn = new SqlConnection(connection);
+            String query = @" Update Sessions SET Start='{1}',[End]='{2}'
+                            where Id={0} and Machine_Id={3} and Shift_Id = {4}";
+            query = String.Format(query, Id, from, to,machine,shift);
+            cn.Open();
+            cmd = new SqlCommand(query, cn);
+
+            cmd.ExecuteNonQuery();
+
+            cn.Close();
+        }
+
+
         public void UpdateShift(int Id, String from, String to)
         {
             SqlConnection cn;
@@ -745,7 +816,8 @@ namespace ManufactureMonitor.DALayer
              SqlCommand cmd;
 
              cn = new SqlConnection(connection);
-             String query = @" Select Convert(varchar(5),CONVERT(TIME(0),[End],0),20) as [End],Id
+             String query = @" Select Convert(varchar(5),CONVERT(TIME(0),[Start],0),20)+'-'+
+                                Convert(varchar(5),CONVERT(TIME(0),[End],0),20) as [End],Id
                             from 
                             Sessions 
                             where 
@@ -770,13 +842,19 @@ namespace ManufactureMonitor.DALayer
              cn = new SqlConnection(connection);
              String query = @" Select Machines.Name+'-'+' '+Convert(varchar(5),CONVERT(TIME(0),Shifts.Start,0),20)   
                                +'-'+Convert(varchar(5),CONVERT(TIME(0),Shifts.[End],0),20)
-                               as shifts
+                               as shifts, CONVERT(TIME(0),Shifts.Start,20) as [Start],CONVERT(TIME(0),Shifts.[End],20) as [End]
                                  from Machines
                                  Join ShiftMachines on Machines.Id=ShiftMachines.Machine_Id 
                                  Join Shifts on Shifts.Id=ShiftMachines.Shift_Id
                                  where
-                                 ShiftMachines.Machine_Id={0} AND ShiftMachines.Shift_Id={1} ";
-             query = String.Format(query, Machine_ID, Shift_Id);
+                                 ShiftMachines.Machine_Id={0}";
+             String query1 = @"AND ShiftMachines.Shift_Id={0} ";
+             if (Shift_Id > 0)
+             {
+                 query1 = string.Format(query1, Shift_Id);
+                 query += query1;
+             }
+             query = String.Format(query, Machine_ID);
              cn.Open();
              cmd = new SqlCommand(query, cn);
              SqlDataReader dr = cmd.ExecuteReader();
@@ -835,7 +913,7 @@ namespace ManufactureMonitor.DALayer
              SqlCommand cmd;
 
              cn = new SqlConnection(connection);
-             String query = @" Select Description,code,type 
+             String query = @" Select Convert(nvarchar,code,0)+':'+Description as [Description],code,type 
                               from SpecificProblems where Machine_Id='{0}'";
              query = String.Format(query, Machine_Id);
 
@@ -857,7 +935,7 @@ namespace ManufactureMonitor.DALayer
              SqlCommand cmd;
 
              cn = new SqlConnection(connection);
-             String query = @" Select Description,code,type 
+             String query = @" Select Description,code,type,subType
                               from SpecificProblems where Code={0} AND Machine_Id={1}";
              query = String.Format(query, code, Machine_Id);
 
@@ -871,15 +949,26 @@ namespace ManufactureMonitor.DALayer
              cn.Close();
              return dt;
          }
-         public void UpdateSpecificProblems(String code, String description, String type)
+         public void UpdateSpecificProblems(String code, String description, int type, int subtype)
          {
              SqlConnection cn;
              SqlCommand cmd;
 
              cn = new SqlConnection(connection);
-             String query = @" Update SpecificProblems SET Description='{1}',Type='{2}'
-                            where (Code='{0}')";
-             query = String.Format(query, code, description, type);
+             String query;
+             if (subtype <= 0)
+             {
+                 query = @" Update SpecificProblems SET Description='{1}',Type={2}
+                            where (Code={0})";
+                 query = String.Format(query, code, description, type);
+             }
+             else
+             {
+                  query = @" Update SpecificProblems SET Description='{1}',Type={2}, SubType={3}
+                            where (Code={0})";
+                 query = String.Format(query, code, description, type,subtype);
+             }
+
              cn.Open();
              cmd = new SqlCommand(query, cn);
 
@@ -889,7 +978,7 @@ namespace ManufactureMonitor.DALayer
 
          }
 
-         public bool AddSpecificProblem(string description, string code, string type,int Machine_Id)
+         public bool AddSpecificProblem(string description, string code, string type,int Machine_Id,int subType)
          {
              SqlConnection cn;
              SqlCommand cmd;
@@ -897,8 +986,23 @@ namespace ManufactureMonitor.DALayer
              {
 
                  cn = new SqlConnection(connection);
-                 String query = @"insert into SpecificProblems(Description,Code,Type,Machine_Id) values('{0}','{1}','{2}',{3})";
-                 query = String.Format(query, description, code, type, Machine_Id);
+                 String query;
+
+
+                 if (subType <= 0)
+                 {
+                     query = @"insert into SpecificProblems(Description,Code,Type,Machine_Id)
+                    values('{0}',{1},{2},{3})";
+
+                     query = String.Format(query, description, code, type, Machine_Id);
+                 }
+                 else
+                 {
+                     query = @"insert into SpecificProblems(Description,Code,Type,Machine_Id,SubType)
+                    values('{0}',{1},{2},{3},{4})";
+
+                     query = String.Format(query, description, code, type, Machine_Id, subType);
+                 }
                  cn.Open();
                  cmd = new SqlCommand(query, cn);
                  cmd.ExecuteNonQuery();
@@ -953,7 +1057,7 @@ namespace ManufactureMonitor.DALayer
              SqlCommand cmd;
 
              cn = new SqlConnection(connection);
-             String query = @"Select Projects.Name as Projects,Projects.Id
+             String query = @"Select Projects.Name+' - ' + Convert(nvarchar,Projects.CycleTime,0) as Projects,Projects.Id
              from ProjectMachines join Projects on ProjectMachines.Project_Id=Projects.Id
              where Machine_Id='{0}'";
              query = String.Format(query, Machine_Id);
@@ -1208,21 +1312,130 @@ namespace ManufactureMonitor.DALayer
              cn.Close();
              return dt;
          }
+
          public DataTable GetStopDetails(int Machine_Id, int Shift_Id, String from, String to,bool Speedloss)
          {
 
              SqlConnection cn;
              SqlCommand cmd;
 
-             String query = @"Select Convert(varchar(5),CONVERT(TIME(0),Shifts.Start,0),20) as [From],
-                                Convert(varchar(5),CONVERT(TIME(0),Shifts.[End],0),20) as [To]
-                                from Shifts
-                                where Id={0} 
-                                ";
+             String query ;
+             String query1 = String.Empty;
 
-
-             query = String.Format(query, Shift_Id);
              cn = new SqlConnection(connection);
+
+             query = @"  select Stops.SlNo, Stops.Code, CONVERT(TIME(0), [Start],0)  as [From], CONVERT(TIME(0),[End],0) as [To],
+                        datediff(second,0,[End]-[Start]) as 'Duration[s]',
+                        (Case when CommonProblems.[Type]=3 then 'OFF' else 'STOP' end) as 'StopType',
+                        Convert(nvarchar,CommonProblems.Code,0)+':'+[Description] as Problem,
+                        Comment,
+                        'Common' as Source,
+                        Stops.Machine_Id       
+                        from Stops                           
+                        inner join CommonProblems on CommonProblems.Code = Stops.Code
+                        where [Start] >= '{1}' and [Start] < '{2}' 
+                        union
+                        select Stops.SlNo, Stops.Code, CONVERT(TIME(0), [Start],0)  as [From], CONVERT(TIME(0),[End],0) as [To],
+                        datediff(second,0,[End]-[Start]) as 'Duration[s]', 
+                        (Case when SpecificProblems.[Type]=3 then 'OFF' else 'STOP' end) as 'StopType', 
+                        Convert(nvarchar,SpecificProblems.Code,0)+':'+[Description] as Problem,
+                        Comment ,
+                        'Specific' as Source,
+                        Stops.Machine_Id    
+                        from Stops                               
+                        inner join SpecificProblems on SpecificProblems.Code = Stops.Code
+
+                            where [Start] >= '{1}' and [Start] < '{2}' and SpecificProblems.Machine_Id={0} 
+
+                            union
+ 
+                            select OFFs.SlNo, OFFs.Code, CONVERT(TIME(0), [Start],0)  as [From], CONVERT(TIME(0),[End],0) as [To],
+                        datediff(second,0,[End]-[Start]) as 'Duration[s]', 
+                        (Case when SpecificProblems.[Type]=3 then 'OFF' else 'STOP' end) as 'StopType', 
+                        Convert(nvarchar,SpecificProblems.Code,0)+':'+[Description] as Problem,
+                        Comment ,
+                        'Specific' as Source,
+                        OFFs.Machine_Id    
+                        from OFFs                               
+                        inner join SpecificProblems on SpecificProblems.Code = OFFs.Code
+
+                            where [Start] >= '{1}' and [Start] < '{2}' and SpecificProblems.Machine_Id={0}
+                            union
+                            select OFFs.SlNo, OFFs.Code, CONVERT(TIME(0), [Start],0)  as [From], CONVERT(TIME(0),[End],0) as [To],
+                            datediff(second,0,[End]-[Start]) as 'Duration[s]', 
+                        (Case when CommonProblems.[Type]=3 then 'OFF' else 'STOP' end) as 'StopType', 
+                        Convert(nvarchar,CommonProblems.Code,0)+':'+[Description] as Problem,
+                        Comment ,
+                        'Common' as Source,
+                        OFFs.Machine_Id    
+                        from OFFs                               
+                        inner join CommonProblems on CommonProblems.Code = OFFs.Code
+
+                            where [Start] >= '{1}' and [End] < '{2}' ";
+
+                 if( Speedloss )
+                 {
+                     query1 = @"
+                            union
+ 
+                            select Stops.SlNo, Stops.Code, CONVERT(TIME(0), [Start],0)  as [From], CONVERT(TIME(0),[End],0) as [To],
+                        datediff(second,0,[End]-[Start]) as 'Duration[s]',
+                        
+                        [Status] as 'StopType',
+                        '' as Problem,
+                        Comment,
+                        'Specific' as Source,
+                        Stops.Machine_Id    
+                        from Stops where [Start] >= '{1}' and [Start] < '{2}' 
+                        and SpecificProblems.Machine_Id={0} and [Status] ='Speed Loss'";
+                     query1 = String.Format(query1, Machine_Id, from,
+                         to);
+
+                     
+                 }
+                 query += query1 +"  order by [From]";
+             query = String.Format(query, Machine_Id, 
+                 from, to);
+
+             cn.Open();
+             cmd = new SqlCommand(query, cn);
+
+            SqlDataReader dr = cmd.ExecuteReader();
+            DataTable dt = new DataTable();
+             dt.Load(dr);
+             dr.Close();
+             cn.Close();
+             return dt;
+         }
+
+         internal DataTable GetStopInfo(int p, String type, String source, int machine)
+         {
+             SqlConnection cn;
+             SqlCommand cmd;
+             String query =String.Empty;
+             cn = new SqlConnection(connection);
+             if( type == "STOP" ) type = "Stops";
+             else if( type == "OFF") type = "Offs";
+             if (source == "Common")
+             {
+
+                 query  = @" Select CommonProblems.Code, Description
+                                from CommonProblems 
+                                inner join {0} on {0}.Code = CommonProblems.Code
+                                where {0}.Code = {1}";
+                 query = String.Format(query, type, p);
+             }
+             else if (source == "Specific")
+             {
+                 query = @" Select SpecificProblems.Code, Description
+                                from SpecificProblems 
+                                inner join {0} on {0}.Code = CommonProblems.Code
+                                where {0}.Code = {1} and {0}.Machine_Id = {2}";
+                 query = String.Format(query, type, p, machine);
+             }
+             query = String.Format(query, p);
+                 
+
              cn.Open();
              cmd = new SqlCommand(query, cn);
 
@@ -1230,75 +1443,38 @@ namespace ManufactureMonitor.DALayer
              DataTable dt = new DataTable();
              dt.Load(dr);
              dr.Close();
+             cn.Close();
+             return dt;
+         }
 
-             DateTime fromTs = DateTime.Parse(from + " " + dt.Rows[0]["From"]);
-             DateTime toTs = DateTime.Parse(from + " " + dt.Rows[0]["To"]);
-
-             if (toTs < fromTs)
-                 toTs = toTs.AddDays(1);
-
+         public DataTable GetStopsInfo(int machine)
+         {
+             SqlConnection cn;
+             SqlCommand cmd;
 
              cn = new SqlConnection(connection);
-             query = @"  select  CONVERT(TIME(0), [Start],0)  as [From], CONVERT(TIME(0),[End],0) as [To],
-                        datediff(second,0,[End]-[Start]) as 'Duration[s]',
-                        (Case when CommonProblems.[Type]=3 then 'OFF' else 'STOP' end) as 'Stop Type',
-                        Convert(nvarchar,CommonProblems.Code,0)+':'+[Description] as Problem,
-                        Comment
-                        from Stops                           
-                        inner join CommonProblems on CommonProblems.Code = Stops.Code
-                        where [Start] >= '{1}' and [Start] < '{2}' 
-                        union
-                        select CONVERT(TIME(0), [Start],0)  as [From], CONVERT(TIME(0),[End],0) as [To],
-                        datediff(second,0,[End]-[Start]) as 'Duration[s]', 
-                        (Case when SpecificProblems.[Type]=3 then 'OFF' else 'STOP' end) as 'Stop Type', 
-                        Convert(nvarchar,SpecificProblems.Code,0)+':'+[Description] as Problem,
-                        Comment 
-                        from Stops                               
-                        inner join SpecificProblems on SpecificProblems.Code = Stops.Code
+             String query = @" Select Convert(nvarchar,code,0)+':'+ Description as [Description],code ,1 as Filter
+                              from CommonProblems 
 
-                            where [Start] >= '{1}' and [Start] < '{2}' and SpecificProblems.Machine_Id={0}
-                            union
- 
-                            select CONVERT(TIME(0), [Start],0)  as [From], CONVERT(TIME(0),[End],0) as [To],
-                        datediff(second,0,[End]-[Start]) as 'Duration[s]', 
-                        (Case when SpecificProblems.[Type]=3 then 'OFF' else 'STOP' end) as 'Stop Type', 
-                        Convert(nvarchar,SpecificProblems.Code,0)+':'+[Description] as Problem,
-                        Comment 
-                        from OFFs                               
-                        inner join SpecificProblems on SpecificProblems.Code = OFFs.Code
+                                union
 
-                            where [Start] >= '{1}' and [Start] < '{2}' and SpecificProblems.Machine_Id={0}
-                            union
-                            select CONVERT(TIME(0), [Start],0)  as [From], CONVERT(TIME(0),[End],0) as [To],
-                            datediff(second,0,[End]-[Start]) as 'Duration[s]', 
-                        (Case when CommonProblems.[Type]=3 then 'OFF' else 'STOP' end) as 'Stop Type', 
-                        Convert(nvarchar,CommonProblems.Code,0)+':'+[Description] as Problem,
-                        Comment 
-                        from OFFs                               
-                        inner join CommonProblems on CommonProblems.Code = OFFs.Code
-
-                            where [Start] >= '{1}' and [End] < '{2}' 
-                            union
- 
-                            select CONVERT(TIME(0), [Start],0)  as [From], CONVERT(TIME(0),[End],0) as [To],
-                        datediff(second,0,[End]-[Start]) as 'Duration[s]',
-                        '',
-                        [Status] as Problem,
-                        Comment
-                        from Stops   where [Status] ='Speed Loss'";
-             query = String.Format(query, Machine_Id, 
-                 fromTs.ToString("yyyy-MM-dd HH:mm:ss"), toTs.ToString("yyyy-MM-dd HH:mm:ss"));
+                            Select Convert(nvarchar,code,0)+':'+ Description as [Description],code ,2 as Filter
+                              from SpecificProblems where Machine_Id = {0} 
+                                order by Filter";
+             query = String.Format(query, machine);
+             query = String.Format(query, cn);
 
              cn.Open();
              cmd = new SqlCommand(query, cn);
 
-            dr = cmd.ExecuteReader();
-             dt = new DataTable();
+             SqlDataReader dr = cmd.ExecuteReader();
+             DataTable dt = new DataTable();
              dt.Load(dr);
              dr.Close();
              cn.Close();
              return dt;
          }
+
 
          internal DataTable GetModels(int p)
          {
@@ -1323,24 +1499,285 @@ namespace ManufactureMonitor.DALayer
              return dt;
          }
 
-         public List<OR> GetOR(int MachineId, DateTime from, DateTime to)
+//         public List<OR> GetOR(int MachineId, DateTime from, DateTime to)
+//         {
+
+//             List<OR> ORList = new List<OR>();
+
+//             List<Session> ORSessions = new List<Session>();
+
+//             SqlConnection cn;
+//             SqlCommand cmd;
+
+//             cn = new SqlConnection(connection);
+//             String query = @" Select * from ProjectTracker where Machine_Id = {0} 
+//                and Timestamp > '{1}' and Timestamp < '{2}' ";
+//             query = String.Format(query, MachineId,from.ToString("yyyy-MM-dd HH:mm:ss"), to.ToString("yyyy-MM-dd HH:mm:ss"));
+
+//             cn.Open();
+//             cmd = new SqlCommand(query, cn);
+
+//             SqlDataReader dr = cmd.ExecuteReader();
+//             DataTable dt = new DataTable();
+//             dt.Load(dr);
+//             dr.Close();
+
+//             DateTime startPoint = from;
+//             for (int i = 0; i < dt.Rows.Count; i++)
+//             {
+//                 OR or = new OR();
+//                 or.From = startPoint;
+//                 or.To = DateTime.Parse((string)dt.Rows[i]["Timestamp"]);
+//                 ORList.Add(or);
+
+//                 startPoint = or.To;
+//             }
+
+
+
+         //         }
+
+         #region SHIFT_HISTORY
+//         public DataTable GetShiftHistory(int machine,String from,String to,bool summary)
+//         {
+//             SqlConnection cn;
+//             SqlCommand cmd;
+
+//             cn = new SqlConnection(connection);
+//             String query = @" select Convert(Time(0),[From],20) as [From], Convert(Time(0),[To],20) as [To], Name as Project,CycleTime,
+//                            SessionActual as [Actual],Scraps from ProjectTracker
+//                            inner join Projects on ProjectTracker.Project_Id = Projects.Id
+//                            inner join Scraps on ProjectTracker.SlNo = Scraps.ProjectTracker_Id
+//                            where [From]>='{1}' and [From]<'{2}' and ProjectTracker.Machine_Id={0}";
+
+
+//             query = String.Format(query, machine,from,to);
+//             query = String.Format(query, cn);
+
+//             cn.Open();
+//             cmd = new SqlCommand(query, cn);
+
+//             SqlDataReader dr = cmd.ExecuteReader();
+//             DataTable dt = new DataTable();
+//             dt.Load(dr);
+
+//             for (int i = 0; i < dt.Rows.Count; i++)
+//             {
+//                 double LoadTime = GetLoadTime(machine, (String)dt.Rows[i]["From"],
+//                     dt.Rows[i]["To"] == DBNull.Value ? DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") : (string)dt.Rows[i]["To"]);
+
+//                 double Nop1 = GetNop1(machine, (String)dt.Rows[i]["From"],
+//                     dt.Rows[i]["To"] == DBNull.Value ? DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") : (string)dt.Rows[i]["To"]);
+
+//                 double Nop2 = GetNop2(machine, (String)dt.Rows[i]["From"],
+//                     dt.Rows[i]["To"] == DBNull.Value ? DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") : (string)dt.Rows[i]["To"]);
+
+//             }
+
+//             dr.Close();
+//             cn.Close();
+//             return dt;
+//         }
+
+         //public double GetNop2(int machine, string p1, string p2)
+         //{
+            
+         //}
+
+         //public double GetNop1(int machine, string p1, string p2)
+         //{
+             
+         //}
+
+         //public double GetLoadTime(int machine, string p1, string p2)
+         //{
+         //    DateTime start = DateTime.Parse(p1);
+         //    DateTime end = DateTime.Parse(p2);
+
+         //    ShiftCollection shifts = getShifts(machine);
+
+         //    Shift s = shifts.getShift(start, end);
+
+         //    s.getSessionDuration(
+
+         //}
+#endregion
+
+         #region CODE_COMMENT
+
+         public DataTable GetStopTimes(int Machine_Id, int Shift_Id, String date)
          {
+             SqlConnection cn;
+             SqlCommand cmd;
 
-             List<OR> ORList = new List<OR>();
-
-             List<Session> ORSessions = new List<Session>();
-
-             ShiftCollection shifts = getShifts(MachineId);
-
-             Shift curShift = shifts.getCurrentShift(from, to);
-             if (curShift == null) return null;
-
-
-             DateTime startPoint = from;
+             cn = new SqlConnection(connection);
+             String query = @"Select Convert(varchar(5),CONVERT(TIME(0),Shifts.Start,0),20) as [From],
+                                Convert(varchar(5),CONVERT(TIME(0),Shifts.[End],0),20) as [To]
+                                from Shifts
+                                where Id={0} 
+                                ";
 
 
+             query = String.Format(query, Shift_Id);
+
+             cn.Open();
+             cmd = new SqlCommand(query, cn);
+
+             SqlDataReader dr = cmd.ExecuteReader();
+             DataTable dt = new DataTable();
+             dt.Load(dr);
+             dr.Close();
+
+             DateTime fromTs = DateTime.Parse(date + " " + dt.Rows[0]["From"]);
+             DateTime toTs = DateTime.Parse(date + " " + dt.Rows[0]["To"]);
+
+             query = @"Select Timestamp from MachineInputs where Machine_Id = {0}  and Timestamp >= '{1}' and Timestamp < '{2}'
+                                 
+                                ";
+             query = String.Format(query, Machine_Id, fromTs.ToString("yyyy-MM-dd HH:mm:ss"), toTs.ToString("yyyy-MM-dd HH:mm:ss"));
+
+             cmd = new SqlCommand(query, cn);
+
+             dr = cmd.ExecuteReader();
+             dt = new DataTable();
+             dt.Load(dr);
+
+             if (dt.Rows.Count > 0)
+                 dt.Columns.Add("Time Between Pulses[s]", typeof(string));
+
+             DateTime temp = fromTs;
+             for (int i = 0; i < dt.Rows.Count; i++)
+             {
 
 
+                 TimeSpan ts = (DateTime)dt.Rows[i]["Timestamp"] - temp;
+                 dt.Rows[i]["Time Between Pulses[s]"] = ts.TotalSeconds;
+
+                 temp = (DateTime)dt.Rows[i]["Timestamp"];
+             }
+
+
+             dr.Close();
+             cn.Close();
+             return dt;
+         }
+
+#endregion
+
+         #region SCRAPS
+
+         internal DataTable GetScrapsEntry(int machine, int shift,DateTime from, DateTime to)
+         {
+             SqlConnection cn;
+             SqlCommand cmd;
+
+             cn = new SqlConnection(connection);
+
+             String query = @"select Scraps.SlNo, Convert(nvarchar(10),Scraps.Timestamp,105) as 'Date', Name as 'Project/Model', Scraps
+                            from Scraps inner join ProjectTracker on Scraps.ProjectTracker_Id = ProjectTracker.SlNo
+                            inner join Projects on Projects.Id = ProjectTracker.Project_Id and SessionActual > 0
+                            where Scraps.Machine_Id = {0} and Scraps.Timestamp >= '{1}' and Scraps.Timestamp < '{2}'";
+
+             query = String.Format(query, machine, from.ToString("yyyy-MM-dd HH:mm:ss"), to.ToString("yyyy-MM-dd HH:mm:ss"));
+
+             String filterShift = @"and Scraps.Shift_Id = '{0}'";
+             if (shift > 0)
+             {
+                 query += filterShift;
+                 query = String.Format(query, shift);
+             }
+             
+            
+
+             cn.Open();
+             cmd = new SqlCommand(query, cn);
+
+             SqlDataReader dr = cmd.ExecuteReader();
+             DataTable dt = new DataTable();
+             dt.Load(dr);
+             dr.Close();
+             cn.Close();
+             return dt;
+         }
+
+         public DataTable GetScrapsReport(int machine, int shift, DateTime from, DateTime to)
+         {
+             SqlConnection cn;
+             SqlCommand cmd;
+
+             cn = new SqlConnection(connection);
+
+             String query = @"select Scraps.SlNo, Convert(nvarchar(10),Scraps.Timestamp,105) as 'Date', SessionActual as Actual, Scraps,
+                            round(Convert(float(1),Scraps,0)/Convert(float(1),SessionActual,0)*100,2,1) as Rejection
+                            from Scraps inner join ProjectTracker on Scraps.ProjectTracker_Id = ProjectTracker.SlNo
+                            inner join Projects on Projects.Id = ProjectTracker.Project_Id and SessionActual > 0
+                            where Scraps.Machine_Id = {0} and Scraps.Timestamp >= '{1}' and Scraps.Timestamp < '{2}'";
+
+             query = String.Format(query, machine, from.ToString("yyyy-MM-dd HH:mm:ss"), to.ToString("yyyy-MM-dd HH:mm:ss"));
+
+             String filterShift = @"and Scraps.Shift_Id = '{0}'";
+             if (shift > 0)
+             {
+                 query += filterShift;
+                 query = String.Format(query, shift);
+             }
+
+
+
+             cn.Open();
+             cmd = new SqlCommand(query, cn);
+
+             SqlDataReader dr = cmd.ExecuteReader();
+             DataTable dt = new DataTable();
+             dt.Load(dr);
+             dr.Close();
+             cn.Close();
+             return dt;
+         }
+
+         internal void updateScraps(int p1, int p2)
+         {
+             SqlConnection cn;
+             SqlCommand cmd;
+
+             cn = new SqlConnection(connection);
+             String query = @" Update Scraps SET Scraps={0} where SlNo={1}";
+             query = String.Format(query,p2,p1);
+             cn.Open();
+             cmd = new SqlCommand(query, cn);
+
+             cmd.ExecuteNonQuery();
+
+             cn.Close();
+         }
+        #endregion
+
+
+
+         internal void UpdateStopInfo(int SlNo,int code, string source, string type, string comment, int machine)
+         {
+             SqlConnection cn;
+             SqlCommand cmd;
+
+             cn = new SqlConnection(connection);
+             String query = string.Empty;
+             if (type == "STOP")
+             {
+
+                 query = @" Update Stops SET code={0} , comment='{2}' where SlNo={1}";
+             }
+             else if (type == "OFF")
+             {
+                 query = @" Update OFFs SET code={0} , comment='{2}' where SlNo={1}";
+             }
+
+             query = String.Format(query, code, SlNo,comment);
+             cn.Open();
+             cmd = new SqlCommand(query, cn);
+
+             cmd.ExecuteNonQuery();
+
+             cn.Close();
          }
     }
 }
