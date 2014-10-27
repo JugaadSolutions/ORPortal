@@ -3,7 +3,7 @@
     <table  style="border: thin solid #FFAF37; width: 90%; text-align:center; height: 567px;">
         <tr>
             <td colspan="7" style="background-color: #FFFFCC; height: 32px;"><strong>
-                <asp:TextBox ID="TextBox1" runat="server" BorderColor="Gray" BorderStyle="Solid" BorderWidth="3px" Height="31px" style="font-size: medium; font-weight: bold; margin-left: 106px" Width="600px">                             Time Sequence of product pulses from machines</asp:TextBox>
+                <asp:TextBox ID="TextBox1" runat="server" BorderColor="Gray" BorderStyle="Solid" BorderWidth="3px" Height="31px" style="font-size: medium; font-weight: bold; margin-left: 106px" Width="600px"> Time Sequence of product pulses from machines</asp:TextBox>
                 </strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <asp:ImageButton ID="ImageButton1" runat="server" Height="25px" ImageAlign="Middle" ImageUrl="~/Images/return.jpg" Width="25px" OnClick="ImageButton1_Click" />
             </td>
@@ -26,14 +26,16 @@
                                  Width="200px" AutoPostBack="true"></asp:ListBox>
                         </td>
                         <td style="height: 42px; width: 260px;">
-                            <asp:Calendar ID="date" runat="server" BackColor="#FFFFCC" BorderColor="#FFCC66" BorderWidth="1px" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="#663399" Height="140px" ShowGridLines="True" Width="195px" style="margin-left: 6px">
+                            <asp:Calendar ID="date" runat="server" BackColor="#FFFFCC" BorderColor="#FFCC66" 
+                                BorderWidth="1px" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" 
+                                ForeColor="#663399" Height="140px"  Width="195px" style="margin-left: 6px">
                                 <DayHeaderStyle BackColor="#FFCC66" Font-Bold="True" Height="1px" />
                                 <NextPrevStyle Font-Size="9pt" ForeColor="#FFFFCC" />
                                 <OtherMonthDayStyle ForeColor="#CC9966" />
                                 <SelectedDayStyle BackColor="#CCCCFF" Font-Bold="True" />
                                 <SelectorStyle BackColor="#FFCC66" />
                                 <TitleStyle BackColor="#FFAF37" Font-Bold="True" Font-Size="9pt" ForeColor="#FFFFCC" />
-                                <TodayDayStyle BackColor="#FFCC66" ForeColor="White" />
+                                
                             </asp:Calendar>
                         </td>
                         <td style="height: 42px; width: 303px;">

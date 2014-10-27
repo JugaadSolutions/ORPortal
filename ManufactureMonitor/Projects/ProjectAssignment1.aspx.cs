@@ -1,22 +1,20 @@
-﻿using System;
+﻿using ManufactureMonitor.DALayer;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Data.SqlClient;
-using ManufactureMonitor.DALayer;
-using System.Data;
 
-
-
-namespace ManufactureMonitor
+namespace ManufactureMonitor.Projects
 {
-    public partial class ActualState : System.Web.UI.Page
+    public partial class ProjectAssignment1 : System.Web.UI.Page
     {
         static DataTable dt;
         protected void Page_Load(object sender, EventArgs e)
         {
+
             if (!Page.IsPostBack)
             {
                 DataAccess da = new DataAccess();
@@ -25,25 +23,20 @@ namespace ManufactureMonitor
                 MachineSelectionListBox.DataValueField = "Machines";
                 MachineSelectionListBox.DataBind();
             }
-                
         }
-
-        protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
-        {
-            Response.Redirect("~/Menu.aspx?MachineGroup=" + Request.QueryString["MachineGroupId"]);
-        }
-
-        
 
         protected void Button1_Click(object sender, EventArgs e)
         {
             if (MachineSelectionListBox.SelectedIndex == -1)
                 return;
-            Response.Redirect("~/ActualState/ActualState_Show.aspx?MachineId=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]);
+            Response.Redirect("~/Projects/ProjectAssignment.aspx?MachineId=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"] 
+                + " &MachineGroupId=" +Session["MachineGroup"]);
+       
         }
 
-        
-
-       
+        protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
+        {
+            Response.Redirect("~/Menu.aspx?MachineGroup=" + Session["MachineGroupId"]);
+        }
     }
 }

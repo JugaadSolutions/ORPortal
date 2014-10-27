@@ -14,8 +14,8 @@ namespace ManufactureMonitor.DALayer
         ConnectionStrings["DefaultConnection"].ConnectionString;
 
 
-
-        public DataTable GetStopProblems(int MachineGroup_ID)
+            #region STOPPROBLEMS
+            public DataTable GetStopProblems(int MachineGroup_ID)
         {
             SqlConnection cn;
             SqlCommand cmd;
@@ -46,7 +46,8 @@ namespace ManufactureMonitor.DALayer
             return dt;
             
         }
-        public DataTable GetParameters(int MachineGroup_ID)
+            #endregion
+            public DataTable GetParameters(int MachineGroup_ID)
         {
             SqlConnection cn;
             SqlCommand cmd;
@@ -1779,5 +1780,75 @@ namespace ManufactureMonitor.DALayer
 
              cn.Close();
          }
+         #region PROJECT_ASSIGNMENT
+         public DataTable CurrentProject(int Machine_Id)
+         {
+             SqlConnection cn;
+             SqlCommand cmd;
+
+             cn = new SqlConnection(connection);
+             String query = @"Select Projects.Name+' - ' + Convert(nvarchar,Projects.CycleTime,0) as Project,Projects.Id as Id
+             from ProjectMachines join Projects on ProjectMachines.Project_Id=Projects.Id
+             where Machine_Id='{0}' AND ProjectMachines.Active='Yes'";
+             query = String.Format(query, Machine_Id);
+
+             cn.Open();
+             cmd = new SqlCommand(query, cn);
+
+             SqlDataReader dr = cmd.ExecuteReader();
+             DataTable dt = new DataTable();
+             dt.Load(dr);
+             dr.Close();
+             cn.Close();
+             return dt;
+         }
+         public DataTable GetNewProjects(int Machine_Id)
+         {
+             SqlConnection cn;
+             SqlCommand cmd;
+
+             cn = new SqlConnection(connection);
+             String query = @"Select Projects.Name+' - ' + Convert(nvarchar,Projects.CycleTime,0) as Projects,Projects.Id as Id
+             from ProjectMachines join Projects on ProjectMachines.Project_Id=Projects.Id
+             where Machine_Id='{0}' AND ProjectMachines.Active='No'";
+             query = String.Format(query, Machine_Id);
+
+             cn.Open();
+             cmd = new SqlCommand(query, cn);
+
+             SqlDataReader dr = cmd.ExecuteReader();
+             DataTable dt = new DataTable();
+             dt.Load(dr);
+             dr.Close();
+             cn.Close();
+             return dt;
+         }
+         public bool SetProject(int Machine_Id, int cur_p_id, int new_p_id)
+         {
+             SqlConnection cn;
+             SqlCommand cmd;
+             try
+             {
+                 cn = new SqlConnection(connection);
+                 String query = @" Begin tran
+                    update ProjectMachines set Active='No' where Machine_Id = {0} and Project_Id = {1}
+                    update ProjectMachines set Active='Yes' where Machine_Id = {0} and Project_Id = {2}
+                    commit";
+                 query = String.Format(query, Machine_Id, cur_p_id, new_p_id);
+                 cn.Open();
+                 cmd = new SqlCommand(query, cn);
+
+                 cmd.ExecuteNonQuery();
+
+                 cn.Close();
+                 return true;
+             }
+             catch (Exception)
+             {
+                 return false;
+
+             }
+         }
+#endregion
     }
 }

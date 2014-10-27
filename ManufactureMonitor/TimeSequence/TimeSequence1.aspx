@@ -1,20 +1,21 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="TimeSequence1.aspx.cs" Inherits="ManufactureMonitor.TimeSequence1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <table  style="border: thin solid #FFAF37; width: 1500px; text-align:center; height: 300px;">
+    <table  style=" width: 1200px; text-align:center; height: 300px;">
         <tr>
             <td colspan="2" style="background-color: #FFFFCC; height: 32px; ">
-                &nbsp;<asp:TextBox ID="TextBox1" runat="server" Width="455px" BorderColor="#333333" BorderStyle="Solid" BorderWidth="3px" Font-Bold="True" ForeColor="Black" Height="20px" style="font-size: medium; margin-left: 0px;">          Stop Times- Times sequence of machine stop times</asp:TextBox>
-            &nbsp;</td>
-            <td colspan="2" style="background-color: #FFFFCC; height: 32px;">
-                &nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <asp:TextBox ID="TextBox1" runat="server" Width="455px" BorderColor="#333333" BorderStyle="Solid" BorderWidth="3px" Font-Bold="True" ForeColor="Black" Height="20px" style="font-size: medium; margin-left: 0px;"> Stop Times- Times sequence of machine stop times</asp:TextBox>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <asp:ImageButton ID="ImageButton1" runat="server" Height="25px" ImageAlign="Middle" ImageUrl="~/Images/return.jpg" OnClick="ImageButton1_Click" Width="25px" />
             </td>
+            <td colspan="2" style="background-color: #FFFFCC; height: 32px; width: 268435456px;">
+                &nbsp;&nbsp;&nbsp;
+                </td>
         </tr>
         <tr>
             <td style="background-color: #FFFFCC; height: 32px; text-align: left;">    
         <tr>
             <td style="background-color: #FFFFCC; height: 32px; ">
-                <table  style="border: thin solid #FFAF37; width: 78%; text-align:center; height: 287px; margin-left: 119px;" align="left">
+                <table  style="border: thin solid #FFAF37; width: 91%; text-align:center; height: 287px; margin-left: 108px;" align="left">
                     <tr>
                         <td colspan="5" style="background-color: #FFAF37; height: 32px; text-align: left;"><strong style="text-align: left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Selection Parameters</strong></td>
                     </tr>
@@ -82,7 +83,7 @@
         
             </td>
             <td colspan="2" style="background-color: #FFFFCC; height: 32px; text-align: left;">&nbsp;</td>
-            <td style="background-color: #FFFFCC; height: 32px; text-align: left;">&nbsp;</td>
+            <td style="background-color: #FFFFCC; height: 32px; text-align: left; width: 268435456px;">&nbsp;</td>
         </tr>
         <tr>
             <td colspan="4">&nbsp;</td>

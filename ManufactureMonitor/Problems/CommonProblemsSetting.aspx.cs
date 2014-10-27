@@ -50,7 +50,8 @@ namespace ManufactureMonitor
 
         protected void Button4_Click(object sender, EventArgs e)
         {
-
+            if (ProblemSelectionListBox.SelectedIndex == -1)
+                return;
             DataAccess da = new DataAccess();
             da.DeleteProblem((Int32)dt.Rows[ProblemSelectionListBox.SelectedIndex]["Code"]);
             Response.Write("<script>alert('Problem Delected Successfully..');if(alert){ window.location='../Problems/CommonProblemsSetting.aspx?MachineId=" + Request.QueryString["MachineId"] + "';}</script>");

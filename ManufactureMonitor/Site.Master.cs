@@ -81,5 +81,10 @@ namespace ManufactureMonitor
             Response.Redirect("~/Index.aspx");
         }
 
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Menu.aspx");
+        }
+
      }
 }

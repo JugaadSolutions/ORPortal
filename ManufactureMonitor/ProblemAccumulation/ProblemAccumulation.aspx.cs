@@ -18,7 +18,7 @@ namespace ManufactureMonitor
             if (!Page.IsPostBack)
             {
                 DataAccess da = new DataAccess();
-                dt = da.GetMachines(Convert.ToInt32(Request.QueryString["MachineGroupId"]));
+                dt = da.GetMachines(Convert.ToInt32(Session["MachineGroup"]));
                 MachineSelectionListBox.DataSource = dt.DefaultView;
                 MachineSelectionListBox.DataValueField = "Machines";
                 MachineSelectionListBox.DataBind();
@@ -29,12 +29,12 @@ namespace ManufactureMonitor
 
         protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
         {
-            Response.Redirect("~/Menu.aspx?MachineGroup=" + Request.QueryString["MachineGroupId"]);
+            Response.Redirect("~/Menu.aspx?MachineGroup=" + Session["MachineGroup"]);
         }
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/ProblemAccumulation_Show.aspx?MachineGroupId=" + Request.QueryString["MachineGroupId"]
+            Response.Redirect("~/ProblemAccumulation/ProblemAccumulation_Show.aspx?MachineGroupId=" + Session["MachineGroup"]
                  + "&MachineId=" + (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
                  + "&ShiftId=" + (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"]);
         }

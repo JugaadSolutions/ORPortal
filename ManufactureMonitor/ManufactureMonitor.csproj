@@ -129,6 +129,8 @@
     <Content Include="Account\RegisterExternalLogin.aspx" />
     <Content Include="ActualState\ActualState.aspx" />
     <Content Include="ActualState\ActualState_Show.aspx" />
+    <Content Include="Images\excelicon.jpg" />
+    <Content Include="Projects\ProjectAssignment1.aspx" />
     <Content Include="Users\ChangePassword.aspx" />
     <Content Include="Problems\CommonProblemsSetting.aspx" />
     <Content Include="Problems\CommonProblemsSetting_ADD.aspx" />
@@ -220,7 +222,6 @@
     <Content Include="ProblemAccumulation\ProblemAccumulation.aspx" />
     <Content Include="ProblemAccumulation\ProblemAccumulation_Show.aspx" />
     <Content Include="Projects\ProjectAssignment.aspx" />
-    <Content Include="Projects\ProjectAssignment_Show.aspx" />
     <Content Include="Projects\ProjectSetting.aspx" />
     <Content Include="Projects\ProjectSetting_Enter_Add.aspx" />
     <Content Include="Projects\ProjectSummary.aspx" />
@@ -324,6 +325,13 @@
     </Compile>
     <Compile Include="Account\RegisterExternalLogin.aspx.designer.cs">
       <DependentUpon>RegisterExternalLogin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Projects\ProjectAssignment1.aspx.cs">
+      <DependentUpon>ProjectAssignment1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Projects\ProjectAssignment1.aspx.designer.cs">
+      <DependentUpon>ProjectAssignment1.aspx</DependentUpon>
     </Compile>
     <Compile Include="Users\ChangePassword.aspx.cs">
       <DependentUpon>ChangePassword.aspx</DependentUpon>
@@ -550,13 +558,6 @@
     </Compile>
     <Compile Include="Projects\ProjectAssignment.aspx.designer.cs">
       <DependentUpon>ProjectAssignment.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Projects\ProjectAssignment_Show.aspx.cs">
-      <DependentUpon>ProjectAssignment_Show.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Projects\ProjectAssignment_Show.aspx.designer.cs">
-      <DependentUpon>ProjectAssignment_Show.aspx</DependentUpon>
     </Compile>
     <Compile Include="Projects\ProjectSetting.aspx.cs">
       <DependentUpon>ProjectSetting.aspx</DependentUpon>

@@ -19,7 +19,7 @@
                     </tr>
                     <tr>
                          <td style="height: 23px; width: 105px"><b>Machines:</b></td>
-                         <td style="height: 23px; width: 217px;"><b>Date :</b></td>
+                         <td style="height: 23px; width: 217px; text-align: left;"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Date :</b></td>
                          <td style="height: 23px; width: 164px;"><b>Shifts:</b></td>
                     </tr>
                     <tr>
@@ -31,7 +31,7 @@
                             <asp:Calendar ID="date" runat="server" BackColor="#FFFFCC" 
                                 BorderColor="#FFCC66" BorderWidth="1px" DayNameFormat="Shortest" 
                                 Font-Names="Verdana" Font-Size="8pt" ForeColor="#663399" Height="129px" 
-                                Width="109px" style="margin-left: 28px">
+                                Width="109px" style="margin-left: 68px">
                                 <DayHeaderStyle BackColor="#FFCC66" Font-Bold="True" Height="1px" />
                                 <NextPrevStyle Font-Size="9pt" ForeColor="#FFFFCC" />
                                 <OtherMonthDayStyle ForeColor="#CC9966" />

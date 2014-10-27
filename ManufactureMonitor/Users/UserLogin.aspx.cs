@@ -48,7 +48,7 @@ namespace ManufactureMonitor
                             Response.Redirect("~/Problems/StopProblemSetting1.aspx"   );
                             break;
                     case "ProjectAssignment":
-                            Response.Redirect("~/Projects/ProjectAssignment.aspx"   );
+                            Response.Redirect("~/Projects/ProjectAssignment1.aspx"   );
                             break;
                     case "M_off_setting":
                             Response.Redirect("~/MachineOff/M_off_Setting.aspx"   );
