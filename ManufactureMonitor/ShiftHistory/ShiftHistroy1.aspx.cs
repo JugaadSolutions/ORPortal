@@ -47,13 +47,16 @@ namespace ManufactureMonitor
                   String datefrom = Calendar1.SelectedDate.ToShortDateString();
                   String dateto = Calendar2.SelectedDate.ToShortDateString();
                   int ShiftId = -1;
+                  
                   if (ShiftSelectionListBox.SelectedIndex != -1)
                   {
                       ShiftId = (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"];
+                       
                   }
                   Response.Redirect("~/ShiftHistory/ShiftHistroy_Show.aspx?MachineId="
-                      + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
+                      + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"] + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]
                        + "&ShiftId=" + ShiftId
+                       +"&ShiftName="+ (string)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Name"]
                        + "&datefrom=" + datefrom + "&dateto=" + dateto
                        +"&Summary="+Convert.ToBoolean(CheckBoxList1.Items[0].Selected));
               }
@@ -69,6 +72,11 @@ namespace ManufactureMonitor
             ShiftSelectionListBox.DataValueField = "shifts";
             ShiftSelectionListBox.DataBind();
                 
+        }
+
+        protected void ImageButton2_Click(object sender, ImageClickEventArgs e)
+        {
+
         }
     }
 }

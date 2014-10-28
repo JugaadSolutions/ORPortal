@@ -28,30 +28,32 @@
                                  Width="200px" AutoPostBack="true"></asp:ListBox>
                         </td>
                         <td style="height: 42px; width: 260px;">
-                            <asp:Calendar ID="Calendar1" runat="server" BackColor="#FFFFCC" BorderColor="#FFCC66" BorderWidth="1px" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="#663399" Height="140px" ShowGridLines="True" Width="195px" style="margin-left: 28px">
+                            <asp:Calendar ID="Calendar1" runat="server" BackColor="#FFFFCC" BorderColor="#FFCC66" BorderWidth="1px" DayNameFormat="Shortest"
+                                 Font-Names="Verdana" Font-Size="8pt" ForeColor="#663399" Height="140px"  Width="195px" style="margin-left: 28px">
                                 <DayHeaderStyle BackColor="#FFCC66" Font-Bold="True" Height="1px" />
                                 <NextPrevStyle Font-Size="9pt" ForeColor="#FFFFCC" />
                                 <OtherMonthDayStyle ForeColor="#CC9966" />
                                 <SelectedDayStyle BackColor="#CCCCFF" Font-Bold="True" />
                                 <SelectorStyle BackColor="#FFCC66" />
                                 <TitleStyle BackColor="#FFAF37" Font-Bold="True" Font-Size="9pt" ForeColor="#FFFFCC" />
-                                <TodayDayStyle BackColor="#FFCC66" ForeColor="White" />
+                                
                             </asp:Calendar>
                         </td>
                         <td style="height: 42px; width: 271px;">
-                            <asp:Calendar ID="Calendar2" runat="server" BackColor="#FFFFCC" BorderColor="#FFCC66" BorderWidth="1px" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="#663399" Height="140px" ShowGridLines="True" Width="195px" style="margin-left: 8px">
+                            <asp:Calendar ID="Calendar2" runat="server" BackColor="#FFFFCC" BorderColor="#FFCC66" BorderWidth="1px"
+                                 DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="#663399" Height="140px"  Width="195px" style="margin-left: 8px">
                                 <DayHeaderStyle BackColor="#FFCC66" Font-Bold="True" Height="1px" />
                                 <NextPrevStyle Font-Size="9pt" ForeColor="#FFFFCC" />
                                 <OtherMonthDayStyle ForeColor="#CC9966" />
                                 <SelectedDayStyle BackColor="#CCCCFF" Font-Bold="True" />
                                 <SelectorStyle BackColor="#FFCC66" />
                                 <TitleStyle BackColor="#FFAF37" Font-Bold="True" Font-Size="9pt" ForeColor="#FFFFCC" />
-                                <TodayDayStyle BackColor="#FFCC66" ForeColor="White" />
+                               
                             </asp:Calendar>
                         </td>
                         <td style="height: 42px; width: 167px;">
                            
-                            <asp:ListBox ID="ShiftSelectionListBox" runat="server" Height="150px" Width="150px"></asp:ListBox>
+                            <asp:ListBox ID="ShiftSelectionListBox" runat="server" Height="150px" Width="150px" style="margin-left: 11px"></asp:ListBox>
                         </td>
                         <td style="height: 42px; width: 321px;">
                             <asp:CheckBoxList ID="CheckBoxList1" runat="server" Height="16px" Width="166px">
@@ -60,8 +62,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="5" style="height: 1px; ">
+                        <td colspan="5" style="height: 70px; ">
                             <asp:Button ID="Button1" runat="server" BorderColor="Gray" BorderStyle="Outset" BorderWidth="2px" Text="Show" Height="45px" Width="80px" OnClick="Button1_Click" />
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <asp:ImageButton ID="ImageButton2" runat="server" Height="40px" ImageAlign="AbsBottom" ImageUrl="~/Images/excelicon.jpg" OnClick="ImageButton2_Click" Width="40px" />
                         </td>
                     </tr>
                     <tr>

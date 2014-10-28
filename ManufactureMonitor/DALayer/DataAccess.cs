@@ -450,7 +450,7 @@ namespace ManufactureMonitor.DALayer
                             +(case when ShiftMachines.Thursday=1 Then ',Thu' else ' ' End)+
                             +(case when ShiftMachines.Friday=1 Then ',Fri' else ' ' End)+
                             +(case when ShiftMachines.Saturday=1 Then ',Sat' else ' ' End)+
-                            +(case when ShiftMachines.Sunday=1 Then ',Sun' else ' ' End) as shifts,Id
+                            +(case when ShiftMachines.Sunday=1 Then ',Sun' else ' ' End) as shifts,Id,Name
                              from 
                              Shifts inner Join ShiftMachines on Shifts.Id=ShiftMachines.Shift_Id
                              where
@@ -843,7 +843,7 @@ namespace ManufactureMonitor.DALayer
              cn = new SqlConnection(connection);
              String query = @" Select Machines.Name+'-'+' '+Convert(varchar(5),CONVERT(TIME(0),Shifts.Start,0),20)   
                                +'-'+Convert(varchar(5),CONVERT(TIME(0),Shifts.[End],0),20)
-                               as shifts, CONVERT(TIME(0),Shifts.Start,20) as [Start],CONVERT(TIME(0),Shifts.[End],20) as [End]
+                               as shifts, CONVERT(TIME(0),Shifts.Start,20) as [Start],CONVERT(TIME(0),Shifts.[End],20) as [End],Shifts.Name as [Name]
                                  from Machines
                                  Join ShiftMachines on Machines.Id=ShiftMachines.Machine_Id 
                                  Join Shifts on Shifts.Id=ShiftMachines.Shift_Id
@@ -874,7 +874,7 @@ namespace ManufactureMonitor.DALayer
              cn = new SqlConnection(connection);
              String query = @" Select Convert(varchar(5),CONVERT(TIME(0),Shifts.Start,0),20)   
                                +'-'+Convert(varchar(5),CONVERT(TIME(0),Shifts.[End],0),20)
-                               as shifts,Shifts.Id as Id
+                               as shifts,Shifts.Id as Id,Shifts.Name as [Name]
                                  from Machines
                                  Join ShiftMachines on Machines.Id=ShiftMachines.Machine_Id 
                                  Join Shifts on Shifts.Id=ShiftMachines.Shift_Id

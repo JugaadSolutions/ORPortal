@@ -37,6 +37,7 @@ namespace ManufactureMonitor
             
 
             Response.Redirect("~/Scraps/Scrap_entry.aspx?MachineId=" + (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
+                 + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]
                  + "&ShiftId=" + shift +"&From=" +Calendar1.SelectedDate.ToString("dd-MMM-yyyy")
                  + "&To=" + Calendar2.SelectedDate.ToString("dd-MMM-yyyy"));
         }
@@ -61,7 +62,9 @@ namespace ManufactureMonitor
             
 
             Response.Redirect("~/Scraps/Scrap_show.aspx?MachineId=" + (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
-                 + "&ShiftId=" + shift + "&From=" + Calendar1.SelectedDate.ToString("dd-MMM-yyyy")
+                 + "&ShiftId=" + shift
+                 + "&ShiftName=" + (string)dt1.Rows[MachineSelectionListBox.SelectedIndex]["Name"] 
+                 + "&From=" + Calendar1.SelectedDate.ToString("dd-MMM-yyyy")
                  + "&To=" + Calendar2.SelectedDate.ToString("dd-MMM-yyyy"));
         }
 

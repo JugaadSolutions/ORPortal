@@ -29,7 +29,8 @@ namespace ManufactureMonitor
         {
            // Session["Id"] = dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"];
             Response.Redirect("~/Shifts/ShiftDefinitionSetting.aspx?MachineId=" 
-                + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"] );
+                + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
+                 + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]);
         }
 
         protected void ImageButton1_Click(object sender, ImageClickEventArgs e)

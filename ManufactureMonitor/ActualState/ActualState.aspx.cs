@@ -39,7 +39,8 @@ namespace ManufactureMonitor
         {
             if (MachineSelectionListBox.SelectedIndex == -1)
                 return;
-            Response.Redirect("~/ActualState/ActualState_Show.aspx?MachineId=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]);
+            Response.Redirect("~/ActualState/ActualState_Show.aspx?MachineId=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
+                + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]);
         }
 
         

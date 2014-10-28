@@ -77,8 +77,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="5" style="height: 1px">
+                        <td colspan="5" style="height: 97px">
                             <asp:Button ID="Button1" runat="server" BorderColor="Gray" BorderStyle="Outset" BorderWidth="2px" Text="Show" Height="45px" Width="80px" OnClick="Button1_Click" />
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <asp:ImageButton ID="ImageButton2" runat="server" Height="40px" ImageUrl="~/Images/excelicon.jpg" OnClick="ImageButton2_Click" Width="40px" />
                         </td>
                     </tr>
                     <tr>

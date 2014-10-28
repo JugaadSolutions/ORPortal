@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="DisplayProject.aspx.cs" Inherits="ManufactureMonitor.DisplayProject" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <p style="background-color: #FFFFCC; text-align: right;">
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div style="height:100%">
+               <asp:Panel runat="server" ID="MainPanel" ScrollBars="Auto" height="100%">
         <table style="width: 100%; border-collapse: collapse">
             <tr>
                 <td style="text-align: center; ">
@@ -29,5 +29,6 @@
             </tr>
         </table>
         
-    </p>
+    </asp:Panel>
+        </div>
 </asp:Content>

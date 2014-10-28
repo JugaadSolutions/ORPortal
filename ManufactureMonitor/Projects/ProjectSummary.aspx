@@ -2,10 +2,9 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <table  style="border: thin solid #FFAF37; width: 102%; text-align:center; height: 201px;">
         <tr>
-            <td colspan="6" style="background-color: #FFFFCC; height: 32px;"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <asp:TextBox ID="TextBox1" runat="server" BorderColor="Gray" BorderStyle="Solid" BorderWidth="3px" Height="30px" style="font-size: medium; font-weight: bold; margin-left: 0px" Width="600px">                                         Project summary - all shifts</asp:TextBox>
-                </strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <asp:ImageButton ID="ImageButton1" runat="server" Height="25px" ImageAlign="Middle" ImageUrl="~/Images/return.jpg" Width="25px" OnClick="ImageButton1_Click" />
+            <td colspan="6" style="background-color: #FFFFCC; height: 32px;"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <asp:TextBox ID="TextBox1" runat="server" BorderColor="Gray" BorderStyle="Solid" BorderWidth="3px" Height="30px" style="font-size: medium; font-weight: bold; margin-left: 0px" Width="509px">                                         Project summary - all shifts</asp:TextBox>
+                </strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:ImageButton ID="ImageButton1" runat="server" Height="25px" ImageAlign="Middle" ImageUrl="~/Images/return.jpg" Width="25px" OnClick="ImageButton1_Click" />
             </td>
         </tr>
         <tr>
@@ -25,25 +24,27 @@
                      Width="200px" AutoPostBack="true"></asp:ListBox>
             </td>
             <td style="height: 42px; width: 248px;">
-                <asp:Calendar ID="datefrom" runat="server" BackColor="#FFFFCC" BorderColor="#FFCC66" BorderWidth="1px" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="#663399" Height="140px" ShowGridLines="True" Width="195px" style="margin-left: 34px">
+                <asp:Calendar ID="datefrom" runat="server" BackColor="#FFFFCC" BorderColor="#FFCC66" BorderWidth="1px" DayNameFormat="Shortest"
+                     Font-Names="Verdana" Font-Size="8pt" ForeColor="#663399" Height="140px"  Width="195px" style="margin-left: 34px">
                     <DayHeaderStyle BackColor="#FFCC66" Font-Bold="True" Height="1px" />
                     <NextPrevStyle Font-Size="9pt" ForeColor="#FFFFCC" />
                     <OtherMonthDayStyle ForeColor="#CC9966" />
                     <SelectedDayStyle BackColor="#CCCCFF" Font-Bold="True" />
                     <SelectorStyle BackColor="#FFCC66" />
                     <TitleStyle BackColor="#FFAF37" Font-Bold="True" Font-Size="9pt" ForeColor="#FFFFCC" />
-                    <TodayDayStyle BackColor="#FFCC66" ForeColor="White" />
+                    
                 </asp:Calendar>
             </td>
             <td style="height: 42px; width: 277px;">
-                <asp:Calendar ID="dateto" runat="server" BackColor="#FFFFCC" BorderColor="#FFCC66" BorderWidth="1px" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="#663399" Height="140px" ShowGridLines="True" Width="195px" style="margin-left: 45px">
+                <asp:Calendar ID="dateto" runat="server" BackColor="#FFFFCC" BorderColor="#FFCC66" BorderWidth="1px" DayNameFormat="Shortest"
+                     Font-Names="Verdana" Font-Size="8pt" ForeColor="#663399" Height="140px"  Width="195px" style="margin-left: 45px">
                     <DayHeaderStyle BackColor="#FFCC66" Font-Bold="True" Height="1px" />
                     <NextPrevStyle Font-Size="9pt" ForeColor="#FFFFCC" />
                     <OtherMonthDayStyle ForeColor="#CC9966" />
                     <SelectedDayStyle BackColor="#CCCCFF" Font-Bold="True" />
                     <SelectorStyle BackColor="#FFCC66" />
                     <TitleStyle BackColor="#FFAF37" Font-Bold="True" Font-Size="9pt" ForeColor="#FFFFCC" />
-                    <TodayDayStyle BackColor="#FFCC66" ForeColor="White" />
+                   
                 </asp:Calendar>
             </td>
             <td style="height: 42px; width: 63px;">
@@ -53,7 +54,9 @@
                 <asp:ListBox ID="ModelSelectionListBox" runat="server" Height="150px" Width="150px"></asp:ListBox>
                 &nbsp;</td>
             <td style="height: 42px; text-align: left;">
-                &nbsp;</td>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <asp:ImageButton ID="ImageButton2" runat="server" Height="40px" ImageAlign="Middle" ImageUrl="~/Images/excelicon.jpg" OnClick="ImageButton2_Click" Width="40px" />
+            </td>
         </tr>
         <tr>
             <td colspan="6" style="height: 1px">

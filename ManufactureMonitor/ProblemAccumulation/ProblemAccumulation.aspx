@@ -57,7 +57,7 @@
                         </td>
                         <td style="height: 42px; width: 167px;">
                            
-                            <asp:ListBox ID="ShiftSelectionListBox" runat="server" Height="150px" Width="150px"></asp:ListBox>
+                            <asp:ListBox ID="ShiftSelectionListBox" runat="server" Height="150px" Width="150px" style="margin-left: 15px"></asp:ListBox>
                         </td>
                         <td style="height: 42px; width: 321px;">
                             <asp:CheckBoxList ID="CheckBoxList1" runat="server" Height="16px" Width="166px">
@@ -66,8 +66,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="5" style="height: 1px">
+                        <td colspan="5" style="height: 67px">
                             <asp:Button ID="Button1" runat="server" BorderColor="Gray" BorderStyle="Outset" BorderWidth="2px" Text="Show" Height="45px" Width="80px" OnClick="Button1_Click" />
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <asp:ImageButton ID="ImageButton2" runat="server" Height="40px" ImageAlign="AbsBottom" ImageUrl="~/Images/excelicon.jpg" OnClick="ImageButton2_Click" Width="40px" />
                         </td>
                     </tr>
                     <tr>

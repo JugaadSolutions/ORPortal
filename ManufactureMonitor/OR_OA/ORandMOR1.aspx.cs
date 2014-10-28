@@ -17,7 +17,7 @@ namespace ManufactureMonitor
             if (!Page.IsPostBack)
             {
                 DataAccess da = new DataAccess();
-                dt = da.GetMachines(Convert.ToInt32(Request.QueryString["MachineGroupId"]));
+                dt = da.GetMachines(Convert.ToInt32(Session["MachineGroup"]));
                 MachineSelectionListBox.DataSource = dt.DefaultView;
                 MachineSelectionListBox.DataValueField = "Machines";
                 MachineSelectionListBox.DataBind();
@@ -28,9 +28,11 @@ namespace ManufactureMonitor
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/ORandMOR1_Show.aspx?MachineGroupId=" + Request.QueryString["MachineGroupId"]
+            Response.Redirect("~/OR_OA/ORandMOR1_Show.aspx?MachineGroup=" + Session["MachineGroup"]
                 + "&MachineId=" + (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
-                 + "&ShiftId=" + (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"]);
+                 + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]
+                 + "&ShiftId=" + (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"]
+                  + "&ShiftName=" + (string)dt1.Rows[MachineSelectionListBox.SelectedIndex]["Name"]);
         }
 
         protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
@@ -47,6 +49,11 @@ namespace ManufactureMonitor
             ShiftSelectionListBox.DataSource = dt1.DefaultView;
             ShiftSelectionListBox.DataValueField = "shifts";
             ShiftSelectionListBox.DataBind();
+        }
+
+        protected void ImageButton2_Click(object sender, ImageClickEventArgs e)
+        {
+
         }
     }
 }

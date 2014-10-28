@@ -18,7 +18,7 @@ namespace ManufactureMonitor
             if (!Page.IsPostBack)
             {
                 DataAccess da = new DataAccess();
-                dt = da.GetMachines(Convert.ToInt32(Request.QueryString["MachineGroupId"]));
+                dt = da.GetMachines(Convert.ToInt32(Session["MachineGroup"]));
                 MachineSelectionListBox.DataSource = dt.DefaultView;
                 MachineSelectionListBox.DataValueField = "Machines";
                 MachineSelectionListBox.DataBind();
@@ -36,7 +36,8 @@ namespace ManufactureMonitor
         {
             Response.Redirect("~/ProjectSummary_Show.aspx?Id=" + Request.QueryString["MachineGroupId"]
                  +"&MachineId="+(int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
-                 + "&ShiftId=" + (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"]);
+                 + "&ShiftId=" + (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"]
+                  + "&ShiftName=" + (string)dt1.Rows[MachineSelectionListBox.SelectedIndex]["Name"]);
         }
 
         protected void MachineSelectionListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -57,10 +58,17 @@ namespace ManufactureMonitor
 
         protected void Button1_Click1(object sender, EventArgs e)
         {
-            Response.Redirect("~/LossHourGraph.aspx?Id=" + Request.QueryString["MachineGroupId"]
+            Response.Redirect("~/SummaryReport/LossHourGraph.aspx?Id=" + Request.QueryString["MachineGroupId"]
                  + "&MachineId=" + (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
-                 + "&ShiftId=" + (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"] 
+                  + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]
+                 + "&ShiftId=" + (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"]
+                  + "&ShiftName=" + (string)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Name"]
                  + "&datefrom=" + datefrom.SelectedDate.ToShortDateString() + "&dateto=" + dateto.SelectedDate.ToShortDateString());
+        }
+
+        protected void ImageButton2_Click(object sender, ImageClickEventArgs e)
+        {
+
         }
     }
 }

@@ -32,7 +32,8 @@ namespace ManufactureMonitor
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Problems/StopProblemSetting.aspx?MachineId=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]);
+            Response.Redirect("~/Problems/StopProblemSetting.aspx?MachineId=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"] 
+                + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]);
         }
     }
 }

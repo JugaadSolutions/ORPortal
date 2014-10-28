@@ -32,7 +32,9 @@ namespace ManufactureMonitor
            
             Response.Redirect("~/MachineInputs/InputFromMachines_Show.aspx?MachineId=" 
                 + (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
-                 + "&ShiftId=" + (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"] 
+                 + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]
+                 + "&ShiftId=" + (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"]
+                  + "&ShiftName=" + (string)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Name"]
                  + "&date=" + date.SelectedDate.ToString("dd-MMM-yyyy"));
         }
 
@@ -51,6 +53,11 @@ namespace ManufactureMonitor
             ShiftSelectionListBox.DataSource = dt1.DefaultView;
             ShiftSelectionListBox.DataValueField = "shifts";
             ShiftSelectionListBox.DataBind();
+        }
+
+        protected void ImageButton2_Click(object sender, ImageClickEventArgs e)
+        {
+
         }
     }
 }

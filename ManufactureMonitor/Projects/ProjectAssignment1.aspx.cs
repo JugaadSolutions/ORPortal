@@ -29,7 +29,8 @@ namespace ManufactureMonitor.Projects
         {
             if (MachineSelectionListBox.SelectedIndex == -1)
                 return;
-            Response.Redirect("~/Projects/ProjectAssignment.aspx?MachineId=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"] 
+            Response.Redirect("~/Projects/ProjectAssignment.aspx?MachineId=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
+                 + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]
                 + " &MachineGroupId=" +Session["MachineGroup"]);
        
         }

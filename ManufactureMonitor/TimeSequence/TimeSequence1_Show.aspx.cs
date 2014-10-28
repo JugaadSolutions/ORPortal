@@ -154,43 +154,48 @@ namespace ManufactureMonitor
 
 
 
-        protected void Export_Click(object sender, EventArgs e)
+        //protected void Export_Click(object sender, EventArgs e)
+        //{
+        //    using (ExcelPackage pck = new ExcelPackage())
+        //    {
+        //        int i = 0;
+        //        foreach (DataTable d in dts)
+        //        {
+        //            if (d.Rows.Count <= 0) {  continue; }
+        //            //Create the worksheet
+        //            ExcelWorksheet ws = pck.Workbook.Worksheets.Add(sheetNames[i]);
+
+        //            //Load the datatable into the sheet, starting from cell A1. Print the column names on row 1
+        //            ws.Cells["A1"].LoadFromDataTable(d, true);
+
+        //            //Format the header for column 1-3
+        //            using (ExcelRange rng = ws.Cells["A1:F1"])
+        //            {
+        //                rng.Style.Font.Bold = true;
+        //                rng.Style.Fill.PatternType = ExcelFillStyle.Solid;                      //Set Pattern for the background to Solid
+        //                rng.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(79, 129, 189));  //Set color to dark blue
+        //                rng.Style.Font.Color.SetColor(Color.White);
+        //            }
+
+        //            ////Example how to Format Column 1 as numeric 
+        //            //using (ExcelRange col = ws.Cells[2,1,d.Rows.Count+1,2])
+        //            //{
+        //            //    col.Style.Numberformat.Format = "HH:mm:ss";
+        //            //    //col.Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+        //            //}
+
+        //            i++;
+        //        }
+        //        //Write it back to the client
+        //        Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+        //        Response.AddHeader("content-disposition", "attachment;  filename=" + fileNames[0]+".xlsx");
+        //        Response.BinaryWrite(pck.GetAsByteArray());
+        //    }
+        //}
+
+        protected void ImageButton2_Click(object sender, ImageClickEventArgs e)
         {
-            using (ExcelPackage pck = new ExcelPackage())
-            {
-                int i = 0;
-                foreach (DataTable d in dts)
-                {
-                    if (d.Rows.Count <= 0) {  continue; }
-                    //Create the worksheet
-                    ExcelWorksheet ws = pck.Workbook.Worksheets.Add(sheetNames[i]);
 
-                    //Load the datatable into the sheet, starting from cell A1. Print the column names on row 1
-                    ws.Cells["A1"].LoadFromDataTable(d, true);
-
-                    //Format the header for column 1-3
-                    using (ExcelRange rng = ws.Cells["A1:F1"])
-                    {
-                        rng.Style.Font.Bold = true;
-                        rng.Style.Fill.PatternType = ExcelFillStyle.Solid;                      //Set Pattern for the background to Solid
-                        rng.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(79, 129, 189));  //Set color to dark blue
-                        rng.Style.Font.Color.SetColor(Color.White);
-                    }
-
-                    ////Example how to Format Column 1 as numeric 
-                    //using (ExcelRange col = ws.Cells[2,1,d.Rows.Count+1,2])
-                    //{
-                    //    col.Style.Numberformat.Format = "HH:mm:ss";
-                    //    //col.Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                    //}
-
-                    i++;
-                }
-                //Write it back to the client
-                Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                Response.AddHeader("content-disposition", "attachment;  filename=" + fileNames[0]+".xlsx");
-                Response.BinaryWrite(pck.GetAsByteArray());
-            }
         }
     }
 }

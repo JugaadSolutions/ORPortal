@@ -42,7 +42,8 @@ namespace ManufactureMonitor
             if (ShiftSelectionListBox.SelectedIndex == -1)
                 return;
             Response.Redirect("~/Shifts/ShiftSetting_Timepoints.aspx?MachineId=" + Request.QueryString["MachineId"] + "&ShiftId=" 
-                + dt.Rows[ShiftSelectionListBox.SelectedIndex]["Id"]);
+                + dt.Rows[ShiftSelectionListBox.SelectedIndex]["Id"]
+                 + "&ShiftName=" + (string)dt.Rows[ShiftSelectionListBox.SelectedIndex]["Name"]);
         }
 
         protected void Button2_Click(object sender, EventArgs e)
@@ -50,7 +51,9 @@ namespace ManufactureMonitor
             if (ShiftSelectionListBox.SelectedIndex == -1)
                 return;
             Response.Redirect("~/Shifts/ShiftSetting_Add.aspx?ShiftId=" 
-                + dt.Rows[ShiftSelectionListBox.SelectedIndex]["Id"]+"&MachineId=" + Request.QueryString["MachineId"]);
+                + dt.Rows[ShiftSelectionListBox.SelectedIndex]["Id"]
+                 + "&ShiftName=" + (string)dt.Rows[ShiftSelectionListBox.SelectedIndex]["Name"]
+                +"&MachineId=" + Request.QueryString["MachineId"]);
         }
 
         protected void Button3_Click(object sender, EventArgs e)

@@ -28,7 +28,9 @@ namespace ManufactureMonitor
         {
             if (MachineSelectionListBox.SelectedIndex == -1)
                 return;
-            Response.Redirect("~/Problems/DisplayStopProblems.aspx?MachineId="+dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]+"&Source=Specific");
+            Response.Redirect("~/Problems/DisplayStopProblems.aspx?MachineId="+dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
+                 + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]
+                +"&Source=Specific");
         }
 
         protected void ImageButton1_Click(object sender, ImageClickEventArgs e)

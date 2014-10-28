@@ -35,7 +35,8 @@ namespace ManufactureMonitor
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Parameters/ParameterSetting_Show.aspx?Id=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"] );
+            Response.Redirect("~/Parameters/ParameterSetting_Show.aspx?Id=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
+                 + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]);
         }
         
     }
