@@ -23,8 +23,10 @@
         </tr>
         <tr>
             <td style="text-align: center; width: 214px; height: 3px;">
-                 <div id="Div1" onmouseover="Dark('Div1')" onmouseout="Light('Div1')" style="width: 200px; height: 30px; margin-left: 90px">
-                <asp:Button ID="Button1" runat="server" BackColor="#FF9966" BorderColor="#CC6666" BorderStyle="Solid" BorderWidth="3px" Height="30px" Text="Actual State" 
+                 <div id="Div1" onmouseover="Dark('Div1')" 
+                     onmouseout="Light('Div1')" style="width: 200px; height: 30px; margin-left: 90px">
+                <asp:Button ID="Button1" runat="server" BackColor="#FF9966" BorderColor="#CC6666"
+                     BorderStyle="Solid" BorderWidth="0px" Height="30px" Text="Actual State" 
                     Width="200px" style="margin-top:0px; margin-left: 0px; margin-right: 0px;" OnClick="Button1_Click"/>
             &nbsp;&nbsp;&nbsp;&nbsp;
            </div> 

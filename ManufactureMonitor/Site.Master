@@ -67,7 +67,7 @@
                          Font-Names="Arial"   ForeColor="Black" CssClass="auto-style2" Font-Bold="True"   />
                 </p>
     </header>
-    <%--<asp:ScriptManager runat="server">
+    <asp:ScriptManager runat="server">
         <Scripts>
            
             <asp:ScriptReference Name="MsAjaxBundle" />
@@ -83,7 +83,7 @@
             <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
             <asp:ScriptReference Name="WebFormsBundle" />
     </Scripts>
-    </asp:ScriptManager>--%>
+    </asp:ScriptManager>
     <div id="body" style="min-height:460px; width:100%; background-color:#FFFFCC; " class="auto-style10">
        <asp:ContentPlaceHolder runat="server" ID="MainContent"   />
     </div>

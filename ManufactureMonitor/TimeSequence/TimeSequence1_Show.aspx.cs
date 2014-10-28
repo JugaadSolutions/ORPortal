@@ -1,7 +1,10 @@
 ﻿using ManufactureMonitor.DALayer;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -12,7 +15,10 @@ namespace ManufactureMonitor
     
     public partial class TimeSequence1_Show : System.Web.UI.Page
     {
-        static DataTable dt,dt1;
+        static DataTable dt;
+        static List<DataTable> dts;
+        static List<String> fileNames;
+        static List<String> sheetNames;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
@@ -20,8 +26,9 @@ namespace ManufactureMonitor
                 DataAccess da = new DataAccess();
                 int machineId = Convert.ToInt32(Request.QueryString["MachineId"]);
 
-
-
+                dts = new List<DataTable>();
+                fileNames = new List<string>();
+                sheetNames = new List<string>();
 
                 DateTime fromDate = DateTime.Parse(Request.QueryString["datefrom"]);
                 DateTime toDate = DateTime.Parse(Request.QueryString["dateto"]);
@@ -50,9 +57,40 @@ namespace ManufactureMonitor
 
 
                         Duration.Text = fromDate.ToShortDateString() + ":" + (dt.Rows[i]["shifts"]).ToString();
-                        dt1 = da.GetStopDetails(machineId, ShiftId, from.ToString("yyyy-MM-dd HH:mm:ss"),
+                        DataTable dt1 = da.GetStopDetails(machineId, ShiftId, from.ToString("yyyy-MM-dd HH:mm:ss"),
                             to.ToString("yyyy-MM-dd HH:mm:ss"),
                             Convert.ToBoolean(Request.QueryString["SpeedLoss"]));
+
+                        if (dt1.Rows.Count == 0) continue;
+                        
+                            DataTable d = new DataTable();
+                            d.Columns.Add("From",typeof(string));
+                            d.Columns.Add("To", typeof(string));
+                            d.Columns.Add("Duration[s]", typeof(string));
+                            d.Columns.Add("Stop Type", typeof(string));
+                            d.Columns.Add("Problem", typeof(string));
+                            d.Columns.Add("Comment",typeof(string));
+
+                            for (int j = 0; j < dt1.Rows.Count; j++)
+                            {
+                                DataRow r = d.NewRow();
+
+                                r["From"] = dt1.Rows[j]["From"];
+                                r["To"] = dt1.Rows[j]["To"];
+                                r["Duration[s]"] = dt1.Rows[j]["Duration[s]"];
+                                r["Stop Type"] = dt1.Rows[j]["StopType"];
+                                r["Problem"] = dt1.Rows[j]["Problem"];
+                                r["Comment"] = dt1.Rows[j]["Comment"];
+                                d.Rows.Add(r);
+                            }
+                            dts.Add(d);
+                            char[] c = {':','-'};
+                            String[] f = Duration.Text.Split(c);
+                            fileNames.Add(f[1]);
+                            sheetNames.Add(f[0] + "-" + f[2] + ":" + f[3] + "-" + f[4] + ":" + f[5]);
+                        
+
+                        
 
                         GridView g = new GridView();
                         g.AutoGenerateColumns = false;
@@ -118,27 +156,41 @@ namespace ManufactureMonitor
 
         protected void Export_Click(object sender, EventArgs e)
         {
-            //using (XLWorkbook wb = new XLWorkbook())
-            //{
-            //    wb.Worksheets.Add(ds);
-            //    wb.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-            //    wb.Style.Font.Bold = true;
+            using (ExcelPackage pck = new ExcelPackage())
+            {
+                int i = 0;
+                foreach (DataTable d in dts)
+                {
+                    if (d.Rows.Count <= 0) {  continue; }
+                    //Create the worksheet
+                    ExcelWorksheet ws = pck.Workbook.Worksheets.Add(sheetNames[i]);
 
-            //    Response.Clear();
-            //    Response.Buffer = true;
-            //    Response.Charset = "";
-            //    Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-            //    Response.AddHeader("content-disposition", "attachment;filename=Summary_Rpt.xlsx");
+                    //Load the datatable into the sheet, starting from cell A1. Print the column names on row 1
+                    ws.Cells["A1"].LoadFromDataTable(d, true);
 
-            //    using (MemoryStream MyMemoryStream = new MemoryStream())
-            //    {
-            //        wb.SaveAs(MyMemoryStream);
-            //        MyMemoryStream.WriteTo(Response.OutputStream);
+                    //Format the header for column 1-3
+                    using (ExcelRange rng = ws.Cells["A1:F1"])
+                    {
+                        rng.Style.Font.Bold = true;
+                        rng.Style.Fill.PatternType = ExcelFillStyle.Solid;                      //Set Pattern for the background to Solid
+                        rng.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(79, 129, 189));  //Set color to dark blue
+                        rng.Style.Font.Color.SetColor(Color.White);
+                    }
 
-            //        Response.Flush();
-            //        Response.End();
-            //    }
-            //}
+                    ////Example how to Format Column 1 as numeric 
+                    //using (ExcelRange col = ws.Cells[2,1,d.Rows.Count+1,2])
+                    //{
+                    //    col.Style.Numberformat.Format = "HH:mm:ss";
+                    //    //col.Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    //}
+
+                    i++;
+                }
+                //Write it back to the client
+                Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                Response.AddHeader("content-disposition", "attachment;  filename=" + fileNames[0]+".xlsx");
+                Response.BinaryWrite(pck.GetAsByteArray());
+            }
         }
     }
 }
