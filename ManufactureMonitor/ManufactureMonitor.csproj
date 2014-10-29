@@ -133,6 +133,16 @@
     <Content Include="ActualState\ActualState.aspx" />
     <Content Include="ActualState\ActualState_Show.aspx" />
     <Content Include="Images\excelicon.jpg" />
+    <Content Include="Images\GREENSMILEY_small.PNG" />
+    <Content Include="Images\greenTriangle.PNG" />
+    <Content Include="Images\GREEN_SMILEY.png" />
+    <Content Include="Images\OrangeSmiley_small.PNG" />
+    <Content Include="Images\OrangeTriangle.PNG" />
+    <Content Include="Images\ORANGE_SmiLEY.png" />
+    <Content Include="Images\REDSMILEY_small.PNG" />
+    <Content Include="Images\redTriangle.PNG" />
+    <Content Include="Images\RED_SMILEY.png" />
+    <Content Include="Images\STOP.png" />
     <Content Include="Projects\ProjectAssignment1.aspx" />
     <Content Include="Users\ChangePassword.aspx" />
     <Content Include="Problems\CommonProblemsSetting.aspx" />
