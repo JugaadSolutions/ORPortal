@@ -532,6 +532,70 @@ namespace ManufactureMonitor.DALayer
             return dt;
         }
 
+        public SessionCollection getSessions(int shift, int machine)
+        {
+
+            SqlConnection con = new SqlConnection(connection);
+            con.Open();
+
+            SessionCollection sessions = new SessionCollection();
+
+            String qry = String.Empty;
+            qry = @"SELECT * FROM [Sessions] where Shift_Id={0} and Machine_Id={1}";
+
+            qry = String.Format(qry, shift, machine);
+            SqlCommand cmd = new SqlCommand(qry, con);
+            SqlDataReader dr = cmd.ExecuteReader();
+            DataTable dt = new DataTable();
+            dt.Load(dr);
+            dr.Close();
+            cmd.Dispose();
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                sessions.Add(new Session(shift, (int)dt.Rows[i]["id"],
+                    ((DateTime)dt.Rows[i]["Start"]).ToString(), ((DateTime)dt.Rows[i]["End"]).ToString()));
+            }
+
+            con.Close();
+            con.Dispose();
+            return sessions;
+        }
+
+        public SessionCollection getBreaks(int shift, int machine)
+        {
+
+            SqlConnection con = new SqlConnection(connection);
+            con.Open();
+
+            SessionCollection breaks = new SessionCollection();
+
+            String qry = String.Empty;
+            qry = @"SELECT Breaks.Id,Start,[End] FROM Breaks where Shift_Id={0} and Machine_Id = {1}";
+
+            qry = String.Format(qry, shift, machine);
+            SqlCommand cmd = new SqlCommand(qry, con);
+            SqlDataReader dr = cmd.ExecuteReader();
+            DataTable dt = new DataTable();
+            dt.Load(dr);
+            dr.Close();
+            cmd.Dispose();
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                Session s = new Session(shift, (int)dt.Rows[i]["Id"],
+                    ((DateTime)dt.Rows[i]["Start"]).ToString(), ((DateTime)dt.Rows[i]["End"]).ToString());
+                s.Isbreak = true;
+                breaks.Add(s);
+            }
+
+            con.Close();
+            con.Dispose();
+            return breaks;
+        }
+
+
+
         public void UpdateSession(int machine,int shift,int Id, String from, String to)
         {
             SqlConnection cn;
@@ -1850,5 +1914,7 @@ namespace ManufactureMonitor.DALayer
              }
          }
 #endregion
+        
     }
+     
 }
