@@ -55,8 +55,7 @@
                 &nbsp;</td>
             <td style="height: 42px; text-align: left;">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <asp:ImageButton ID="ImageButton2" runat="server" Height="40px" ImageAlign="Middle" ImageUrl="~/Images/excelicon.jpg" OnClick="ImageButton2_Click" Width="40px" />
-            </td>
+                </td>
         </tr>
         <tr>
             <td colspan="6" style="height: 1px">
@@ -66,7 +65,7 @@
         </tr>
         <tr>
             <td colspan="6">
-                <asp:Button ID="Button3" runat="server" Text="OR-OA"  /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <asp:Button ID="Button3" runat="server" Text="OR-OA" OnClick="Button3_Click"  /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <asp:Button ID="Button2" runat="server" Text="Production Progress" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <asp:Button ID="Button1" runat="server" Text="Loss Hour" OnClick="Button1_Click1" />
             </td>

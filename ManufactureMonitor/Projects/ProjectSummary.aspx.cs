@@ -58,17 +58,70 @@ namespace ManufactureMonitor
 
         protected void Button1_Click1(object sender, EventArgs e)
         {
-            Response.Redirect("~/SummaryReport/LossHourGraph.aspx?Id=" + Request.QueryString["MachineGroupId"]
-                 + "&MachineId=" + (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
-                  + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]
-                 + "&ShiftId=" + (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"]
-                  + "&ShiftName=" + (string)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Name"]
-                 + "&datefrom=" + datefrom.SelectedDate.ToShortDateString() + "&dateto=" + dateto.SelectedDate.ToShortDateString());
+            if (validateSelection())
+            {
+
+                int ShiftId = -1;
+                String ShiftName = "All Shifts";
+                if (ShiftSelectionListBox.SelectedIndex != -1)
+                {
+                    ShiftId = (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"];
+                    ShiftName = (string)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Name"];
+                }
+                Response.Redirect("~/SummaryReport/LossHourGraph.aspx?Id=" + Request.QueryString["MachineGroupId"]
+                  + "&MachineId=" + (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
+                   + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]
+                  + "&ShiftId=" + (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"]
+                   + "&ShiftName=" + (string)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Name"]
+                  + "&datefrom=" + datefrom.SelectedDate.ToShortDateString() + "&dateto=" + dateto.SelectedDate.ToShortDateString());
+            }
+            
         }
 
         protected void ImageButton2_Click(object sender, ImageClickEventArgs e)
         {
 
         }
+
+        protected void Button3_Click(object sender, EventArgs e)
+        {
+          
+            if( validateSelection() )
+            {
+               
+                int ShiftId = -1;
+                String ShiftName = "All Shifts";
+                if (ShiftSelectionListBox.SelectedIndex != -1)
+                {
+                    ShiftId = (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"];
+                    ShiftName = (string)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Name"];
+                }
+                Response.Redirect("~/SummaryReport/OR_OAGraph.aspx?MachineId="
+                    + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"] 
+                        + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]
+                     + "&ShiftId=" + ShiftId
+                     + "&ShiftName=" + ShiftName
+                     + "&datefrom=" + datefrom.SelectedDate.ToString("dd-MMM-yy") + "&dateto=" + dateto.SelectedDate.ToString("dd-MMM-yy")
+                    );
+            }
+        }
+
+        bool validateSelection()
+        {
+
+            if (datefrom.SelectedDate == DateTime.MinValue || dateto.SelectedDate == DateTime.MinValue)
+            {
+                Response.Write("<script>alert('Please select From and To dates...');</script>");
+                return false;
+            }
+
+            if (dateto.SelectedDate < datefrom.SelectedDate)
+            {
+                Response.Write("<script>alert('To Date should be greater than From Date.');</script>");
+                return false;
+            }
+            return true;
+        }
+
     }
 }

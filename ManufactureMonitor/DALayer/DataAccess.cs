@@ -1578,6 +1578,36 @@ namespace ManufactureMonitor.DALayer
          }
 
 
+         public DataTable GetStops(int machine, DateTime start, DateTime end)
+         {
+
+             SqlConnection cn;
+             SqlCommand cmd;
+
+             cn = new SqlConnection(connection);
+             String query = @" Select Convert(nvarchar,code,0)+':'+ Description as [Description],code ,1 as Filter
+                              from CommonProblems 
+
+                                union
+
+                            Select Convert(nvarchar,code,0)+':'+ Description as [Description],code ,2 as Filter
+                              from SpecificProblems where Machine_Id = {0} 
+                                order by Filter";
+             query = String.Format(query, machine);
+             query = String.Format(query, cn);
+
+             cn.Open();
+             cmd = new SqlCommand(query, cn);
+
+             SqlDataReader dr = cmd.ExecuteReader();
+             DataTable dt = new DataTable();
+             dt.Load(dr);
+             dr.Close();
+             cn.Close();
+             return dt;
+         }
+
+
          internal DataTable GetModels(int p)
          {
              SqlConnection cn;
@@ -1640,7 +1670,7 @@ namespace ManufactureMonitor.DALayer
          //         }
 
          #region SHIFT_HISTORY
-         public DataTable GetShiftHistory(int machine,String from,String to,bool summary)
+         public List<ShiftHistory> GetShiftHistory(int machine,String from,String to)
          {
              SqlConnection cn;
              SqlCommand cmd;
@@ -1648,14 +1678,16 @@ namespace ManufactureMonitor.DALayer
              cn = new SqlConnection(connection);
              String query = @" select Convert(Time(0),[From],20) as [From], Convert(Time(0),[To],20) as [To],
                             Name as Project,CycleTime, ProjectTracker.[From] as 'Start',ProjectTracker.[To] as 'End',
-                            SessionActual as [Actual],Scraps from ProjectTracker
+                            SessionActual - Scraps as [Actual],Scraps from ProjectTracker
                             inner join Projects on ProjectTracker.Project_Id = Projects.Id
                             inner join Scraps on ProjectTracker.SlNo = Scraps.ProjectTracker_Id
-                            where [From]>='{1}' and [To]<'{2}' and ProjectTracker.Machine_Id={0}";
+                            where [From]>='{1}' and [To]<='{2}' and ProjectTracker.Machine_Id={0} and Scraps.Machine_Id={0}
+                             and Scraps.Machine_Id={0} and Timestamp >='{1}' and Timestamp<='{2}'
+                                order by Timestamp asc";
+             
 
 
              query = String.Format(query, machine,from,to);
-             query = String.Format(query, cn);
 
              cn.Open();
              cmd = new SqlCommand(query, cn);
@@ -1663,6 +1695,14 @@ namespace ManufactureMonitor.DALayer
              SqlDataReader dr = cmd.ExecuteReader();
              DataTable dt = new DataTable();
              dt.Load(dr);
+
+             dt.Columns.Add("LoadTime", typeof(double));
+             dt.Columns.Add("Nop1", typeof(double));
+             dt.Columns.Add("Nop2", typeof(double));
+             dt.Columns.Add("Undefined", typeof(double));
+             dt.Columns.Add("idle", typeof(double));
+             dt.Columns.Add("KR", typeof(double));
+             dt.Columns.Add("BKR", typeof(double));
 
              for (int i = 0; i < dt.Rows.Count; i++)
              {
@@ -1670,170 +1710,96 @@ namespace ManufactureMonitor.DALayer
                      dt.Rows[i]["End"] == 
                      DBNull.Value ? DateTime.Now : (DateTime)dt.Rows[i]["End"]);
 
+                 dt.Rows[i]["LoadTime"] = LoadTime;
+                 
+
                  double Nop1 = GetNop1Duration(machine, (DateTime)dt.Rows[i]["Start"],
                      dt.Rows[i]["End"] ==
                      DBNull.Value ? DateTime.Now : (DateTime)dt.Rows[i]["End"]);
+                 dt.Rows[i]["Nop1"] = Nop1;
 
                  double Nop2 = GetNop2Duration(machine, (DateTime)dt.Rows[i]["Start"],
                      dt.Rows[i]["End"] ==
                      DBNull.Value ? DateTime.Now : (DateTime)dt.Rows[i]["End"]);
 
+                 dt.Rows[i]["Nop2"] = Nop2;
+
                  double Undefined = GetUndefinedDuration(machine, (DateTime)dt.Rows[i]["Start"],
                      dt.Rows[i]["End"] ==
                      DBNull.Value ? DateTime.Now : (DateTime)dt.Rows[i]["End"]);
+                 dt.Rows[i]["Undefined"] = Undefined;
 
                  double OffDuration = GetOffDuration(machine, (DateTime)dt.Rows[i]["Start"],
                      dt.Rows[i]["End"] ==
                      DBNull.Value ? DateTime.Now : (DateTime)dt.Rows[i]["End"]);
+                 dt.Rows[i]["Idle"] = OffDuration;
+
+                 double Kadouritsu = (((int)dt.Rows[i]["Actual"]  * (double)dt.Rows[i]["CycleTime"])
+                     / LoadTime)*100;
+                 dt.Rows[i]["KR"] = Math.Round(Kadouritsu,2);
+
+                 double Bekadouritsu = ((LoadTime - Nop1) / LoadTime) * 100;
+                 dt.Rows[i]["BKR"] = Math.Round(Bekadouritsu, 2);
 
              }
 
              dr.Close();
              cn.Close();
-             return dt;
+             List<ShiftHistory> ShiftHistory = new List<ShiftHistory>();
+
+             for (int i = 0; i < dt.Rows.Count; i++)
+             {
+                 ShiftHistory.Add(new ShiftHistory
+                 {
+                     Project = (String)dt.Rows[i]["Project"],
+                     CycleTime = (double)dt.Rows[i]["CycleTime"],
+                     From = dt.Rows[i]["From"].ToString(),
+                     To = dt.Rows[i]["To"].ToString(),
+                     Actual = (int)dt.Rows[i]["Actual"],
+                     Scraps = (int)dt.Rows[i]["Scraps"],
+                     LoadTime = (double)dt.Rows[i]["LoadTime"],
+                     Nop1 = (double)dt.Rows[i]["Nop1"],
+                     Nop2 = (double)dt.Rows[i]["Nop2"],
+                     Undefined = (double)dt.Rows[i]["Undefined"],
+                     Idle = (double)dt.Rows[i]["Idle"],
+                     KR = (double)dt.Rows[i]["KR"],
+                     BKR = (double)dt.Rows[i]["BKR"]
+                 });
+             }
+
+             return ShiftHistory;
          }
 
-         public double GetNop2Duration(int machine, DateTime start, DateTime end)
+         public List<ShiftHistory_Summary> GetShiftHistory_Summary(int machine, String from, String to)
          {
-             double duration = 0;
-             SqlConnection cn;
-             SqlCommand cmd;
+             
+             List<ShiftHistory> ShiftHistory =GetShiftHistory(machine, from, to);
+             Dictionary<String, List<ShiftHistory>> ShiftHistoryCollection = new Dictionary<string,List<ShiftHistory>>();
 
-             cn = new SqlConnection(connection);
-             String query = @" select sum(Duration) as Duration from (select Sum(DATEDIFF(SECOND, [START],[END])) as Duration
-                                    from Stops 
-                                    inner join CommonProblems on Stops.Code = CommonProblems.code
-                                    
-                                    where  
-                                    Start >='{0}' and end <='{0}'  
-                                    and Stops.Code <> 0 and CommonProblems.[Type] = 2 and Stops.Machine_Id = 1
-                                    union
-                                    select Sum(DATEDIFF(SECOND, [START],[END])) as Duration
-                                                                        from Stops 
-                                                                        inner join SpecificProblems on Stops.Code = SpecificProblems.Code
-                                    
-                                                                        where  
-                                    Start >='{0}' and Start <='{1}'  
-                                    and Stops.Code <> 0 and SpecificProblems.[Type]  = 2 and Stops.Machine_Id = {2} ) as NOP1
-                                    ";
+            
+             foreach (ShiftHistory sh in ShiftHistory)
+             {
+                 if (ShiftHistoryCollection.ContainsKey(sh.Project))
+                     ShiftHistoryCollection[sh.Project].Add(sh);
+                 else
+                 {
+                     List<ShiftHistory> sl = new List<Entity.ShiftHistory>();
+                     sl.Add(sh);
+                     ShiftHistoryCollection.Add(sh.Project, sl);
+                 }
+             }
 
+             List<ShiftHistory_Summary> ShSummary = new List<ShiftHistory_Summary>();
 
-             query = String.Format(query, start.ToString("yyyy-MM-dd HH:mm:ss"), end.ToString("yyyy-MM-dd HH:mm:ss"), machine);
-             query = String.Format(query, cn);
+             foreach (KeyValuePair<string, List<ShiftHistory>> K in ShiftHistoryCollection)
+             {
+                 ShSummary.Add(new ShiftHistory_Summary(K.Value));
+             }
 
-             cn.Open();
-             cmd = new SqlCommand(query, cn);
-
-             SqlDataReader dr = cmd.ExecuteReader();
-             DataTable dt = new DataTable();
-             dt.Load(dr);
-
-
-             return duration;
+             return ShSummary;
          }
 
-         public double GetNop1Duration(int machine, DateTime start, DateTime end)
-         {
-             double duration = 0;
-             SqlConnection cn;
-             SqlCommand cmd;
 
-             cn = new SqlConnection(connection);
-             String query = @" select sum(Duration) as Duration from (select Sum(DATEDIFF(SECOND, [START],[END])) as Duration
-                                    from Stops 
-                                    inner join CommonProblems on Stops.Code = CommonProblems.code
-                                    
-                                    where  
-                                    Start >='{0}' and end <='{0}'  
-                                    and Stops.Code <> 0 and CommonProblems.[Type] = 1 and Stops.Machine_Id = 1
-                                    union
-                                    select Sum(DATEDIFF(SECOND, [START],[END])) as Duration
-                                                                        from Stops 
-                                                                        inner join SpecificProblems on Stops.Code = SpecificProblems.Code
-                                    
-                                                                        where  
-                                    Start >='{0}' and Start <='{1}'  
-                                    and Stops.Code <> 0 and SpecificProblems.[Type]  = 1 and Stops.Machine_Id = {2} ) as NOP1
-                                    ";
-
-
-             query = String.Format(query, start.ToString("yyyy-MM-dd HH:mm:ss"), end.ToString("yyyy-MM-dd HH:mm:ss"), machine);
-             query = String.Format(query, cn);
-
-             cn.Open();
-             cmd = new SqlCommand(query, cn);
-
-             SqlDataReader dr = cmd.ExecuteReader();
-             DataTable dt = new DataTable();
-             dt.Load(dr);
-
-
-             return duration;
-         }
-
-         public double GetUndefinedDuration(int machine, DateTime start, DateTime end)
-         {
-             double duration = 0;
-             SqlConnection cn;
-             SqlCommand cmd;
-
-             cn = new SqlConnection(connection);
-             String query = @" select sum(Duration) as Duration from (select Sum(DATEDIFF(SECOND, [START],[END])) as Duration
-                                    from Stops 
-                                    inner join CommonProblems on Stops.Code = CommonProblems.code
-                                    
-                                    where  
-                                    Start >='{0}' and end <='{0}'  
-                                    and Stops.Code = 0  and Stops.Machine_Id = 1
-                                    union
-                                    select Sum(DATEDIFF(SECOND, [START],[END])) as Duration
-                                                                        from Stops 
-                                                                        inner join SpecificProblems on Stops.Code = SpecificProblems.Code
-                                    
-                                                                        where  
-                                    Start >='{0}' and Start <='{1}'  
-                                    and Stops.Code= 0 and Stops.Machine_Id = {2} ) as NOP1
-                                    ";
-
-
-             query = String.Format(query, start.ToString("yyyy-MM-dd HH:mm:ss"), end.ToString("yyyy-MM-dd HH:mm:ss"), machine);
-             query = String.Format(query, cn);
-
-             cn.Open();
-             cmd = new SqlCommand(query, cn);
-
-             SqlDataReader dr = cmd.ExecuteReader();
-             DataTable dt = new DataTable();
-             dt.Load(dr);
-
-
-             return duration;
-         }
-
-         public double GetOffDuration(int machine, DateTime start, DateTime end)
-         {
-             SqlConnection cn;
-             SqlCommand cmd;
-
-             cn = new SqlConnection(connection);
-             String query = @" select DATEDIFF(SECOND, [START],[END])
-                                    from OFFs where 
-                                    Start >='{0}' and Start <='{1}' and Machine_Id={2}";
-
-
-             query = String.Format(query, start.ToString("yyyy-MM-dd HH:mm:ss"), end.ToString("yyyy-MM-dd HH:mm:ss"),machine);
-             query = String.Format(query, cn);
-
-             cn.Open();
-             cmd = new SqlCommand(query, cn);
-
-             SqlDataReader dr = cmd.ExecuteReader();
-             DataTable dt = new DataTable();
-             dt.Load(dr);
-
-             if (dt.Rows.Count < 0) return 0;
-             return (int)dt.Rows[0][0];
-         }
 
          public double GetLoadTime(int machine, DateTime start, DateTime end)
          {
@@ -1841,41 +1807,161 @@ namespace ManufactureMonitor.DALayer
              ShiftCollection shifts = getShifts(machine);
 
              Shift s = shifts.getShift(start, end);
-             
+             s.Sessions = getSessions(s.ID,machine);
+             s.Breaks = getBreaks(s.ID,machine);
+
+             double loadtime = s.getActiveDuration(start,end);
+
+             return loadtime;
+         
+         }
+
+
+         public double GetNop2Duration(int machine, DateTime start, DateTime end)
+         {
+             ShiftCollection shifts = getShifts(machine);
+
+             Shift s = shifts.getShift(start, end);
+             s.Sessions = getSessions(s.ID,machine);
+             s.Breaks = getBreaks(s.ID,machine);
+
              double duration = 0;
-             SessionCollection breaks =  GetBreaks(s.ID, machine);
+             SqlConnection cn;
+             SqlCommand cmd;
 
-             foreach( Session b in breaks )
+             cn = new SqlConnection(connection);
+
+             cn.Open();
+             cmd = new SqlCommand("getDefinedStopDuration", cn) ;
+             cmd.CommandType = CommandType.StoredProcedure;
+
+             cmd.Parameters.Add("@StartTs", SqlDbType.DateTime).Value = start;
+             cmd.Parameters.Add("@StopTs", SqlDbType.DateTime).Value = end;
+             cmd.Parameters.Add("@StopType", SqlDbType.Int).Value = 2;
+             cmd.Parameters.Add("@Machine_Id", SqlDbType.Int).Value = machine;
+
+
+             SqlDataReader dr = cmd.ExecuteReader();
+             DataTable dt = new DataTable();
+             dt.Load(dr);
+             if (dt.Rows.Count <= 0) return 0;
+             if (dt.Rows[0][0] == DBNull.Value) return 0;
+             for (int i = 0; i < dt.Rows.Count; i++)
              {
-                 DateTime breakStart = DateTime.Parse(b.StartTime);
-                 DateTime breakEnd = DateTime.Parse(b.EndTime);
-
-                 breakStart =
-                     new DateTime(start.Year,start.Month,start.Day,breakStart.Hour,breakStart.Minute,breakStart.Second);
-                   breakEnd =
-                     new DateTime(end.Year,end.Month,end.Day,breakEnd.Hour,breakEnd.Minute,breakEnd.Second);
-
-                 if( start >= breakStart && start <= breakEnd)
-                 {
-                     duration+= (breakEnd - breakStart ).TotalSeconds - (start- breakStart).TotalSeconds;
-                 }
-                 else if( start <= breakStart && end >= breakEnd)
-                 {
-                     duration += (breakEnd - breakStart ).TotalSeconds ;
-                 }
-                 else if( end >= breakStart && end <= breakEnd )
-                 {
-                     duration += (breakEnd - breakStart).TotalSeconds - (breakEnd - end).TotalSeconds;
-
-                 }
+                 duration += s.getActiveDuration((DateTime)dt.Rows[i]["Start"], (DateTime)dt.Rows[i]["END"]);
              }
 
-             duration += GetOffDuration(machine, start, end);
+             return duration;
+         }
+
+         public double GetNop1Duration(int machine, DateTime start, DateTime end)
+         {
+             ShiftCollection shifts = getShifts(machine);
+
+             Shift s = shifts.getShift(start, end);
+             s.Sessions = getSessions(s.ID, machine);
+             s.Breaks = getBreaks(s.ID, machine);
+
+             double duration = 0;
+             SqlConnection cn;
+             SqlCommand cmd;
+
+             cn = new SqlConnection(connection);
+
+             cn.Open();
+             cmd = new SqlCommand("getDefinedStopDuration", cn);
+             cmd.CommandType = CommandType.StoredProcedure;
+
+             cmd.Parameters.Add("@StartTs", SqlDbType.DateTime).Value = start;
+             cmd.Parameters.Add("@StopTs", SqlDbType.DateTime).Value = end;
+             cmd.Parameters.Add("@StopType", SqlDbType.Int).Value = 1;
+             cmd.Parameters.Add("@Machine_Id", SqlDbType.Int).Value = machine;
 
 
-             return (end-start).TotalSeconds -  duration;
-                 
+             SqlDataReader dr = cmd.ExecuteReader();
+             DataTable dt = new DataTable();
+             dt.Load(dr);
+             if (dt.Rows.Count <= 0) return 0;
+             if (dt.Rows[0][0] == DBNull.Value) return 0;
+             for (int i = 0; i < dt.Rows.Count; i++)
+             {
+                 duration += s.getActiveDuration((DateTime)dt.Rows[i]["Start"], (DateTime)dt.Rows[i]["END"]);
+             }
 
+             return duration;
+         }
+
+         public double GetUndefinedDuration(int machine, DateTime start, DateTime end)
+         {
+             ShiftCollection shifts = getShifts(machine);
+
+             Shift s = shifts.getShift(start, end);
+             s.Sessions = getSessions(s.ID, machine);
+             s.Breaks = getBreaks(s.ID, machine);
+
+             double duration = 0;
+             SqlConnection cn;
+             SqlCommand cmd;
+
+             cn = new SqlConnection(connection);
+
+             cn.Open();
+             cmd = new SqlCommand("getUnDefinedStopDuration", cn);
+             cmd.CommandType = CommandType.StoredProcedure;
+
+             cmd.Parameters.Add("@StartTs", SqlDbType.DateTime).Value = start;
+             cmd.Parameters.Add("@StopTs", SqlDbType.DateTime).Value = end;
+             cmd.Parameters.Add("@StopType", SqlDbType.Int).Value = 0;
+             cmd.Parameters.Add("@Machine_Id", SqlDbType.Int).Value = machine;
+
+
+             SqlDataReader dr = cmd.ExecuteReader();
+             DataTable dt = new DataTable();
+             dt.Load(dr);
+             if (dt.Rows.Count <= 0) return 0;
+             if (dt.Rows[0][0] == DBNull.Value) return 0;
+             for (int i = 0; i < dt.Rows.Count; i++)
+             {
+                 duration += s.getActiveDuration((DateTime)dt.Rows[i]["Start"], (DateTime)dt.Rows[i]["END"]);
+             }
+
+             return duration;
+         }
+
+         public double GetOffDuration(int machine, DateTime start, DateTime end)
+         {
+             ShiftCollection shifts = getShifts(machine);
+
+             Shift s = shifts.getShift(start, end);
+             s.Sessions = getSessions(s.ID, machine);
+             s.Breaks = getBreaks(s.ID, machine);
+
+             double duration = 0;
+             SqlConnection cn;
+             SqlCommand cmd;
+
+             cn = new SqlConnection(connection);
+
+             cn.Open();
+             cmd = new SqlCommand("getOffDuration", cn);
+             cmd.CommandType = CommandType.StoredProcedure;
+
+             cmd.Parameters.Add("@StartTs", SqlDbType.DateTime).Value = start;
+             cmd.Parameters.Add("@StopTs", SqlDbType.DateTime).Value = end;
+             cmd.Parameters.Add("@Machine_Id", SqlDbType.Int).Value = machine;
+
+
+             SqlDataReader dr = cmd.ExecuteReader();
+             DataTable dt = new DataTable();
+             dt.Load(dr);
+             if (dt.Rows.Count <= 0) return 0;
+             if (dt.Rows[0][0] == DBNull.Value) return 0;
+             for (int i = 0; i < dt.Rows.Count; i++)
+             {
+                 duration += s.getActiveDuration((DateTime)dt.Rows[i]["Start"], (DateTime)dt.Rows[i]["END"]);
+             }
+
+             return duration;
          }
 #endregion
 
@@ -2028,6 +2114,75 @@ namespace ManufactureMonitor.DALayer
          }
         #endregion
 
+
+         #region ACTUAL_STATE
+         public int getSessionPlan(Session s, int machine)
+         {
+             SqlConnection cn;
+             SqlCommand cmd;
+
+             DateTime breakStart = DateTime.Parse(s.StartTime);
+             DateTime breakEnd = DateTime.Parse(s.EndTime);
+
+             breakStart =
+                 new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, breakStart.Hour, breakStart.Minute, breakStart.Second);
+             breakEnd =
+               new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, breakEnd.Hour, breakEnd.Minute, breakEnd.Second);
+             cn = new SqlConnection(connection);
+             String query = @" Select Max([Plan]) from [Plan] where timestamp >= '{0}' and timestamp <= '{1}' 
+                                and Machine_Id={2}";
+             query = String.Format(query, breakStart.ToString("yyyy-MM-dd HH:mm:ss"), breakEnd.ToString("yyyy-MM-dd HH:mm:ss"), machine);
+
+             cn.Open();
+             cmd = new SqlCommand(query, cn);
+
+             SqlDataReader dr = cmd.ExecuteReader();
+             DataTable dt = new DataTable();
+             dt.Load(dr);
+             dr.Close();
+             cn.Close();
+
+             if (dt.Rows.Count <= 0) return 0;
+             if (dt.Rows[0][0] == DBNull.Value) return 0;
+
+
+             return (int)dt.Rows[0][0];
+         }
+
+
+         public int getSessionActual(Session s, int machine)
+         {
+             SqlConnection cn;
+             SqlCommand cmd;
+
+             DateTime breakStart = DateTime.Parse(s.StartTime);
+             DateTime breakEnd = DateTime.Parse(s.EndTime);
+
+             breakStart =
+                 new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, breakStart.Hour, breakStart.Minute, breakStart.Second);
+             breakEnd =
+               new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, breakEnd.Hour, breakEnd.Minute, breakEnd.Second);
+             cn = new SqlConnection(connection);
+             String query = @" Select Max(Actual) from [Actual] where timestamp >= '{0}' and timestamp <= '{1}' 
+                                and Machine_Id={2}";
+             query = String.Format(query, breakStart.ToString("yyyy-MM-dd HH:mm:ss"), breakEnd.ToString("yyyy-MM-dd HH:mm:ss"), machine);
+
+             cn.Open();
+             cmd = new SqlCommand(query, cn);
+
+             SqlDataReader dr = cmd.ExecuteReader();
+             DataTable dt = new DataTable();
+             dt.Load(dr);
+             dr.Close();
+             cn.Close();
+
+             if (dt.Rows.Count <= 0) return 0;
+             if (dt.Rows[0][0] == DBNull.Value) return 0;
+
+
+             return (int)dt.Rows[0][0];
+         }
+#endregion
 
 
          internal void UpdateStopInfo(int SlNo,int code, string source, string type, string comment, int machine)

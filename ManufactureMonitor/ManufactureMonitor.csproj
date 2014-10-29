@@ -339,6 +339,7 @@
     <Compile Include="Account\RegisterExternalLogin.aspx.designer.cs">
       <DependentUpon>RegisterExternalLogin.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Entity\ShiftHistory.cs" />
     <Compile Include="Projects\ProjectAssignment1.aspx.cs">
       <DependentUpon>ProjectAssignment1.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

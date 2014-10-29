@@ -3,6 +3,7 @@ using ManufactureMonitor.Entity;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -36,6 +37,9 @@ namespace ManufactureMonitor
              s.Sessions = da.getSessions(s.ID, machine);
              s.Breaks = da.getSessions(s.ID, machine);
 
+             if (s.IsActive == false) SystimeTextBox.BackColor = Color.DarkGray;
+             else if (s.inBreak()) SystimeTextBox.BackColor = Color.DarkBlue;
+
             Session se =  s.getSession(now);
 
             DateTime seStart = DateTime.Parse(se.StartTime);
@@ -46,7 +50,16 @@ namespace ManufactureMonitor
 
             ShiftLabel.Text = "Actual Shift  " + shStart.ToString("HH:mm") + "-" + now.ToString("HH:mm");
 
-            div1.Style.Add(HtmlTextWriterStyle.MarginLeft, "150px");
+            int seplan = da.getSessionActual(se, machine);
+            int seactual = da.getSessionPlan(se, machine);
+
+            if( seplan == 0 ) 
+
+            SessionActualTextBox.Text = "A " + seactual.ToString();
+            SessionPlanTextBox.Text = "P " + seplan.ToString();
+
+
+            
 
 
 

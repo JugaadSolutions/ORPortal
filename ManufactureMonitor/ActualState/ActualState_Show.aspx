@@ -27,9 +27,9 @@
             <tr>
                 <td style="height: 110px; text-align: left;" colspan="2">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <asp:TextBox ID="SessionPlanTextBox" runat="server" BackColor="Black" BorderColor="White" BorderStyle="Solid" BorderWidth="3px" Enabled="False" Font-Bold="True" Font-Size="60pt" ForeColor="White" Height="100px" Width="300px" style="text-align:center">P</asp:TextBox>
+                    <asp:TextBox ID="SessionPlanTextBox" runat="server" BackColor="Black" BorderColor="White" BorderStyle="Solid" BorderWidth="3px" Enabled="False" Font-Bold="True" Font-Size="60pt" ForeColor="White" Height="100px" Width="300px" style="text-align:center"></asp:TextBox>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <asp:TextBox ID="SessionActualTextBox" runat="server" BackColor="Black" BorderColor="White" BorderStyle="Solid" BorderWidth="3px" Enabled="False" Font-Bold="True" Font-Size="60pt" ForeColor="Yellow" Height="100px" Width="300px" style="text-align:center">A</asp:TextBox>
+                    <asp:TextBox ID="SessionActualTextBox" runat="server" BackColor="Black" BorderColor="White" BorderStyle="Solid" BorderWidth="3px" Enabled="False" Font-Bold="True" Font-Size="60pt" ForeColor="Yellow" Height="100px" Width="300px" style="text-align:center"></asp:TextBox>
                 </td>
             </tr>
             <tr>

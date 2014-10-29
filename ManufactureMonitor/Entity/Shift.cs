@@ -164,18 +164,7 @@ namespace ManufactureMonitor.Entity
             return null;
         }
 
-        public double getSessionDuration(Session s)
-        {
-            double duration = s.getDuration();
-            foreach (Session b in Breaks)
-            {
-                if (IsWithin(b, s))
-                    duration -= b.getDuration();
-            }
-            return duration;
-        }
         
-
         public bool inBreak()
         {
 
@@ -217,36 +206,55 @@ namespace ManufactureMonitor.Entity
 
         }
 
-        public bool IsWithin(Session s1, Session s2)
+        public double getBreakDuration(DateTime start, DateTime end,String bStart,String bEnd)
         {
-           if( DateTime.Parse(s1.StartTime) >= DateTime.Parse(s2.StartTime) && 
-               DateTime.Parse(s1.EndTime) <= DateTime.Parse(s2.EndTime))
-           {
-               return true;
-           }
-           else return false;
+            double duration = 0;
+
+            DateTime breakStart = DateTime.Parse(bStart);
+                 DateTime breakEnd = DateTime.Parse(bEnd);
+
+                 breakStart =
+                     new DateTime(start.Year,start.Month,start.Day,breakStart.Hour,breakStart.Minute,breakStart.Second);
+                   breakEnd =
+                     new DateTime(end.Year,end.Month,end.Day,breakEnd.Hour,breakEnd.Minute,breakEnd.Second);
+
+         
+
+            if( breakStart <= start &&  breakEnd >= start && breakStart  <= end  && breakEnd  <= end)
+            {
+                duration+= (breakEnd - breakStart ).TotalSeconds - (start- breakStart).TotalSeconds;
+
+            }
+            else if( breakStart  >= start && breakEnd >= start && breakStart  <= end &&  breakEnd  <= end)
+            {
+                duration += (breakEnd - breakStart ).TotalSeconds ;
+            }
+            else if(breakStart  >= start && breakEnd >= start && breakStart  <= end &&  breakEnd  >= end)
+            {
+                duration += (breakEnd - breakStart).TotalSeconds - (breakEnd - end).TotalSeconds;
+
+            }
+            
+
+            return duration;
+
+
 
         }
 
 
-       //public double getActiveDuration(DateTime start , DateTime end )
-       //{
-       //    double duration = (end -start).TotalSeconds;
+       public double getActiveDuration(DateTime start , DateTime end )
+       {
+           double duration = (end - start).TotalSeconds;
 
-       //    foreach(Session b in Breaks)
-       //    {
-       //        if( b.IsWithin(start) )
-       //        {
-       //            DateTime temp = DateTime.Parse(b.StartTime);
+           foreach(Session b in Breaks)
+           {
+               duration -= getBreakDuration(start,end,b.StartTime,b.EndTime);
+           }
+           return duration;
+       }
 
-       //            DateTime breakStart = new DateTime(start.Year,start.Month,start.Day,temp.Hour,temp.Minute,temp.Second);
-       //            duration -= breakStart - start 
-
-            //DateTime currentTime = new DateTime(endTime.Year, endTime.Month, endTime.Day, ts.Hour, ts.Minute, ts.Second);
-
-            //if (currentTime < endTime)
-            //    return true;
-            //else return false;
+            
 
 
         
