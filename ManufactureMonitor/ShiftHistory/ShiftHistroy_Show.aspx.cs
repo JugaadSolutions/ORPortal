@@ -46,9 +46,9 @@ namespace ManufactureMonitor
 
 
                         Duration.Text = fromDate.ToShortDateString() + ":" + (dt.Rows[i]["shifts"]).ToString();
-                        //dt1 = da.GetShiftHistory(machineId,  from.ToString("yyyy-MM-dd HH:mm:ss"),
-                        //    to.ToString("yyyy-MM-dd HH:mm:ss"),
-                        //    Convert.ToBoolean(Request.QueryString["Summary"]));
+                        dt1 = da.GetShiftHistory(machineId, from.ToString("yyyy-MM-dd HH:mm:ss"),
+                            to.ToString("yyyy-MM-dd HH:mm:ss"),
+                            Convert.ToBoolean(Request.QueryString["Summary"]));
 
                         GridView g = new GridView();
                         g.AutoGenerateColumns = false;

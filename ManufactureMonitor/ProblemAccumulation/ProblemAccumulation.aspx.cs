@@ -34,11 +34,18 @@ namespace ManufactureMonitor
 
         protected void Button1_Click(object sender, EventArgs e)
         {
+            int ShiftId = -1;
+            String ShiftName = "All Shifts";
+            if (ShiftSelectionListBox.SelectedIndex != -1)
+            {
+                ShiftId = (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"];
+                ShiftName = (string)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Name"];
+            }
             Response.Redirect("~/ProblemAccumulation/ProblemAccumulation_Show.aspx?MachineGroupId=" + Session["MachineGroup"]
                  + "&MachineId=" + (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
                   + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]
-                 + "&ShiftId=" + (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"]
-                  + "&ShiftName=" + (string)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Name"]);
+                 + "&ShiftId=" + ShiftId
+                  + "&ShiftName=" + ShiftName);
         }
 
         protected void MachineSelectionListBox_SelectedIndexChanged(object sender, EventArgs e)
