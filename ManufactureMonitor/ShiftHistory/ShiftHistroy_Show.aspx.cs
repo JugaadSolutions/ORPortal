@@ -167,59 +167,64 @@ namespace ManufactureMonitor
                         }
                         else
                             g.DataSource = shSummary;
+
                         g.DataBind();
                         MainPanel.Controls.Add(Duration);
                         MainPanel.Controls.Add(g);
 
-                        TextBox Total = new TextBox();
-                        Total.TextMode = TextBoxMode.SingleLine;
-                        Total.BackColor = Color.OrangeRed;
-                        Total.Style.Add("text-align", "center");
-
-                        Total.Style.Add(HtmlTextWriterStyle.FontStyle, "Bold");
-                        Total.Width = new Unit("100%");
-
-                        Total.Text = "Shift Total";
-
-                        MainPanel.Controls.Add(Total);
-                        if (!summary)
+                        if (g.Rows.Count > 0)
                         {
-                            List<ShiftHistory> tempList = new List<ShiftHistory>();
-                            ShiftHistory temp = new ShiftHistory();
-                            foreach (ShiftHistory sh in Sh)
+
+                            TextBox Total = new TextBox();
+                            Total.TextMode = TextBoxMode.SingleLine;
+                            Total.BackColor = Color.OrangeRed;
+                            Total.Style.Add("text-align", "center");
+
+                            Total.Style.Add(HtmlTextWriterStyle.FontStyle, "Bold");
+                            Total.Width = new Unit("100%");
+
+                            Total.Text = "Shift Total";
+
+                            MainPanel.Controls.Add(Total);
+                            if (!summary)
                             {
-                                temp.Actual += sh.Actual;
-                                temp.Scraps += sh.Scraps;
-                                temp.LoadTime += sh.LoadTime;
-                                temp.Nop1 += sh.Nop1;
-                                temp.Nop2 += sh.Nop2;
-                                temp.Idle += sh.Idle;
-                                temp.Undefined += sh.Undefined;
-                                 temp.KR += ((sh.Actual * sh.CycleTime ) );
-                                 temp.BKR += ((sh.LoadTime - sh.Nop1)) ;
+                                List<ShiftHistory> tempList = new List<ShiftHistory>();
+                                ShiftHistory temp = new ShiftHistory();
+                                foreach (ShiftHistory sh in Sh)
+                                {
+                                    temp.Actual += sh.Actual;
+                                    temp.Scraps += sh.Scraps;
+                                    temp.LoadTime += sh.LoadTime;
+                                    temp.Nop1 += sh.Nop1;
+                                    temp.Nop2 += sh.Nop2;
+                                    temp.Idle += sh.Idle;
+                                    temp.Undefined += sh.Undefined;
+                                    temp.KR += ((sh.Actual * sh.CycleTime));
+                                    temp.BKR += ((sh.LoadTime - sh.Nop1));
+                                }
+
+                                temp.KR = Math.Round((temp.KR / temp.LoadTime) * 100, 2);
+                                temp.BKR = Math.Round((temp.BKR / temp.LoadTime) * 100, 2);
+                                tempList.Add(temp);
+
+                                GridView g1 = new GridView();
+
+                                g1.Style.Add(HtmlTextWriterStyle.Width, "100%");
+                                g1.RowDataBound += g1_RowDataBound;
+                                g1.ShowHeader = false;
+                                g1.DataSource = tempList;
+                                g1.DataBind();
+
+                                MainPanel.Controls.Add(g1);
+
+
                             }
+                            else
+                            {
+                                ShiftHistory_Summary sTemp = ShiftHistory_Summary.ShiftHistory_SummaryTotal(shSummary);
+                                List<ShiftHistory_Summary> sList = new List<ShiftHistory_Summary>();
 
-                            temp.KR = Math.Round((temp.KR / temp.LoadTime) * 100, 2);
-                            temp.BKR = Math.Round((temp.BKR/temp.LoadTime)*100, 2);
-                            tempList.Add(temp);
-
-                            GridView g1 = new GridView();
-                            
-                            g1.Style.Add(HtmlTextWriterStyle.Width, "100%");
-                            g1.RowDataBound += g1_RowDataBound;
-                            g1.ShowHeader = false;
-                            g1.DataSource = tempList;
-                            g1.DataBind();
-
-                            MainPanel.Controls.Add(g1);
-
-                        }
-                        else
-                        {
-                              ShiftHistory_Summary sTemp = ShiftHistory_Summary.ShiftHistory_SummaryTotal(shSummary);
-                              List<ShiftHistory_Summary> sList = new List<ShiftHistory_Summary>();
-
-                              sList.Add(sTemp);
+                                sList.Add(sTemp);
 
                                 GridView g1 = new GridView();
 
@@ -230,7 +235,8 @@ namespace ManufactureMonitor
                                 g1.DataBind();
 
                                 MainPanel.Controls.Add(g1);
-                            
+
+                            }
                         }
 
                     }
