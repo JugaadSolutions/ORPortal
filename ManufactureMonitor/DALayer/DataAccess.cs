@@ -54,7 +54,8 @@ namespace ManufactureMonitor.DALayer
 
             cn = new SqlConnection(connection);
             String query = @" Select Name as Machine, TOS as [time to stop(s)], Convert(nvarchar,Pulses,0)+':'+
-            Convert(nvarchar,Pieces,0) as [Pulses:Pieces],Rmin as [OR red MIN(%)],Rmax as [OR red MAX(%)],Omin as [OR orange MIN(%)],Omax as [OR orange MAX(%)],Gmin as [OR green MIN(%)],Gmax as [OR green MAX(%)]
+            Convert(nvarchar,Pieces,0) as [Pulses:Pieces],Rmin as [OR red MIN(%)],Rmax as [OR red MAX(%)],Omin as [OR orange MIN(%)],
+            Omax as [OR orange MAX(%)],Gmin as [OR green MIN(%)],Gmax as [OR green MAX(%)]
                             from Machines where (Machines.MachineGroupId={0})";
             query = String.Format(query, MachineGroup_ID);
 
@@ -70,6 +71,29 @@ namespace ManufactureMonitor.DALayer
             
            
         }
+            public DataTable GetParameters(int MachineGroup_ID, int Machine_Id)
+            {
+                SqlConnection cn;
+                SqlCommand cmd;
+
+                cn = new SqlConnection(connection);
+                String query = @" Select Name as Machine,Rmin as [OR red MIN(%)],Rmax as [OR red MAX(%)],Omin as [OR orange MIN(%)],
+            Omax as [OR orange MAX(%)],Gmin as [OR green MIN(%)],Gmax as [OR green MAX(%)]
+                            from Machines where (Machines.MachineGroupId={0} AND Machines.Id={1})";
+                query = String.Format(query, MachineGroup_ID, Machine_Id);
+
+                cn.Open();
+                cmd = new SqlCommand(query, cn);
+
+                SqlDataReader dr = cmd.ExecuteReader();
+                DataTable dt = new DataTable();
+                dt.Load(dr);
+                dr.Close();
+                cn.Close();
+                return dt;
+
+
+            }
         public DataTable GetMachines(int MachineGroup_ID)
         {
             SqlConnection cn;

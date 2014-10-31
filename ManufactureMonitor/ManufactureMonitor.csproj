@@ -143,6 +143,7 @@
     <Content Include="Images\redTriangle.PNG" />
     <Content Include="Images\RED_SMILEY.png" />
     <Content Include="Images\STOP.png" />
+    <Content Include="Images\whiteTriangle .png" />
     <Content Include="Projects\ProjectAssignment1.aspx" />
     <Content Include="Users\ChangePassword.aspx" />
     <Content Include="Problems\CommonProblemsSetting.aspx" />

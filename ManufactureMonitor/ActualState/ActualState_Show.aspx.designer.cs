@@ -85,13 +85,13 @@ namespace ManufactureMonitor {
         protected global::System.Web.UI.WebControls.TextBox SessionActualTextBox;
         
         /// <summary>
-        /// TextBox7 control.
+        /// ORTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox7;
+        protected global::System.Web.UI.WebControls.TextBox ORTextBox;
         
         /// <summary>
         /// SessionSmiley control.
@@ -130,31 +130,40 @@ namespace ManufactureMonitor {
         protected global::System.Web.UI.WebControls.Image Pointer;
         
         /// <summary>
-        /// RedTextBox control.
+        /// MainDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label RedTextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl MainDiv;
         
         /// <summary>
-        /// OrangeTextBox control.
+        /// RedLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label OrangeTextBox;
+        protected global::System.Web.UI.WebControls.Label RedLabel;
         
         /// <summary>
-        /// GreenTextBox control.
+        /// OrangeLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label GreenTextBox;
+        protected global::System.Web.UI.WebControls.Label OrangeLabel;
+        
+        /// <summary>
+        /// GreenLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label GreenLabel;
         
         /// <summary>
         /// ShiftLabel control.
@@ -166,31 +175,31 @@ namespace ManufactureMonitor {
         protected global::System.Web.UI.WebControls.Label ShiftLabel;
         
         /// <summary>
-        /// TextBox5 control.
+        /// ShiftPlanTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox5;
+        protected global::System.Web.UI.WebControls.TextBox ShiftPlanTextBox;
         
         /// <summary>
-        /// TextBox6 control.
+        /// ShiftActualTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox6;
+        protected global::System.Web.UI.WebControls.TextBox ShiftActualTextBox;
         
         /// <summary>
-        /// ShiftORLabel control.
+        /// ShiftORTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ShiftORLabel;
+        protected global::System.Web.UI.WebControls.TextBox ShiftORTextBox;
         
         /// <summary>
         /// ShiftSmiley control.

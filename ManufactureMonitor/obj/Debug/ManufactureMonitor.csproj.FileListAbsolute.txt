@@ -108,13 +108,6 @@ W:\Repository\IOR\Software\ORPortal\ManufactureMonitor\bin\Microsoft.Web.Infrast
 W:\Repository\IOR\Software\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.csprojResolveAssemblyReference.cache
 W:\Repository\IOR\Software\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.dll
 W:\Repository\IOR\Software\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.pdb
-D:\ideonics\Repository\ORPortal\ManufactureMonitor\bin\ManufactureMonitor.dll
-D:\ideonics\Repository\ORPortal\ManufactureMonitor\bin\ManufactureMonitor.pdb
-D:\ideonics\Repository\ORPortal\ManufactureMonitor\bin\Microsoft.Web.Infrastructure.dll
-D:\ideonics\Repository\ORPortal\ManufactureMonitor\bin\Microsoft.Web.Infrastructure.xml
-D:\ideonics\Repository\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.dll
-D:\ideonics\Repository\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.pdb
-D:\ideonics\Repository\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.csprojResolveAssemblyReference.cache
 C:\Ideonics\Dev_proj\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.csprojResolveAssemblyReference.cache
 C:\Ideonics\Dev_proj\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.dll
 C:\Ideonics\Dev_proj\ORPortal\ManufactureMonitor\bin\ManufactureMonitor.dll
@@ -129,8 +122,6 @@ C:\Users\Sagar\Desktop\ORPortal\ManufactureMonitor\bin\Microsoft.Web.Infrastruct
 C:\Users\Sagar\Desktop\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.dll
 C:\Users\Sagar\Desktop\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.pdb
 C:\Users\Sagar\Desktop\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.csprojResolveAssemblyReference.cache
-D:\ideonics\Repository\ORPortal\ManufactureMonitor\bin\EPPlus.dll
-D:\ideonics\Repository\ORPortal\ManufactureMonitor\bin\EPPlus.xml
 C:\Sagar\Repository\ORPortal\ManufactureMonitor\bin\ManufactureMonitor.dll
 C:\Sagar\Repository\ORPortal\ManufactureMonitor\bin\ManufactureMonitor.pdb
 C:\Sagar\Repository\ORPortal\ManufactureMonitor\bin\EPPlus.dll
@@ -140,3 +131,12 @@ C:\Sagar\Repository\ORPortal\ManufactureMonitor\bin\Microsoft.Web.Infrastructure
 C:\Sagar\Repository\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.csprojResolveAssemblyReference.cache
 C:\Sagar\Repository\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.dll
 C:\Sagar\Repository\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.pdb
+D:\ideonics\Repository\ORPortal\ManufactureMonitor\bin\ManufactureMonitor.dll
+D:\ideonics\Repository\ORPortal\ManufactureMonitor\bin\ManufactureMonitor.pdb
+D:\ideonics\Repository\ORPortal\ManufactureMonitor\bin\EPPlus.dll
+D:\ideonics\Repository\ORPortal\ManufactureMonitor\bin\Microsoft.Web.Infrastructure.dll
+D:\ideonics\Repository\ORPortal\ManufactureMonitor\bin\EPPlus.xml
+D:\ideonics\Repository\ORPortal\ManufactureMonitor\bin\Microsoft.Web.Infrastructure.xml
+D:\ideonics\Repository\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.dll
+D:\ideonics\Repository\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.pdb
+D:\ideonics\Repository\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.csprojResolveAssemblyReference.cache
