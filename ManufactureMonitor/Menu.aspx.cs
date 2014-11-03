@@ -36,7 +36,7 @@ namespace ManufactureMonitor
             }
             else
             {
-                Response.Redirect("~/Projects/ProjectAssignment.aspx"  );
+                Response.Redirect("~/Projects/ProjectAssignment1.aspx"  );
             }
         }
 
