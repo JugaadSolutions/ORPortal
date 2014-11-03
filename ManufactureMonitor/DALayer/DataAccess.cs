@@ -2206,6 +2206,90 @@ namespace ManufactureMonitor.DALayer
 
              return (int)dt.Rows[0][0];
          }
+
+
+         public Stop getStop(int machine,Shift sh)
+         {
+             Stop s;
+
+             DateTime shStart = DateTime.Parse(sh.StartTime);
+             DateTime shEnd = DateTime.Parse(sh.EndTime);
+             shStart =
+                new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, shStart.Hour, shStart.Minute, shStart.Second);
+             shEnd =
+               new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, shEnd.Hour, shEnd.Minute, shEnd.Second);
+
+             SqlConnection con = new SqlConnection(connection);
+             con.Open();
+
+             String qry = String.Empty;
+             qry = @"select Top(1) * from [Stops] where Machine_Id={0} and[Start] > '{1}' and [End] is null order by [Start] asc";
+             qry = String.Format(qry, machine,shStart.ToString("yyyy-MM-dd HH:mm:ss"));
+
+
+             SqlCommand cmd = new SqlCommand(qry, con);
+             SqlDataReader dr = cmd.ExecuteReader();
+             DataTable dt = new DataTable();
+             dt.Load(dr);
+             dr.Close();
+             cmd.Dispose();
+             con.Close();
+             if (dt.Rows.Count == 0)
+             {
+                 s = null;
+             }
+             else
+             {
+
+                 s = new Stop();
+                 s.ID = (int)dt.Rows[0]["SlNo"];
+                 s.Status = "Open";
+                 s.From = (DateTime?)dt.Rows[0]["Start"];
+                 s.To = (dt.Rows[0]["End"] == DBNull.Value) ? null : (DateTime?)dt.Rows[0]["End"];
+             }
+
+
+
+             return s;
+         }
+
+
+         public Stop getOff(int machine)
+         {
+             Stop s;
+             SqlConnection con = new SqlConnection(connection);
+             con.Open();
+
+             String qry = String.Empty;
+             qry = @"select Top(1) * from [OFFs] where Machine_Id={0} and [End] is null order by [Start] asc";
+             qry = String.Format(qry, machine);
+
+
+             SqlCommand cmd = new SqlCommand(qry, con);
+             SqlDataReader dr = cmd.ExecuteReader();
+             DataTable dt = new DataTable();
+             dt.Load(dr);
+             dr.Close();
+             cmd.Dispose();
+             con.Close();
+             if (dt.Rows.Count == 0)
+             {
+                 s = null;
+             }
+             else
+             {
+
+                 s = new Stop();
+                 s.ID = (int)dt.Rows[0]["SlNo"];
+                 s.Status = "Open";
+                 s.From = (DateTime?)dt.Rows[0]["Start"];
+                 s.To = (dt.Rows[0]["End"] == DBNull.Value) ? null : (DateTime?)dt.Rows[0]["End"];
+             }
+
+
+
+             return s;
+         }
 #endregion
 
 

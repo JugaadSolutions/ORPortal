@@ -41,12 +41,9 @@ namespace ManufactureMonitor
              if (s.IsActive == false) SystimeTextBox.BackColor = Color.DarkGray;
              else
              {
-
-                 if (s.inBreak())
-                     SystimeTextBox.BackColor = Color.Blue;
-                 else
-                     SystimeTextBox.BackColor = Color.Lime;
-             }
+                 Stop off = da.getOff(machine);
+                 Stop stop = da.getStop(machine,s );
+                
 
             Session se =  s.getSession(now);
 
@@ -58,8 +55,8 @@ namespace ManufactureMonitor
 
             ShiftLabel.Text = "Actual Shift  " + shStart.ToString("HH:mm") + "-" + now.ToString("HH:mm");
 
-            int seplan = 10; // da.getSessionActual(se, machine);
-            int seactual = 9; // da.getSessionPlan(se, machine);
+            int seactual =  da.getSessionActual(se, machine);
+            int seplan = da.getSessionPlan(se, machine);
             dt = da.GetParameters(Convert.ToInt32(Session["MachineGroup"]), machine);
              double Rmin=(double)dt.Rows[0][1];
              double  Rmax=(double)dt.Rows[0][2];
@@ -74,7 +71,7 @@ namespace ManufactureMonitor
             double OR = 0;
             if (seplan > 0)
             {
-                OR = (seactual * 100.0 / seplan);
+                OR = Math.Round((seactual * 100.0 / seplan), 2);
                  ORTextBox.Text = OR.ToString()+"%";
             }
 
@@ -89,7 +86,7 @@ namespace ManufactureMonitor
                 int lm = ((int)(OR * 760) / 100);
                 if (lm < 0)
                     lm = 0;
-                Pointer.Attributes.Add("style", "margin-left:" + lm + "%");
+                Pointer.Attributes.Add("style", "margin-left:" + lm + "px");
                 
 
             }
@@ -102,7 +99,7 @@ namespace ManufactureMonitor
                 
                 int lm = ((int)(OR * 760) / 100);
 
-                Pointer.Attributes.Add("style", "margin-left:" + lm + "%");
+                Pointer.Attributes.Add("style", "margin-left:" + lm + "px");
                 
                 
             }
@@ -160,7 +157,7 @@ namespace ManufactureMonitor
             
             if (shiftplan > 0)
             {
-                OR = (shiftactual * 100.0 / shiftplan);
+                OR = Math.Round((shiftactual * 100.0 / shiftplan), 2);
                 ShiftORTextBox.Text = OR.ToString()+"%";
             }
 
@@ -204,7 +201,22 @@ namespace ManufactureMonitor
             }
 
 
+            if (off != null)
+            {
+                SystimeTextBox.BackColor = Color.Blue;
+                SessionSmiley.ImageUrl = "~/Images/STOP.png";
+                return;
+            }
+            else if (stop != null)
+            {
+                SystimeTextBox.BackColor = Color.Red;
+            }
 
+            else if (s.inBreak())
+                SystimeTextBox.BackColor = Color.Blue;
+            else
+                SystimeTextBox.BackColor = Color.Lime;
+             }
 
         }
 

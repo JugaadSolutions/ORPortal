@@ -85,8 +85,8 @@
                         BorderStyle="Solid" BorderWidth="2px" Enabled="False" Font-Bold="True" 
                         Font-Size="X-Large" ForeColor="#FFFF66" Height="40px" Width="120px" style="text-align:center; margin-left:20px">A</asp:TextBox>
                     
-                    <asp:TextBox ID="ShiftORTextBox" runat="server" style="background-color: black; font-size: x-large; margin-left:40px" Font-Bold="True" 
-                        Font-Size="XX-Large" ForeColor="White" Height="40px" Enabled="false" Width="100px"></asp:TextBox>
+                    <asp:TextBox ID="ShiftORTextBox" runat="server" style="background-color: black; font-size: x-large; margin-left:40px; text-align:center" Font-Bold="True" 
+                        Font-Size="40pt" ForeColor="White" Height="40px" Enabled="false" Width="100px" BorderColor="Black" BorderStyle="None">20%</asp:TextBox>
                     <asp:Image ID="ShiftSmiley" runat="server" Height="50px"  Width="50px" 
                         ImageAlign="Top"  ImageUrl="~/Images/GREENSMILEY_small.PNG" style=" text-align:right; margin-left:280px"/>
                 
