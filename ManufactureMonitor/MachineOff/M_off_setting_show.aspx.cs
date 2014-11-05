@@ -11,11 +11,16 @@ namespace ManufactureMonitor
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            StopImage.Visible = false;
         }
         protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
         {
             Response.Redirect("~/Menu.aspx?MachineGroup=" + Request.QueryString["MachineGroupId"]);
+        }
+
+        protected void Button4_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/MachineOff/CancelMachineOff.aspx");
         }
     }
 }

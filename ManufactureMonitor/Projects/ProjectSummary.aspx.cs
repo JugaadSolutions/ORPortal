@@ -73,7 +73,8 @@ namespace ManufactureMonitor
                    + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]
                   + "&ShiftId=" + (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"]
                    + "&ShiftName=" + (string)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Name"]
-                  + "&datefrom=" + datefrom.SelectedDate.ToShortDateString() + "&dateto=" + dateto.SelectedDate.ToShortDateString());
+                  + "&datefrom=" + datefrom.SelectedDate.ToShortDateString()
+                  + "&dateto=" + dateto.SelectedDate.ToShortDateString());
             }
             
         }

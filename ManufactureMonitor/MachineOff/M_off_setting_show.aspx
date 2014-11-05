@@ -1,8 +1,10 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="M_off_setting_show.aspx.cs" Inherits="ManufactureMonitor.M_off_setting_show" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    <asp:Panel runat="server" ID="MainPanel" style="text-align:center;" ScrollBars="Auto" height="100%" >
+        
     <table style="width: 100%; border-collapse: collapse">
         <tr>
-            <td colspan="3" style="height: 46px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;<asp:TextBox ID="TextBox1" runat="server" BorderColor="Gray" BorderStyle="Solid" BorderWidth="3px" Font-Bold="True" Width="708px" style="margin-left: 177px; font-size: medium;" Height="30px">                                                                    Machine OFF- Setting</asp:TextBox>
+            <td colspan="3" style="height: 46px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;<asp:TextBox ID="TextBox1" runat="server" BorderColor="Gray" BorderStyle="Solid" BorderWidth="3px" Font-Bold="True" Width="708px" style="margin-left: 0px; font-size: medium;" Height="30px">                                                                    Machine OFF- Setting</asp:TextBox>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;<asp:ImageButton ID="ImageButton1" runat="server" Height="25px" ImageAlign="Middle" ImageUrl="~/Images/return.jpg" Width="25px" OnClick="ImageButton1_Click" />
             </td>
@@ -15,21 +17,24 @@
         <tr>
             <td style="width: 417px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;</td>
             <td style="background-color: #99CCFF; text-align: center; width: 450px;">
-                <table style="border: thin solid #FFAF37; width: 100%; border-collapse: collapse; background-color: #FFFFCC;">
+                <table style="border: thin solid #FFAF37; width: 100%; border-collapse: collapse; background-color: #FFFFCC; font-weight: 700;">
                     <tr>
-                        <td colspan="2" style="height: 43px"> <asp:Button ID="Button2" runat="server" Text="Machine OFF Immediately" Width="256px" />
+                        <td colspan="2" style="height: 43px; text-align: left;"> &nbsp;&nbsp;
+                            <asp:Image ID="StopImage" runat="server" Height="50px" ImageAlign="Top" ImageUrl="~/Images/STOP.png" Width="50px" />
+                            <br />
+                            <asp:Button ID="Button2" runat="server" Text="Machine OFF Immediately" Width="256px" style="margin-left:20%" />
                         </td>
                     </tr>
                     <tr>
-                        <td style="width: 194px; height: 19px;">Date:</td>
-                        <td style="height: 19px">Shifts:</td>
+                        <td style="width: 226px; height: 19px;">Date:</td>
+                        <td style="height: 19px">&nbsp;</td>
                     </tr>
                     <tr>
-                        <td style="width: 194px" >
+                        <td colspan="2" >
                             
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             
-                            <asp:Calendar ID="Calendar1" runat="server" BackColor="White" BorderColor="#999999" CellPadding="4" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="Black" Height="180px" Width="200px" style="margin-left:9px">
+                            <asp:Calendar ID="Calendar1" runat="server" BackColor="White" BorderColor="#999999" CellPadding="4" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="Black" Height="180px" Width="200px" style="margin-left:112px">
                                 <DayHeaderStyle BackColor="#FFCC66" Font-Bold="True" Font-Size="7pt" />
                                 <NextPrevStyle VerticalAlign="Bottom" />
                                 <OtherMonthDayStyle ForeColor="white" />
@@ -40,20 +45,38 @@
                                 <WeekendDayStyle BackColor="#FFFFCC" />
                             </asp:Calendar>
                         </td>
-                        <td>
-                            <asp:DropDownList ID="DropDownList1" runat="server" Height="16px" Width="141px">
-                            </asp:DropDownList>
-                        </td>
                     </tr>
                     <tr>
-                        <td colspan="2">&nbsp;</td>
+                        <td colspan="2" >
+                            
+                            Time:</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 226px" >
+                            
+                            From:</td>
+                        <td >
+                            
+                            To:</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 226px; bottom: 25%;">
+                            <asp:TextBox ID="from1" runat="server" Height="25px" Width="30px"></asp:TextBox>
+&nbsp; :&nbsp;
+                            <asp:TextBox ID="from2" runat="server" Height="25px" Width="30px"></asp:TextBox>
+                        </td>
+                        <td style="bottom: 25%">
+                            <asp:TextBox ID="To1" runat="server" Height="25px" Width="30px"></asp:TextBox>
+&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;
+                            <asp:TextBox ID="To2" runat="server" Height="25px" Width="30px"></asp:TextBox>
+                        </td>
                     </tr>
                     <tr>
                         <td colspan="2" style="height: 40px"><asp:Button ID="Button3" runat="server" Text="Machine OFF retroactively" Width="256px" />
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2" style="height: 40px"><asp:Button ID="Button4" runat="server" Text="Cancel Machine OFF Immediately" Width="256px" />
+                        <td colspan="2" style="height: 40px"><asp:Button ID="Button4" runat="server" Text="Cancel Machine OFF retroactively" Width="256px" OnClick="Button4_Click" />
                         </td>
                     </tr>
                     <tr>
@@ -88,4 +111,5 @@
             <td colspan="3">&nbsp;</td>
         </tr>
     </table>
+        </asp:Panel>
 </asp:Content>
