@@ -29,7 +29,8 @@ namespace ManufactureMonitor
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-           
+            if (MachineSelectionListBox.SelectedIndex == -1)
+                return;
             Response.Redirect("~/MachineInputs/InputFromMachines_Show.aspx?MachineId=" 
                 + (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
                  + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]

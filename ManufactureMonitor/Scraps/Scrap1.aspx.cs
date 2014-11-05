@@ -33,13 +33,18 @@ namespace ManufactureMonitor
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            int shift =  ShiftSelectionListBox.SelectedIndex == -1 ? 0 : (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"];
-            
+            if (validateSelection())
+            {
+                if (MachineSelectionListBox.SelectedIndex == -1)
+                    return;
+                int shift = ShiftSelectionListBox.SelectedIndex == -1 ? 0 : (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"];
 
-            Response.Redirect("~/Scraps/Scrap_entry.aspx?MachineId=" + (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
-                 + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]
-                 + "&ShiftId=" + shift +"&From=" +Calendar1.SelectedDate.ToString("dd-MMM-yyyy")
-                 + "&To=" + Calendar2.SelectedDate.ToString("dd-MMM-yyyy"));
+
+                Response.Redirect("~/Scraps/Scrap_entry.aspx?MachineId=" + (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
+                     + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]
+                     + "&ShiftId=" + shift + "&From=" + Calendar1.SelectedDate.ToString("dd-MMM-yyyy")
+                     + "&To=" + Calendar2.SelectedDate.ToString("dd-MMM-yyyy"));
+            }
         }
 
         protected void MachineSelectionListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -58,15 +63,33 @@ namespace ManufactureMonitor
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-            int shift = ShiftSelectionListBox.SelectedIndex == -1 ? 0 : (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"];
-            
+            if (validateSelection())
+            {
+                int shift = ShiftSelectionListBox.SelectedIndex == -1 ? 0 : (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"];
 
-            Response.Redirect("~/Scraps/Scrap_show.aspx?MachineId=" + (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
-                 + "&ShiftId=" + shift
-                 + "&ShiftName=" + (string)dt1.Rows[MachineSelectionListBox.SelectedIndex]["Name"] 
-                 + "&From=" + Calendar1.SelectedDate.ToString("dd-MMM-yyyy")
-                 + "&To=" + Calendar2.SelectedDate.ToString("dd-MMM-yyyy"));
+
+                Response.Redirect("~/Scraps/Scrap_show.aspx?MachineId=" + (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
+                     + "&ShiftId=" + shift
+                     + "&ShiftName=" + (string)dt1.Rows[MachineSelectionListBox.SelectedIndex]["Name"]
+                     + "&From=" + Calendar1.SelectedDate.ToString("dd-MMM-yyyy")
+                     + "&To=" + Calendar2.SelectedDate.ToString("dd-MMM-yyyy"));
+            }
         }
+        bool validateSelection()
+        {
 
+            if (Calendar1.SelectedDate == DateTime.MinValue || Calendar2.SelectedDate == DateTime.MinValue)
+            {
+                Response.Write("<script>alert('Please select From and To dates...');</script>");
+                return false;
+            }
+
+            if (Calendar2.SelectedDate < Calendar1.SelectedDate)
+            {
+                Response.Write("<script>alert('To Date should be greater than From Date.');</script>");
+                return false;
+            }
+            return true;
+        }
     }
 }

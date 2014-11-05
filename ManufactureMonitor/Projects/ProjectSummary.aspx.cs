@@ -32,13 +32,7 @@ namespace ManufactureMonitor
             Response.Redirect("~/Menu.aspx?MachineGroup=" + Request.QueryString["MachineGroupId"]);
         }
 
-        protected void Button1_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("~/ProjectSummary_Show.aspx?Id=" + Request.QueryString["MachineGroupId"]
-                 +"&MachineId="+(int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
-                 + "&ShiftId=" + (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"]
-                  + "&ShiftName=" + (string)dt1.Rows[MachineSelectionListBox.SelectedIndex]["Name"]);
-        }
+        
 
         protected void MachineSelectionListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -56,7 +50,7 @@ namespace ManufactureMonitor
             ModelSelectionListBox.DataBind();
         }
 
-        protected void Button1_Click1(object sender, EventArgs e)
+        protected void Button1_Click(object sender, EventArgs e)
         {
             if (validateSelection())
             {
@@ -102,7 +96,8 @@ namespace ManufactureMonitor
                         + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]
                      + "&ShiftId=" + ShiftId
                      + "&ShiftName=" + ShiftName
-                     + "&datefrom=" + datefrom.SelectedDate.ToString("dd-MMM-yy") + "&dateto=" + dateto.SelectedDate.ToString("dd-MMM-yy")
+                     + "&datefrom=" + datefrom.SelectedDate.ToString("dd-MMM-yy")
+                     + "&dateto=" + dateto.SelectedDate.ToString("dd-MMM-yy")
                     );
             }
         }

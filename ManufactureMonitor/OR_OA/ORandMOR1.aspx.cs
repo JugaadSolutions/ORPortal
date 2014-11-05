@@ -28,11 +28,17 @@ namespace ManufactureMonitor
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/OR_OA/ORandMOR1_Show.aspx?MachineGroup=" + Session["MachineGroup"]
-                + "&MachineId=" + (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
-                 + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]
-                 + "&ShiftId=" + (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"]
-                  + "&ShiftName=" + (string)dt1.Rows[MachineSelectionListBox.SelectedIndex]["Name"]);
+            if (validateSelection())
+            {
+
+                Response.Redirect("~/OR_OA/ORandMOR1_Show.aspx?MachineGroup=" + Session["MachineGroup"]
+                    + "&MachineId=" + (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
+                     + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]
+                     + "&ShiftId=" + (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"]
+                      + "&ShiftName=" + (string)dt1.Rows[MachineSelectionListBox.SelectedIndex]["Name"]
+                      + "&datefrom=" + datefrom.SelectedDate.ToString("dd-MMM-yy")
+                      + "&dateto=" + dateto.SelectedDate.ToString("dd-MMM-yy"));
+            }
         }
 
         protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
@@ -54,6 +60,22 @@ namespace ManufactureMonitor
         protected void ImageButton2_Click(object sender, ImageClickEventArgs e)
         {
 
+        }
+        bool validateSelection()
+        {
+
+            if (datefrom.SelectedDate == DateTime.MinValue || dateto.SelectedDate == DateTime.MinValue)
+            {
+                Response.Write("<script>alert('Please select From and To dates...');</script>");
+                return false;
+            }
+
+            if (dateto.SelectedDate < datefrom.SelectedDate)
+            {
+                Response.Write("<script>alert('To Date should be greater than From Date.');</script>");
+                return false;
+            }
+            return true;
         }
     }
 }

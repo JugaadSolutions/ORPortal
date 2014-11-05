@@ -34,18 +34,24 @@ namespace ManufactureMonitor
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            int ShiftId = -1;
-            String ShiftName = "All Shifts";
-            if (ShiftSelectionListBox.SelectedIndex != -1)
+            if( validateSelection() )
             {
-                ShiftId = (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"];
-                ShiftName = (string)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Name"];
+                int ShiftId = -1;
+                String ShiftName = "All Shifts";
+                if (ShiftSelectionListBox.SelectedIndex != -1)
+                {
+                    ShiftId = (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"];
+                    ShiftName = (string)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Name"];
+                }
+                Response.Redirect("~/ProblemAccumulation/ProblemAccumulation_Show.aspx?MachineGroupId=" + Session["MachineGroup"]
+                     + "&MachineId=" + (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
+                      + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]
+                     + "&ShiftId=" + ShiftId
+                      + "&ShiftName=" + ShiftName
+                       + "&datefrom=" + datefrom.SelectedDate.ToShortDateString()
+                      + "&dateto=" + dateto.SelectedDate.ToShortDateString());
             }
-            Response.Redirect("~/ProblemAccumulation/ProblemAccumulation_Show.aspx?MachineGroupId=" + Session["MachineGroup"]
-                 + "&MachineId=" + (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
-                  + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]
-                 + "&ShiftId=" + ShiftId
-                  + "&ShiftName=" + ShiftName);
+
         }
 
         protected void MachineSelectionListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -62,6 +68,22 @@ namespace ManufactureMonitor
         protected void ImageButton2_Click(object sender, ImageClickEventArgs e)
         {
 
+        }
+        bool validateSelection()
+        {
+
+            if (datefrom.SelectedDate == DateTime.MinValue || dateto.SelectedDate == DateTime.MinValue)
+            {
+                Response.Write("<script>alert('Please select From and To dates...');</script>");
+                return false;
+            }
+
+            if (dateto.SelectedDate < datefrom.SelectedDate)
+            {
+                Response.Write("<script>alert('To Date should be greater than From Date.');</script>");
+                return false;
+            }
+            return true;
         }
     }
 }
