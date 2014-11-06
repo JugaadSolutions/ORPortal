@@ -81,31 +81,34 @@ namespace ManufactureMonitor
 
         protected void ImageButton2_Click(object sender, ImageClickEventArgs e)
         {
-            DataAccess da = new DataAccess();
-            DateTime from = Calendar1.SelectedDate;
-            DateTime to = Calendar2.SelectedDate;
-            int machineId = (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"];
-            summary = CheckBoxList1.Items[0].Selected;
-         
-            to = to.AddDays(1);
-           
-         
-            if (!summary)
+            if (validateSelection())
             {
+                DataAccess da = new DataAccess();
+                DateTime from = Calendar1.SelectedDate;
+                DateTime to = Calendar2.SelectedDate;
+                int machineId = (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"];
+                summary = CheckBoxList1.Items[0].Selected;
 
-                Sh = da.GetShiftHistory(machineId, from.ToString("yyyy-MM-dd HH:mm:ss"),
-                    to.ToString("yyyy-MM-dd HH:mm:ss")
-                    );
+                to = to.AddDays(1);
 
-                GenerateShiftHistoryReport(Sh);
-            }
-            else
-            {
-                shSummary = da.GetShiftHistory_Summary(machineId, from.ToString("yyyy-MM-dd HH:mm:ss"),
-                    to.ToString("yyyy-MM-dd HH:mm:ss")
-                    );
 
-                GenerateShiftHistorySummaryReport(shSummary);
+                if (!summary)
+                {
+
+                    Sh = da.GetShiftHistory(machineId, from.ToString("yyyy-MM-dd HH:mm:ss"),
+                        to.ToString("yyyy-MM-dd HH:mm:ss")
+                        );
+
+                    GenerateShiftHistoryReport(Sh);
+                }
+                else
+                {
+                    shSummary = da.GetShiftHistory_Summary(machineId, from.ToString("yyyy-MM-dd HH:mm:ss"),
+                        to.ToString("yyyy-MM-dd HH:mm:ss")
+                        );
+
+                    GenerateShiftHistorySummaryReport(shSummary);
+                }
             }
         }
 
@@ -189,6 +192,21 @@ namespace ManufactureMonitor
             Response.Flush();
             Response.End();
         }
+        bool validateSelection()
+        {
 
+            if (Calendar1.SelectedDate == DateTime.MinValue || Calendar2.SelectedDate == DateTime.MinValue)
+            {
+                Response.Write("<script>alert('Please select From and To dates...');</script>");
+                return false;
+            }
+
+            if (Calendar2.SelectedDate < Calendar1.SelectedDate)
+            {
+                Response.Write("<script>alert('To Date should be greater than From Date.');</script>");
+                return false;
+            }
+            return true;
+        }
     }
 }

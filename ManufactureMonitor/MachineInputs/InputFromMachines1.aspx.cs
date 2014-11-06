@@ -29,14 +29,18 @@ namespace ManufactureMonitor
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            if (MachineSelectionListBox.SelectedIndex == -1)
-                return;
-            Response.Redirect("~/MachineInputs/InputFromMachines_Show.aspx?MachineId=" 
-                + (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
-                 + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]
-                 + "&ShiftId=" + (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"]
-                  + "&ShiftName=" + (string)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Name"]
-                 + "&date=" + date.SelectedDate.ToString("dd-MMM-yyyy"));
+            if (validateSelection())
+            {
+
+                if (MachineSelectionListBox.SelectedIndex == -1)
+                    return;
+                Response.Redirect("~/MachineInputs/InputFromMachines_Show.aspx?MachineId="
+                    + (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
+                     + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]
+                     + "&ShiftId=" + (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"]
+                      + "&ShiftName=" + (string)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Name"]
+                     + "&date=" + date.SelectedDate.ToString("dd-MMM-yyyy"));
+            }
         }
 
         protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
@@ -58,7 +62,27 @@ namespace ManufactureMonitor
 
         protected void ImageButton2_Click(object sender, ImageClickEventArgs e)
         {
+            //Response.ClearContent();
+            //Response.Buffer = true;
+            //Response.AddHeader("content-disposition", string.Format("attachment; filename={0}", "Inputs.xls"));
+            //Response.ContentType = "application/ms-excel";
+            //StringWriter sw = new StringWriter();
+            //HtmlTextWriter htw = new HtmlTextWriter(sw);
+            //GridView1.GridLines = GridLines.Both;
+            //GridView1.HeaderStyle.Font.Bold = true;
+            //GridView1.RenderControl(htw);
+            //Response.Write(sw.ToString());
+            //Response.End();
+        }
+        bool validateSelection()
+        {
 
+            if (date.SelectedDate == DateTime.MinValue)
+            {
+                Response.Write("<script>alert('Please select From and To dates...');</script>");
+                return false;
+            }
+            return true;
         }
     }
 }

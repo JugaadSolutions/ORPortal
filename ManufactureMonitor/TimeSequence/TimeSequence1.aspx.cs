@@ -74,5 +74,10 @@ namespace ManufactureMonitor
             ShiftSelectionListBox.DataValueField = "shifts";
             ShiftSelectionListBox.DataBind();
         }
+
+        protected void ImageButton2_Click(object sender, ImageClickEventArgs e)
+        {
+
+        }
     }
 }

@@ -4,7 +4,7 @@
     <asp:Panel runat="server" ID="MainPanel" Height="100%" Width="100%" HorizontalAlign="Center" >
         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                     <ContentTemplate>
-                    <asp:Timer ID="Timer1" runat="server" Interval="5000" />
+                    <asp:Timer ID="Timer1" runat="server" Interval="5000" OnTick="Timer1_Tick" />
         <table style="width: 800px; border-collapse: collapse; height: 500px; background-color: #000000; 
                     text-align:center; margin-bottom: 4px;" align="center" >
         <tr>

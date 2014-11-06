@@ -44,7 +44,7 @@ namespace ManufactureMonitor
                         Duration.Style.Add("text-align", "center");
                         Duration.Style.Add("margin", "10px");
                         Duration.Width = new Unit("60%");
-
+                        Duration.Height = new Unit("30px");
 
                         DateTime from = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + dt.Rows[i]["Start"]);
                         DateTime to = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + dt.Rows[i]["End"]);
@@ -69,7 +69,7 @@ namespace ManufactureMonitor
                         }
 
                         GridView g = new GridView();
-                        g.RowDataBound += g_RowDataBound;
+                        //g.RowDataBound += g_RowDataBound;
                         g.AutoGenerateColumns = false;
                         g.HeaderStyle.BackColor = Color.OrangeRed;
                         
@@ -169,6 +169,10 @@ namespace ManufactureMonitor
                             g.DataSource = shSummary;
 
                         g.DataBind();
+                        for (int a = 0; a < g.Columns.Count; a++)
+                        {
+                            g.Columns[a].ItemStyle.Width = 200;
+                        }
                         MainPanel.Controls.Add(Duration);
                         MainPanel.Controls.Add(g);
 
@@ -177,12 +181,12 @@ namespace ManufactureMonitor
 
                             TextBox Total = new TextBox();
                             Total.TextMode = TextBoxMode.SingleLine;
-                            Total.BackColor = Color.OrangeRed;
+                            Total.Style.Add(HtmlTextWriterStyle.BackgroundColor, "#FF9966");
                             Total.Style.Add("text-align", "center");
 
                             Total.Style.Add(HtmlTextWriterStyle.FontStyle, "Bold");
                             Total.Width = new Unit("100%");
-
+                            Total.Height = new Unit("30px");
                             Total.Text = "Shift Total";
 
                             MainPanel.Controls.Add(Total);
@@ -210,12 +214,18 @@ namespace ManufactureMonitor
                                 GridView g1 = new GridView();
 
                                 g1.Style.Add(HtmlTextWriterStyle.Width, "100%");
+                                g1.HorizontalAlign = HorizontalAlign.Center;
                                 g1.RowDataBound += g1_RowDataBound;
                                 g1.ShowHeader = false;
                                 g1.DataSource = tempList;
                                 g1.DataBind();
-
                                 MainPanel.Controls.Add(g1);
+
+                                //for (int j = 0; j < g1.Rows.Count; j++)
+                                //{
+                                //    g1.Columns[j].ItemStyle.Width = 100;
+                                //}
+                                
 
 
                             }
@@ -229,13 +239,18 @@ namespace ManufactureMonitor
                                 GridView g1 = new GridView();
 
                                 g1.Style.Add(HtmlTextWriterStyle.Width, "100%");
+                                g1.HorizontalAlign = HorizontalAlign.Center;
                                 g1.RowDataBound += g1_RowDataBound;
                                 g1.ShowHeader = false;
                                 g1.DataSource = sList;
                                 g1.DataBind();
-
                                 MainPanel.Controls.Add(g1);
 
+                                //for (int j = 0; j < g1.Columns.Count; j++)
+                                //{
+                                //    g1.Columns[j].ItemStyle.Width = 100;
+                                //}
+                                
                             }
                         }
 
@@ -247,40 +262,44 @@ namespace ManufactureMonitor
 
         }
 
-        void g_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-            if (e.Row.RowType == DataControlRowType.Header)
-            {
-                e.Row.Cells[0].Width = new Unit("6%");
-                e.Row.Cells[1].Width = new Unit("6%");
-                e.Row.Cells[2].Width = new Unit("28%");
-                e.Row.Cells[3].Width = new Unit("6%");
-                e.Row.Cells[4].Width = new Unit("6%");
-                e.Row.Cells[5].Width = new Unit("6%");
-                e.Row.Cells[6].Width = new Unit("6%");
-                e.Row.Cells[7].Width = new Unit("6%");
-                e.Row.Cells[8].Width = new Unit("6%");
-                e.Row.Cells[9].Width = new Unit("6%");
-                e.Row.Cells[10].Width = new Unit("6%");
-                if (!summary)
-                {
-                    e.Row.Cells[11].Width = new Unit("6%");
-                    e.Row.Cells[12].Width = new Unit("6%");
-                }
+        //void g_RowDataBound(object sender, GridViewRowEventArgs e)
+        //{
+        //    if (e.Row.RowType == DataControlRowType.Header)
+        //    {
+        //        e.Row.Cells[0].Width = new Unit("6%");
+        //        e.Row.Cells[1].Width = new Unit("6%");
+        //        e.Row.Cells[2].Width = new Unit("28%");
+        //        e.Row.Cells[3].Width = new Unit("6%");
+        //        e.Row.Cells[4].Width = new Unit("6%");
+        //        e.Row.Cells[5].Width = new Unit("6%");
+        //        e.Row.Cells[6].Width = new Unit("6%");
+        //        e.Row.Cells[7].Width = new Unit("6%");
+        //        e.Row.Cells[8].Width = new Unit("6%");
+        //        e.Row.Cells[9].Width = new Unit("6%");
+        //        e.Row.Cells[10].Width = new Unit("6%");
+        //        if (!summary)
+        //        {
+        //            e.Row.Cells[11].Width = new Unit("6%");
+        //            e.Row.Cells[12].Width = new Unit("6%");
+        //        }
                
 
 
-            }
+        //    }
 
 
-        }
+        //}
 
         void g1_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.Header)
             {
-                foreach (TableCell c in e.Row.Cells)
-                    c.Width = new Unit("7.7%");
+                GridView g = new GridView();
+                for (int j = 0; j < g.Columns.Count; j++)
+                {
+                    e.Row.Cells[j].Width = 100;
+                }
+
             }
         }
 
@@ -288,5 +307,6 @@ namespace ManufactureMonitor
         {
             Response.Redirect("~/Menu.aspx?MachineGroup="+Request.QueryString["MachineGroupId"]);
         }
+        
     }
 }

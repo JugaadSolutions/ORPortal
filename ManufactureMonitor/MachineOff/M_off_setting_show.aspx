@@ -1,8 +1,12 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="M_off_setting_show.aspx.cs" Inherits="ManufactureMonitor.M_off_setting_show" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:Panel runat="server" ID="MainPanel" style="text-align:center;" ScrollBars="Auto" height="100%" >
+    <div style="height:100%">
+    <asp:Panel runat="server" ID="MainPanel" Height="100%" Width="100%" HorizontalAlign="Center" ScrollBars="Auto" >
+        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                    <ContentTemplate>
+                    <asp:Timer ID="Timer1" runat="server" Interval="10000" OnTick="Timer1_Tick" />
         
-    <table style="width: 100%; border-collapse: collapse">
+    <table style="width: 100%; height:100%; border-collapse: collapse" >
         <tr>
             <td colspan="3" style="height: 46px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;<asp:TextBox ID="TextBox1" runat="server" BorderColor="Gray" BorderStyle="Solid" BorderWidth="3px" Font-Bold="True" Width="708px" style="margin-left: 0px; font-size: medium;" Height="30px">                                                                    Machine OFF- Setting</asp:TextBox>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -17,7 +21,7 @@
         <tr>
             <td style="width: 417px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;</td>
             <td style="background-color: #99CCFF; text-align: center; width: 450px;">
-                <table style="border: thin solid #FFAF37; width: 100%; border-collapse: collapse; background-color: #FFFFCC; font-weight: 700;">
+                <table style="border: thin solid #FFAF37; width: 100%; height:100%; border-collapse: collapse; background-color: #FFFFCC; font-weight: 700;">
                     <tr>
                         <td colspan="2" style="height: 43px; text-align: left;"> &nbsp;&nbsp;
                             <asp:Image ID="StopImage" runat="server" Height="50px" ImageAlign="Top" ImageUrl="~/Images/STOP.png" Width="50px" />
@@ -81,7 +85,7 @@
                     </tr>
                     <tr>
                         <td colspan="2" style="height: 39px">
-                <asp:Button ID="Button1" runat="server" BorderColor="Gray" BorderStyle="Outset" BorderWidth="3px" Font-Names="Calibri" Font-Size="Medium" Height="30px" Text="Next Machine" Width="152px" />
+                <asp:Button ID="Button1" runat="server" BorderColor="Gray" BorderStyle="Outset" BorderWidth="3px" Font-Names="Calibri" Font-Size="Medium" Height="30px" Text="Next Machine" Width="152px" OnClick="Button1_Click" />
                         </td>
                     </tr>
                     <tr>
@@ -111,5 +115,9 @@
             <td colspan="3">&nbsp;</td>
         </tr>
     </table>
+       </ContentTemplate>
+                    
+                    </asp:UpdatePanel>
         </asp:Panel>
+        </div>
 </asp:Content>

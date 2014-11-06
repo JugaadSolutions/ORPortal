@@ -32,14 +32,18 @@ namespace ManufactureMonitor
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            if (date.SelectedDate == DateTime.MinValue)
-                return;
-            Response.Redirect("~/EnterCodeComment/StopTimes2_show.aspx?MachineId=" + (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
-                 + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]
+            if (validateSelection())
+            {
 
-                 + "&ShiftId=" + (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"]
-                  + "&ShiftName=" + (string)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Name"]
-                 + "&date=" + date.SelectedDate.ToString("dd-MMM-yyyy"));
+                if (date.SelectedDate == DateTime.MinValue)
+                    return;
+                Response.Redirect("~/EnterCodeComment/StopTimes2_show.aspx?MachineId=" + (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
+                     + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]
+
+                     + "&ShiftId=" + (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"]
+                      + "&ShiftName=" + (string)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Name"]
+                     + "&date=" + date.SelectedDate.ToString("dd-MMM-yyyy"));
+            }
         }
 
         protected void MachineSelectionListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -54,6 +58,15 @@ namespace ManufactureMonitor
             ShiftSelectionListBox.DataBind();
 
         }
+        bool validateSelection()
+        {
 
+            if (date.SelectedDate == DateTime.MinValue)
+            {
+                Response.Write("<script>alert('Please select From and To dates...');</script>");
+                return false;
+            }
+            return true;
+        }
     }
 }

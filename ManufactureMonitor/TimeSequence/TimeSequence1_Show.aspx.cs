@@ -193,9 +193,6 @@ namespace ManufactureMonitor
         //    }
         //}
 
-        protected void ImageButton2_Click(object sender, ImageClickEventArgs e)
-        {
-
-        }
+       
     }
 }

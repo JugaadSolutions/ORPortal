@@ -1700,13 +1700,15 @@ namespace ManufactureMonitor.DALayer
              SqlCommand cmd;
 
              cn = new SqlConnection(connection);
-             String query = @" select Convert(Time(0),[From],20) as [From], Convert(Time(0),[To],20) as [To],
-                            Name as Project,CycleTime, ProjectTracker.[From] as 'Start',ProjectTracker.[To] as 'End',
-                            SessionActual - Scraps as [Actual],Scraps from ProjectTracker
-                            inner join Projects on ProjectTracker.Project_Id = Projects.Id
-                            inner join Scraps on ProjectTracker.SlNo = Scraps.ProjectTracker_Id
-                            where [From]>='{1}' and [To]<='{2}' and ProjectTracker.Machine_Id={0} and Scraps.Machine_Id={0}
-                             and Scraps.Machine_Id={0} and Timestamp >='{1}' and Timestamp<='{2}'
+             String query = @"select distinct Convert(Time(0),[From],20) as [From], Convert(Time(0),[To],20) as [To],
+                                Name as Project,CycleTime, ProjectTracker.[From] as 'Start',ProjectTracker.[To] as 'End',
+                                SessionActual - Scraps as [Actual],Scraps, Scraps.[timestamp] from ProjectTracker 
+                                inner join Projects on ProjectTracker.Project_Id = Projects.Id 
+                                inner join Scraps on ProjectTracker.SlNo = Scraps.ProjectTracker_Id 
+                                 where [From]>='{1}' and ([To]<='{2}' or [To] is null) and
+                                  ProjectTracker.Machine_Id={0} and Scraps.Machine_Id={0} 
+                                   and Scraps.Machine_Id={0} and Timestamp >='{1}' 
+                                   and Timestamp<='{2}'
                                 order by Timestamp asc";
              
 
@@ -2289,6 +2291,44 @@ namespace ManufactureMonitor.DALayer
 
 
              return s;
+         }
+         public bool getOffMachine(int machine)
+         {
+             
+             SqlConnection con = new SqlConnection(connection);
+             try
+             {
+                 
+                 String qry = String.Empty;
+                 qry = @"select  * from [OFFs] where Machine_Id={0} and [End] is null and status='OPEN' ";
+                 qry = String.Format(qry, machine);
+
+
+                 SqlCommand cmd = new SqlCommand(qry, con);
+                 con.Open();
+                 //cmd.Connection = con;
+                 SqlDataReader dr = cmd.ExecuteReader();
+                 DataTable dt = new DataTable();
+                 dt.Load(dr);
+                 dr.Close();
+                 con.Close();
+                 if (dt.Rows.Count > 0)
+                 {
+
+                     return true;
+
+
+                 }
+
+                 return false;
+             }
+
+
+             catch (Exception)
+             {
+                 return false;
+
+             }
          }
 #endregion
 

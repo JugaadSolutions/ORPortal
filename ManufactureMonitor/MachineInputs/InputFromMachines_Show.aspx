@@ -47,8 +47,7 @@
         <tr>
             <td style="width: 149px">&nbsp;</td>
             <td style="text-align: center; width: 799px">
-                <asp:ImageButton ID="ImageButton2" runat="server" ImageUrl="~/Images/excelicon.jpg" OnClick="ImageButton2_Click" />
-            </td>
+                &nbsp;</td>
             <td>&nbsp;</td>
         </tr>
         <tr>

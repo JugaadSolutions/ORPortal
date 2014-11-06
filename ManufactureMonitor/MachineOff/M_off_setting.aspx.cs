@@ -17,7 +17,7 @@ namespace ManufactureMonitor
             if (!Page.IsPostBack)
             {
                 DataAccess da = new DataAccess();
-                dt = da.GetMachines(Convert.ToInt32(Request.QueryString["MachineGroupId"]));
+                dt = da.GetMachines(Convert.ToInt32(Session["MachineGroup"]));
                 //ListView1.DataSource = dt;
                 //ListView1.DataBind();
                 MachineSelectionListBox.DataSource = dt.DefaultView;
@@ -35,9 +35,8 @@ namespace ManufactureMonitor
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/M_off_setting_show.aspx?MachineId=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
-                 + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]
-                + "&MachineGroupId=" + Request.QueryString["MachineGroupId"]);
+            Response.Redirect("~/MachineOff/M_off_setting_show.aspx?MachineId=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
+                 + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]);
         }
 
     }
