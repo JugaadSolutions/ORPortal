@@ -56,9 +56,7 @@
                             <asp:ListBox ID="ShiftSelectionListBox" runat="server" Height="150px" Width="150px" style="margin-left: 11px"></asp:ListBox>
                         </td>
                         <td style="height: 42px; width: 321px;">
-                            <asp:CheckBoxList ID="CheckBoxList1" runat="server" Height="16px" Width="166px">
-                                <asp:ListItem>Project Summary</asp:ListItem>
-                            </asp:CheckBoxList>
+                            <asp:ListBox ID="ModelSelectionListBox" runat="server" Height="150px" Width="150px"></asp:ListBox>
                         </td>
                     </tr>
                     <tr>

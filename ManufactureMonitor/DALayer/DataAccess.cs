@@ -1638,7 +1638,7 @@ namespace ManufactureMonitor.DALayer
              SqlCommand cmd;
 
              cn = new SqlConnection(connection);
-             String query = @" Select Projects.ID, Name+'-'+Convert(nvarchar,CycleTime,0) as [Models]
+             String query = @" Select Projects.ID,Projects.Name, Name+'-'+Convert(nvarchar,CycleTime,0) as [Models]
                               from ProjectMachines 
                                 inner join Projects on Projects.id=ProjectMachines.Project_Id
                                 where Machine_Id={0}";

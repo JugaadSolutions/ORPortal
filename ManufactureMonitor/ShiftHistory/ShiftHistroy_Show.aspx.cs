@@ -81,7 +81,6 @@ namespace ManufactureMonitor
                             b = new BoundField();
                             b.DataField = "From";
                             b.HeaderText = "From";
-
                             g.Columns.Add(b);
 
                             b = new BoundField();
@@ -95,69 +94,58 @@ namespace ManufactureMonitor
                         b = new BoundField();
                         b.DataField = "Project";
                         b.HeaderText = "Project/Model";
-
                         g.Columns.Add(b);
 
                         b = new BoundField();
                         b.DataField = "CycleTime";
                         b.HeaderText = "Plan Cycle Time[s]";
-
                         g.Columns.Add(b);
 
 
                         b = new BoundField();
                         b.DataField = "Actual";
                         b.HeaderText = "OK Pieces";
-
                         g.Columns.Add(b);
 
                         b = new BoundField();
                         b.DataField = "Scraps";
                         b.HeaderText = "Scraps";
-
                         g.Columns.Add(b);
 
                         b = new BoundField();
                         b.DataField = "LoadTime";
                         b.HeaderText = "Load Time/Available Time [s]";
-
                         g.Columns.Add(b);
 
 
                         b = new BoundField();
                         b.DataField = "Nop1";
                         b.HeaderText = "Non-Operation Time 1 / Machine Related [s] ";
-
                         g.Columns.Add(b);
 
                         b = new BoundField();
                         b.DataField = "Nop2";
                         b.HeaderText = "Non-Operation Time 2 / Other Than Machine Related [s] ";
-
                         g.Columns.Add(b);
 
                         b = new BoundField();
                         b.DataField = "Undefined";
                         b.HeaderText = "Undefined [s] ";
-
                         g.Columns.Add(b);
 
                         b = new BoundField();
                         b.DataField = "Idle";
                         b.HeaderText = "Idle Time/Exclude Hour [s] ";
-
                         g.Columns.Add(b);
 
                         b = new BoundField();
                         b.DataField = "KR";
                         b.HeaderText = "KADOURITSU/Operation Ratio [%] ";
-
                         g.Columns.Add(b);
 
                         b = new BoundField();
                         b.DataField = "BKR";
                         b.HeaderText = "BEKADOURITSU/Operational Availability [%] ";
-
                         g.Columns.Add(b);
 
                         g.HorizontalAlign = HorizontalAlign.Center;

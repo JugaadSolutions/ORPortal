@@ -140,3 +140,5 @@ D:\ideonics\Repository\ORPortal\ManufactureMonitor\bin\Microsoft.Web.Infrastruct
 D:\ideonics\Repository\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.dll
 D:\ideonics\Repository\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.pdb
 D:\ideonics\Repository\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.csprojResolveAssemblyReference.cache
+W:\Repository\IOR\Software\ORPortal\ManufactureMonitor\bin\EPPlus.dll
+W:\Repository\IOR\Software\ORPortal\ManufactureMonitor\bin\EPPlus.xml

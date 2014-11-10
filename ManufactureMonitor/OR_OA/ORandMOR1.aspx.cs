@@ -11,7 +11,7 @@ namespace ManufactureMonitor
 {
     public partial class ORandMOR1 : System.Web.UI.Page
     {
-        static DataTable dt, dt1;
+        static DataTable dt, dt1,dt2;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
@@ -30,14 +30,28 @@ namespace ManufactureMonitor
         {
             if (validateSelection())
             {
+                String Project = "";
+               
+                if (ModelSelectionListBox.SelectedIndex != -1)
+                    Project = (String)dt2.Rows[ModelSelectionListBox.SelectedIndex]["Name"];
+
+                int ShiftId = -1;
+                String ShiftName = "All Shifts";
+                if (ShiftSelectionListBox.SelectedIndex != -1)
+                {
+                    ShiftId = (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"];
+                    ShiftName = (string)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Name"];
+                }
+
 
                 Response.Redirect("~/OR_OA/ORandMOR1_Show.aspx?MachineGroup=" + Session["MachineGroup"]
                     + "&MachineId=" + (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
                      + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]
-                     + "&ShiftId=" + (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"]
-                      + "&ShiftName=" + (string)dt1.Rows[MachineSelectionListBox.SelectedIndex]["Name"]
+                     + "&ShiftId=" + ShiftId
+                      + "&ShiftName=" + ShiftName
                       + "&datefrom=" + datefrom.SelectedDate.ToString("dd-MMM-yy")
-                      + "&dateto=" + dateto.SelectedDate.ToString("dd-MMM-yy"));
+                      + "&dateto=" + dateto.SelectedDate.ToString("dd-MMM-yy")
+                      +"&Project="+Project);
             }
         }
 
@@ -55,6 +69,12 @@ namespace ManufactureMonitor
             ShiftSelectionListBox.DataSource = dt1.DefaultView;
             ShiftSelectionListBox.DataValueField = "shifts";
             ShiftSelectionListBox.DataBind();
+
+
+            dt2 = da.GetModels((int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]);
+            ModelSelectionListBox.DataSource = dt2.DefaultView;
+            ModelSelectionListBox.DataValueField = "Models";
+            ModelSelectionListBox.DataBind();
         }
 
         protected void ImageButton2_Click(object sender, ImageClickEventArgs e)

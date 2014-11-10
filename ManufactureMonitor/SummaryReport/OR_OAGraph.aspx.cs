@@ -17,9 +17,7 @@ namespace ManufactureMonitor
         {
             if (!Page.IsPostBack)
             {
-                //Chart1.Series["OR"].ChartType = System.Web.UI.DataVisualization.Charting.SeriesChartType.Line;
-                //Chart1.Series["OA"].ChartType = System.Web.UI.DataVisualization.Charting.SeriesChartType.Line;
-
+               
                 Chart1 = new Chart();
                 Chart1.ImageLocation = @"~/Charts";
                 Chart1.ImageStorageMode = ImageStorageMode.UseImageLocation;
@@ -28,10 +26,7 @@ namespace ManufactureMonitor
                 Chart1.Height = 500;
                 ChartArea area = new ChartArea("MainArea");
                 Series series = new Series("Series1");
-                //Chart.Palette = ChartColorPalette.Pastel;
-                //Chart.Palette = ChartColorPalette.None;
-                //Chart.PaletteCustomColors = new Color[] { Color.Red, Color.Blue, Color.Yellow };
-
+               
                 series.ChartType = SeriesChartType.Line;
                 
                 series.ChartArea = "MainArea";
@@ -51,14 +46,8 @@ namespace ManufactureMonitor
 
                 for (; day <= to; day = day.AddDays(1))
                 {
-                    series.Points.AddXY(day.ToString("yyyy-MMM-dd"), 100);
-                    
-                    
-                    
+                    series.Points.AddXY(day.ToString("yyyy-MMM-dd"), 100);       
                     series2.Points.AddXY(day.ToString("yyyy-MMM-dd"), 90);
-                    
-                    
-                    
                 }
 
 
@@ -76,10 +65,7 @@ namespace ManufactureMonitor
 
                 Chart1.ChartAreas["MainArea"].AxisY.Title = "Percentage";
                 Chart1.ChartAreas["MainArea"].AxisX.LabelStyle.Angle = -45;
-
-                
-
-                
+    
                 Chart1.ChartAreas["MainArea"].AxisX.MajorGrid.Enabled = false;
                 Chart1.ChartAreas["MainArea"].AxisY.MajorGrid.Enabled = false;
                 
