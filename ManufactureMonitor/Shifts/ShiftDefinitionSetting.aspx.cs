@@ -14,7 +14,7 @@ namespace ManufactureMonitor
         static DataTable dt;
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            ((Label)Master.FindControl("MasterPageLabel")).Text = "OR  " + Session["MachineName"];
             if (!Page.IsPostBack)
             {
                 DataAccess da = new DataAccess();

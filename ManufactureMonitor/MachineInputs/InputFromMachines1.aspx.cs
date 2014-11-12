@@ -15,6 +15,7 @@ namespace ManufactureMonitor
         static DataTable dt1;
         protected void Page_Load(object sender, EventArgs e)
         {
+            ((Label)Master.FindControl("MasterPageLabel")).Text = "OR  " + Session["Machinegroupname"];
             if (!Page.IsPostBack)
             {
                 DataAccess da = new DataAccess();
@@ -22,7 +23,7 @@ namespace ManufactureMonitor
                 MachineSelectionListBox.DataSource = dt.DefaultView;
                 MachineSelectionListBox.DataValueField = "Machines";
                 MachineSelectionListBox.DataBind();
-               
+                
 
             }
         }
@@ -34,6 +35,7 @@ namespace ManufactureMonitor
 
                 if (MachineSelectionListBox.SelectedIndex == -1)
                     return;
+                Session["MachineName"] = dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"];
                 Response.Redirect("~/MachineInputs/InputFromMachines_Show.aspx?MachineId="
                     + (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
                      + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]

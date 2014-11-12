@@ -26,9 +26,11 @@ namespace ManufactureMonitor
                 {
                     case "Common":
                         dt = da.DisplayProblems();
+                        ((Label)Master.FindControl("MasterPageLabel")).Text = "OR";
                         break;
                     case "Specific":
                        dt = da.DisplaySpecificProblems(Convert.ToInt32(Request.QueryString["MachineId"]));
+                       ((Label)Master.FindControl("MasterPageLabel")).Text = "OR  " + Session["MachineName"];
                         break;
                 }
 

@@ -14,6 +14,7 @@ namespace ManufactureMonitor
         static DataTable dt;
         protected void Page_Load(object sender, EventArgs e)
         {
+            ((Label)Master.FindControl("MasterPageLabel")).Text = "OR";
             if (!Page.IsPostBack)
             {
                 if (Request.QueryString["Code"] != null)

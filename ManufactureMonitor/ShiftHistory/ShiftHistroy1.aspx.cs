@@ -19,6 +19,7 @@ namespace ManufactureMonitor
         static bool summary;
         protected void Page_Load(object sender, EventArgs e)
         {
+            ((Label)Master.FindControl("MasterPageLabel")).Text = "OR  " + Session["Machinegroupname"];
             if (!Page.IsPostBack)
             {
                 DataAccess da = new DataAccess();
@@ -26,7 +27,7 @@ namespace ManufactureMonitor
                 MachineSelectionListBox.DataSource = dt.DefaultView;
                 MachineSelectionListBox.DataValueField = "Machines";
                 MachineSelectionListBox.DataBind();
-               
+                
             }
         }
 
@@ -58,6 +59,9 @@ namespace ManufactureMonitor
                       ShiftId = (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"];
                       ShiftName = (string)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Name"];
                   }
+                  if (MachineSelectionListBox.SelectedIndex == -1)
+                      return;
+                  Session["MachineName"] = dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"];
                   Response.Redirect("~/ShiftHistory/ShiftHistroy_Show.aspx?MachineId="
                       + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"] + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]
                        + "&ShiftId=" + ShiftId

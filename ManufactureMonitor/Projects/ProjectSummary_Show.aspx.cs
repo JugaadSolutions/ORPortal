@@ -11,7 +11,7 @@ namespace ManufactureMonitor
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            ((Label)Master.FindControl("MasterPageLabel")).Text = "OR  " + Session["MachineName"];
         }
 
         protected void BackButton_Click(object sender, ImageClickEventArgs e)

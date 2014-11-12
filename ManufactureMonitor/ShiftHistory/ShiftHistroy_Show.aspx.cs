@@ -17,8 +17,11 @@ namespace ManufactureMonitor
         static List<ShiftHistory> Sh;
         static List<ShiftHistory_Summary> shSummary;
         static bool summary;
+        GridView g1 = new GridView();
+        List<ShiftHistory> tempList;
         protected void Page_Load(object sender, EventArgs e)
         {
+            ((Label)Master.FindControl("MasterPageLabel")).Text = "OR  " + Session["MachineName"];
             if (!Page.IsPostBack)
             {
                 DataAccess da = new DataAccess();
@@ -28,7 +31,7 @@ namespace ManufactureMonitor
                 DateTime toDate = DateTime.Parse(Request.QueryString["dateto"]);
                 toDate = toDate.AddDays(1);
                 int ShiftId = Convert.ToInt32(Request.QueryString["ShiftId"]);
-
+                String ShiftName = Request.QueryString["ShiftName"];
                 summary = Convert.ToBoolean(Request.QueryString["Summary"]);
                 
 
@@ -93,7 +96,7 @@ namespace ManufactureMonitor
 
                         b = new BoundField();
                         b.DataField = "Project";
-                        b.HeaderText = "Project/Model";
+                        b.HeaderText = "Project/ Model";
                         g.Columns.Add(b);
 
                         b = new BoundField();
@@ -114,7 +117,7 @@ namespace ManufactureMonitor
 
                         b = new BoundField();
                         b.DataField = "LoadTime";
-                        b.HeaderText = "Load Time/Available Time [s]";
+                        b.HeaderText = "Load Time/ Available Time [s]";
                         g.Columns.Add(b);
 
 
@@ -135,17 +138,17 @@ namespace ManufactureMonitor
 
                         b = new BoundField();
                         b.DataField = "Idle";
-                        b.HeaderText = "Idle Time/Exclude Hour [s] ";
+                        b.HeaderText = "Idle Time/ Exclude Hour [s] ";
                         g.Columns.Add(b);
 
                         b = new BoundField();
                         b.DataField = "KR";
-                        b.HeaderText = "KADOURITSU/Operation Ratio [%] ";
+                        b.HeaderText = "KADOURITSU/ Operation Ratio [%] ";
                         g.Columns.Add(b);
 
                         b = new BoundField();
                         b.DataField = "BKR";
-                        b.HeaderText = "BEKADOURITSU/Operational Availability [%] ";
+                        b.HeaderText = "BEKADOURITSU/ Operational Availability [%] ";
                         g.Columns.Add(b);
 
                         g.HorizontalAlign = HorizontalAlign.Center;
@@ -155,12 +158,12 @@ namespace ManufactureMonitor
                         }
                         else
                             g.DataSource = shSummary;
-
+                        g.RowDataBound += g_RowDataBound;
                         g.DataBind();
-                        for (int a = 0; a < g.Columns.Count; a++)
-                        {
-                            g.Columns[a].ItemStyle.Width = 200;
-                        }
+                        //for (int a = 0; a < g.Columns.Count; a++)
+                        //{
+                        //    g.Columns[a].ItemStyle.Width = 200;
+                        //}
                         MainPanel.Controls.Add(Duration);
                         MainPanel.Controls.Add(g);
 
@@ -180,7 +183,7 @@ namespace ManufactureMonitor
                             MainPanel.Controls.Add(Total);
                             if (!summary)
                             {
-                                List<ShiftHistory> tempList = new List<ShiftHistory>();
+                                tempList = new List<ShiftHistory>();
                                 ShiftHistory temp = new ShiftHistory();
                                 foreach (ShiftHistory sh in Sh)
                                 {
@@ -199,7 +202,7 @@ namespace ManufactureMonitor
                                 temp.BKR = Math.Round((temp.BKR / temp.LoadTime) * 100, 2);
                                 tempList.Add(temp);
 
-                                GridView g1 = new GridView();
+                                
 
                                 g1.Style.Add(HtmlTextWriterStyle.Width, "100%");
                                 g1.HorizontalAlign = HorizontalAlign.Center;
@@ -224,7 +227,7 @@ namespace ManufactureMonitor
 
                                 sList.Add(sTemp);
 
-                                GridView g1 = new GridView();
+                                
 
                                 g1.Style.Add(HtmlTextWriterStyle.Width, "100%");
                                 g1.HorizontalAlign = HorizontalAlign.Center;
@@ -249,47 +252,76 @@ namespace ManufactureMonitor
 
 
         }
-
-        //void g_RowDataBound(object sender, GridViewRowEventArgs e)
-        //{
-        //    if (e.Row.RowType == DataControlRowType.Header)
-        //    {
-        //        e.Row.Cells[0].Width = new Unit("6%");
-        //        e.Row.Cells[1].Width = new Unit("6%");
-        //        e.Row.Cells[2].Width = new Unit("28%");
-        //        e.Row.Cells[3].Width = new Unit("6%");
-        //        e.Row.Cells[4].Width = new Unit("6%");
-        //        e.Row.Cells[5].Width = new Unit("6%");
-        //        e.Row.Cells[6].Width = new Unit("6%");
-        //        e.Row.Cells[7].Width = new Unit("6%");
-        //        e.Row.Cells[8].Width = new Unit("6%");
-        //        e.Row.Cells[9].Width = new Unit("6%");
-        //        e.Row.Cells[10].Width = new Unit("6%");
-        //        if (!summary)
-        //        {
-        //            e.Row.Cells[11].Width = new Unit("6%");
-        //            e.Row.Cells[12].Width = new Unit("6%");
-        //        }
-               
-
-
-        //    }
+        void g_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                e.Row.Cells[0].Width = 100;
+                e.Row.Cells[1].Width = 100;
+                e.Row.Cells[2].Width = 100;
+                e.Row.Cells[3].Width = 100;
+                e.Row.Cells[4].Width = 100;
+                e.Row.Cells[5].Width = 100;
+                e.Row.Cells[6].Width = 100;
+                e.Row.Cells[7].Width = 100;
+                e.Row.Cells[8].Width = 100;
+                e.Row.Cells[9].Width = 100;
+                e.Row.Cells[10].Width = 100;
+                if (!summary)
+                {
+                    e.Row.Cells[11].Width = 100;
+                    e.Row.Cells[12].Width = 100;
+                }
 
 
-        //}
+
+            }
+
+
+        }
+
 
         void g1_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            if (e.Row.RowType == DataControlRowType.Header)
+            if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                GridView g = new GridView();
-                for (int j = 0; j < g.Columns.Count; j++)
+                e.Row.Cells[0].Width = 100;
+                e.Row.Cells[1].Width = 100;
+                e.Row.Cells[2].Width = 100;
+                e.Row.Cells[3].Width = 100;
+                e.Row.Cells[4].Width = 100;
+                e.Row.Cells[5].Width = 100;
+                e.Row.Cells[6].Width = 100;
+                e.Row.Cells[7].Width = 100;
+                e.Row.Cells[8].Width = 100;
+                e.Row.Cells[9].Width = 100;
+                e.Row.Cells[10].Width = 100;
+                if (!summary)
                 {
-                    e.Row.Cells[j].Width = 100;
+                    e.Row.Cells[11].Width = 100;
+                    e.Row.Cells[12].Width = 100;
                 }
+               
+
 
             }
+
+
         }
+
+        //void g1_RowDataBound(object sender, GridViewRowEventArgs e)
+        //{
+        //    if (e.Row.RowType == DataControlRowType.Header)
+        //    {
+               
+        //        for (int j = 0; j < tempList.Count; j++)
+        //        {
+        //            e.Row.Cells[j].Width = 100;
+        //        }
+
+        //    }
+        //}
 
         protected void BackButton_Click(object sender, ImageClickEventArgs e)
         {

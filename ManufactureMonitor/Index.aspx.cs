@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Data.SqlClient;
 
 namespace ManufactureMonitor
 {
@@ -11,12 +12,14 @@ namespace ManufactureMonitor
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            ((Label)Master.FindControl("MasterPageLabel")).Text = "OR";
 
         }
 
         protected void Button1_Click(object sender, EventArgs e)
         {
             Session["Machinegroup"] = 1;
+            Session["Machinegroupname"]="Che";
             Response.Redirect("Menu.aspx");
             
         }
@@ -24,6 +27,7 @@ namespace ManufactureMonitor
         protected void Button3_Click(object sender, EventArgs e)
         {
             Session["Machinegroup"] = 2;
+            Session["Machinegroupname"] = "AirCleaner";
             Response.Redirect("Menu.aspx");
            
         }
@@ -31,6 +35,7 @@ namespace ManufactureMonitor
         protected void Button2_Click(object sender, EventArgs e)
         {
             Session["Machinegroup"] = 3;
+            Session["Machinegroupname"] = "TubeFinal";
             Response.Redirect("Menu.aspx");
            
         }

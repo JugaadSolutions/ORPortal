@@ -14,7 +14,7 @@ namespace ManufactureMonitor
         static DataTable dt, dt1,dt2;
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            ((Label)Master.FindControl("MasterPageLabel")).Text = "OR  " + Session["Machinegroupname"];
             if (!Page.IsPostBack)
             {
                 DataAccess da = new DataAccess();
@@ -39,6 +39,7 @@ namespace ManufactureMonitor
             DataAccess da = new DataAccess();
             if (MachineSelectionListBox.SelectedIndex == -1)
                 return;
+            Session["MachineName"] = dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"];
             dt1 = da.GetShiftTimings(Convert.ToInt32(dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]));
             ShiftSelectionListBox.DataSource = dt1.DefaultView;
             ShiftSelectionListBox.DataValueField = "shifts";

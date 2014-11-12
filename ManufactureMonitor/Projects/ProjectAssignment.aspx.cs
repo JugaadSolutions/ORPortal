@@ -15,7 +15,7 @@ namespace ManufactureMonitor
         int curProject;
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            ((Label)Master.FindControl("MasterPageLabel")).Text = "OR  " + Session["MachineName"];
             if (!Page.IsPostBack)
             {
                 

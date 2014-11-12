@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using ManufactureMonitor.DALayer;
 using System.Data;
 using ManufactureMonitor.Entity;
+using System.Web.UI.WebControls;
 
 namespace ManufactureMonitor
 {
@@ -16,6 +17,7 @@ namespace ManufactureMonitor
         
         protected void Page_Load(object sender, EventArgs e)
         {
+            ((Label)Master.FindControl("MasterPageLabel")).Text = "OR  " + Session["MachineName"];
             if (!Page.IsPostBack)
             {
                 DataAccess da = new DataAccess();

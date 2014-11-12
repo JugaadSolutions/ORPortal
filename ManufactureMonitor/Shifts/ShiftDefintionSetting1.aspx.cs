@@ -14,6 +14,7 @@ namespace ManufactureMonitor
         static DataTable dt;
         protected void Page_Load(object sender, EventArgs e)
         {
+            ((Label)Master.FindControl("MasterPageLabel")).Text = "OR  " + Session["Machinegroupname"];
             if (!Page.IsPostBack)
             {
                 DataAccess da = new DataAccess();
@@ -21,13 +22,15 @@ namespace ManufactureMonitor
                 MachineSelectionListBox.DataSource = dt.DefaultView;
                 MachineSelectionListBox.DataValueField = "Machines";
                 MachineSelectionListBox.DataBind();
-                
+               
             }  
         }
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-           // Session["Id"] = dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"];
+            if (MachineSelectionListBox.SelectedIndex == -1)
+                return;
+            Session["MachineName"] = dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"];
             Response.Redirect("~/Shifts/ShiftDefinitionSetting.aspx?MachineId=" 
                 + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
                  + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]);

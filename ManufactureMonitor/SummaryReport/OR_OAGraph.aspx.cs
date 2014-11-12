@@ -15,9 +15,10 @@ namespace ManufactureMonitor
         Chart Chart1;
         protected void Page_Load(object sender, EventArgs e)
         {
+            ((Label)Master.FindControl("MasterPageLabel")).Text = "OR  " + Session["MachineName"];
             if (!Page.IsPostBack)
             {
-               
+                String ShiftName = Request.QueryString["ShiftName"];
                 Chart1 = new Chart();
                 Chart1.ImageLocation = @"~/Charts";
                 Chart1.ImageStorageMode = ImageStorageMode.UseImageLocation;
@@ -35,6 +36,13 @@ namespace ManufactureMonitor
                 Series series2 = new Series("Series2");
                 series2.ChartType = SeriesChartType.Line;
                 series2.ChartArea = "MainArea";
+                //Series series3 = new Series("Series3");
+                //series3.ChartType = SeriesChartType.Point;
+                //series3.ChartArea = "MainArea";
+
+                //Series series4 = new Series("Series4");
+                //series4.ChartType = SeriesChartType.Point;
+                //series4.ChartArea = "MainArea";
                 String From = Request.QueryString["datefrom"];
                 String To = Request.QueryString["dateto"];
                 DateTime from = Convert.ToDateTime(Request.QueryString["datefrom"]);
@@ -48,6 +56,7 @@ namespace ManufactureMonitor
                 {
                     series.Points.AddXY(day.ToString("yyyy-MMM-dd"), 100);       
                     series2.Points.AddXY(day.ToString("yyyy-MMM-dd"), 90);
+                    //series3.Points.AddXY(day.ToString("yyyy-MMM-dd"), 100);
                 }
 
 
@@ -71,7 +80,9 @@ namespace ManufactureMonitor
                 
 
 
-                Chart1.Titles.Add("OR & OA Graph");
+                Chart1.Titles.Add("OR & OA Graph"+ " "+ From+" - "+To+" "+ ShiftName);
+                
+             
 
                 ReportDataPlaceHolder.Controls.Add(Chart1);
             }

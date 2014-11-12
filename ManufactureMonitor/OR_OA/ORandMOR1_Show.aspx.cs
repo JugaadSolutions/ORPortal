@@ -8,6 +8,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.UI.HtmlControls;
+using System.Configuration;
 
 namespace ManufactureMonitor
 {
@@ -19,21 +21,28 @@ namespace ManufactureMonitor
         static List<ShiftHistory_Summary> shProject;
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            ((Label)Master.FindControl("MasterPageLabel")).Text = "OR  "+Session["MachineName"];
+            
+            
+            
             if (!Page.IsPostBack)
             {
                 DataAccess da = new DataAccess();
                 int machineId = Convert.ToInt32(Request.QueryString["MachineId"]);
-
+                String MachineName = Request.QueryString["MachineName"];
                 DateTime fromDate = DateTime.Parse(Request.QueryString["datefrom"]);
                 DateTime toDate = DateTime.Parse(Request.QueryString["dateto"]);
-                toDate = toDate.AddDays(1);
+                //toDate = toDate.AddDays(1);
                 int ShiftId = Convert.ToInt32(Request.QueryString["ShiftId"]);
+                String ShiftName = Request.QueryString["ShiftName"];
                 Project = Request.QueryString["Project"];
 
                 GridView g = new GridView();
                 g.AutoGenerateColumns = false;
                 g.HeaderStyle.BackColor = Color.OrangeRed;
-
+                g.Style.Add(HtmlTextWriterStyle.Width, "100%");
+                g.HorizontalAlign = HorizontalAlign.Center;
                 BoundField b;
                 b = new BoundField();
                 b.DataField = "Date";
@@ -52,7 +61,7 @@ namespace ManufactureMonitor
 
                 b = new BoundField();
                 b.DataField = "LoadTime";
-                b.HeaderText = "Load Time/Available Time [s]";
+                b.HeaderText = "Load Time/ Available Time [s]";
                 g.Columns.Add(b);
 
 
@@ -73,41 +82,56 @@ namespace ManufactureMonitor
 
                 b = new BoundField();
                 b.DataField = "Idle";
-                b.HeaderText = "Idle Time/Exclude Hour [s] ";
+                b.HeaderText = "Idle Time/ Exclude Hour [s] ";
                 g.Columns.Add(b);
 
                 b = new BoundField();
                 b.DataField = "KR";
-                b.HeaderText = "KADOURITSU/Operation Ratio [%] ";
+                b.HeaderText = "KADOURITSU/ Operation Ratio [%] ";
                 g.Columns.Add(b);
 
                 b = new BoundField();
                 b.DataField = "BKR";
-                b.HeaderText = "BEKADOURITSU/Operational Availability [%] ";
+                b.HeaderText = "BEKADOURITSU/ Operational Availability [%] ";
                 g.Columns.Add(b);
 
                 List<ShiftHistory> tempList = new List<ShiftHistory>();
 
 
 
-
-
-                while (fromDate < toDate)
+                TextBox Duration = new TextBox();
+                Duration.TextMode = TextBoxMode.SingleLine;
+                Duration.BackColor = Color.LightGray;
+                
+                Duration.Style.Add("text-align", "center");
+                Duration.Font.Bold=true;
+                Duration.Font.Name="Arial";
+                Duration.Font.Size = 12;
+                Duration.Style.Add("margin", "10px");
+                Duration.Width = new Unit("60%");
+                Duration.Height = new Unit("60px");
+                Duration.Text = "OR and OA Accumulation- " + Environment.NewLine + " Project:" + Project
+                            + Environment.NewLine + " ShiftDate: " + fromDate.ToString("dd-MMM-yyyy") + Environment.NewLine
+                            + "  Shift:  " + ShiftName;
+                while (fromDate <= toDate)
                 {
                     ShiftHistory temp = new ShiftHistory();
                     dt = da.GetShiftTimings(machineId, ShiftId);
+                   
                     for (int i = 0; i < dt.Rows.Count; i++)
                     {
 
+                        
 
                         DateTime from = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + dt.Rows[i]["Start"]);
                         DateTime to = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + dt.Rows[i]["End"]);
-
+                        
                         if (to < from)
                             to = to.AddDays(1);
 
                         temp.Date = from.ToString("dd-MMM-yyyy");
-
+                        
+                        
                         sh = da.GetShiftHistory(machineId, from.ToString("yyyy-MM-dd HH:mm:ss"),
                                 to.ToString("yyyy-MM-dd HH:mm:ss")
                                 );
@@ -127,9 +151,9 @@ namespace ManufactureMonitor
                             temp.Nop2 += s.Nop2;
                             temp.Idle += s.Idle;
                             temp.Undefined += s.Undefined;
-                         
+
                         }
-                        double kr = (( temp.CycleTime * temp.Actual)/temp.LoadTime)*100;
+                        double kr = ((temp.CycleTime * temp.Actual) / temp.LoadTime) * 100;
 
                         temp.KR = Math.Round(kr, 2);
 
@@ -137,17 +161,21 @@ namespace ManufactureMonitor
                         temp.BKR = Math.Round(bkr, 2);
 
 
+
+
+                        MainPanel.Controls.Add(Duration);
+                        tempList.Add(temp);
+                        
                     }
-                  
-
-                    tempList.Add(temp);
                     fromDate = fromDate.AddDays(1);
+                    g.RowDataBound += g_RowDataBound;
+                    g.DataSource = tempList;
+                    g.DataBind();
+
+                    MainPanel.Controls.Add(g);
+                    
                 }
-
-                g.DataSource = tempList;
-                g.DataBind();
-                MainPanel.Controls.Add(g);
-
+                
                 TextBox Total = new TextBox();
                 Total.TextMode = TextBoxMode.SingleLine;
                 Total.Style.Add(HtmlTextWriterStyle.BackgroundColor, "#FF9966");
@@ -161,9 +189,14 @@ namespace ManufactureMonitor
                 MainPanel.Controls.Add(Total);
 
                 GridView g1 = new GridView();
-
+                g1.Style.Add(HtmlTextWriterStyle.Width, "100%");
+                g1.HorizontalAlign = HorizontalAlign.Center;
                 BoundField b1;
-                
+
+                b1 = new BoundField();
+                b1.DataField = "Date";
+                b1.HeaderText = "Date";
+                g1.Columns.Add(b1);
 
                 b1 = new BoundField();
                 b1.DataField = "Actual";
@@ -177,7 +210,7 @@ namespace ManufactureMonitor
 
                 b1 = new BoundField();
                 b1.DataField = "LoadTime";
-                b1.HeaderText = "Load Time/Available Time [s]";
+                b1.HeaderText = "Load Time/ Available Time [s]";
                 g1.Columns.Add(b1);
 
 
@@ -188,7 +221,7 @@ namespace ManufactureMonitor
 
                 b1 = new BoundField();
                 b1.DataField = "Nop2";
-                b1.HeaderText = "Non-Operation Time 2 / Other Than Machine Related [s] ";
+                b1.HeaderText = "Non-Operation Time 2 / Other Than \n Machine Related [s] ";
                 g1.Columns.Add(b1);
 
                 b1 = new BoundField();
@@ -198,17 +231,17 @@ namespace ManufactureMonitor
 
                 b1 = new BoundField();
                 b1.DataField = "Idle";
-                b1.HeaderText = "Idle Time/Exclude Hour [s] ";
+                b1.HeaderText = "Idle Time/ Exclude Hour [s] ";
                 g1.Columns.Add(b1);
 
                 b1 = new BoundField();
                 b1.DataField = "KR";
-                b1.HeaderText = "KADOURITSU/Operation Ratio [%] ";
+                b1.HeaderText = "KADOURITSU/ Operation Ratio [%] ";
                 g1.Columns.Add(b1);
 
                 b1 = new BoundField();
                 b1.DataField = "BKR";
-                b1.HeaderText = "BEKADOURITSU/Operational Availability [%] ";
+                b1.HeaderText = "BEKADOURITSU/ Operational Availability [%] ";
                 g1.Columns.Add(b1);
 
                 ShiftHistory cumulative = new ShiftHistory();
@@ -233,16 +266,16 @@ namespace ManufactureMonitor
                 cumulativeList.Add(cumulative);
 
                 g1.AutoGenerateColumns = false;
-                g1.Style.Add(HtmlTextWriterStyle.Width, "100%");
-                g1.HorizontalAlign = HorizontalAlign.Center;
+               
                 g1.RowDataBound += g1_RowDataBound;
                 g1.ShowHeader = false;
                 g1.DataSource = cumulativeList;
+                
                 g1.DataBind();
 
                 MainPanel.Controls.Add(g1);
 
-
+                
             }
 
         }
@@ -252,17 +285,53 @@ namespace ManufactureMonitor
             Response.Redirect("~/Menu.aspx?MachineGroup=" + Request.QueryString["MachineGroupId"]);
         }
 
+
+         void g_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+
+
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                e.Row.Cells[0].Width = 100;
+                e.Row.Cells[1].Width = 100;
+                e.Row.Cells[2].Width = 100;
+                e.Row.Cells[3].Width = 100;
+                e.Row.Cells[4].Width = 100;
+                e.Row.Cells[5].Width = 100;
+                e.Row.Cells[6].Width = 100;
+                e.Row.Cells[7].Width = 100;
+                e.Row.Cells[8].Width = 100;
+                e.Row.Cells[9].Width = 100;
+                  
+            }
+
+
+        }
+
+
         void g1_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            if (e.Row.RowType == DataControlRowType.Header)
+
+
+            if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                GridView g = new GridView();
-                for (int j = 0; j < g.Columns.Count; j++)
-                {
-                    e.Row.Cells[j].Width = 100;
-                }
+                e.Row.Cells[0].Width = 100;
+                e.Row.Cells[1].Width = 100;
+                e.Row.Cells[2].Width = 100;
+                e.Row.Cells[3].Width = 100;
+                e.Row.Cells[4].Width = 100;
+                e.Row.Cells[5].Width = 100;
+                e.Row.Cells[6].Width = 100;
+                e.Row.Cells[7].Width = 100;
+                e.Row.Cells[8].Width = 100;
+                e.Row.Cells[9].Width = 100;
+               
+                
+
 
             }
+
+
         }
 
     }

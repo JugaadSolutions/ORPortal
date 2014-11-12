@@ -16,7 +16,7 @@ namespace ManufactureMonitor
         static DataTable dt;
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            ((Label)Master.FindControl("MasterPageLabel")).Text = "OR  " + Request.QueryString["MachineName"];
             Update();
         }
         protected void Timer1_Tick(object sender, EventArgs e)

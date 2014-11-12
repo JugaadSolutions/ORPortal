@@ -16,6 +16,7 @@ namespace ManufactureMonitor
         Chart ch;
         protected void Page_Load(object sender, EventArgs e)
         {
+            ((Label)Master.FindControl("MasterPageLabel")).Text = "OR  " + Session["MachineName"];
             //int machineId = Convert.ToInt32(Request.QueryString["MachineId"]);
             //int machineGroup = Convert.ToInt32(Request.QueryString["Id"]);
             // DataAccess da = new DataAccess();

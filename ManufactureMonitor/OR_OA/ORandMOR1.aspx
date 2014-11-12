@@ -20,7 +20,7 @@
                          <td style="height: 23px; width: 260px;">Date From:</td>
                          <td style="height: 23px; width: 271px;">Date To:</td>
                          <td style="height: 23px; width: 167px;">Shifts:</td>
-                         <td style="height: 23px; width: 321px;"></td>
+                         <td style="height: 23px; width: 321px;">Projects:</td>
                     </tr>
                     <tr>
                         <td style="width: 105px; height: 42px">

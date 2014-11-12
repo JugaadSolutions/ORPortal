@@ -12,6 +12,7 @@ namespace ManufactureMonitor.DALayer
     {
             String connection = System.Configuration.ConfigurationManager.
         ConnectionStrings["DefaultConnection"].ConnectionString;
+       
 
 
             #region STOPPROBLEMS
@@ -2428,7 +2429,14 @@ namespace ManufactureMonitor.DALayer
              }
          }
 #endregion
-        
+      
+        //by ganesh
+          ~DataAccess()
+         {
+             SqlConnection.ClearAllPools();
+         }
+
+       
     }
      
 }

@@ -16,6 +16,7 @@ namespace ManufactureMonitor
         protected void Page_Load(object sender, EventArgs e)
         {
             machineId =  Convert.ToInt32(Request.QueryString["MachineId"]);
+            ((Label)Master.FindControl("MasterPageLabel")).Text = "OR  " + Session["MachineName"];
             if (!Page.IsPostBack)
             {
                 if (Request.QueryString["Code"] != null)

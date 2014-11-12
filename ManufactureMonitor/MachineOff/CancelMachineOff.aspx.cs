@@ -11,7 +11,7 @@ namespace ManufactureMonitor.MachineOff
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            ((Label)Master.FindControl("MasterPageLabel")).Text = "OR  " + Session["MachineName"];
         }
 
         protected void EditButton_Click(object sender, EventArgs e)

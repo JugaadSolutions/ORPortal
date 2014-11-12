@@ -14,6 +14,7 @@ namespace ManufactureMonitor
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            ((Label)Master.FindControl("MasterPageLabel")).Text = "OR";
             DataAccess da = new DataAccess();
 
             DataTable dt = da.GetParameters(Convert.ToInt32(Session["MachineGroup"]));

@@ -13,6 +13,7 @@ namespace ManufactureMonitor
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            ((Label)Master.FindControl("MasterPageLabel")).Text = "OR  " + Session["MachineName"];
             DataAccess da = new DataAccess();
 
             DataTable dt = da.GetProject(Convert.ToInt32(Request.QueryString["MachineId"]));

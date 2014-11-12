@@ -14,6 +14,7 @@ namespace ManufactureMonitor
         {
             //Session["User"] = TextBox1.Text;
             //MachineGroupId = Session["MachineGroup"];
+            ((Label)Master.FindControl("MasterPageLabel")).Text = "OR  " + Session["Machinegroupname"];
         }
 
         protected void Button1_Click(object sender, EventArgs e)

@@ -5,7 +5,8 @@
 <html lang="en" style="background-color:white;" >
 <head id="Head1" runat="server" style="background-color:white">
     <meta charset="utf-8" />
-    <title><%: Page.Title %> - Manufacture Monitor</title>
+    <title id="title1" runat="server"><%: Page.Title %>- Manufacture Monitor</title>
+    
     <asp:PlaceHolder ID="PlaceHolder1" runat="server"   >     
           <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>  
@@ -60,12 +61,15 @@
 </head>
 <body>
     <form runat="server" style="background-color:white;" >
-     <header  style="background-color:white; " class="auto-style9">
-                <p  style="background-color:white;" class="auto-style1">
-                   <asp:Image ID="Image1" runat="server" ImageUrl="~/Images/headerLogo.jpg" Height="77px" Width="405px" />
-                     &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <asp:Label ID="Label1" runat="server" Text="OR" Font-Size="XX-Large" 
-                         Font-Names="Arial"   ForeColor="Black" CssClass="auto-style2" Font-Bold="True"   />
+     <header  style="background-color:white; " >
+                <p  style="background-color:white;" >
+                   <asp:Image ID="Image1" runat="server" ImageUrl="~/Images/headerLogo.jpg" Height="77px" Width="405px" Text-Align="Left" />
+                    
+                    <asp:Label ID="MasterPageLabel" runat="server" Font-Size="XX-Large" Text-Align="Center"
+                         Font-Names="Arial"   ForeColor="Black" CssClass="auto-style2" Font-Bold="True" Text="" Style="margin-left:200px"  />
+
                 </p>
+         
     </header>
     <asp:ScriptManager runat="server">
         <Scripts>

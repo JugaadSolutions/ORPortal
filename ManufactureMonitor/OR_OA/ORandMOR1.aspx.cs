@@ -14,6 +14,7 @@ namespace ManufactureMonitor
         static DataTable dt, dt1,dt2;
         protected void Page_Load(object sender, EventArgs e)
         {
+            ((Label)Master.FindControl("MasterPageLabel")).Text = "OR  " + Session["Machinegroupname"];
             if (!Page.IsPostBack)
             {
                 DataAccess da = new DataAccess();
@@ -22,7 +23,6 @@ namespace ManufactureMonitor
                 MachineSelectionListBox.DataValueField = "Machines";
                 MachineSelectionListBox.DataBind();
                 
-
             }
         }
 
@@ -43,7 +43,9 @@ namespace ManufactureMonitor
                     ShiftName = (string)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Name"];
                 }
 
-
+                if (MachineSelectionListBox.SelectedIndex == -1)
+                    return;
+                Session["MachineName"] = dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"];
                 Response.Redirect("~/OR_OA/ORandMOR1_Show.aspx?MachineGroup=" + Session["MachineGroup"]
                     + "&MachineId=" + (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
                      + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]
@@ -52,6 +54,7 @@ namespace ManufactureMonitor
                       + "&datefrom=" + datefrom.SelectedDate.ToString("dd-MMM-yy")
                       + "&dateto=" + dateto.SelectedDate.ToString("dd-MMM-yy")
                       +"&Project="+Project);
+                
             }
         }
 
