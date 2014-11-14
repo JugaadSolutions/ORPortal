@@ -15,7 +15,7 @@
             <td style="width: 173px; height: 25px;"></td>
             <td >
                 <asp:GridView ID="GridView1" runat="server" HorizontalAlign="Center" CellPadding="3" BackColor="#DEBA84" 
-                    BorderColor="#DEBA84" BorderStyle="None" BorderWidth="1px" CellSpacing="2"  
+                    BorderColor="#663300" BorderStyle="Solid" BorderWidth="1px" CellSpacing="2"  
                     ShowHeaderWhenEmpty="True" Width="870px"  AutoGenerateColumns="false" OnRowEditing="GridView1_RowEditing"
                      OnRowUpdating ="GridView1_RowUpdating" >
                     <FooterStyle BackColor="#F7DFB5" ForeColor="#8C4510" />

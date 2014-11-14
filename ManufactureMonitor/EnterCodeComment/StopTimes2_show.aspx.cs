@@ -1,4 +1,5 @@
 ﻿using ManufactureMonitor.DALayer;
+using ManufactureMonitor.Entity;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,7 +13,7 @@ namespace ManufactureMonitor
     public partial class StopTimes2_show : System.Web.UI.Page
     {
         static DataTable dt,dt1;
-
+        static List<TimeSequence> Ts;
         protected void Page_Load(object sender, EventArgs e)
         {
             ((Label)Master.FindControl("MasterPageLabel")).Text = "OR  " + Session["MachineName"];
@@ -49,7 +50,7 @@ namespace ManufactureMonitor
 
 
                 Duration.Text = fromDate.ToShortDateString() + ":" + (dt.Rows[0]["shifts"]).ToString();
-                dt1 = da.GetStopDetails(machineId, ShiftId, from.ToString("yyyy-MM-dd HH:mm:ss"),
+                Ts= da.GetStopDetails(machineId, ShiftId, from.ToString("yyyy-MM-dd HH:mm:ss"),
                     to.ToString("yyyy-MM-dd HH:mm:ss"),
                     Convert.ToBoolean(Request.QueryString["SpeedLoss"]));
 

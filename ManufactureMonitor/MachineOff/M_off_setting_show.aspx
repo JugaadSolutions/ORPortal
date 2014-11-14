@@ -45,7 +45,7 @@
                                 <SelectedDayStyle BackColor="#666666" Font-Bold="True" ForeColor="White" />
                                 <SelectorStyle BackColor="#CCCCCC" />
                                 <TitleStyle BackColor="#FFAF37" BorderColor="Black" Font-Bold="True" />
-                                <TodayDayStyle BackColor="#CCCCCC" ForeColor="Black" />
+                               
                                 <WeekendDayStyle BackColor="#FFFFCC" />
                             </asp:Calendar>
                         </td>

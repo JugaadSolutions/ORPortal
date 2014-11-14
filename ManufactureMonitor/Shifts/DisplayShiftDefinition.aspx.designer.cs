@@ -13,6 +13,15 @@ namespace ManufactureMonitor {
     public partial class DisplayShiftDefinition {
         
         /// <summary>
+        /// MainPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel MainPanel;
+        
+        /// <summary>
         /// TextBox1 control.
         /// </summary>
         /// <remarks>
@@ -49,30 +58,57 @@ namespace ManufactureMonitor {
         protected global::System.Web.UI.WebControls.TextBox TextBox2;
         
         /// <summary>
-        /// GridView3 control.
+        /// FirstShiftTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView3;
+        protected global::System.Web.UI.WebControls.TextBox FirstShiftTextBox;
         
         /// <summary>
-        /// GridView4 control.
+        /// FirstShiftGrid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView4;
+        protected global::System.Web.UI.WebControls.GridView FirstShiftGrid;
         
         /// <summary>
-        /// GridView5 control.
+        /// SecondShiftTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView5;
+        protected global::System.Web.UI.WebControls.TextBox SecondShiftTextBox;
+        
+        /// <summary>
+        /// SecondShiftGrid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView SecondShiftGrid;
+        
+        /// <summary>
+        /// ThirdShiftTextBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox ThirdShiftTextBox;
+        
+        /// <summary>
+        /// ThirdShiftGrid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView ThirdShiftGrid;
     }
 }

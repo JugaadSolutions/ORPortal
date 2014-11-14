@@ -65,7 +65,7 @@
                         </td>
                         <td style="height: 42px; width: 321px;">
                             <asp:CheckBoxList ID="CheckBoxList1" runat="server" Height="16px" Width="166px">
-                                <asp:ListItem>Project Summary</asp:ListItem>
+                                <asp:ListItem>Speed Loss</asp:ListItem>
                             </asp:CheckBoxList>
                         </td>
                     </tr>

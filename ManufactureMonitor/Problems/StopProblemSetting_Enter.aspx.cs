@@ -75,7 +75,14 @@ namespace ManufactureMonitor
                 }
                 else
                 {
-                    Response.Write("<script>alert('Problem code already exist..');if(alert){ window.location='../Problems/StopProblemSetting_Enter.aspx?MachineId=" + Request.QueryString["MachineId"] + "';}</script>");
+                    if (Convert.ToInt32(TextBox2.Text) >= 1 && Convert.ToInt32(TextBox2.Text) <= 999)
+                    {
+                        Response.Write("<script>alert('Problem code already exist..');if(alert){ window.location='../Problems/StopProblemSetting_Enter.aspx?MachineId=" + Request.QueryString["MachineId"] + "';}</script>");
+                    }
+                    else
+                    {
+                        Response.Write("<script>alert('Problem code must be within 1 to 999..');if(alert){ window.location='../Problems/StopProblemSetting_Enter.aspx?MachineId=" + Request.QueryString["MachineId"] + "';}</script>");
+                    }
                 }
             }
             else

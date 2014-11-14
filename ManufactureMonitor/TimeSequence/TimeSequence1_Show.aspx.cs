@@ -1,4 +1,5 @@
 ﻿using ManufactureMonitor.DALayer;
+using ManufactureMonitor.Entity;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using System;
@@ -17,6 +18,7 @@ namespace ManufactureMonitor
     {
         static DataTable dt;
         static List<DataTable> dts;
+        static List<TimeSequence> Ts;
         static List<String> fileNames;
         static List<String> sheetNames;
         protected void Page_Load(object sender, EventArgs e)
@@ -58,37 +60,37 @@ namespace ManufactureMonitor
 
 
                         Duration.Text = fromDate.ToShortDateString() + ":" + (dt.Rows[i]["shifts"]).ToString();
-                        DataTable dt1 = da.GetStopDetails(machineId, ShiftId, from.ToString("yyyy-MM-dd HH:mm:ss"),
+                        Ts = da.GetStopDetails(machineId, ShiftId, from.ToString("yyyy-MM-dd HH:mm:ss"),
                             to.ToString("yyyy-MM-dd HH:mm:ss"),
                             Convert.ToBoolean(Request.QueryString["SpeedLoss"]));
 
-                        if (dt1.Rows.Count == 0) continue;
-                        
-                            DataTable d = new DataTable();
-                            d.Columns.Add("From",typeof(string));
-                            d.Columns.Add("To", typeof(string));
-                            d.Columns.Add("Duration[s]", typeof(string));
-                            d.Columns.Add("Stop Type", typeof(string));
-                            d.Columns.Add("Problem", typeof(string));
-                            d.Columns.Add("Comment",typeof(string));
+                        //if (dt1.Rows.Count == 0) continue;
 
-                            for (int j = 0; j < dt1.Rows.Count; j++)
-                            {
-                                DataRow r = d.NewRow();
+                        //DataTable d = new DataTable();
+                        //d.Columns.Add("From", typeof(string));
+                        //d.Columns.Add("To", typeof(string));
+                        //d.Columns.Add("Duration[s]", typeof(string));
+                        //d.Columns.Add("Stop Type", typeof(string));
+                        //d.Columns.Add("Problem", typeof(string));
+                        //d.Columns.Add("Comment", typeof(string));
 
-                                r["From"] = dt1.Rows[j]["From"];
-                                r["To"] = dt1.Rows[j]["To"];
-                                r["Duration[s]"] = dt1.Rows[j]["Duration[s]"];
-                                r["Stop Type"] = dt1.Rows[j]["StopType"];
-                                r["Problem"] = dt1.Rows[j]["Problem"];
-                                r["Comment"] = dt1.Rows[j]["Comment"];
-                                d.Rows.Add(r);
-                            }
-                            dts.Add(d);
-                            char[] c = {':','-'};
-                            String[] f = Duration.Text.Split(c);
-                            fileNames.Add(f[1]);
-                            sheetNames.Add(f[0] + "-" + f[2] + ":" + f[3] + "-" + f[4] + ":" + f[5]);
+                        //for (int j = 0; j < dt1.Rows.Count; j++)
+                        //{
+                        //    DataRow r = d.NewRow();
+
+                        //    r["From"] = dt1.Rows[j]["From"];
+                        //    r["To"] = dt1.Rows[j]["To"];
+                        //    r["Duration[s]"] = dt1.Rows[j]["Duration[s]"];
+                        //    r["Stop Type"] = dt1.Rows[j]["StopType"];
+                        //    r["Problem"] = dt1.Rows[j]["Problem"];
+                        //    r["Comment"] = dt1.Rows[j]["Comment"];
+                        //    d.Rows.Add(r);
+                        //}
+                        //dts.Add(d);
+                        //char[] c = { ':', '-' };
+                        //String[] f = Duration.Text.Split(c);
+                        //fileNames.Add(f[1]);
+                        //sheetNames.Add(f[0] + "-" + f[2] + ":" + f[3] + "-" + f[4] + ":" + f[5]);
                         
 
                         
@@ -108,7 +110,7 @@ namespace ManufactureMonitor
                         g.Columns.Add(b);
 
                         b = new BoundField();
-                        b.DataField = "Duration[s]";
+                        b.DataField = "Duration";
                         b.HeaderText = "Duration[s]";
 
                         g.Columns.Add(b);
@@ -135,7 +137,7 @@ namespace ManufactureMonitor
 
 
                         g.HorizontalAlign = HorizontalAlign.Center;
-                        g.DataSource = dt1;
+                        g.DataSource = Ts;
                         g.DataBind();
                         Panel1.Controls.Add(Duration);
                         Panel1.Controls.Add(g);

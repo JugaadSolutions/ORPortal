@@ -74,10 +74,19 @@
                         <td colspan="5" style="height: 1px">
                             <asp:Button ID="Button1" runat="server" BorderColor="Gray" BorderStyle="Outset" BorderWidth="2px" Text="Entry" Height="45px" Width="80px" OnClick="Button1_Click" />
                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <asp:Button ID="Button2" runat="server" Height="45px" Text="Reports" Width="84px" BorderStyle="Outset" BorderWidth="2px" BorderColor="Gray" OnClick="Button2_Click"/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <asp:ImageButton ID="ImageButton2" runat="server" Height="40px" ImageAlign="AbsMiddle" ImageUrl="~/Images/excelicon.jpg" OnClick="ImageButton2_Click" Width="35px" />
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="5"></td>
+                        <td colspan="5">
+                            <asp:Panel ID="TotalPanel" runat="server" Width="100%">
+                                <asp:Label ID="TotalLabel" runat="server" Font-Size="Medium" ForeColor="#996633" Height="30px" Text="Total:" Width="155px"></asp:Label>
+                                <asp:TextBox ID="ActualTotal" runat="server" BorderColor="#996633" BorderStyle="Solid" BorderWidth="1px" Height="30px" Width="185px"></asp:TextBox>
+                                <asp:TextBox ID="ScrapsTotal" runat="server" BorderColor="#996633" BorderStyle="Solid" BorderWidth="1px" Height="30px" Width="176px"></asp:TextBox>
+                                <asp:TextBox ID="RejectionTotal" runat="server" BorderColor="#996633" BorderStyle="Solid" BorderWidth="1px" Height="30px" Width="220px"></asp:TextBox>
+                            </asp:Panel>
+                        </td>
                     </tr>
                 </table>
                         </td>

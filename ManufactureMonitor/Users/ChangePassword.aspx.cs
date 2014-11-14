@@ -27,6 +27,7 @@ namespace ManufactureMonitor
             bool b=da.SetPassword(TextBox2.Text,TextBox3.Text,TextBox5.Text);
             if (b == true)
             {
+                Session["User"]=TextBox2.Text;
                 Response.Write("<script>alert('Password changed successfully....');if(alert){ window.location='../Menu.aspx'}</script>");
             }
             else

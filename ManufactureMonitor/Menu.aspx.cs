@@ -53,7 +53,7 @@ namespace ManufactureMonitor
 
         protected void Button13_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Shifts/DisplayShiftDefinition.aspx"  );
+            Response.Redirect("~/Shifts/DisplayShiftDefinition1.aspx"  );
         }
 
         protected void Button6_Click(object sender, EventArgs e)

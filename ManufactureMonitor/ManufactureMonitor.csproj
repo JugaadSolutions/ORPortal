@@ -146,6 +146,7 @@
     <Content Include="Images\whiteTriangle .png" />
     <Content Include="MachineOff\CancelMachineOff.aspx" />
     <Content Include="Projects\ProjectAssignment1.aspx" />
+    <Content Include="Shifts\DisplayShiftDefinition1.aspx" />
     <Content Include="Users\ChangePassword.aspx" />
     <Content Include="Problems\CommonProblemsSetting.aspx" />
     <Content Include="Problems\CommonProblemsSetting_ADD.aspx" />
@@ -344,6 +345,7 @@
     <Compile Include="Entity\ShiftHistory.cs" />
     <Compile Include="Entity\Stop.cs" />
     <Compile Include="Entity\StopTimeoutArgs.cs" />
+    <Compile Include="Entity\TimeSequence.cs" />
     <Compile Include="MachineOff\CancelMachineOff.aspx.cs">
       <DependentUpon>CancelMachineOff.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -357,6 +359,13 @@
     </Compile>
     <Compile Include="Projects\ProjectAssignment1.aspx.designer.cs">
       <DependentUpon>ProjectAssignment1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Shifts\DisplayShiftDefinition1.aspx.cs">
+      <DependentUpon>DisplayShiftDefinition1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Shifts\DisplayShiftDefinition1.aspx.designer.cs">
+      <DependentUpon>DisplayShiftDefinition1.aspx</DependentUpon>
     </Compile>
     <Compile Include="Users\ChangePassword.aspx.cs">
       <DependentUpon>ChangePassword.aspx</DependentUpon>

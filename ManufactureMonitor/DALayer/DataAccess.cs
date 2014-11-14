@@ -229,23 +229,23 @@ namespace ManufactureMonitor.DALayer
                             (Case When ShiftMachines.Sunday=0 Then 'No' else 'Yes' End) 
                             from Shifts LEFT Outer Join ShiftMachines on (Shifts.Id=ShiftMachines.Shift_Id)
                             LEFT Outer join 
-                            (select Breaks.Shift_Id, [start] , [end]  from Breaks where Name='FIRST' and Machine_Id=1) 
+                            (select Breaks.Shift_Id, [start] , [end]  from Breaks where Name='FIRST' and Machine_Id={0}) 
                                 as FirstBreak on FirstBreak.Shift_Id = Shifts.Id
 
                             LEFT Outer join 
-                            (select Breaks.Shift_Id, [start] , [end]  from Breaks where Name='SECOND'and Machine_Id=1) 
+                            (select Breaks.Shift_Id, [start] , [end]  from Breaks where Name='SECOND'and Machine_Id={0}) 
                             as SecondBreak on SecondBreak.Shift_Id = Shifts.Id
 
                             LEFT Outer join 
-                            (select Breaks.Shift_Id, [start], [end]  from Breaks where Name='THIRD'and Machine_Id=1) 
+                            (select Breaks.Shift_Id, [start], [end]  from Breaks where Name='THIRD'and Machine_Id={0}) 
                             as ThirdBreak on ThirdBreak.Shift_Id = Shifts.Id
 
                             LEFT Outer join 
-                            (select Breaks.Shift_Id, [start] , [end] from Breaks where Name='FOURTH'and Machine_Id=1) 
+                            (select Breaks.Shift_Id, [start] , [end] from Breaks where Name='FOURTH'and Machine_Id={0}) 
                             as FourthBreak on FourthBreak.Shift_Id = Shifts.Id
 
                             LEFT Outer join 
-                            (select Breaks.Shift_Id, [start] , [end]  from Breaks where Name='FIFTH'and Machine_Id=1) 
+                            (select Breaks.Shift_Id, [start] , [end]  from Breaks where Name='FIFTH'and Machine_Id={0}) 
                             as FifthBreak on FifthBreak.Shift_Id = Shifts.Id
                             where ShiftMachines.Machine_Id = {0}";
             query = String.Format(query, Machine_ID);
@@ -261,6 +261,32 @@ namespace ManufactureMonitor.DALayer
             return dt;
 
 
+        }
+        public DataTable GetShiftDays(int MachineId)
+        {
+             SqlConnection cn;
+            SqlCommand cmd;
+
+            cn = new SqlConnection(connection);
+            String query = @" select ( (Case when ShiftMachines.Monday=0 Then ' ' else 'Mon' End)+' ,'+
+                            (Case When ShiftMachines.Tuesday=0 Then ' ' else 'Tue' End)+' ,'+
+                            (Case When ShiftMachines.Wednesday=0 Then ' ' else 'Wed' End)+' ,'+
+                            (Case When ShiftMachines.Thursday =0 Then ' ' else 'Thu' End)+' ,'+
+                            (Case When ShiftMachines.Friday =0 Then ' ' else 'Fri' End) +' ,'+
+                            (Case When ShiftMachines.Saturday =0 Then ' ' else 'Sat' End)+' ,'+ 
+                            (Case When ShiftMachines.Sunday=0 Then ' ' else 'Sun' End) )as Days 
+                            From ShiftMachines where Machine_Id={0}";
+            query = String.Format(query, MachineId);
+
+            cn.Open();
+            cmd = new SqlCommand(query, cn);
+
+            SqlDataReader dr = cmd.ExecuteReader();
+            DataTable dt = new DataTable();
+            dt.Load(dr);
+            dr.Close();
+            cn.Close();
+            return dt;
         }
         public bool SetPassword(String name,String password,String password1)
         {
@@ -295,6 +321,7 @@ namespace ManufactureMonitor.DALayer
                 }
 
             }
+            
             cn.Close();
             return false;
             
@@ -1134,7 +1161,15 @@ namespace ManufactureMonitor.DALayer
                  cmd = new SqlCommand(query, cn);
                  cmd.ExecuteNonQuery();
                  cn.Close();
-                 return true;
+                 int Code=Convert.ToInt32(code);
+                 if (Code >= 1 && Code <= 999)
+                 {
+                     return true;
+                 }
+                 else
+                 {
+                     return false;
+                 }
 
              }
 
@@ -1440,7 +1475,7 @@ namespace ManufactureMonitor.DALayer
              return dt;
          }
 
-         public DataTable GetStopDetails(int Machine_Id, int Shift_Id, String from, String to,bool Speedloss)
+         public List<TimeSequence> GetStopDetails(int machine, int Shift_Id, String from, String to, bool Speedloss)
          {
 
              SqlConnection cn;
@@ -1513,15 +1548,17 @@ namespace ManufactureMonitor.DALayer
                         Comment,
                         'Specific' as Source,
                         Stops.Machine_Id    
-                        from Stops where [Start] >= '{1}' and [Start] < '{2}' 
-                        and SpecificProblems.Machine_Id={0} and [Status] ='Speed Loss'";
-                     query1 = String.Format(query1, Machine_Id, from,
+                        from Stops 
+                        
+                        where [Start] >= '{1}' and [Start] < '{2}' 
+                        and  [Status] ='SpeedLoss'";
+                     query1 = String.Format(query1, machine, from,
                          to);
 
                      
                  }
                  query += query1 +"  order by [From]";
-             query = String.Format(query, Machine_Id, 
+                 query = String.Format(query, machine, 
                  from, to);
 
              cn.Open();
@@ -1532,7 +1569,25 @@ namespace ManufactureMonitor.DALayer
              dt.Load(dr);
              dr.Close();
              cn.Close();
-             return dt;
+             List<TimeSequence> TimeSequence = new List<TimeSequence>();
+
+             for (int i = 0; i < dt.Rows.Count; i++)
+             {
+                 TimeSequence.Add(new TimeSequence
+                 {
+                    
+                     From =dt.Rows[i]["From"].ToString(),
+                     To = dt.Rows[i]["To"].ToString(),
+
+                     Duration = (int)dt.Rows[i]["Duration[s]"],
+                     StopType = (String)dt.Rows[i]["StopType"],
+                     Problem = (String)dt.Rows[i]["Problem"],
+                     Comment = (String)dt.Rows[i]["Comment"],
+                     
+                 });
+             }
+
+             return TimeSequence;
          }
 
          internal DataTable GetStopInfo(int p, String type, String source, int machine)
@@ -2119,6 +2174,13 @@ namespace ManufactureMonitor.DALayer
              SqlDataReader dr = cmd.ExecuteReader();
              DataTable dt = new DataTable();
              dt.Load(dr);
+             //
+            
+             
+             //for (int i = 0; i < dt.Rows.Count;i++ )
+             //{
+
+             //}
              dr.Close();
              cn.Close();
              return dt;
@@ -2436,7 +2498,32 @@ namespace ManufactureMonitor.DALayer
              SqlConnection.ClearAllPools();
          }
 
-       
+
+
+          internal DataTable GetSession(int machine, int shift)
+          {
+              SqlConnection cn;
+              SqlCommand cmd;
+
+              cn = new SqlConnection(connection);
+              String query = @" Select Convert(varchar(5),CONVERT(TIME(0),[Start],0),20)+'-'+Convert(varchar(5),CONVERT(TIME(0),[End],0),20)
+                            from 
+                            Sessions 
+                            where 
+                            Shift_Id={1} AND Machine_Id={0}";
+              query = String.Format(query, machine, shift);
+
+              cn.Open();
+              cmd = new SqlCommand(query, cn);
+
+              SqlDataReader dr = cmd.ExecuteReader();
+              DataTable dt = new DataTable();
+              dt.Load(dr);
+              dr.Close();
+              cn.Close();
+              return dt;
+
+          }
     }
      
 }

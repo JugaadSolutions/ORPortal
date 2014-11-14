@@ -1,8 +1,13 @@
 ﻿using ManufactureMonitor.DALayer;
+using ManufactureMonitor.Entity;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -11,18 +16,30 @@ namespace ManufactureMonitor
 {
     public partial class TimeSequence1 : System.Web.UI.Page
     {
-        static DataTable dt,dt1;
+        static DataTable dt, dt1, dt2;
+        static List<TimeSequence> Ts;
+        static List<DataTable> dts;
+        static List<String> fileNames;
+        static List<String> sheetNames;
+        static bool SpeedLoss;
+        static int machineId;
         protected void Page_Load(object sender, EventArgs e)
         {
             ((Label)Master.FindControl("MasterPageLabel")).Text = "OR  " + Session["Machinegroupname"];
             if (!Page.IsPostBack)
             {
                 DataAccess da = new DataAccess();
+
+
+                dts = new List<DataTable>();
+                fileNames = new List<string>();
+                sheetNames = new List<string>();
+
                 dt = da.GetMachines(Convert.ToInt32(Session["MachineGroup"]));
                 MachineSelectionListBox.DataSource = dt.DefaultView;
                 MachineSelectionListBox.DataValueField = "Machines";
                 MachineSelectionListBox.DataBind();
-                
+
 
             }
         }
@@ -53,34 +70,117 @@ namespace ManufactureMonitor
                 {
                     ShiftId = (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"];
                 }
+
+
+
                 if (MachineSelectionListBox.SelectedIndex == -1)
                     return;
                 Session["MachineName"] = dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"];
-                Response.Redirect("~/TimeSequence/TimeSequence1_Show.aspx?MachineId=" 
+                machineId = (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"];
+                Response.Redirect("~/TimeSequence/TimeSequence1_Show.aspx?MachineId="
                     + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
                      + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]
                      + "&ShiftId=" + ShiftId
                       + "&ShiftName=" + (string)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Name"]
                      + "&datefrom=" + datefrom + "&dateto=" + dateto
-                     +"&SpeedLoss="+CheckBoxList1.Items[0].Selected);
+                     + "&SpeedLoss=" + CheckBoxList1.Items[0].Selected);
             }
         }
 
         protected void MachineSelectionListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            //DateTime fromDate = DateTime.Parse(Request.QueryString["datefrom"]);
+            //DateTime toDate = DateTime.Parse(Request.QueryString["dateto"]);
+            //int machineId = Convert.ToInt32(Request.QueryString["MachineId"]);
+            //int ShiftId = (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"];
             DataAccess da = new DataAccess(); 
             if (MachineSelectionListBox.SelectedIndex == -1)
                 return;
-            dt1 = da.GetShiftTimings(Convert.ToInt32(dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]));
+            dt1= da.GetShiftTimings(Convert.ToInt32(dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]));
+            //DateTime from = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + dt1.Rows[0]["Start"]);
+            //DateTime to = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + dt1.Rows[0]["End"]);
+            //if (to < from)
+            //    to = to.AddDays(1);
+
             ShiftSelectionListBox.DataSource = dt1.DefaultView;
             ShiftSelectionListBox.DataValueField = "shifts";
             ShiftSelectionListBox.DataBind();
+            //dt2 = da.GetStopDetails(machineId, ShiftId, from.ToString("yyyy-MM-dd HH:mm:ss"),
+            //                to.ToString("yyyy-MM-dd HH:mm:ss"),
+            //                Convert.ToBoolean(Request.QueryString["SpeedLoss"]));
         }
 
         protected void ImageButton2_Click(object sender, ImageClickEventArgs e)
         {
+            if (validateSelection())
+            {
+                DataAccess da = new DataAccess();
+                DateTime from = Calendar1.SelectedDate;
+                DateTime to = Calendar2.SelectedDate;
+                //int machineId = (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"];
+                int ShiftId = (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"];
+                SpeedLoss = CheckBoxList1.Items[0].Selected;
 
+                to = to.AddDays(1);
+                Ts= da.GetStopDetails(machineId, ShiftId, from.ToString("yyyy-MM-dd HH:mm:ss"),
+                            to.ToString("yyyy-MM-dd HH:mm:ss"),
+                            Convert.ToBoolean(Request.QueryString["SpeedLoss"]));
+                if (!SpeedLoss)
+                {
+                    GenerateTimeSequenceReport(Ts);
+                }
+                else
+                {
+                    GenerateTimeSequenceReport(Ts);
+                }
+
+            }
+        }
+        bool validateSelection()
+        {
+
+            if (Calendar1.SelectedDate == DateTime.MinValue || Calendar2.SelectedDate == DateTime.MinValue)
+            {
+                Response.Write("<script>alert('Please select From and To dates...');</script>");
+                return false;
+            }
+
+            if (Calendar2.SelectedDate < Calendar1.SelectedDate)
+            {
+                Response.Write("<script>alert('To Date should be greater than From Date.');</script>");
+                return false;
+            }
+            return true;
+        }
+        void GenerateTimeSequenceReport(List<TimeSequence> Ts)
+        {
+            Response.Clear();
+            Response.Buffer = true;
+            Response.AddHeader("content-disposition", "attachment;filename=TimeSequence_"
+                + (String)dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"] + ".csv");
+            Response.Charset = "";
+            Response.ContentType = "application/text";
+            StringBuilder sBuilder = new System.Text.StringBuilder();
+
+            sBuilder.Append("From,To,Duration,StopType,Problem,Comment");
+
+            sBuilder.Append("\r\n");
+            foreach (TimeSequence ts in Ts)
+            {
+                sBuilder.Append(ts.From + ",");
+                sBuilder.Append(ts.To + ",");
+                sBuilder.Append(ts.Duration + ",");
+                sBuilder.Append(ts.StopType + ",");
+                sBuilder.Append(ts.Problem + ",");
+                sBuilder.Append(ts.Comment + ",");
+                sBuilder.Append("\r\n");
+            }
+
+
+
+            Response.Output.Write(sBuilder.ToString());
+            Response.Flush();
+            Response.End();
         }
     }
 }
