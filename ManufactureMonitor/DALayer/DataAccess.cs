@@ -2524,6 +2524,77 @@ namespace ManufactureMonitor.DALayer
               return dt;
 
           }
+
+          public DataTable GetAccumulation(int machine, String from, String to)
+          {
+              SqlConnection cn;
+              SqlCommand cmd;
+
+              cn = new SqlConnection(connection);
+              String query = @"
+              Select DISTINCT Res.Code As [Code],Res.descp as [Problems],Time_mi.Time_in_Seconds As [Time],Time_mi.[Count] As [Count]
+                From
+                (Select Code_Desc.[Description] as descp,Stops.Start,Stops.[End],Stops.Code As Code,Stops.Machine_Id
+	                From
+                        (Select [code],[Description] 
+		                From
+		                [CommonProblems] 
+		                UNION ALL
+		                Select [Code],[Description]
+		                From
+		                [SpecificProblems]) AS Code_Desc
+	                INNER JOIN Stops
+	                ON
+	                Stops.Code=Code_Desc.Code
+	                Where Stops.Machine_Id={0}
+	                AND 
+	                [start] Between '{1}' AND '{2}' 
+	                AND 
+	                [end] Between '{1}' AND '{2}' ) As Res
+	                INNER JOIN 
+	                (Select Stops.Code, SUM(DATEDIFF(SECOND,Start,[end])) As [Time_in_Seconds],COUNT(Stops.Code) As [Count] 
+	                From
+	                Stops
+	                Where
+	                [start] Between '{1}' AND '{2}' 
+	                AND 
+	                [end] Between '{1}' AND '{2}'
+	                AND 
+	                Machine_Id={0}
+	                Group BY
+	                Stops.Code) As Time_mi
+	                ON
+	                Time_mi.Code=Res.Code
+	                Where
+	                Machine_Id={0}";
+
+              query = String.Format(query, machine, from , to);
+
+              cn.Open();
+              cmd = new SqlCommand(query, cn);
+
+              SqlDataReader dr = cmd.ExecuteReader();
+              DataTable dt = new DataTable();
+              dt.Load(dr);
+              dt.Columns.Add("Time[%]",typeof(Int32));
+
+              Int32 sum = 0;
+              for (int i = 0; i < dt.Rows.Count; i++)
+              {
+                  sum += Convert.ToInt32(dt.Rows[i]["Time"].ToString());
+              }
+
+              for (int i = 0; i < dt.Rows.Count; i++)
+              {
+                  dt.Rows[i]["Time[%]"] = (Convert.ToInt32(dt.Rows[i]["Time"].ToString()) / sum)*100;
+              }
+
+
+              dr.Close();
+              cn.Close();
+              return dt;
+
+          }
     }
      
 }

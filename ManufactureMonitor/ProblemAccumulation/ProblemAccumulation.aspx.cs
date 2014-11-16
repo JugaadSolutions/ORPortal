@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -11,7 +12,7 @@ namespace ManufactureMonitor
 {
     public partial class ProblemAccumulation : System.Web.UI.Page
     {
-        static DataTable dt,dt1;
+        static DataTable dt,dt1,dt2;
         protected void Page_Load(object sender, EventArgs e)
         {
             ((Label)Master.FindControl("MasterPageLabel")).Text = "OR  " + Session["Machinegroupname"];
@@ -22,7 +23,7 @@ namespace ManufactureMonitor
                 MachineSelectionListBox.DataSource = dt.DefaultView;
                 MachineSelectionListBox.DataValueField = "Machines";
                 MachineSelectionListBox.DataBind();
-               
+                
 
             }
         }
@@ -70,7 +71,32 @@ namespace ManufactureMonitor
 
         protected void ImageButton2_Click(object sender, ImageClickEventArgs e)
         {
+            if (validateSelection())
+            {
+                DataAccess da = new DataAccess();
+                int machine = (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"];
 
+                DateTime fromDate = datefrom.SelectedDate;
+                DateTime toDate = dateto.SelectedDate;
+                toDate = toDate.AddDays(1);
+                int ShiftId = (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"];
+                while (fromDate < toDate)
+                {
+                    dt = da.GetShiftTimings(machine, ShiftId);
+                    for (int i = 0; i < dt1.Rows.Count; i++)
+                    {
+                        DateTime from = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + dt.Rows[i]["Start"]);
+                        DateTime to = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + dt.Rows[i]["End"]);
+
+                        dt1 = da.GetAccumulation(machine, from.ToString("yyyy-MM-dd HH:mm:ss"),
+                                    to.ToString("yyyy-MM-dd HH:mm:ss"));
+
+                    }
+                    fromDate = fromDate.AddDays(1);
+                }
+                GenerateAccumulationReport(dt1);
+            }
+               
         }
         bool validateSelection()
         {
@@ -88,5 +114,36 @@ namespace ManufactureMonitor
             }
             return true;
         }
+        void GenerateAccumulationReport(DataTable dt1)
+        {
+            Response.Clear();
+            Response.Buffer = true;
+            Response.AddHeader("content-disposition", "attachment;filename=ProblemAccumulation_"
+                + Session["MachineName"] + ".csv");
+            Response.Charset = "";
+            Response.ContentType = "application/text";
+            StringBuilder sBuilder = new System.Text.StringBuilder();
+
+            sBuilder.Append("Code,Problems,Time[s],Count,Time[%]");
+
+            sBuilder.Append("\r\n");
+            for (int i = 0; i < dt1.Rows.Count; i++)
+            {
+                sBuilder.Append(dt1.Rows[i]["Code"] + ",");
+                sBuilder.Append(dt1.Rows[i]["Problems"] + ",");
+                sBuilder.Append(dt1.Rows[i]["Time"] + ",");
+                sBuilder.Append(dt1.Rows[i]["Count"] + ",");
+                sBuilder.Append(dt1.Rows[i]["Time[%]"] + ",");
+                
+                sBuilder.Append("\r\n");
+            }
+
+
+
+            Response.Output.Write(sBuilder.ToString());
+            Response.Flush();
+            Response.End();
+        }
+
     }
 }

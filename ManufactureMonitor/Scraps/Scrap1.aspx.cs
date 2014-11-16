@@ -144,10 +144,10 @@ namespace ManufactureMonitor
             sBuilder.Append("\r\n");
             for (int i = 0; i < dt.Rows.Count;i++ )
             {
-                sBuilder.Append(dt.Rows[0]["Date"] + ",");
-                sBuilder.Append(dt.Rows[0]["Actual"] + ",");
-                sBuilder.Append(dt.Rows[0]["Scraps"] + ",");
-                sBuilder.Append(dt.Rows[0]["Rejection"] + ",");
+                sBuilder.Append(dt.Rows[i]["Date"] + ",");
+                sBuilder.Append(dt.Rows[i]["Actual"] + ",");
+                sBuilder.Append(dt.Rows[i]["Scraps"] + ",");
+                sBuilder.Append(dt.Rows[i]["Rejection"] + ",");
                 sBuilder.Append("\r\n");
                 sBuilder.Append(TotalLabel.Text + ",");
                 sBuilder.Append(ActualTotal.Text + ",");

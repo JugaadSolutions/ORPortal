@@ -36,10 +36,10 @@
                     </Columns>
                 </asp:GridView>
                 <asp:Panel ID="TotalPanel" runat="server" Width="100%">
-                <asp:Label ID="TotalLabel" runat="server" Font-Size="Medium" ForeColor="#996633" Height="30px" Text="Total:" Width="164px"></asp:Label><asp:TextBox ID="ActualTotal" 
-                runat="server" BorderColor="#996633" BorderStyle="Solid" BorderWidth="1px" Height="30px" Width="185px"></asp:TextBox><asp:TextBox ID="ScrapsTotal" 
-                    runat="server" BorderColor="#996633" BorderStyle="Solid" BorderWidth="1px" Height="30px" Width="176px"></asp:TextBox><asp:TextBox ID="RejectionTotal" 
-                        runat="server" BorderColor="#996633" BorderStyle="Solid" BorderWidth="1px" Height="30px" Width="220px"></asp:TextBox>
+                <asp:Label ID="TotalLabel" runat="server" Font-Size="Medium" ForeColor="#996633" Height="30px" Text="Total:" Width="201px"></asp:Label><asp:TextBox ID="ActualTotal" 
+                runat="server" BorderColor="#996633" BorderStyle="Solid" BorderWidth="1px" Height="30px" Width="178px"></asp:TextBox><asp:TextBox ID="ScrapsTotal" 
+                    runat="server" BorderColor="#996633" BorderStyle="Solid" BorderWidth="1px" Height="30px" Width="172px"></asp:TextBox><asp:TextBox ID="RejectionTotal" 
+                        runat="server" BorderColor="#996633" BorderStyle="Solid" BorderWidth="1px" Height="30px" Width="237px"></asp:TextBox>
                     </asp:Panel>
             </td>
             

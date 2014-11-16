@@ -52,7 +52,7 @@ namespace ManufactureMonitor
                         DateTime from = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + dt.Rows[i]["Start"]);
                         DateTime to = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + dt.Rows[i]["End"]);
 
-                        if (to < from)
+                        if (to < from)                      // this statement never be true
                             to = to.AddDays(1);
 
                         Duration.Text = fromDate.ToString("dd-MMM-yy") + ":" + (dt.Rows[i]["shifts"]).ToString();
@@ -152,6 +152,7 @@ namespace ManufactureMonitor
                         g.Columns.Add(b);
 
                         g.HorizontalAlign = HorizontalAlign.Center;
+                        g.Style.Add(HtmlTextWriterStyle.Width, "100%");
                         if (!summary)
                         {
                             g.DataSource = Sh;
@@ -212,10 +213,7 @@ namespace ManufactureMonitor
                                 g1.DataBind();
                                 MainPanel.Controls.Add(g1);
 
-                                //for (int j = 0; j < g1.Rows.Count; j++)
-                                //{
-                                //    g1.Columns[j].ItemStyle.Width = 100;
-                                //}
+                                
                                 
 
 
@@ -237,10 +235,7 @@ namespace ManufactureMonitor
                                 g1.DataBind();
                                 MainPanel.Controls.Add(g1);
 
-                                //for (int j = 0; j < g1.Columns.Count; j++)
-                                //{
-                                //    g1.Columns[j].ItemStyle.Width = 100;
-                                //}
+                               
                                 
                             }
                         }
@@ -296,11 +291,11 @@ namespace ManufactureMonitor
                 e.Row.Cells[7].Width = 100;
                 e.Row.Cells[8].Width = 100;
                 e.Row.Cells[9].Width = 100;
-                e.Row.Cells[10].Width = 100;
+                //e.Row.Cells[10].Width = 100;
                 if (!summary)
                 {
-                    e.Row.Cells[11].Width = 100;
-                    e.Row.Cells[12].Width = 100;
+                    e.Row.Cells[10].Width = 100;
+                    //e.Row.Cells[12].Width = 100;
                 }
                
 
