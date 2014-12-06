@@ -120,5 +120,28 @@ namespace ManufactureMonitor
             return true;
         }
 
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            if (validateSelection())
+            {
+
+                int ShiftId = -1;
+                String ShiftName = "All Shifts";
+                if (ShiftSelectionListBox.SelectedIndex != -1)
+                {
+                    ShiftId = (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"];
+                    ShiftName = (string)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Name"];
+                }
+                Response.Redirect("~/SummaryReport/OR_OAGraph.aspx?MachineId="
+                    + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
+                        + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]
+                     + "&ShiftId=" + ShiftId
+                     + "&ShiftName=" + ShiftName
+                     + "&datefrom=" + datefrom.SelectedDate.ToString("dd-MMM-yy")
+                     + "&dateto=" + dateto.SelectedDate.ToString("dd-MMM-yy")
+                    );
+            }
+        }
+
     }
 }

@@ -38,6 +38,7 @@ namespace ManufactureMonitor
                 String ShiftName = Request.QueryString["ShiftName"];
                 Project = Request.QueryString["Project"];
 
+                #region GRID_COLUMNS
                 GridView g = new GridView();
                 g.AutoGenerateColumns = false;
                 g.HeaderStyle.BackColor = Color.OrangeRed;
@@ -94,10 +95,11 @@ namespace ManufactureMonitor
                 b.DataField = "BKR";
                 b.HeaderText = "BEKADOURITSU/ Operational Availability [%] ";
                 g.Columns.Add(b);
+                #endregion
 
                 List<ShiftHistory> tempList = new List<ShiftHistory>();
 
-
+               
 
                 TextBox Duration = new TextBox();
                 Duration.TextMode = TextBoxMode.SingleLine;
@@ -188,6 +190,8 @@ namespace ManufactureMonitor
 
                 MainPanel.Controls.Add(Total);
 
+                #region GRID_COLUMNS
+
                 GridView g1 = new GridView();
                 g1.Style.Add(HtmlTextWriterStyle.Width, "100%");
                 g1.HorizontalAlign = HorizontalAlign.Center;
@@ -243,6 +247,7 @@ namespace ManufactureMonitor
                 b1.DataField = "BKR";
                 b1.HeaderText = "BEKADOURITSU/ Operational Availability [%] ";
                 g1.Columns.Add(b1);
+                #endregion
 
                 ShiftHistory cumulative = new ShiftHistory();
                 List<ShiftHistory> cumulativeList = new List<ShiftHistory>();

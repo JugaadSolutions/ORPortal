@@ -1,4 +1,5 @@
 ﻿using ManufactureMonitor.DALayer;
+using ManufactureMonitor.Entity;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -13,6 +14,7 @@ namespace ManufactureMonitor
     public partial class ProblemAccumulation : System.Web.UI.Page
     {
         static DataTable dt,dt1,dt2;
+        Dictionary<int, List<TimeSequence>> PAccumulation;
         protected void Page_Load(object sender, EventArgs e)
         {
             ((Label)Master.FindControl("MasterPageLabel")).Text = "OR  " + Session["Machinegroupname"];
@@ -80,23 +82,69 @@ namespace ManufactureMonitor
                 DateTime toDate = dateto.SelectedDate;
                 toDate = toDate.AddDays(1);
                 int ShiftId = (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"];
+                PAccumulation = new Dictionary<int, List<TimeSequence>>();
+                List<ProblemAccumulationRecord> PARList = new List<ProblemAccumulationRecord>();
                 while (fromDate < toDate)
                 {
                     dt = da.GetShiftTimings(machine, ShiftId);
-                    for (int i = 0; i < dt1.Rows.Count; i++)
+                    for (int i = 0; i < dt.Rows.Count; i++)
                     {
                         DateTime from = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + dt.Rows[i]["Start"]);
                         DateTime to = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + dt.Rows[i]["End"]);
 
-                        dt1 = da.GetAccumulation(machine, from.ToString("yyyy-MM-dd HH:mm:ss"),
-                                    to.ToString("yyyy-MM-dd HH:mm:ss"));
+                        List<TimeSequence> ts =
+                            da.GetStopDetails(machine, ShiftId, from.ToString("yyyy-MM-dd HH:mm:ss"), to.ToString("yyyy-MM-dd HH:mm:ss"), true);
+
+                        foreach (TimeSequence t in ts)
+                        {
+                            if (PAccumulation.ContainsKey(t.ProblemCode))
+                            {
+                                PAccumulation[t.ProblemCode].Add(t);
+                            }
+                            else
+                            {
+                                PAccumulation.Add(t.ProblemCode, new List<TimeSequence>());
+                                PAccumulation[t.ProblemCode].Add(t);
+                            }
+                        }
 
                     }
                     fromDate = fromDate.AddDays(1);
                 }
-                GenerateAccumulationReport(dt1);
+
+                
+
+                foreach (KeyValuePair<int, List<TimeSequence>> kv in PAccumulation)
+                {
+                    double problemDuration = 0;
+
+                    foreach (TimeSequence ts in kv.Value)
+                    {
+                        problemDuration += ts.GetDuration();
+                    }
+
+                    ProblemAccumulationRecord par = new ProblemAccumulationRecord();
+                    par.TimeDuration = problemDuration;
+                    par.ProblemCode = kv.Value[0].ProblemCode;
+                    par.ProblemDescription = kv.Value[0].Problem;
+                    par.Count = kv.Value.Count;
+
+                    PARList.Add(par);
+                }
+                double TotalDuration = 0;
+                foreach (ProblemAccumulationRecord p in PARList)
+                {
+                    TotalDuration += p.TimeDuration;
+                }
+
+                foreach (ProblemAccumulationRecord p in PARList)
+                {
+                    p.TimePercentage = Math.Round((p.TimeDuration / TotalDuration) * 100, 2);
+                }
+                GenerateAccumulationReport(PARList);
             }
-               
+
+            
         }
         bool validateSelection()
         {
@@ -114,7 +162,7 @@ namespace ManufactureMonitor
             }
             return true;
         }
-        void GenerateAccumulationReport(DataTable dt1)
+        void GenerateAccumulationReport(List<ProblemAccumulationRecord> PARList)
         {
             Response.Clear();
             Response.Buffer = true;
@@ -124,16 +172,16 @@ namespace ManufactureMonitor
             Response.ContentType = "application/text";
             StringBuilder sBuilder = new System.Text.StringBuilder();
 
-            sBuilder.Append("Code,Problems,Time[s],Count,Time[%]");
+            sBuilder.Append("Code,Problem,Time[s],Time[%],Count,");
 
             sBuilder.Append("\r\n");
-            for (int i = 0; i < dt1.Rows.Count; i++)
+            for (int i = 0; i < PARList.Count; i++)
             {
-                sBuilder.Append(dt1.Rows[i]["Code"] + ",");
-                sBuilder.Append(dt1.Rows[i]["Problems"] + ",");
-                sBuilder.Append(dt1.Rows[i]["Time"] + ",");
-                sBuilder.Append(dt1.Rows[i]["Count"] + ",");
-                sBuilder.Append(dt1.Rows[i]["Time[%]"] + ",");
+                sBuilder.Append(PARList[i].ProblemCode + ",");
+                sBuilder.Append(PARList[i].ProblemDescription+ ",");
+                sBuilder.Append(PARList[i].TimeDuration + ",");
+                sBuilder.Append(PARList[i].TimePercentage + ",");
+                sBuilder.Append(PARList[i].Count + ",");
                 
                 sBuilder.Append("\r\n");
             }

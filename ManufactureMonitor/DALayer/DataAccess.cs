@@ -1575,14 +1575,14 @@ namespace ManufactureMonitor.DALayer
              {
                  TimeSequence.Add(new TimeSequence
                  {
-                    
+                     ProblemCode = (int)dt.Rows[i]["Code"],
                      From =dt.Rows[i]["From"].ToString(),
                      To = dt.Rows[i]["To"].ToString(),
 
                      Duration = (int)dt.Rows[i]["Duration[s]"],
                      StopType = (String)dt.Rows[i]["StopType"],
                      Problem = (String)dt.Rows[i]["Problem"],
-                     Comment = (String)dt.Rows[i]["Comment"],
+                     Comment = (dt.Rows[i]["Comment"] == DBNull.Value) ? "" : (String)dt.Rows[i]["Comment"]
                      
                  });
              }

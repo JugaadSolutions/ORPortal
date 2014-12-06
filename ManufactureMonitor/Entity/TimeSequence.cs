@@ -15,7 +15,24 @@ namespace ManufactureMonitor.Entity
         public String Problem { get; set; }
         public String Comment { get; set; }
         public String Date { get; set; }
+        public int ProblemCode { get; set; }
 
-        
+
+        public double GetDuration()
+        {
+            DateTime from = DateTime.Parse(From);
+            DateTime to = DateTime.Parse(To);
+
+            return (to - from).TotalSeconds;
+        }
+    }
+
+    public class ProblemAccumulationRecord
+    {
+        public int ProblemCode { get; set; }
+        public String ProblemDescription { get; set; }
+        public double TimeDuration { get; set; }
+        public double TimePercentage { get; set; }
+        public int Count { get; set; }
     }
 }

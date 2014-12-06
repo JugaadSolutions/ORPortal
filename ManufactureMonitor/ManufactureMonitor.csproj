@@ -147,6 +147,7 @@
     <Content Include="MachineOff\CancelMachineOff.aspx" />
     <Content Include="Projects\ProjectAssignment1.aspx" />
     <Content Include="Shifts\DisplayShiftDefinition1.aspx" />
+    <Content Include="SummaryReport\ProductionProgress.aspx" />
     <Content Include="Users\ChangePassword.aspx" />
     <Content Include="Problems\CommonProblemsSetting.aspx" />
     <Content Include="Problems\CommonProblemsSetting_ADD.aspx" />
@@ -366,6 +367,13 @@
     </Compile>
     <Compile Include="Shifts\DisplayShiftDefinition1.aspx.designer.cs">
       <DependentUpon>DisplayShiftDefinition1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SummaryReport\ProductionProgress.aspx.cs">
+      <DependentUpon>ProductionProgress.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SummaryReport\ProductionProgress.aspx.designer.cs">
+      <DependentUpon>ProductionProgress.aspx</DependentUpon>
     </Compile>
     <Compile Include="Users\ChangePassword.aspx.cs">
       <DependentUpon>ChangePassword.aspx</DependentUpon>

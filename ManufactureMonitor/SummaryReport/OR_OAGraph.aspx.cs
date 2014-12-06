@@ -23,7 +23,7 @@ namespace ManufactureMonitor
                 Chart1.ImageLocation = @"~/Charts";
                 Chart1.ImageStorageMode = ImageStorageMode.UseImageLocation;
                 Chart1.ImageType = ChartImageType.Png;
-                Chart1.Width = 800;
+                Chart1.Width = 1000;
                 Chart1.Height = 500;
                 ChartArea area = new ChartArea("MainArea");
                 Series series = new Series("Series1");
@@ -80,7 +80,7 @@ namespace ManufactureMonitor
                 
 
 
-                Chart1.Titles.Add("OR & OA Graph"+ " "+ From+" - "+To+" "+ ShiftName);
+                Chart1.Titles.Add("OR & OA Graph"+Environment.NewLine+ From+" - "+To+Environment.NewLine+ ShiftName);
                 
              
 
