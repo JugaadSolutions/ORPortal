@@ -48,7 +48,7 @@ namespace ManufactureMonitor.DALayer
             
         }
             #endregion
-            public DataTable GetParameters(int MachineGroup_ID)
+         public DataTable GetParameters(int MachineGroup_ID)
         {
             SqlConnection cn;
             SqlCommand cmd;
@@ -1933,6 +1933,7 @@ namespace ManufactureMonitor.DALayer
                  duration += s.getActiveDuration((DateTime)dt.Rows[i]["Start"], (DateTime)dt.Rows[i]["END"]);
              }
 
+             cn.Close();
              return duration;
          }
 
@@ -1970,6 +1971,7 @@ namespace ManufactureMonitor.DALayer
                  duration += s.getActiveDuration((DateTime)dt.Rows[i]["Start"], (DateTime)dt.Rows[i]["END"]);
              }
 
+             cn.Close();
              return duration;
          }
 
@@ -2007,6 +2009,7 @@ namespace ManufactureMonitor.DALayer
                  duration += s.getActiveDuration((DateTime)dt.Rows[i]["Start"], (DateTime)dt.Rows[i]["END"]);
              }
 
+             cn.Close();
              return duration;
          }
 
@@ -2043,6 +2046,7 @@ namespace ManufactureMonitor.DALayer
                  duration += s.getActiveDuration((DateTime)dt.Rows[i]["Start"], (DateTime)dt.Rows[i]["END"]);
              }
 
+             cn.Close();
              return duration;
          }
 #endregion
