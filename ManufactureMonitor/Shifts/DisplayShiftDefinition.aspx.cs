@@ -22,7 +22,7 @@ namespace ManufactureMonitor
                 
                 DataAccess da = new DataAccess();
 
-                dt = da.GetSchedule(Convert.ToInt32(Session["MachineGroup"]));
+                dt = da.GetSchedule(Convert.ToInt32(Request.QueryString["MachineId"]));
                 GridView1.DataSource = dt;
                 GridView1.DataBind();
                 dt1 = da.GetShiftDays(Convert.ToInt32(Request.QueryString["MachineId"]));

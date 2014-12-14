@@ -56,5 +56,12 @@ namespace ManufactureMonitor
         {
             Response.Redirect("~/Problems/DisplayStopProblems.aspx?Source=Common");
         }
+
+        protected void Button6_Click(object sender, EventArgs e)
+        {
+            Session["Machinegroup"] = 5;
+            Session["Machinegroupname"] = "Group 1";
+            Response.Redirect("Menu.aspx");
+        }
     }
 }

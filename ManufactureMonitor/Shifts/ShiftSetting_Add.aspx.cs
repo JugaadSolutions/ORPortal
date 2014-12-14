@@ -101,7 +101,7 @@ namespace ManufactureMonitor
             List<String> BreakStart = new List<String>();
             List<String> BreakEnd = new List<String>();
 
-            String[] Tags = { "FIRST REST", "SECOND REST", "THIRD REST", "FOURTH REST", "FIFTH REST" };
+            String[] Tags = { "FIRST", "SECOND", "THIRD", "FOURTH", "FIFTH" };
             BreakStart.Add("2014-01-01 " + TextBox6.Text + ":" + TextBox7.Text); BreakEnd.Add("2014-01-01 " + TextBox26.Text + ":" + TextBox27.Text);
             BreakStart.Add("2014-01-01 " + TextBox10.Text + ":" + TextBox11.Text); BreakEnd.Add("2014-01-01 " + TextBox12.Text + ":" + TextBox13.Text);
             BreakStart.Add("2014-01-01 " + TextBox14.Text + ":" + TextBox15.Text); BreakEnd.Add("2014-01-01 " + TextBox16.Text + ":" + TextBox17.Text);
