@@ -76,11 +76,11 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2" style="height: 40px"><asp:Button ID="Button3" runat="server" Text="Machine OFF retroactively" Width="256px" />
+                        <td colspan="2" style="height: 40px"><asp:Button ID="MOffRetro" runat="server" Text="Machine OFF retroactively" Width="256px"  OnClick="MOffRetro_Click"/>
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2" style="height: 40px"><asp:Button ID="Button4" runat="server" Text="Cancel Machine OFF retroactively" Width="256px" OnClick="Button4_Click" />
+                        <td colspan="2" style="height: 40px"><asp:Button ID="CMOffRetro" runat="server" Text="Cancel Machine OFF retroactively" Width="256px" OnClick="CMOffRetro_Click" />
                         </td>
                     </tr>
                     <tr>

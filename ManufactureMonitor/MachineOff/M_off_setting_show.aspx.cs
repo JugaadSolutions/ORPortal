@@ -38,14 +38,11 @@ namespace ManufactureMonitor
             Response.Redirect("~/Menu.aspx");
         }
 
-        protected void Button4_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("~/MachineOff/CancelMachineOff.aspx");
-        }
+      
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/MachineOff/M_off_setting.aspx");
+            
         }
         protected void Timer1_Tick(object sender, EventArgs e)
         {
@@ -66,6 +63,16 @@ namespace ManufactureMonitor
                 Button2.Text = "Machine OFF Immediately";
             }
 
+        }
+
+        protected void CMOffRetro_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/MachineOff/CancelMachineOff.aspx");
+        }
+
+        protected void MOffRetro_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/MachineOff/M_off_setting.aspx");
         }
 
         

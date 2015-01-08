@@ -121,22 +121,22 @@ namespace ManufactureMonitor {
         protected global::System.Web.UI.WebControls.TextBox To2;
         
         /// <summary>
-        /// Button3 control.
+        /// MOffRetro control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button3;
+        protected global::System.Web.UI.WebControls.Button MOffRetro;
         
         /// <summary>
-        /// Button4 control.
+        /// CMOffRetro control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button4;
+        protected global::System.Web.UI.WebControls.Button CMOffRetro;
         
         /// <summary>
         /// Button1 control.
