@@ -24,9 +24,14 @@
                 <table style="border: thin solid #FFAF37; width: 100%; height:100%; border-collapse: collapse; background-color: #FFFFCC; font-weight: 700;">
                     <tr>
                         <td colspan="2" style="height: 43px; text-align: left;"> &nbsp;&nbsp;
+                            <asp:Panel ID="DropDownPanel" runat="server" style="text-align: center">
+                                <asp:Label ID="CodeLabel" runat="server" Text="Code:"></asp:Label>
+                                &nbsp;&nbsp;
+                                <asp:DropDownList ID="CodeDropDown" runat="server"></asp:DropDownList>
+                            </asp:Panel>
                             <asp:Image ID="StopImage" runat="server" Height="50px" ImageAlign="Top" ImageUrl="~/Images/STOP.png" Width="50px" />
                             <br />
-                            <asp:Button ID="Button2" runat="server" Text="Machine OFF Immediately" Width="256px" style="margin-left:20%" />
+                            <asp:Button ID="M_Off_Imm" runat="server" Text="Machine OFF Immediately" Width="256px" style="margin-left:20%" OnClick="M_Off_Imm_Click" />
                         </td>
                     </tr>
                     <tr>
@@ -38,7 +43,7 @@
                             
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             
-                            <asp:Calendar ID="Calendar1" runat="server" BackColor="White" BorderColor="#999999" CellPadding="4" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="Black" Height="180px" Width="200px" style="margin-left:112px">
+                            <asp:Calendar ID="Date" runat="server" BackColor="White" BorderColor="#999999" CellPadding="4" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="Black" Height="180px" Width="200px" style="margin-left:112px">
                                 <DayHeaderStyle BackColor="#FFCC66" Font-Bold="True" Font-Size="7pt" />
                                 <NextPrevStyle VerticalAlign="Bottom" />
                                 <OtherMonthDayStyle ForeColor="white" />
@@ -85,7 +90,7 @@
                     </tr>
                     <tr>
                         <td colspan="2" style="height: 39px">
-                <asp:Button ID="Button1" runat="server" BorderColor="Gray" BorderStyle="Outset" BorderWidth="3px" Font-Names="Calibri" Font-Size="Medium" Height="30px" Text="Next Machine" Width="152px" OnClick="Button1_Click" />
+                <asp:Button ID="MachimeSelection" runat="server" BorderColor="Gray" BorderStyle="Outset" BorderWidth="3px" Font-Names="Calibri" Font-Size="Medium" Height="30px" Text="Next Machine" Width="152px" OnClick="MachimeSelection_Click" />
                         </td>
                     </tr>
                     <tr>

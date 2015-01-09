@@ -1657,6 +1657,33 @@ namespace ManufactureMonitor.DALayer
              return dt;
          }
 
+         public DataTable GetOffInfo(int machine)
+         {
+             SqlConnection cn;
+             SqlCommand cmd;
+
+             cn = new SqlConnection(connection);
+             String query = @" Select Convert(nvarchar,code,0)+':'+ Description as [Description],code ,1 as Filter
+                              from CommonProblems where Type='3'
+
+                                union
+
+                            Select Convert(nvarchar,code,0)+':'+ Description as [Description],code ,2 as Filter
+                              from SpecificProblems where Machine_Id = {0} and Type='3'
+                                order by Filter";
+             query = String.Format(query, machine);
+             query = String.Format(query, cn);
+
+             cn.Open();
+             cmd = new SqlCommand(query, cn);
+
+             SqlDataReader dr = cmd.ExecuteReader();
+             DataTable dt = new DataTable();
+             dt.Load(dr);
+             dr.Close();
+             cn.Close();
+             return dt;
+         }
 
          public DataTable GetStops(int machine, DateTime start, DateTime end)
          {
@@ -2598,6 +2625,56 @@ namespace ManufactureMonitor.DALayer
               cn.Close();
               return dt;
 
+          }
+
+          public void SetM_Off_Imm(int MId, int parameter, string exeTime, string timestamp)
+          {
+              SqlConnection cn;
+              SqlCommand cmd;
+
+              cn = new SqlConnection(connection);
+              String query = @" Insert Into Command(Machine_ID,ID,Parameters,ExecutionTimeStamp,Status,TimeStamp)
+                                Values({0},' ','{1}','{2}','1','{3}')";
+              query = String.Format(query, MId,parameter, exeTime,timestamp);
+              cn.Open();
+              cmd = new SqlCommand(query, cn);
+
+              cmd.ExecuteNonQuery();
+
+              cn.Close();
+          }
+          public void SetM_Off_Retro(int machine, DateTime from, DateTime to)
+          {
+              SqlConnection cn;
+              SqlCommand cmd;
+
+              cn = new SqlConnection(connection);
+              String query = @" Update MachineInputs SET Valid='0'
+                            where (Machine_Id={0} and (timestamp>='{1}' and timestamp<='{2}'))";
+              query = String.Format(query,machine,from,to );
+              cn.Open();
+              cmd = new SqlCommand(query, cn);
+
+              cmd.ExecuteNonQuery();
+
+              cn.Close();
+          }
+
+          public void SetCM_Off_Retro(int MId, DateTime from, DateTime to)
+          {
+              SqlConnection cn;
+              SqlCommand cmd;
+
+              cn = new SqlConnection(connection);
+              String query = @" Update MachineInputs SET Valid='1'
+                            where (Machine_Id={0} and (timestamp>='{1}' and timestamp<='{2}'))";
+              query = String.Format(query, MId, from, to);
+              cn.Open();
+              cmd = new SqlCommand(query, cn);
+
+              cmd.ExecuteNonQuery();
+
+              cn.Close();
           }
     }
      

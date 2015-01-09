@@ -58,6 +58,33 @@ namespace ManufactureMonitor {
         protected global::System.Web.UI.WebControls.ImageButton ImageButton1;
         
         /// <summary>
+        /// DropDownPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel DropDownPanel;
+        
+        /// <summary>
+        /// CodeLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label CodeLabel;
+        
+        /// <summary>
+        /// CodeDropDown control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList CodeDropDown;
+        
+        /// <summary>
         /// StopImage control.
         /// </summary>
         /// <remarks>
@@ -67,22 +94,22 @@ namespace ManufactureMonitor {
         protected global::System.Web.UI.WebControls.Image StopImage;
         
         /// <summary>
-        /// Button2 control.
+        /// M_Off_Imm control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button2;
+        protected global::System.Web.UI.WebControls.Button M_Off_Imm;
         
         /// <summary>
-        /// Calendar1 control.
+        /// Date control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Calendar Calendar1;
+        protected global::System.Web.UI.WebControls.Calendar Date;
         
         /// <summary>
         /// from1 control.
@@ -139,12 +166,12 @@ namespace ManufactureMonitor {
         protected global::System.Web.UI.WebControls.Button CMOffRetro;
         
         /// <summary>
-        /// Button1 control.
+        /// MachimeSelection control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Button MachimeSelection;
     }
 }
