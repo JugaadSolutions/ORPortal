@@ -12,7 +12,7 @@
         </tr>
         <tr>
             <td>
-                <table style="border: thin solid #FFAF37; width: 21%; border-collapse: collapse; height: 327px; margin-left: 481px; border-color: #FFAF37;" >
+                <table style="border: thin solid #FFAF37; width: 32%; border-collapse: collapse; height: 302px; margin-left: 450px; " >
                     <tr>
                         <td style="background-color: #FFAF37; text-align: center;"><strong>Machine Selection</strong></td>
                     </tr>

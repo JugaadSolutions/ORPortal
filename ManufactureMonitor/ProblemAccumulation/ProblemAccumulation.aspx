@@ -3,7 +3,7 @@
     <table  style="border: thin solid #FFAF37; width: 100%; text-align:center; height: 300px;">
         <tr>
             <td colspan="4" style="background-color: #FFFFCC; height: 32px; text-align: center;"><strong>
-                <asp:TextBox ID="TextBox1" runat="server" Height="30px" style="font-weight: bold; font-size: medium; margin-left: 0px" Width="550px">                              Stop time problem accumulation - all shifts</asp:TextBox>
+                <asp:TextBox ID="TextBox1" runat="server" Height="30px" style="font-weight: bold; font-size: medium; margin-left: 201px" Width="550px">                              Stop time problem accumulation - all shifts</asp:TextBox>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<asp:ImageButton ID="ImageButton1" runat="server" Height="25px" ImageAlign="Middle" ImageUrl="~/Images/return.jpg" OnClick="ImageButton1_Click" Width="25px" style="margin-left: 0px" />
                 </strong>
             </td>

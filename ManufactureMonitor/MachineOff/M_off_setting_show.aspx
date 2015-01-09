@@ -43,15 +43,14 @@
                             
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             
-                            <asp:Calendar ID="Date" runat="server" BackColor="White" BorderColor="#999999" CellPadding="4" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="Black" Height="180px" Width="200px" style="margin-left:112px">
-                                <DayHeaderStyle BackColor="#FFCC66" Font-Bold="True" Font-Size="7pt" />
-                                <NextPrevStyle VerticalAlign="Bottom" />
-                                <OtherMonthDayStyle ForeColor="white" />
-                                <SelectedDayStyle BackColor="#666666" Font-Bold="True" ForeColor="White" />
-                                <SelectorStyle BackColor="#CCCCCC" />
-                                <TitleStyle BackColor="#FFAF37" BorderColor="Black" Font-Bold="True" />
+                            <asp:Calendar ID="Date" runat="server"  BorderColor="#FFCC66" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt"  Height="129px" Width="109px" style="margin-left:132px" BackColor="#FFFFCC" BorderWidth="1px" ForeColor="#663399">
+                                <DayHeaderStyle BackColor="#FFCC66" Font-Bold="True" Height="1px" />
+                                <NextPrevStyle Font-Size="9pt" ForeColor="#FFFFCC" />
+                                <OtherMonthDayStyle ForeColor="#CC9966" />
+                                <SelectedDayStyle BackColor="#CCCCFF" Font-Bold="True" />
+                                <SelectorStyle BackColor="#FFCC66" />
+                                <TitleStyle BackColor="#FFAF37" Font-Bold="True" Font-Size="9pt" ForeColor="#FFFFCC" />
                                
-                                <WeekendDayStyle BackColor="#FFFFCC" />
                             </asp:Calendar>
                         </td>
                     </tr>

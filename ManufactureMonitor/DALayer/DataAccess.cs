@@ -2627,15 +2627,15 @@ namespace ManufactureMonitor.DALayer
 
           }
 
-          public void SetM_Off_Imm(int MId, int parameter, string exeTime, string timestamp)
+          public void SetM_Off_Imm(int MId, int parameter, string exeTime, string timestamp,int command)
           {
               SqlConnection cn;
               SqlCommand cmd;
 
               cn = new SqlConnection(connection);
               String query = @" Insert Into Command(Machine_ID,ID,Parameters,ExecutionTimeStamp,Status,TimeStamp)
-                                Values({0},' ','{1}','{2}','1','{3}')";
-              query = String.Format(query, MId,parameter, exeTime,timestamp);
+                                Values({0},'{4}','{1}','{2}','1','{3}')";
+              query = String.Format(query, MId, parameter, exeTime, timestamp, command);
               cn.Open();
               cmd = new SqlCommand(query, cn);
 

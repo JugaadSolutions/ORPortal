@@ -3,7 +3,7 @@
     <table style="width: 1500px; border-collapse: collapse; background-color: #FFFFCC; height: 450px">
         <tr>
             <td style="height: 46px; text-align: center;">
-                <asp:TextBox ID="TextBox1" runat="server" BorderColor="Gray" BorderStyle="Solid" BorderWidth="3px" Font-Bold="True" Height="30px" style="font-size: large" Width="457px"> Project Assignment</asp:TextBox>
+                <asp:TextBox ID="TextBox1" runat="server" BorderColor="Gray" BorderStyle="Solid" BorderWidth="3px" Font-Bold="True" Height="30px" style="font-size: large" Width="457px">                             Project Assignment</asp:TextBox>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <asp:ImageButton ID="ImageButton1" runat="server" Height="25px" ImageAlign="Middle" ImageUrl="~/Images/return.jpg" OnClick="ImageButton1_Click" Width="25px" />
             </td>

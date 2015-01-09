@@ -14,6 +14,7 @@ namespace ManufactureMonitor
         DataTable dt;
         static int MachineId;
         static int Code;
+        static int Command;
         protected void Page_Load(object sender, EventArgs e)
         {
             ((Label)Master.FindControl("MasterPageLabel")).Text = "OR  " + Session["MachineName"];
@@ -35,6 +36,7 @@ namespace ManufactureMonitor
                     StopImage.Visible = true;
                     M_Off_Imm.Text = "Cancel Machine OFF Immediately";
                     DropDownPanel.Visible = false;
+                    Command = 1;
                 }
                 else
                 {
@@ -45,6 +47,7 @@ namespace ManufactureMonitor
                     String Selected = CodeDropDown.SelectedItem.Value;
                     String[] words = Selected.Split(':');
                     Code = Convert.ToInt32(words[0]);
+                    Command = 0;
                 }
             }
         }
@@ -76,7 +79,7 @@ namespace ManufactureMonitor
                 StopImage.Visible = true;
                 M_Off_Imm.Text = "Cancel Machine OFF Immediately";
                 DropDownPanel.Visible = false;
-               
+                Command = 1;
             }
             else
             {
@@ -87,6 +90,7 @@ namespace ManufactureMonitor
                 String Selected = CodeDropDown.SelectedItem.Value;
                 String[] words = Selected.Split(':');
                 Code = Convert.ToInt32(words[0]);
+                Command = 0;
             }
 
         }
@@ -133,7 +137,7 @@ namespace ManufactureMonitor
             String ExeTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             String TimeStamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             DataAccess da = new DataAccess();
-            da.SetM_Off_Imm(MachineId,Code,ExeTime,TimeStamp);
+            da.SetM_Off_Imm(MachineId,Code,ExeTime,TimeStamp,Command);
             from1.Text = "";
             from2.Text = "";
             To1.Text = "";
