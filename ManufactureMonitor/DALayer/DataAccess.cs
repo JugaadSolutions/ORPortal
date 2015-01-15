@@ -1790,7 +1790,7 @@ namespace ManufactureMonitor.DALayer
                                 inner join Scraps on ProjectTracker.SlNo = Scraps.ProjectTracker_Id 
                                  where [From]>='{1}' and ([To]<='{2}' or [To] is null) and
                                   ProjectTracker.Machine_Id={0} and Scraps.Machine_Id={0} 
-                                   and Scraps.Machine_Id={0} and Timestamp >='{1}' 
+                                   and Timestamp >='{1}' 
                                    and Timestamp<='{2}'
                                 order by Timestamp asc";
              
@@ -1815,11 +1815,7 @@ namespace ManufactureMonitor.DALayer
 
              for (int i = 0; i < dt.Rows.Count; i++)
              {
-                 double LoadTime = GetLoadTime(machine, (DateTime)dt.Rows[i]["Start"],
-                     dt.Rows[i]["End"] == 
-                     DBNull.Value ? DateTime.Now : (DateTime)dt.Rows[i]["End"]);
-
-                 dt.Rows[i]["LoadTime"] = LoadTime;
+                 
                  
 
                  double Nop1 = GetNop1Duration(machine, (DateTime)dt.Rows[i]["Start"],
@@ -1842,6 +1838,13 @@ namespace ManufactureMonitor.DALayer
                      dt.Rows[i]["End"] ==
                      DBNull.Value ? DateTime.Now : (DateTime)dt.Rows[i]["End"]);
                  dt.Rows[i]["Idle"] = OffDuration;
+
+
+                 double LoadTime = GetLoadTime(machine, (DateTime)dt.Rows[i]["Start"],
+                     dt.Rows[i]["End"] ==
+                     DBNull.Value ? DateTime.Now : (DateTime)dt.Rows[i]["End"]);
+
+                 dt.Rows[i]["LoadTime"] = LoadTime-OffDuration;
 
                  double Kadouritsu = (((int)dt.Rows[i]["Actual"]  * (double)dt.Rows[i]["CycleTime"])
                      / LoadTime)*100;

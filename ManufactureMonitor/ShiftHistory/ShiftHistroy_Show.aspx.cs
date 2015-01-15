@@ -291,11 +291,11 @@ namespace ManufactureMonitor
                 e.Row.Cells[7].Width = 100;
                 e.Row.Cells[8].Width = 100;
                 e.Row.Cells[9].Width = 100;
-                //e.Row.Cells[10].Width = 100;
+                e.Row.Cells[10].Width = 100;
                 if (!summary)
                 {
-                    e.Row.Cells[10].Width = 100;
-                    //e.Row.Cells[12].Width = 100;
+                    e.Row.Cells[11].Width = 100;
+                    e.Row.Cells[12].Width = 100;
                 }
                
 
