@@ -1486,7 +1486,7 @@ namespace ManufactureMonitor.DALayer
 
              cn = new SqlConnection(connection);
 
-             query = @"  select Stops.SlNo, Stops.Code, CONVERT(TIME(0), [Start],0)  as [From], CONVERT(TIME(0),[End],0) as [To],
+             query = @"  select Stops.SlNo, Stops.Code, CONVERT(TIME(0), [Start],20)  as [From], CONVERT(TIME(0),[End],20) as [To],
                         datediff(second,0,[End]-[Start]) as 'Duration[s]',
                         (Case when CommonProblems.[Type]=3 then 'OFF' else 'STOP' end) as 'StopType',
                         Convert(nvarchar,CommonProblems.Code,0)+':'+[Description] as Problem,
@@ -1495,9 +1495,9 @@ namespace ManufactureMonitor.DALayer
                         Stops.Machine_Id       
                         from Stops                           
                         inner join CommonProblems on CommonProblems.Code = Stops.Code
-                        where [Start] >= '{1}' and [Start] < '{2}' 
+                        where [Start] >= '{1}' and [End] < '{2}' 
                         union
-                        select Stops.SlNo, Stops.Code, CONVERT(TIME(0), [Start],0)  as [From], CONVERT(TIME(0),[End],0) as [To],
+                        select Stops.SlNo, Stops.Code, CONVERT(TIME(0), [Start],20)  as [From], CONVERT(TIME(0),[End],20) as [To],
                         datediff(second,0,[End]-[Start]) as 'Duration[s]', 
                         (Case when SpecificProblems.[Type]=3 then 'OFF' else 'STOP' end) as 'StopType', 
                         Convert(nvarchar,SpecificProblems.Code,0)+':'+[Description] as Problem,
@@ -1507,11 +1507,11 @@ namespace ManufactureMonitor.DALayer
                         from Stops                               
                         inner join SpecificProblems on SpecificProblems.Code = Stops.Code
 
-                            where [Start] >= '{1}' and [Start] < '{2}' and SpecificProblems.Machine_Id={0} 
+                            where [Start] >= '{1}' and [End] < '{2}' and SpecificProblems.Machine_Id={0} 
 
                             union
  
-                            select OFFs.SlNo, OFFs.Code, CONVERT(TIME(0), [Start],0)  as [From], CONVERT(TIME(0),[End],0) as [To],
+                            select OFFs.SlNo, OFFs.Code, CONVERT(TIME(0), [Start],20)  as [From], CONVERT(TIME(0),[End],20) as [To],
                         datediff(second,0,[End]-[Start]) as 'Duration[s]', 
                         (Case when SpecificProblems.[Type]=3 then 'OFF' else 'STOP' end) as 'StopType', 
                         Convert(nvarchar,SpecificProblems.Code,0)+':'+[Description] as Problem,
@@ -1521,9 +1521,9 @@ namespace ManufactureMonitor.DALayer
                         from OFFs                               
                         inner join SpecificProblems on SpecificProblems.Code = OFFs.Code
 
-                            where [Start] >= '{1}' and [Start] < '{2}' and SpecificProblems.Machine_Id={0}
+                            where [Start] >= '{1}' and [End] < '{2}' and SpecificProblems.Machine_Id={0}
                             union
-                            select OFFs.SlNo, OFFs.Code, CONVERT(TIME(0), [Start],0)  as [From], CONVERT(TIME(0),[End],0) as [To],
+                            select OFFs.SlNo, OFFs.Code, CONVERT(TIME(0), [Start],20)  as [From], CONVERT(TIME(0),[End],20) as [To],
                             datediff(second,0,[End]-[Start]) as 'Duration[s]', 
                         (Case when CommonProblems.[Type]=3 then 'OFF' else 'STOP' end) as 'StopType', 
                         Convert(nvarchar,CommonProblems.Code,0)+':'+[Description] as Problem,
@@ -1540,7 +1540,7 @@ namespace ManufactureMonitor.DALayer
                      query1 = @"
                             union
  
-                            select Stops.SlNo, Stops.Code, CONVERT(TIME(0), [Start],0)  as [From], CONVERT(TIME(0),[End],0) as [To],
+                            select Stops.SlNo, Stops.Code, CONVERT(TIME(0), [Start],20)  as [From], CONVERT(TIME(0),[End],20) as [To],
                         datediff(second,0,[End]-[Start]) as 'Duration[s]',
                         
                         [Status] as 'StopType',
@@ -1550,7 +1550,7 @@ namespace ManufactureMonitor.DALayer
                         Stops.Machine_Id    
                         from Stops 
                         
-                        where [Start] >= '{1}' and [Start] < '{2}' 
+                        where [Start] >= '{1}' and [End] < '{2}' 
                         and  [Status] ='SpeedLoss'";
                      query1 = String.Format(query1, machine, from,
                          to);
@@ -1576,7 +1576,7 @@ namespace ManufactureMonitor.DALayer
                  TimeSequence.Add(new TimeSequence
                  {
                      ProblemCode = (int)dt.Rows[i]["Code"],
-                     From =dt.Rows[i]["From"].ToString(),
+                     From = dt.Rows[i]["From"].ToString(),
                      To = dt.Rows[i]["To"].ToString(),
 
                      Duration = (int)dt.Rows[i]["Duration[s]"],
@@ -2322,7 +2322,7 @@ namespace ManufactureMonitor.DALayer
              con.Open();
 
              String qry = String.Empty;
-             qry = @"select Top(1) * from [Stops] where Machine_Id={0} and[Start] > '{1}' and [End] is null order by [Start] asc";
+             qry = @"select Top(1) * from [Stops] where Machine_Id={0} and[Start] > '{1}' and [End] is null  and Status<>'Speed Loss' order by [Start] asc";
              qry = String.Format(qry, machine,shStart.ToString("yyyy-MM-dd HH:mm:ss"));
 
 
@@ -2360,7 +2360,7 @@ namespace ManufactureMonitor.DALayer
              con.Open();
 
              String qry = String.Empty;
-             qry = @"select Top(1) * from [OFFs] where Machine_Id={0} and [End] is null order by [Start] asc";
+             qry = @"select Top(1) * from [OFFs] where Machine_Id={0} and [Status] = 'OPEN' order by [Start] asc";
              qry = String.Format(qry, machine);
 
 
@@ -2529,7 +2529,7 @@ namespace ManufactureMonitor.DALayer
         //by ganesh
           ~DataAccess()
          {
-             SqlConnection.ClearAllPools();
+           //  SqlConnection.ClearAllPools();
          }
 
 

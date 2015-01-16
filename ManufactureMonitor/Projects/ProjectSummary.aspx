@@ -65,11 +65,11 @@
         </tr>
         <tr>
             <td colspan="6">
-                <asp:Button ID="Button3" runat="server" Text="OR-OA" OnClick="Button3_Click"  /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <asp:Button ID="Button2" runat="server" Text="Production Progress" OnClick="Button2_Click" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <asp:Button ID="Button1" runat="server" Text="Loss Hour" OnClick="Button1_Click" />
+                <asp:Button ID="OR_OAGraph" runat="server" Text="OR-OA" OnClick="OR_OAGraph_Click" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <asp:Button ID="ProdProgress" runat="server" Text="Production Progress" OnClick="ProdProgress_Click"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <asp:Button ID="LossHour" runat="server" Text="Loss Hour" OnClick="LossHour_Click" />
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <asp:ImageButton ID="ImageButton2" runat="server" Height="40px" ImageAlign="AbsBottom" ImageUrl="~/Images/excelicon.jpg" OnClick="ImageButton2_Click" Width="40px" />
+                            <asp:ImageButton ID="ExcelImage" runat="server" Height="40px" ImageAlign="AbsBottom" ImageUrl="~/Images/excelicon.jpg" OnClick="ExcelImage_Click" Width="40px" />
             </td>
         </tr>
     </table>

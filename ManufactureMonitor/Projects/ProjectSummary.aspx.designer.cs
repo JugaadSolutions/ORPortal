@@ -76,39 +76,39 @@ namespace ManufactureMonitor {
         protected global::System.Web.UI.WebControls.ListBox ModelSelectionListBox;
         
         /// <summary>
-        /// Button3 control.
+        /// OR_OAGraph control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button3;
+        protected global::System.Web.UI.WebControls.Button OR_OAGraph;
         
         /// <summary>
-        /// Button2 control.
+        /// ProdProgress control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button2;
+        protected global::System.Web.UI.WebControls.Button ProdProgress;
         
         /// <summary>
-        /// Button1 control.
+        /// LossHour control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Button LossHour;
         
         /// <summary>
-        /// ImageButton2 control.
+        /// ExcelImage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton ImageButton2;
+        protected global::System.Web.UI.WebControls.ImageButton ExcelImage;
     }
 }

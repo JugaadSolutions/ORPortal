@@ -38,7 +38,7 @@
             <tr>
                 <td style="height: 130px; width: 473px; text-align:left">
                     <asp:TextBox ID="ORTextBox" runat="server" BackColor="Black" BorderColor="Black" BorderStyle="Solid" 
-                        BorderWidth="0px"  Enabled="False" Font-Bold="True" Font-Size="80pt" ForeColor="White" Height="100%"
+                        BorderWidth="0px"  Enabled="False" Font-Bold="True" Font-Size="75pt" ForeColor="White" Height="100%"
                          style="text-align: center; margin-left:20px" Width="400px"></asp:TextBox>
                 </td>
                 <td  style="height: 130px; margin-right:20px">

@@ -17,7 +17,7 @@ namespace ManufactureMonitor
         static List<ShiftHistory> Sh;
         static List<ShiftHistory_Summary> shSummary;
         static bool summary;
-        GridView g1 = new GridView();
+        
         List<ShiftHistory> tempList;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -60,18 +60,19 @@ namespace ManufactureMonitor
                         {
 
 
-                            Sh = da.GetShiftHistory(machineId, from.ToString("yyyy-MM-dd HH:mm:ss"),
-                                to.ToString("yyyy-MM-dd HH:mm:ss")
+                            Sh = da.GetShiftHistory(machineId, from.ToString("yyyy-MM-dd HH:mm"),
+                                to.AddSeconds(5).ToString("yyyy-MM-dd HH:mm:ss")
                                 );
                         }
                         else
                         {
-                            shSummary =  da.GetShiftHistory_Summary(machineId, from.ToString("yyyy-MM-dd HH:mm:ss"),
-                                to.ToString("yyyy-MM-dd HH:mm:ss")
+                            shSummary =  da.GetShiftHistory_Summary(machineId, from.ToString("yyyy-MM-dd HH:mm"),
+                                to.AddSeconds(5).ToString("yyyy-MM-dd HH:mm:ss")
                                 );
                         }
 
                         GridView g = new GridView();
+                        GridView g1 = new GridView();
                         //g.RowDataBound += g_RowDataBound;
                         g.AutoGenerateColumns = false;
                         g.HeaderStyle.BackColor = Color.OrangeRed;

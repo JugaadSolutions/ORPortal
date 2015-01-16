@@ -32,7 +32,7 @@ namespace ManufactureMonitor
             SystimeTextBox.Text = now.ToString("HH:mm");
             DataAccess da = new DataAccess();
             dt = da.CurrentProject(machine);
-            ProjectTextBox.Text = (String)dt.Rows[0][0]+"ss";
+            ProjectTextBox.Text = (String)dt.Rows[0][0]+"s";
             ShiftCollection shifts = da.getShifts(machine);
              Shift s = shifts.getCurrentShift();
              s.Sessions = da.getSessions(s.ID, machine);
