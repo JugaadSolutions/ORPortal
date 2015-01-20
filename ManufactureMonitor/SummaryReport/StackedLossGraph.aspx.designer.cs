@@ -13,48 +13,30 @@ namespace ManufactureMonitor.MachineOff {
     public partial class CancelMachineOff {
         
         /// <summary>
-        /// MachineLabel control.
+        /// MainPanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label MachineLabel;
+        protected global::System.Web.UI.WebControls.Panel MainPanel;
         
         /// <summary>
-        /// ShiftLabel control.
+        /// Div1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ShiftLabel;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div1;
         
         /// <summary>
-        /// CancelMachineSelectionListBox control.
+        /// ReportDataPlaceHolder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox CancelMachineSelectionListBox;
-        
-        /// <summary>
-        /// EnterButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button EnterButton;
-        
-        /// <summary>
-        /// BackButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BackButton;
+        protected global::System.Web.UI.WebControls.PlaceHolder ReportDataPlaceHolder;
     }
 }

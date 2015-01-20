@@ -144,7 +144,7 @@
     <Content Include="Images\RED_SMILEY.png" />
     <Content Include="Images\STOP.png" />
     <Content Include="Images\whiteTriangle .png" />
-    <Content Include="MachineOff\CancelMachineOff.aspx" />
+    <Content Include="SummaryReport\StackedLossGraph.aspx" />
     <Content Include="Projects\ProjectAssignment1.aspx" />
     <Content Include="Shifts\DisplayShiftDefinition1.aspx" />
     <Content Include="SummaryReport\ProductionProgress.aspx" />
@@ -347,12 +347,12 @@
     <Compile Include="Entity\Stop.cs" />
     <Compile Include="Entity\StopTimeoutArgs.cs" />
     <Compile Include="Entity\TimeSequence.cs" />
-    <Compile Include="MachineOff\CancelMachineOff.aspx.cs">
-      <DependentUpon>CancelMachineOff.aspx</DependentUpon>
+    <Compile Include="SummaryReport\StackedLossGraph.aspx.cs">
+      <DependentUpon>StackedLossGraph.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="MachineOff\CancelMachineOff.aspx.designer.cs">
-      <DependentUpon>CancelMachineOff.aspx</DependentUpon>
+    <Compile Include="SummaryReport\StackedLossGraph.aspx.designer.cs">
+      <DependentUpon>StackedLossGraph.aspx</DependentUpon>
     </Compile>
     <Compile Include="Projects\ProjectAssignment1.aspx.cs">
       <DependentUpon>ProjectAssignment1.aspx</DependentUpon>

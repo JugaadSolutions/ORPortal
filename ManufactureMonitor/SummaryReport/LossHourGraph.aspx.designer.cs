@@ -13,13 +13,13 @@ namespace ManufactureMonitor {
     public partial class LossHourGraph {
         
         /// <summary>
-        /// ChartHolder control.
+        /// MainPanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel ChartHolder;
+        protected global::System.Web.UI.WebControls.Panel MainPanel;
         
         /// <summary>
         /// Div1 control.
@@ -40,12 +40,21 @@ namespace ManufactureMonitor {
         protected global::System.Web.UI.WebControls.PlaceHolder ReportDataPlaceHolder;
         
         /// <summary>
-        /// Download control.
+        /// Div2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Download;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div2;
+        
+        /// <summary>
+        /// StackedDataPlaceHolder control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder StackedDataPlaceHolder;
     }
 }

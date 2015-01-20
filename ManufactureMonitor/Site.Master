@@ -89,7 +89,7 @@
     </Scripts>
     </asp:ScriptManager>
     <div id="body" style="min-height:460px; width:100%; background-color:#FFFFCC; " class="auto-style10">
-       <asp:ContentPlaceHolder runat="server" ID="MainContent"   />
+       <asp:ContentPlaceHolder runat="server" ID="MainContent"  />
     </div>
     <footer style="background-color:#FFFFFF" class="auto-style8" >
             <div  style="text-align:left">

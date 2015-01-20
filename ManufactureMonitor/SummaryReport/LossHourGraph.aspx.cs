@@ -15,7 +15,7 @@ namespace ManufactureMonitor
     {
         static DataTable dt, dt1;
         Dictionary<int, List<TimeSequence>> ProblemAccumulation;
-        Chart Chart1;
+        Chart Chart1,Chart2;
         protected void Page_Load(object sender, EventArgs e)
         {
             ((Label)Master.FindControl("MasterPageLabel")).Text = "OR  " + Session["MachineName"];
@@ -85,6 +85,9 @@ namespace ManufactureMonitor
             {
                 p.TimePercentage = Math.Round((p.TimeDuration / TotalDuration) * 100, 2);
             }
+
+            /*Graph of Detail Column Chart*/
+
             Chart1 = new Chart();
             Chart1.ImageLocation = @"~/Charts";
             Chart1.ImageStorageMode = ImageStorageMode.UseImageLocation;
@@ -105,6 +108,8 @@ namespace ManufactureMonitor
             {
                 series.Points.AddXY(par.ProblemDescription,par.TimeDuration);
             }
+
+            
             Chart1.ChartAreas.Add(area);
             Chart1.Series.Add(series);
             Chart1.ChartAreas["MainArea"].AxisX.Interval = 1;
@@ -123,11 +128,59 @@ namespace ManufactureMonitor
 
 
 
+           
+            
+            
+            
+            /*Graph of  Stacked column*/
+            
+            Chart2 = new Chart();
+            Chart2.ImageLocation = @"~/Charts";
+            Chart2.ImageStorageMode = ImageStorageMode.UseImageLocation;
+            Chart2.ImageType = ChartImageType.Png;
+            Chart2.Width = 1000;
+            Chart2.Height = 500;
+
+            ChartArea area1 = new ChartArea("MainArea1");
+            Series series1 = new Series("Series2");
+
+            series1.ChartType = SeriesChartType.StackedColumn;
+            series1.ChartArea = "MainArea1";
+            series1.IsValueShownAsLabel = true;
+            DateTime day = DateTime.Parse(Request.QueryString["datefrom"]);
+
+
+            for (int i = 0; day <= toDate; day = day.AddDays(1), i++)
+            {
+                series.Points.AddXY(day.ToString("yyyy-MMM-dd"), 100);
+            }
+
+            Chart2.ChartAreas.Add(area1);
+            Chart2.Series.Add(series1);
+            Chart2.ChartAreas["MainArea1"].AxisX.Interval = 1;
+
+            Chart2.ChartAreas["MainArea1"].AxisX.Title = "CHE Front old line";
+            Chart2.ChartAreas["MainArea1"].AxisX.IsLabelAutoFit = true;
+
+            Chart2.ChartAreas["MainArea1"].AxisY.Interval = 10;
+
+            Chart2.ChartAreas["MainArea1"].AxisY.Title = " ";
+
+            Chart2.ChartAreas["MainArea1"].AxisX.LabelStyle.Angle = -45;
+
+            Chart2.ChartAreas["MainArea1"].AxisX.MajorGrid.Enabled = false;
+            Chart2.ChartAreas["MainArea1"].AxisY.MajorGrid.Enabled = false;
+
+
+
+
             Chart1.Titles.Add("Loss Time" + Environment.NewLine + From + " - " + To + Environment.NewLine + ShiftName);
 
 
-
             ReportDataPlaceHolder.Controls.Add(Chart1);
+
+            StackedDataPlaceHolder.Controls.Add(Chart2);
         }
+        
     }
 }
