@@ -126,9 +126,9 @@ namespace ManufactureMonitor
             Chart1.ChartAreas["MainArea"].AxisX.MajorGrid.Enabled = false;
             Chart1.ChartAreas["MainArea"].AxisY.MajorGrid.Enabled = false;
 
+            Chart1.Titles.Add("Loss Time" + Environment.NewLine + From + " - " + To + Environment.NewLine + ShiftName);
 
-
-           
+            ReportDataPlaceHolder.Controls.Add(Chart1);
             
             
             
@@ -138,7 +138,7 @@ namespace ManufactureMonitor
             Chart2.ImageLocation = @"~/Charts";
             Chart2.ImageStorageMode = ImageStorageMode.UseImageLocation;
             Chart2.ImageType = ChartImageType.Png;
-            Chart2.Width = 1000;
+            Chart2.Width = 500;
             Chart2.Height = 500;
 
             ChartArea area1 = new ChartArea("MainArea1");
@@ -149,11 +149,8 @@ namespace ManufactureMonitor
             series1.IsValueShownAsLabel = true;
             DateTime day = DateTime.Parse(Request.QueryString["datefrom"]);
 
-
-            for (int i = 0; day <= toDate; day = day.AddDays(1), i++)
-            {
-                series.Points.AddXY(day.ToString("yyyy-MMM-dd"), 100);
-            }
+            series1.Points.AddXY("", 100);
+          
 
             Chart2.ChartAreas.Add(area1);
             Chart2.Series.Add(series1);
@@ -170,16 +167,9 @@ namespace ManufactureMonitor
 
             Chart2.ChartAreas["MainArea1"].AxisX.MajorGrid.Enabled = false;
             Chart2.ChartAreas["MainArea1"].AxisY.MajorGrid.Enabled = false;
-
-
-
-
-            Chart1.Titles.Add("Loss Time" + Environment.NewLine + From + " - " + To + Environment.NewLine + ShiftName);
-
-
-            ReportDataPlaceHolder.Controls.Add(Chart1);
-
             StackedDataPlaceHolder.Controls.Add(Chart2);
+            
+           
         }
         
     }
