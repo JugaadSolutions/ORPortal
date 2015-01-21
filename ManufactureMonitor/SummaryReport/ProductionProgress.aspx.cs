@@ -26,12 +26,11 @@ namespace ManufactureMonitor.SummaryReport
 
             DateTime fromDate = DateTime.Parse(Request.QueryString["datefrom"]);
             DateTime toDate = DateTime.Parse(Request.QueryString["dateto"]);
-            //toDate = toDate.AddDays(1);
             int ShiftId = Convert.ToInt32(Request.QueryString["ShiftId"]);
             String ShiftName = Request.QueryString["ShiftName"];
-            Project = Convert.ToInt32(Request.QueryString["Project"]);
-
-           
+            //List<int> OK = new List<int>();
+            Series series = new Series("Series1");
+            String Date = fromDate.ToString("yyyy-MM-dd");
             while (fromDate <= toDate)
             {
                
@@ -45,20 +44,18 @@ namespace ManufactureMonitor.SummaryReport
                     if (to < from)
                         to = to.AddDays(1);
 
-                   List<double> OK= new List<double>();
-
-                    dt2 = da.GetMachine(Project);
-                    int machineid = (int)dt2.Rows[0]["Machine_Id"];
-                    dt1 = da.GetOK(machineid, ShiftId, Project, from, to);
-                    for (int j = 0; j < dt1.Rows.Count; j++)
-                    {
-                        double ok = (int)dt1.Rows[j]["SessionActual"] - (int)dt1.Rows[j]["Scraps"];
-                        OK.Add(ok);
-                    }
-                
-                    
-
+                   dt2 = da.GetModels(machineId);
+                   
+                   for (int k = 0; k < dt2.Rows.Count; k++)
+                   {
+                       int Project = (int)dt2.Rows[k]["ID"];
+                       int ok = da.GetOK(machineId, ShiftId, Project, from, to);
+                       series.Points.AddXY(Date, ok);
+                       
+                   }
+                   
                 }
+                
                 fromDate = fromDate.AddDays(1);
                    
             }
@@ -74,21 +71,13 @@ namespace ManufactureMonitor.SummaryReport
             String To = Request.QueryString["dateto"];
 
             ChartArea area = new ChartArea("MainArea");
-            Series series = new Series("Series1");
+            //Series series = new Series("Series1");
 
             series.ChartType = SeriesChartType.StackedColumn;
             series.ChartArea = "MainArea";
             series.IsValueShownAsLabel = true;
 
-            DateTime day = DateTime.Parse(Request.QueryString["datefrom"]);
-            for (int i = 0; day <= toDate; day = day.AddDays(1), i++)
-            {
-               
-
-                series.Points.AddXY(day.ToString("yyyy-MMM-dd"), OK);
-            }
-
-
+            
             Chart1.ChartAreas.Add(area);
             Chart1.Series.Add(series);
             Chart1.ChartAreas["MainArea"].AxisX.Interval = 1;
@@ -96,7 +85,7 @@ namespace ManufactureMonitor.SummaryReport
             Chart1.ChartAreas["MainArea"].AxisX.Title = "Date";
             Chart1.ChartAreas["MainArea"].AxisX.IsLabelAutoFit = true;
 
-            Chart1.ChartAreas["MainArea"].AxisY.Interval = 50;
+            Chart1.ChartAreas["MainArea"].AxisY.Interval = 1000;
 
             Chart1.ChartAreas["MainArea"].AxisY.Title = "Prod'n C";
 

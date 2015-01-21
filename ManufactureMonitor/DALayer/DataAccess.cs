@@ -2708,18 +2708,18 @@ namespace ManufactureMonitor.DALayer
               cn.Close();
           }
 
-          public DataTable GetOK(int machine, int shift, int pid, DateTime from, DateTime to)
+          public int GetOK(int machine, int shift, int pid, DateTime from, DateTime to)
           {
               SqlConnection cn;
               SqlCommand cmd;
 
               cn = new SqlConnection(connection);
-              String query = @"Select ProjectTracker.SessionActual,Scraps.Scraps
+              String query = @"Select (SUM(ProjectTracker.SessionActual)-SUM(Scraps.Scraps)) as [OK]
                             from ProjectTracker join Scraps on ProjectTracker.Machine_Id=Scraps.Machine_Id      
                             where 
                             ProjectTracker.Shift_Id={1} AND ProjectTracker.Machine_Id={0} AND ProjectTracker.Project_Id={2} and 
                             ProjectTracker.[From] >='{3}' AND 
-                            ProjectTracker.[To] <=' {4}'";
+                            ProjectTracker.[From] <=' {4}'";
               query = String.Format(query, machine, shift, pid, from, to);
 
               cn.Open();
@@ -2730,8 +2730,17 @@ namespace ManufactureMonitor.DALayer
               dt.Load(dr);
               dr.Close();
               cn.Close();
-              return dt;
+              for (int i = 0; i < dt.Rows.Count;i++)
+              {
+                  if (dt.Rows[i]["OK"] ==
+                          DBNull.Value)
 
+                      return 0;
+                  else
+                      break;
+              }
+              int OK=(int)dt.Rows[0][0];
+              return OK;
           }
     }
      
