@@ -127,7 +127,7 @@ namespace ManufactureMonitor
             Chart1.ChartAreas["MainArea"].AxisY.MajorGrid.Enabled = false;
 
             Chart1.Titles.Add("Loss Time" + Environment.NewLine + From + " - " + To + Environment.NewLine + ShiftName);
-
+            Chart1.Legends.Add(new Legend("Default") { Docking = Docking.Right });
             ReportDataPlaceHolder.Controls.Add(Chart1);
             
             
@@ -167,6 +167,7 @@ namespace ManufactureMonitor
 
             Chart2.ChartAreas["MainArea1"].AxisX.MajorGrid.Enabled = false;
             Chart2.ChartAreas["MainArea1"].AxisY.MajorGrid.Enabled = false;
+            Chart2.Legends.Add(new Legend("Default") { Docking = Docking.Right });
             StackedDataPlaceHolder.Controls.Add(Chart2);
             
            

@@ -28,7 +28,7 @@ namespace ManufactureMonitor.SummaryReport
             DateTime toDate = DateTime.Parse(Request.QueryString["dateto"]);
             int ShiftId = Convert.ToInt32(Request.QueryString["ShiftId"]);
             String ShiftName = Request.QueryString["ShiftName"];
-            //List<int> OK = new List<int>();
+            List<String> ProjectName = new List<String>();
             
             String Date = fromDate.ToString("yyyy-MM-dd");
             dt2 = da.GetModels(machineId);
@@ -40,6 +40,7 @@ namespace ManufactureMonitor.SummaryReport
                 Series series = new Series();
                 series.ChartType = SeriesChartType.StackedColumn;
                 series.ChartArea = "MainArea";
+                
                 //series.IsValueShownAsLabel = true;
                 seriesList.Add(series);
             }
@@ -62,8 +63,10 @@ namespace ManufactureMonitor.SummaryReport
                    for (int k = 0; k < dt2.Rows.Count; k++)
                    {
                        int Project = (int)dt2.Rows[k]["ID"];
+                       String Name = (string)dt2.Rows[k]["Name"];
                        int ok = da.GetOK(machineId, ShiftId, Project, from, to);
                        seriesList[k].Points.AddXY(from.ToString("dd-MM-yyyy"), ok);
+                       ProjectName.Add(Name);
                        
                    }
                    
@@ -77,14 +80,14 @@ namespace ManufactureMonitor.SummaryReport
             Chart1.ImageLocation = @"~/Charts";
             Chart1.ImageStorageMode = ImageStorageMode.UseImageLocation;
             Chart1.ImageType = ChartImageType.Png;
-            Chart1.Width = 1000;
+            Chart1.Width = 500;
             Chart1.Height = 500;
 
             String From = Request.QueryString["datefrom"];
             String To = Request.QueryString["dateto"];
 
             ChartArea area = new ChartArea("MainArea");
-           
+            
 
           
 
@@ -99,7 +102,7 @@ namespace ManufactureMonitor.SummaryReport
             Chart1.ChartAreas["MainArea"].AxisX.Title = "Date";
             Chart1.ChartAreas["MainArea"].AxisX.IsLabelAutoFit = true;
 
-            Chart1.ChartAreas["MainArea"].AxisY.Interval = 1000;
+            Chart1.ChartAreas["MainArea"].AxisY.Interval = 10;
 
             Chart1.ChartAreas["MainArea"].AxisY.Title = "Production Count";
 
@@ -107,9 +110,9 @@ namespace ManufactureMonitor.SummaryReport
 
             Chart1.ChartAreas["MainArea"].AxisX.MajorGrid.Enabled = false;
             Chart1.ChartAreas["MainArea"].AxisY.MajorGrid.Enabled = false;
-
+            Chart1.Legends.Add(new Legend("ProjectName") { Docking = Docking.Right });
             Chart1.Titles.Add("Production Progress Chart" + Environment.NewLine + From + " - " + To + Environment.NewLine + ShiftName);
-
+            
             ReportDataPlaceHolder.Controls.Add(Chart1);
             
         }

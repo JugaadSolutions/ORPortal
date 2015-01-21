@@ -158,3 +158,4 @@ C:\Sagar\Repository\ORPortal\ManufactureMonitor\bin\EPPlus.xml
 C:\Sagar\Repository\ORPortal\ManufactureMonitor\bin\Microsoft.Web.Infrastructure.xml
 C:\Sagar\Repository\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.dll
 C:\Sagar\Repository\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.pdb
+D:\ideonics\Repository\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.csprojResolveAssemblyReference.cache
