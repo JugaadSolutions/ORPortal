@@ -112,6 +112,10 @@ namespace ManufactureMonitor
 
                 int ShiftId = -1;
                 String ShiftName = "All Shifts";
+                int Project = 0;
+
+                if (ModelSelectionListBox.SelectedIndex != -1)
+                    Project = (int)dt2.Rows[ModelSelectionListBox.SelectedIndex]["ID"];
                 if (ShiftSelectionListBox.SelectedIndex != -1)
                 {
                     ShiftId = (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"];
@@ -124,6 +128,7 @@ namespace ManufactureMonitor
                      + "&ShiftName=" + ShiftName
                      + "&datefrom=" + datefrom.SelectedDate.ToString("dd-MMM-yy")
                      + "&dateto=" + dateto.SelectedDate.ToString("dd-MMM-yy")
+                      + "&Project=" + Project
                     );
             }
         }

@@ -20,6 +20,7 @@ namespace ManufactureMonitor.Entity
         public double Idle { get; set; }
         public double KR { get; set; }
         public double BKR { get; set; }
+        public double OK { get; set; }
         public String Date { get; set; }
 
         public String GetFromDate()

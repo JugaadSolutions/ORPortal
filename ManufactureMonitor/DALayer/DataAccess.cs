@@ -116,6 +116,27 @@ namespace ManufactureMonitor.DALayer
             return dt;
 
         }
+         public DataTable GetMachine(int proj)
+        {
+            SqlConnection cn;
+            SqlCommand cmd;
+
+            cn = new SqlConnection(connection);
+            String query = @" Select Machine_Id
+                              from ProjectMachines where Project_Id={0}";
+            query = String.Format(query, proj);
+
+            cn.Open();
+            cmd = new SqlCommand(query, cn);
+
+            SqlDataReader dr = cmd.ExecuteReader();
+            DataTable dt = new DataTable();
+            dt.Load(dr);
+            dr.Close();
+            cn.Close();
+            return dt;
+
+        }
         public DataTable GetMachines(int MachineGroup_ID,int Machine_Id)
         {
             SqlConnection cn;
@@ -1812,11 +1833,13 @@ namespace ManufactureMonitor.DALayer
              dt.Columns.Add("idle", typeof(double));
              dt.Columns.Add("KR", typeof(double));
              dt.Columns.Add("BKR", typeof(double));
+             dt.Columns.Add("OK", typeof(double));
 
              for (int i = 0; i < dt.Rows.Count; i++)
              {
-                 
-                 
+
+                 double OK = (int)dt.Rows[i]["Actual"] - (int)dt.Rows[i]["Scraps"];
+                 dt.Rows[i]["OK"]=OK;
 
                  double Nop1 = GetNop1Duration(machine, (DateTime)dt.Rows[i]["Start"],
                      dt.Rows[i]["End"] ==
@@ -1853,6 +1876,9 @@ namespace ManufactureMonitor.DALayer
                  double Bekadouritsu = ((LoadTime - Nop1) / LoadTime) * 100;
                  dt.Rows[i]["BKR"] = Math.Round(Bekadouritsu, 2);
 
+                 
+                
+
              }
 
              dr.Close();
@@ -1875,7 +1901,9 @@ namespace ManufactureMonitor.DALayer
                      Undefined = (double)dt.Rows[i]["Undefined"],
                      Idle = (double)dt.Rows[i]["Idle"],
                      KR = (double)dt.Rows[i]["KR"],
-                     BKR = (double)dt.Rows[i]["BKR"]
+                     BKR = (double)dt.Rows[i]["BKR"],
+                     OK=(double)dt.Rows[i]["OK"]
+                     
                  });
              }
 
@@ -2529,7 +2557,7 @@ namespace ManufactureMonitor.DALayer
         //by ganesh
           ~DataAccess()
          {
-           //  SqlConnection.ClearAllPools();
+             //SqlConnection.ClearAllPools();
          }
 
 
@@ -2678,6 +2706,32 @@ namespace ManufactureMonitor.DALayer
               cmd.ExecuteNonQuery();
 
               cn.Close();
+          }
+
+          public DataTable GetOK(int machine, int shift, int pid, DateTime from, DateTime to)
+          {
+              SqlConnection cn;
+              SqlCommand cmd;
+
+              cn = new SqlConnection(connection);
+              String query = @"Select ProjectTracker.SessionActual,Scraps.Scraps
+                            from ProjectTracker join Scraps on ProjectTracker.Machine_Id=Scraps.Machine_Id      
+                            where 
+                            ProjectTracker.Shift_Id={1} AND ProjectTracker.Machine_Id={0} AND ProjectTracker.Project_Id={2} and 
+                            ProjectTracker.[From] >='{3}' AND 
+                            ProjectTracker.[To] <=' {4}'";
+              query = String.Format(query, machine, shift, pid, from, to);
+
+              cn.Open();
+              cmd = new SqlCommand(query, cn);
+
+              SqlDataReader dr = cmd.ExecuteReader();
+              DataTable dt = new DataTable();
+              dt.Load(dr);
+              dr.Close();
+              cn.Close();
+              return dt;
+
           }
     }
      
