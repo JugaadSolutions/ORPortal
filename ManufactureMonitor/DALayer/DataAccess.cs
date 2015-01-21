@@ -2715,12 +2715,12 @@ namespace ManufactureMonitor.DALayer
 
               cn = new SqlConnection(connection);
               String query = @"Select (SUM(ProjectTracker.SessionActual)-SUM(Scraps.Scraps)) as [OK]
-                            from ProjectTracker join Scraps on ProjectTracker.Machine_Id=Scraps.Machine_Id      
+                            from ProjectTracker join Scraps on ProjectTracker.SlNo=Scraps.ProjectTracker_Id    
                             where 
                             ProjectTracker.Shift_Id={1} AND ProjectTracker.Machine_Id={0} AND ProjectTracker.Project_Id={2} and 
                             ProjectTracker.[From] >='{3}' AND 
                             ProjectTracker.[From] <=' {4}'";
-              query = String.Format(query, machine, shift, pid, from, to);
+              query = String.Format(query, machine, shift, pid, from.ToString("yyyy-MM-dd HH:mm:ss"), to.ToString("yyyy-MM-dd HH:mm:ss"));
 
               cn.Open();
               cmd = new SqlCommand(query, cn);

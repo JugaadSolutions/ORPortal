@@ -8,13 +8,13 @@
         <asp:PlaceHolder ID="ReportDataPlaceHolder" runat="server"   >
    
             </asp:PlaceHolder>
-            <asp:PlaceHolder ID="StackedDataPlaceHolder" runat="server">
-   
-            </asp:PlaceHolder>
+           
         </div>
       
          <div id="Div2" runat="server" >
-        
+         <asp:PlaceHolder ID="StackedDataPlaceHolder" runat="server">
+   
+            </asp:PlaceHolder>
         </div>
        
     </asp:Panel>

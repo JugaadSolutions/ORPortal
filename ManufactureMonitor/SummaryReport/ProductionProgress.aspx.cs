@@ -29,8 +29,21 @@ namespace ManufactureMonitor.SummaryReport
             int ShiftId = Convert.ToInt32(Request.QueryString["ShiftId"]);
             String ShiftName = Request.QueryString["ShiftName"];
             //List<int> OK = new List<int>();
-            Series series = new Series("Series1");
+            
             String Date = fromDate.ToString("yyyy-MM-dd");
+            dt2 = da.GetModels(machineId);
+
+            List<Series> seriesList = new List<Series>();
+
+            for (int i = 0; i < dt2.Rows.Count; i++)
+            {
+                Series series = new Series();
+                series.ChartType = SeriesChartType.StackedColumn;
+                series.ChartArea = "MainArea";
+                //series.IsValueShownAsLabel = true;
+                seriesList.Add(series);
+            }
+
             while (fromDate <= toDate)
             {
                
@@ -44,13 +57,13 @@ namespace ManufactureMonitor.SummaryReport
                     if (to < from)
                         to = to.AddDays(1);
 
-                   dt2 = da.GetModels(machineId);
+                   
                    
                    for (int k = 0; k < dt2.Rows.Count; k++)
                    {
                        int Project = (int)dt2.Rows[k]["ID"];
                        int ok = da.GetOK(machineId, ShiftId, Project, from, to);
-                       series.Points.AddXY(Date, ok);
+                       seriesList[k].Points.AddXY(from.ToString("dd-MM-yyyy"), ok);
                        
                    }
                    
@@ -71,15 +84,16 @@ namespace ManufactureMonitor.SummaryReport
             String To = Request.QueryString["dateto"];
 
             ChartArea area = new ChartArea("MainArea");
-            //Series series = new Series("Series1");
+           
 
-            series.ChartType = SeriesChartType.StackedColumn;
-            series.ChartArea = "MainArea";
-            series.IsValueShownAsLabel = true;
+          
 
             
             Chart1.ChartAreas.Add(area);
-            Chart1.Series.Add(series);
+
+            foreach( Series s in seriesList )
+                Chart1.Series.Add(s);
+
             Chart1.ChartAreas["MainArea"].AxisX.Interval = 1;
 
             Chart1.ChartAreas["MainArea"].AxisX.Title = "Date";
@@ -87,7 +101,7 @@ namespace ManufactureMonitor.SummaryReport
 
             Chart1.ChartAreas["MainArea"].AxisY.Interval = 1000;
 
-            Chart1.ChartAreas["MainArea"].AxisY.Title = "Prod'n C";
+            Chart1.ChartAreas["MainArea"].AxisY.Title = "Production Count";
 
             Chart1.ChartAreas["MainArea"].AxisX.LabelStyle.Angle = -45;
 

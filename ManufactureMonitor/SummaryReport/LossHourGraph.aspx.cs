@@ -135,7 +135,7 @@ namespace ManufactureMonitor
             /*Graph of  Stacked column*/
             
             Chart2 = new Chart();
-            Chart2.ImageLocation = @"~/Charts";
+            Chart2.ImageLocation = @"~/Charts_1";
             Chart2.ImageStorageMode = ImageStorageMode.UseImageLocation;
             Chart2.ImageType = ChartImageType.Png;
             Chart2.Width = 500;

@@ -142,15 +142,6 @@ D:\ideonics\Repository\ORPortal\ORPortal\ORPortal\ManufactureMonitor\bin\Microso
 D:\ideonics\Repository\ORPortal\ORPortal\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.csprojResolveAssemblyReference.cache
 D:\ideonics\Repository\ORPortal\ORPortal\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.dll
 D:\ideonics\Repository\ORPortal\ORPortal\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.pdb
-C:\Sagar\Repository\ORPortal\ManufactureMonitor\bin\ManufactureMonitor.dll
-C:\Sagar\Repository\ORPortal\ManufactureMonitor\bin\ManufactureMonitor.pdb
-C:\Sagar\Repository\ORPortal\ManufactureMonitor\bin\EPPlus.dll
-C:\Sagar\Repository\ORPortal\ManufactureMonitor\bin\Microsoft.Web.Infrastructure.dll
-C:\Sagar\Repository\ORPortal\ManufactureMonitor\bin\EPPlus.xml
-C:\Sagar\Repository\ORPortal\ManufactureMonitor\bin\Microsoft.Web.Infrastructure.xml
-C:\Sagar\Repository\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.dll
-C:\Sagar\Repository\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.pdb
-C:\Sagar\Repository\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.csprojResolveAssemblyReference.cache
 D:\ideonics\Repository\ORPortal\ManufactureMonitor\bin\ManufactureMonitor.dll
 D:\ideonics\Repository\ORPortal\ManufactureMonitor\bin\ManufactureMonitor.pdb
 D:\ideonics\Repository\ORPortal\ManufactureMonitor\bin\EPPlus.dll
@@ -159,3 +150,11 @@ D:\ideonics\Repository\ORPortal\ManufactureMonitor\bin\EPPlus.xml
 D:\ideonics\Repository\ORPortal\ManufactureMonitor\bin\Microsoft.Web.Infrastructure.xml
 D:\ideonics\Repository\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.dll
 D:\ideonics\Repository\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.pdb
+C:\Sagar\Repository\ORPortal\ManufactureMonitor\bin\ManufactureMonitor.dll
+C:\Sagar\Repository\ORPortal\ManufactureMonitor\bin\ManufactureMonitor.pdb
+C:\Sagar\Repository\ORPortal\ManufactureMonitor\bin\EPPlus.dll
+C:\Sagar\Repository\ORPortal\ManufactureMonitor\bin\Microsoft.Web.Infrastructure.dll
+C:\Sagar\Repository\ORPortal\ManufactureMonitor\bin\EPPlus.xml
+C:\Sagar\Repository\ORPortal\ManufactureMonitor\bin\Microsoft.Web.Infrastructure.xml
+C:\Sagar\Repository\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.dll
+C:\Sagar\Repository\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.pdb
