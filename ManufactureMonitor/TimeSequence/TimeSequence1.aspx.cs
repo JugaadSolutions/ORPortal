@@ -66,9 +66,11 @@ namespace ManufactureMonitor
                 String datefrom = Calendar1.SelectedDate.ToShortDateString();
                 String dateto = Calendar2.SelectedDate.ToShortDateString();
                 int ShiftId = -1;
+                String ShiftName = "All Shifts";
                 if (ShiftSelectionListBox.SelectedIndex != -1)
                 {
                     ShiftId = (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"];
+                    ShiftName = (string)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Name"];
                 }
 
 
@@ -81,7 +83,7 @@ namespace ManufactureMonitor
                     + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
                      + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]
                      + "&ShiftId=" + ShiftId
-                      + "&ShiftName=" + (string)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Name"]
+                      + "&ShiftName="+ShiftName
                      + "&datefrom=" + datefrom + "&dateto=" + dateto
                      + "&SpeedLoss=" + CheckBoxList1.Items[0].Selected);
             }
