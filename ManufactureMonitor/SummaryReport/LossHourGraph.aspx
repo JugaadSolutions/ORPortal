@@ -5,16 +5,17 @@
     <asp:Panel ID="MainPanel" runat="server" HorizontalAlign="Center" ScrollBars="Auto" Height="100%">
     
         <div id="Div1" runat="server" >
-        <asp:PlaceHolder ID="ReportDataPlaceHolder" runat="server"   >
+       <asp:PlaceHolder ID="StackedDataPlaceHolder" runat="server">
    
             </asp:PlaceHolder>
            
         </div>
       
          <div id="Div2" runat="server" >
-         <asp:PlaceHolder ID="StackedDataPlaceHolder" runat="server">
+               <asp:PlaceHolder ID="ReportDataPlaceHolder" runat="server"   >
    
             </asp:PlaceHolder>
+        
         </div>
        
     </asp:Panel>

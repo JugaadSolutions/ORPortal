@@ -37,11 +37,11 @@ namespace ManufactureMonitor.SummaryReport
 
             for (int i = 0; i < dt2.Rows.Count; i++)
             {
-                Series series = new Series();
+                Series series = new Series((string)dt2.Rows[i]["Name"]);
                 series.ChartType = SeriesChartType.StackedColumn;
                 series.ChartArea = "MainArea";
                 
-                //series.IsValueShownAsLabel = true;
+                series.IsValueShownAsLabel = true;
                 seriesList.Add(series);
             }
 
@@ -109,7 +109,7 @@ namespace ManufactureMonitor.SummaryReport
             Chart1.ChartAreas["MainArea"].AxisX.LabelStyle.Angle = -45;
 
             Chart1.ChartAreas["MainArea"].AxisX.MajorGrid.Enabled = false;
-            Chart1.ChartAreas["MainArea"].AxisY.MajorGrid.Enabled = false;
+            Chart1.ChartAreas["MainArea"].AxisY.MajorGrid.Enabled = true;
             Chart1.Legends.Add(new Legend("ProjectName") { Docking = Docking.Right });
             Chart1.Titles.Add("Production Progress Chart" + Environment.NewLine + From + " - " + To + Environment.NewLine + ShiftName);
             

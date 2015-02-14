@@ -16,6 +16,10 @@ namespace ManufactureMonitor.Entity
         public double LoadTime { get; set; }
         public double Nop1 { get; set; }
         public double Nop2 { get; set; }
+        public double Nop2_1 { get; set; }
+        public double Nop2_2 { get; set; }
+        public double Nop2_3 { get; set; }
+        public double Nop2_4 { get; set; }
         public double Undefined {get;set;}
         public double Idle { get; set; }
         public double KR { get; set; }

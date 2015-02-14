@@ -61,13 +61,13 @@ namespace ManufactureMonitor
 
 
                             Sh = da.GetShiftHistory(machineId, from.ToString("yyyy-MM-dd HH:mm"),
-                                to.AddSeconds(5).ToString("yyyy-MM-dd HH:mm:ss")
+                                to.ToString("yyyy-MM-dd HH:mm:ss")
                                 );
                         }
                         else
                         {
                             shSummary =  da.GetShiftHistory_Summary(machineId, from.ToString("yyyy-MM-dd HH:mm"),
-                                to.AddSeconds(5).ToString("yyyy-MM-dd HH:mm:ss")
+                                to.ToString("yyyy-MM-dd HH:mm:ss")
                                 );
                         }
 
@@ -248,6 +248,9 @@ namespace ManufactureMonitor
 
 
         }
+
+
+      
         void g_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             

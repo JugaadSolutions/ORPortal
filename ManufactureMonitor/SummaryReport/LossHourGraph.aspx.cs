@@ -14,6 +14,7 @@ namespace ManufactureMonitor
     public partial class LossHourGraph : System.Web.UI.Page
     {
         static DataTable dt, dt1;
+        static List<ShiftHistory> ShiftHistoryList;
         Dictionary<int, List<TimeSequence>> ProblemAccumulation;
         Chart Chart1,Chart2;
         protected void Page_Load(object sender, EventArgs e)
@@ -28,6 +29,10 @@ namespace ManufactureMonitor
             int ShiftId = Convert.ToInt32(Request.QueryString["ShiftId"]);
             String ShiftName = Request.QueryString["ShiftName"];
             ProblemAccumulation = new Dictionary<int, List<TimeSequence>>();
+
+            List<ShiftHistory> tempList;
+            
+
             while (fromDate <= toDate)
             {
                 dt = da.GetShiftTimings(machine, ShiftId);
@@ -39,6 +44,10 @@ namespace ManufactureMonitor
                     List<TimeSequence> ts =
                         da.GetStopDetails(machine, ShiftId, from.ToString("yyyy-MM-dd HH:mm:ss"), to.ToString("yyyy-MM-dd HH:mm:ss"), true);
 
+
+                    ShiftHistoryList = da.GetShiftHistory(machine, from.ToString("yyyy-MM-dd HH:mm"),
+                               to.ToString("yyyy-MM-dd HH:mm:ss")
+                               );
                     foreach (TimeSequence t in ts)
                     {
                         if (ProblemAccumulation.ContainsKey(t.ProblemCode))
@@ -51,6 +60,26 @@ namespace ManufactureMonitor
                             ProblemAccumulation[t.ProblemCode].Add(t);
                         }
                     }
+
+                    tempList = new List<ShiftHistory>();
+                    ShiftHistory temp = new ShiftHistory();
+                    foreach (ShiftHistory sh in ShiftHistoryList)
+                    {
+                        temp.Actual += sh.Actual;
+                        temp.Scraps += sh.Scraps;
+                        temp.LoadTime += sh.LoadTime;
+                        temp.Nop1 += sh.Nop1;
+                        temp.Nop2 += sh.Nop2;
+                        temp.Idle += sh.Idle;
+                        temp.Undefined += sh.Undefined;
+                        temp.KR += ((sh.Actual * sh.CycleTime));
+                        temp.BKR += ((sh.LoadTime - sh.Nop1));
+                    }
+
+                    temp.KR = Math.Round((temp.KR / temp.LoadTime) * 100, 2);
+                    temp.BKR = Math.Round((temp.BKR / temp.LoadTime) * 100, 2);
+                    tempList.Add(temp);
+
 
                 }
                 fromDate = fromDate.AddDays(1);
@@ -117,7 +146,7 @@ namespace ManufactureMonitor
             Chart1.ChartAreas["MainArea"].AxisX.Title = "Problems";
             Chart1.ChartAreas["MainArea"].AxisX.IsLabelAutoFit = true;
 
-            Chart1.ChartAreas["MainArea"].AxisY.Interval = 1000;
+            Chart1.ChartAreas["MainArea"].AxisY.Interval = 10;
 
             Chart1.ChartAreas["MainArea"].AxisY.Title = "Time in Sec";
 
@@ -134,41 +163,41 @@ namespace ManufactureMonitor
             
             /*Graph of  Stacked column*/
             
-            Chart2 = new Chart();
-            Chart2.ImageLocation = @"~/Charts_1";
-            Chart2.ImageStorageMode = ImageStorageMode.UseImageLocation;
-            Chart2.ImageType = ChartImageType.Png;
-            Chart2.Width = 500;
-            Chart2.Height = 500;
+            //Chart2 = new Chart();
+            //Chart2.ImageLocation = @"~/Charts_1";
+            //Chart2.ImageStorageMode = ImageStorageMode.UseImageLocation;
+            //Chart2.ImageType = ChartImageType.Png;
+            //Chart2.Width = 500;
+            //Chart2.Height = 500;
 
-            ChartArea area1 = new ChartArea("MainArea1");
-            Series series1 = new Series("Series2");
+            //ChartArea area1 = new ChartArea("MainArea1");
+            //Series series1 = new Series("Series2");
 
-            series1.ChartType = SeriesChartType.StackedColumn;
-            series1.ChartArea = "MainArea1";
-            series1.IsValueShownAsLabel = true;
-            DateTime day = DateTime.Parse(Request.QueryString["datefrom"]);
+            //series1.ChartType = SeriesChartType.StackedColumn;
+            //series1.ChartArea = "MainArea1";
+            //series1.IsValueShownAsLabel = true;
+            //DateTime day = DateTime.Parse(Request.QueryString["datefrom"]);
 
-            series1.Points.AddXY("", 100);
+            //series1.Points.AddXY("", 100);
           
 
-            Chart2.ChartAreas.Add(area1);
-            Chart2.Series.Add(series1);
-            Chart2.ChartAreas["MainArea1"].AxisX.Interval = 1;
+            //Chart2.ChartAreas.Add(area1);
+            //Chart2.Series.Add(series1);
+            //Chart2.ChartAreas["MainArea1"].AxisX.Interval = 1;
 
-            Chart2.ChartAreas["MainArea1"].AxisX.Title = "CHE Front old line";
-            Chart2.ChartAreas["MainArea1"].AxisX.IsLabelAutoFit = true;
+            //Chart2.ChartAreas["MainArea1"].AxisX.Title = (String)Session["MachineName"];
+            //Chart2.ChartAreas["MainArea1"].AxisX.IsLabelAutoFit = true;
 
-            Chart2.ChartAreas["MainArea1"].AxisY.Interval = 10;
+            //Chart2.ChartAreas["MainArea1"].AxisY.Interval = 10;
 
-            Chart2.ChartAreas["MainArea1"].AxisY.Title = " ";
+            //Chart2.ChartAreas["MainArea1"].AxisY.Title = " ";
 
-            Chart2.ChartAreas["MainArea1"].AxisX.LabelStyle.Angle = -45;
+            //Chart2.ChartAreas["MainArea1"].AxisX.LabelStyle.Angle = -45;
 
-            Chart2.ChartAreas["MainArea1"].AxisX.MajorGrid.Enabled = false;
-            Chart2.ChartAreas["MainArea1"].AxisY.MajorGrid.Enabled = false;
-            Chart2.Legends.Add(new Legend("Default") { Docking = Docking.Right });
-            StackedDataPlaceHolder.Controls.Add(Chart2);
+            //Chart2.ChartAreas["MainArea1"].AxisX.MajorGrid.Enabled = false;
+            //Chart2.ChartAreas["MainArea1"].AxisY.MajorGrid.Enabled = false;
+            //Chart2.Legends.Add(new Legend("Default") { Docking = Docking.Right });
+            //StackedDataPlaceHolder.Controls.Add(Chart2);
             
            
         }
