@@ -1616,6 +1616,8 @@ namespace ManufactureMonitor.DALayer
              {
                  TimeSequence.Add(new TimeSequence
                  {
+                     SlNo = (int)dt.Rows[i]["SlNo"],
+                     Machine_Id = machine,
                      ProblemCode = (int)dt.Rows[i]["Code"],
                      From = dt.Rows[i]["From"].ToString(),
                      To = dt.Rows[i]["To"].ToString(),
@@ -2582,7 +2584,7 @@ namespace ManufactureMonitor.DALayer
 #endregion
 
 
-         internal void UpdateStopInfo(int SlNo,int code, string source, string type, string comment, int machine)
+         internal void UpdateStopInfo(int SlNo,int code,string type, string comment, int machine)
          {
              SqlConnection cn;
              SqlCommand cmd;

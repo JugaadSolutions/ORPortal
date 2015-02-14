@@ -54,7 +54,7 @@ namespace ManufactureMonitor
                     to.ToString("yyyy-MM-dd HH:mm:ss"),
                     Convert.ToBoolean(Request.QueryString["SpeedLoss"]));
 
-                GridView1.DataSource = dt1;
+                GridView1.DataSource = Ts;
                 GridView1.DataBind();
 
 

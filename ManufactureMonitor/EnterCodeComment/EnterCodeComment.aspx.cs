@@ -39,7 +39,7 @@ namespace ManufactureMonitor
         {
             DataAccess da = new DataAccess();
             da.UpdateStopInfo(Convert.ToInt32(Request.QueryString["SlNo"]),
-                (int)dt.Rows[CodeSelection.SelectedIndex]["Code"],Request.QueryString["Source"],Request.QueryString["Type"],
+                (int)dt.Rows[CodeSelection.SelectedIndex]["ProblemCode"],Request.QueryString["Type"],
                 TextBox2.Text, Convert.ToInt32(Request.QueryString["Machine_Id"]));
 
             Response.Write("<script>alert('Action Completed Successfully..');if(alert){ window.location='../EnterCodeComment/StopTimes2.aspx';}</script>");

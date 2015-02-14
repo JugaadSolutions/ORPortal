@@ -16,12 +16,12 @@
                 <asp:GridView ID="GridView1" runat="server" BackColor="White" BorderColor="#3366CC"
                      BorderStyle="None" BorderWidth="1px" CellPadding="4" Width="809px" Height="179px" AutoGenerateColumns="false">
                     <Columns>
-                        <asp:HyperLinkField Text="Update" DataNavigateUrlFields="Code,StopType,Source,Machine_Id,SlNo" 
+                        <asp:HyperLinkField Text="Update" DataNavigateUrlFields="ProblemCode,StopType,Machine_Id,SlNo" 
                             DataNavigateUrlFormatString =
-                            "~/EnterCodeComment/EnterCodeComment.aspx?Code={0}&Type={1}&Source={2}&Machine_Id={3}&SlNo={4}" />
+                            "~/EnterCodeComment/EnterCodeComment.aspx?ProblemCode={0}&Type={1}&Machine_Id={2}&SlNo={3}" />
                         <asp:BoundField HeaderText ="From" DataField="From" />
                         <asp:BoundField HeaderText ="To" DataField="To" />
-                        <asp:BoundField HeaderText ="Duration[s]" DataField="Duration[s]" />
+                        <asp:BoundField HeaderText ="Duration[s]" DataField="Duration" />
                         <asp:BoundField HeaderText ="Stop Type" DataField="StopType" />
                         <asp:BoundField HeaderText ="Problem" DataField="Problem" />
                         <asp:BoundField HeaderText ="Comment" DataField="Comment" />

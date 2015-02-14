@@ -7,7 +7,8 @@ namespace ManufactureMonitor.Entity
 {
     public class TimeSequence
     {
-        
+        public int SlNo { get; set; }
+        public int Machine_Id { get; set; }
         public String From { get; set; }
         public String To { get; set; }
         public int Duration { get; set; }
