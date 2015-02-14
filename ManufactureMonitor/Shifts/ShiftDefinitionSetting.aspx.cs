@@ -18,7 +18,7 @@ namespace ManufactureMonitor
             if (!Page.IsPostBack)
             {
                 DataAccess da = new DataAccess();
-                dt = da.GetShifts(Convert.ToInt32(Session["MachineGroup"]));
+                dt = da.GetShifts(Convert.ToInt32(Session["Machine_Id"]));
                 ShiftSelectionListBox.DataSource = dt.DefaultView;
                 ShiftSelectionListBox.DataValueField = "shifts";
                 ShiftSelectionListBox.DataBind();

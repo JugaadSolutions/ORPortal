@@ -31,6 +31,7 @@ namespace ManufactureMonitor
             if (MachineSelectionListBox.SelectedIndex == -1)
                 return;
             Session["MachineName"] = dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"];
+            Session["Machine_Id"] = dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"];
             Response.Redirect("~/Shifts/ShiftDefinitionSetting.aspx?MachineId=" 
                 + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
                  + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]);
