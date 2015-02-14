@@ -1341,8 +1341,8 @@ namespace ManufactureMonitor.DALayer
              try
              {
                  cn = new SqlConnection(connection);
-                 String query = @" Insert Into ProjectMachines(Project_Id,Machine_Id)
-                                    Values({0},{1})";
+                 String query = @" Insert Into ProjectMachines(Project_Id,Machine_Id,Active)
+                                    Values({0},{1},'No')";
                  query = String.Format(query, Project_Id, Machine_Id);
                  cn.Open();
                  cmd = new SqlCommand(query, cn);

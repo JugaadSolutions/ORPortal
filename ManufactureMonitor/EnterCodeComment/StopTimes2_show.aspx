@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="StopTimes2_show.aspx.cs" Inherits="ManufactureMonitor.StopTimes2_show" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    <asp:Panel runat="server" ID="MainPanel" ScrollBars="Auto" height="100%">
     <table style="width: 100%; border-collapse: collapse; background-color: #FFFFCC;">
         <tr>
             <td style="width: 273px; height: 40px;"></td>
@@ -44,4 +45,5 @@
             <td>&nbsp;</td>
         </tr>
     </table>
+        </asp:Panel>
 </asp:Content>

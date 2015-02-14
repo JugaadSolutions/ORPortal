@@ -1,8 +1,10 @@
 ﻿using ManufactureMonitor.DALayer;
+using ManufactureMonitor.Entity;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -12,6 +14,8 @@ namespace ManufactureMonitor
     public partial class ORandMOR1 : System.Web.UI.Page
     {
         static DataTable dt, dt1,dt2;
+        static List<ShiftHistory> sh;
+        static String Project = "";
         protected void Page_Load(object sender, EventArgs e)
         {
             ((Label)Master.FindControl("MasterPageLabel")).Text = "OR  " + Session["Machinegroupname"];
@@ -46,6 +50,7 @@ namespace ManufactureMonitor
                 if (MachineSelectionListBox.SelectedIndex == -1)
                     return;
                 Session["MachineName"] = dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"];
+                
                 Response.Redirect("~/OR_OA/ORandMOR1_Show.aspx?MachineGroup=" + Session["MachineGroup"]
                     + "&MachineId=" + (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
                      + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]
@@ -82,7 +87,69 @@ namespace ManufactureMonitor
 
         protected void ImageButton2_Click(object sender, ImageClickEventArgs e)
         {
+            if (validateSelection())
+            {
+                List<ShiftHistory> tempList = new List<ShiftHistory>();
+                DateTime fromDate = datefrom.SelectedDate;
+                DateTime toDate = dateto.SelectedDate;
+                int machineId = (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"];
+                int ShiftId = (int)dt.Rows[ShiftSelectionListBox.SelectedIndex]["Id"];
+                DataAccess da = new DataAccess();
+                while (fromDate <= toDate)
+                {
+                    ShiftHistory temp = new ShiftHistory();
+                    dt = da.GetShiftTimings(machineId, ShiftId);
 
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+
+
+
+                        DateTime from = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + dt.Rows[i]["Start"]);
+                        DateTime to = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + dt.Rows[i]["End"]);
+
+                        if (to < from)
+                            to = to.AddDays(1);
+
+                        temp.Date = from.ToString("dd-MMM-yyyy");
+
+
+                        sh = da.GetShiftHistory(machineId, from.ToString("yyyy-MM-dd HH:mm:ss"),
+                                to.ToString("yyyy-MM-dd HH:mm:ss")
+                                );
+
+                        foreach (ShiftHistory s in sh)
+                        {
+                            if (Project != "")
+                            {
+                                if (s.Project != Project)
+                                    continue;
+                            }
+                            temp.CycleTime += s.CycleTime;
+                            temp.Actual += s.Actual;
+                            temp.Scraps += s.Scraps;
+                            temp.LoadTime += s.LoadTime;
+                            temp.Nop1 += s.Nop1;
+                            temp.Nop2 += s.Nop2;
+                            temp.Idle += s.Idle;
+                            temp.Undefined += s.Undefined;
+
+                        }
+                        double kr = ((temp.CycleTime * temp.Actual) / temp.LoadTime) * 100;
+
+                        temp.KR = Math.Round(kr, 2);
+
+                        double bkr = ((temp.LoadTime - temp.Nop1) / temp.LoadTime) * 100;
+                        temp.BKR = Math.Round(bkr, 2);
+
+                        tempList.Add(temp);
+
+                    }
+                    fromDate = fromDate.AddDays(1);
+
+                }
+                GenerateAccumulationReport(tempList);
+            }
         }
         bool validateSelection()
         {
@@ -99,6 +166,37 @@ namespace ManufactureMonitor
                 return false;
             }
             return true;
+        }
+        void GenerateAccumulationReport(List<ShiftHistory> tempList)
+        {
+            Response.Clear();
+            Response.Buffer = true;
+            Response.AddHeader("content-disposition", "attachment;filename=OR_OA_Accumulation_"
+                + Session["MachineName"] + ".csv");
+            Response.Charset = "";
+            Response.ContentType = "application/text";
+            StringBuilder sBuilder = new System.Text.StringBuilder();
+
+            sBuilder.Append("Date,OKPieces,Scraps,Load Time/ Available Time [s],Non-Operation Time 1 / Machine Related [s] ,Non-Operation Time 2 / Other Than Machine Related [s],Undefined [s],Idle Time/ Exclude Hour [s],KADOURITSU/ Operation Ratio [%] ,BEKADOURITSU/ Operational Availability [%] ");
+
+            sBuilder.Append("\r\n");
+            for (int i = 0; i < tempList.Count; i++)
+            {
+                sBuilder.Append(tempList[i].Date + ",");
+                sBuilder.Append(tempList[i].OK + ",");
+                sBuilder.Append(tempList[i].Scraps + ",");
+                sBuilder.Append(tempList[i].LoadTime + ",");
+                sBuilder.Append(tempList[i].Nop1 + ",");
+                sBuilder.Append(tempList[i].Nop2 + ",");
+                sBuilder.Append(tempList[i].Undefined + ",");
+                sBuilder.Append(tempList[i].Idle + ",");
+                sBuilder.Append(tempList[i].KR + ",");
+                sBuilder.Append(tempList[i].BKR + ",");
+                sBuilder.Append("\r\n");
+            }
+            Response.Output.Write(sBuilder.ToString());
+            Response.Flush();
+            Response.End();
         }
     }
 }
