@@ -32,18 +32,29 @@ namespace ManufactureMonitor
         }
 
        
-
-        protected void Button1_Click(object sender, EventArgs e)
+        protected void Delete_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Problems/StopProblemSetting_Enter.aspx?MachineId=" + Request.QueryString["MachineId"]);
+            if (ShiftSelectionListBox.SelectedIndex == -1)
+                return;
+            DataAccess da = new DataAccess();
+            da.DeleteSProblem((Int32)dt.Rows[ShiftSelectionListBox.SelectedIndex]["Code"]);
+            Response.Write("<script>alert('Problem Deleted Successfully..');if(alert){ window.location='../Problems/StopProblemSetting.aspx?MachineId=" + Request.QueryString["MachineId"] + "';}</script>");
+       
         }
 
-        protected void Button2_Click(object sender, EventArgs e)
+        protected void Edit_Click(object sender, EventArgs e)
         {
             if (ShiftSelectionListBox.SelectedIndex == -1)
                 return;
             Response.Redirect("~/Problems/StopProblemSetting_Enter.aspx?Code=" + dt.Rows[ShiftSelectionListBox.SelectedIndex]["Code"]
                 + "&MachineId=" + Request.QueryString["MachineId"]);
         }
+
+        protected void Add_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Problems/StopProblemSetting_Enter.aspx?MachineId=" + Request.QueryString["MachineId"]);
+        }
+
+        
     }
 }

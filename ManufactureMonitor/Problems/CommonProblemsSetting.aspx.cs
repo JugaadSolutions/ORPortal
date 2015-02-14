@@ -55,7 +55,7 @@ namespace ManufactureMonitor
                 return;
             DataAccess da = new DataAccess();
             da.DeleteProblem((Int32)dt.Rows[ProblemSelectionListBox.SelectedIndex]["Code"]);
-            Response.Write("<script>alert('Problem Delected Successfully..');if(alert){ window.location='../Problems/CommonProblemsSetting.aspx?MachineId=" + Request.QueryString["MachineId"] + "';}</script>");
+            Response.Write("<script>alert('Problem Deleted Successfully..');if(alert){ window.location='../Problems/CommonProblemsSetting.aspx?MachineId=" + Request.QueryString["MachineId"] + "';}</script>");
         }
     }
 }

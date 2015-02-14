@@ -510,6 +510,24 @@ namespace ManufactureMonitor.DALayer
 
             cn.Close();
         }
+
+        public void DeleteSProblem(int code)
+        {
+            SqlConnection cn;
+            SqlCommand cmd;
+
+            cn = new SqlConnection(connection);
+            String query = @" Delete From SpecificProblems 
+                            where (Code={0})";
+            query = String.Format(query, code);
+            cn.Open();
+            cmd = new SqlCommand(query, cn);
+
+            cmd.ExecuteNonQuery();
+
+            cn.Close();
+        }
+
         public DataTable GetShifts(int Id)
         {
             SqlConnection cn;
@@ -1168,35 +1186,32 @@ namespace ManufactureMonitor.DALayer
                  cn = new SqlConnection(connection);
                  String query;
 
-
-                 if (subType <= 0)
+                 if (Convert.ToInt32(code) >= 1 && Convert.ToInt32(code) <= 999)
                  {
-                     query = @"insert into SpecificProblems(Description,Code,Type,Machine_Id)
-                    values('{0}',{1},{2},{3})";
+                     if (subType <= 0)
+                     {
+                         query = @"insert into SpecificProblems(Description,Code,Type,Machine_Id)
+                        values('{0}',{1},{2},{3})";
 
-                     query = String.Format(query, description, code, type, Machine_Id);
-                 }
-                 else
-                 {
-                     query = @"insert into SpecificProblems(Description,Code,Type,Machine_Id,SubType)
-                    values('{0}',{1},{2},{3},{4})";
+                         query = String.Format(query, description, code, type, Machine_Id);
+                     }
+                     else
+                     {
+                         query = @"insert into SpecificProblems(Description,Code,Type,Machine_Id,SubType)
+                        values('{0}',{1},{2},{3},{4})";
 
-                     query = String.Format(query, description, code, type, Machine_Id, subType);
-                 }
-                 cn.Open();
-                 cmd = new SqlCommand(query, cn);
-                 cmd.ExecuteNonQuery();
-                 cn.Close();
-                 int Code=Convert.ToInt32(code);
-                 if (Code >= 1 && Code <= 999)
-                 {
+                         query = String.Format(query, description, code, type, Machine_Id, subType);
+                     }
+                     cn.Open();
+                     cmd = new SqlCommand(query, cn);
+                     cmd.ExecuteNonQuery();
+                     cn.Close();
                      return true;
-                 }
+                }
                  else
                  {
                      return false;
                  }
-
              }
 
              catch (Exception)

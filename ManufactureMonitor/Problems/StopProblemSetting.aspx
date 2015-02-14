@@ -14,16 +14,21 @@
                         <td style="background-color: #FFAF37; text-align: center;" colspan="2">Problem Selection</td>
                     </tr>
                     <tr>
-                        <td rowspan="2" style="width: 53px">
+                        <td rowspan="3" style="width: 53px">
                             <asp:ListBox ID="ShiftSelectionListBox" runat="server" SelectionMode="Single" Height="210px" style="margin-left: 28px" Width="325px" />
                         </td>
-                        <td style="width: 822px">
-                <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Add" Width="66px" />
+                        <td style="width: 822px; height: 17px;">
+                <asp:Button ID="Add" runat="server" OnClick="Add_Click" Text="Add" Width="66px" />
                         </td>
                     </tr>
                     <tr>
                         <td style="width: 822px">
-                <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Edit" Width="66px" style="height: 26px" />
+                <asp:Button ID="Edit" runat="server" OnClick="Edit_Click" Text="Edit" Width="66px" style="height: 26px" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 822px">
+                <asp:Button ID="Delete" runat="server" OnClick="Delete_Click" Text="Delete" Width="66px" style="height: 26px" />
                         </td>
                     </tr>
                     <tr>
