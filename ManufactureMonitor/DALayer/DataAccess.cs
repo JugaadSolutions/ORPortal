@@ -1826,8 +1826,9 @@ namespace ManufactureMonitor.DALayer
              SqlCommand cmd;
 
              cn = new SqlConnection(connection);
-             
-                 String query = @"select distinct Convert(Time(0),[From],20) as [From], Convert(Time(0),[To],20) as [To],
+
+             String query = @"select  distinct CONVERT(nvarchar(10),TimeStamp,105)as Date, Convert(Time(0),[From],20) as [From],
+                                Convert(Time(0),[To],20) as [To],
                                 Name as Project,CycleTime, ProjectTracker.[From] as 'Start',ProjectTracker.[To] as 'End',
                                 SessionActual - Scraps as [Actual],Scraps, Scraps.[timestamp] from ProjectTracker 
                                 inner join Projects on ProjectTracker.Project_Id = Projects.Id 
@@ -1924,6 +1925,7 @@ namespace ManufactureMonitor.DALayer
                  {
                      Project = (String)dt.Rows[i]["Project"],
                      CycleTime = (double)dt.Rows[i]["CycleTime"],
+                     Date=dt.Rows[i]["Date"].ToString(),
                      From = dt.Rows[i]["From"].ToString(),
                      To = dt.Rows[i]["To"].ToString(),
                      Actual = (int)dt.Rows[i]["Actual"],

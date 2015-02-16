@@ -47,6 +47,7 @@ namespace ManufactureMonitor.Entity
             ShiftHistory_Summary su = new ShiftHistory_Summary();
             foreach(ShiftHistory_Summary s in summaryList)
             {
+                
                 su.Actual += s.Actual;
                 su.Scraps += s.Scraps;
                 su.LoadTime += s.LoadTime;
@@ -81,6 +82,7 @@ namespace ManufactureMonitor.Entity
                     this.Project = sh.Project;
                 if (this.CycleTime != sh.CycleTime)
                     this.CycleTime = sh.CycleTime;
+                Date = sh.Date;
                 Actual += sh.Actual;
                 Scraps += sh.Scraps;
                 LoadTime += sh.LoadTime;
@@ -90,6 +92,7 @@ namespace ManufactureMonitor.Entity
                 Undefined += sh.Undefined;
 
             }
+            
             KR = Math.Round(((Actual * CycleTime) / LoadTime) * 100,2);
             BKR = Math.Round(((LoadTime - Nop1) / LoadTime) * 100,2);
         }

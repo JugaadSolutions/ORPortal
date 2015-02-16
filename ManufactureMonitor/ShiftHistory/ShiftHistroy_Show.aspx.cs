@@ -79,6 +79,12 @@ namespace ManufactureMonitor
                         
 
                         BoundField b;
+
+                        b = new BoundField();
+                        b.DataField = "Date";
+                        b.HeaderText = "Date";
+                        g.Columns.Add(b);
+
                         if (!summary)
                         {
 
@@ -93,7 +99,6 @@ namespace ManufactureMonitor
                             g.Columns.Add(b);
                         }
 
-                       
 
                         b = new BoundField();
                         b.DataField = "Project";
