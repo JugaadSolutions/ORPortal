@@ -2305,10 +2305,15 @@ namespace ManufactureMonitor.DALayer
 
              cn = new SqlConnection(connection);
 
-             String query = @"select Scraps.SlNo, Convert(nvarchar(10),Scraps.Timestamp,105) as 'Date', Name as 'Project/Model', Scraps
+             String query = @"select  Scraps.SlNo, Convert(nvarchar(10), Scraps.Timestamp, 105) as 'Date',
+                            Convert(nvarchar(10), Sessions.Start,8) as 'From',Convert(nvarchar(10),Sessions.[End],8) as [To],
+                            Projects.Name as 'Project/Model', Scraps
                             from Scraps inner join ProjectTracker on Scraps.ProjectTracker_Id = ProjectTracker.SlNo
-                            inner join Projects on Projects.Id = ProjectTracker.Project_Id and SessionActual > 0
-                            where Scraps.Machine_Id = {0} and Scraps.Timestamp >= '{1}' and Scraps.Timestamp < '{2}'";
+                            inner join Projects on Projects.Id = ProjectTracker.Project_Id and SessionActual > 0 
+                            inner join Sessions
+                            on Scraps.Shift_Id=Sessions.Shift_Id and Scraps.Machine_Id=Sessions.Machine_Id
+                            where Scraps.Machine_Id ={0} and Scraps.Timestamp >= '{1}' and Scraps.Timestamp < '{2}' 
+                            order by Scraps.SlNo";
 
              query = String.Format(query, machine, from.ToString("yyyy-MM-dd HH:mm:ss"), to.ToString("yyyy-MM-dd HH:mm:ss"));
 
