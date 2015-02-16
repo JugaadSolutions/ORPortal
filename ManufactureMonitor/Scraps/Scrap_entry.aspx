@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Scrap_entry.aspx.cs" Inherits="ManufactureMonitor.Scraps.Scrap_entry" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+     <asp:Panel runat="server" ID="MainPanel" ScrollBars="Auto" height="100%" style="text-align:center;">
      <table style="width: 100%; border-collapse: collapse; background-color: #FFFFCC;">
         <tr>
             <td style="width: 173px; height: 40px;"></td>
@@ -16,7 +17,7 @@
             <td >
                 <asp:GridView ID="GridView1" runat="server" HorizontalAlign="Center" CellPadding="3" BackColor="#DEBA84" 
                     BorderColor="#663300" BorderStyle="Solid" BorderWidth="1px" CellSpacing="2"  
-                    ShowHeaderWhenEmpty="True" Width="870px"  AutoGenerateColumns="false" OnRowEditing="GridView1_RowEditing"
+                    ShowHeaderWhenEmpty="True" Width="870px"  AutoGenerateColumns="False" OnRowEditing="GridView1_RowEditing"
                      OnRowUpdating ="GridView1_RowUpdating" >
                     <FooterStyle BackColor="#F7DFB5" ForeColor="#8C4510" />
                     <HeaderStyle BackColor="#FF9966" Font-Bold="True" ForeColor="White" />
@@ -29,15 +30,27 @@
                     <SortedDescendingHeaderStyle BackColor="#93451F" />
                     <Columns>
                         <asp:BoundField DataField="Date" ReadOnly="true" HeaderText="Date" ShowHeader="true" 
-                            HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" />
-                        <asp:BoundField DataField="Project/Model" ReadOnly="true"
-                             HeaderText="Project/Model" ShowHeader="true" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" />
-                       <asp:TemplateField HeaderText="Scraps" HeaderStyle-HorizontalAlign="Center" ShowHeader="true" ItemStyle-HorizontalAlign="Center">
-                           <ItemTemplate> <%#Eval("Scraps") %></ItemTemplate>
-                           <EditItemTemplate>
-                               <asp:TextBox ID="ScrapTextbox" runat="server" TextMode="SingleLine" />
-                           </EditItemTemplate>
-                       </asp:TemplateField>
+                            HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                        <HeaderStyle HorizontalAlign="Center" />
+                        <ItemStyle HorizontalAlign="Center" />
+                        </asp:BoundField>
+                        <asp:BoundField DataField="From" ReadOnly="True"
+                             HeaderText="From" />
+                        <asp:BoundField DataField="To" HeaderText="To" ReadOnly="True" />
+                        <asp:BoundField DataField="Project/Model" HeaderStyle-HorizontalAlign="Center" HeaderText="Project/Model" ItemStyle-HorizontalAlign="Center" ReadOnly="true" ShowHeader="true">
+                        <HeaderStyle HorizontalAlign="Center" />
+                        <ItemStyle HorizontalAlign="Center" />
+                        </asp:BoundField>
+                        <asp:TemplateField HeaderStyle-HorizontalAlign="Center" HeaderText="Scraps" ItemStyle-HorizontalAlign="Center" ShowHeader="true">
+                            <ItemTemplate>
+                                <%#Eval("Scraps") %>
+                            </ItemTemplate>
+                            <EditItemTemplate>
+                                <asp:TextBox ID="ScrapTextbox" runat="server" TextMode="SingleLine" />
+                            </EditItemTemplate>
+                            <HeaderStyle HorizontalAlign="Center" />
+                            <ItemStyle HorizontalAlign="Center" />
+                        </asp:TemplateField>
                         <asp:CommandField ShowHeader="false"  ShowEditButton="true" EditText="Update" UpdateText="Save"  ShowCancelButton="false"/>
                     </Columns>
                 </asp:GridView>
@@ -50,4 +63,5 @@
             <td>&nbsp;</td>
         </tr>
     </table>
+         </asp:Panel>
 </asp:Content>
