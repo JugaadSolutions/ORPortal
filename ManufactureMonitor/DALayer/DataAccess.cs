@@ -2307,7 +2307,7 @@ namespace ManufactureMonitor.DALayer
 
              cn = new SqlConnection(connection);
 
-             String query = @"select  Scraps.SlNo, Convert(nvarchar(10), Scraps.Timestamp, 105) as 'Date',
+             String query = @"select distinct Convert(nvarchar(10), Scraps.Timestamp, 105) as 'Date', Scraps.SlNo, 
                             Convert(nvarchar(10), Sessions.Start,8) as 'From',Convert(nvarchar(10),Sessions.[End],8) as [To],
                             Projects.Name as 'Project/Model', Scraps
                             from Scraps inner join ProjectTracker on Scraps.ProjectTracker_Id = ProjectTracker.SlNo

@@ -120,19 +120,20 @@ namespace ManufactureMonitor
         {
             Response.Clear();
             Response.Buffer = true;
-            Response.AddHeader("content-disposition", "attachment;filename=ShiftHistory_" 
+            Response.AddHeader("content-disposition", "attachment;filename=ShiftHistorySummary_" 
                 +(String)dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]+".csv");
             Response.Charset = "";
             Response.ContentType = "application/text";
             StringBuilder sBuilder = new System.Text.StringBuilder();
           
-            sBuilder.Append("From,To,Project/Model,Plan Cycle Time[s],OK Pieces,Scraps,Load Time/Available Time[s], Non-Operation Time 1/Machine Related[s],"
+            sBuilder.Append("Date,From,To,Project/Model,Plan Cycle Time[s],OK Pieces,Scraps,Load Time/Available Time[s], Non-Operation Time 1/Machine Related[s],"
                 + "Non-Operation Time 2/Other than Machine[s], Undefined, Idle Time/Exclude Hour[s], KADOURITSU/Operation Ratio[%]," 
             + "Bekadouritsu/Operational Availability[s]");
             
             sBuilder.Append("\r\n");
             foreach( ShiftHistory s in sh )
             {
+                    sBuilder.Append(s.Date + ",");
                     sBuilder.Append(s.From +"," );
                     sBuilder.Append(s.To +"," );
                     sBuilder.Append(s.Project +"," );
@@ -167,14 +168,14 @@ namespace ManufactureMonitor
             Response.ContentType = "application/text";
             StringBuilder sBuilder = new System.Text.StringBuilder();
 
-            sBuilder.Append("Project/Model,Plan Cycle Time[s],OK Pieces,Scraps,Load Time/Available Time[s], Non-Operation Time 1/Machine Related[s],"
+            sBuilder.Append("Date,Project/Model,Plan Cycle Time[s],OK Pieces,Scraps,Load Time/Available Time[s], Non-Operation Time 1/Machine Related[s],"
                 + "Non-Operation Time 2/Other than Machine[s], Undefined, Idle Time/Exclude Hour[s], KADOURITSU/Operation Ratio[%],"
             + "Bekadouritsu/Operational Availability[s]");
 
             sBuilder.Append("\r\n");
             foreach (ShiftHistory_Summary s in Sh_Su)
             {
-                
+                sBuilder.Append(s.Date + ",");
                 sBuilder.Append(s.Project + ",");
                 sBuilder.Append(s.CycleTime + ",");
                 sBuilder.Append(s.Actual + ",");
