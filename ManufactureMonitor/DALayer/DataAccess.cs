@@ -1874,6 +1874,10 @@ namespace ManufactureMonitor.DALayer
                  double OK = (int)dt.Rows[i]["Actual"] - (int)dt.Rows[i]["Scraps"];
                  dt.Rows[i]["OK"]=OK;
 
+                 double Nop1 = GetNop1Duration(machine, (DateTime)dt.Rows[i]["Start"],
+                    dt.Rows[i]["End"] ==
+                    DBNull.Value ? DateTime.Now : (DateTime)dt.Rows[i]["End"], s);
+                 dt.Rows[i]["Nop1"] = Nop1;
                 
 
                  double Nop2 = GetNop2Duration(machine, (DateTime)dt.Rows[i]["Start"],
@@ -1892,10 +1896,7 @@ namespace ManufactureMonitor.DALayer
                      DBNull.Value ? DateTime.Now : (DateTime)dt.Rows[i]["End"], s);
                  dt.Rows[i]["Idle"] = OffDuration;
 
-                 double Nop1 = GetNop1Duration(machine, (DateTime)dt.Rows[i]["Start"],
-                    dt.Rows[i]["End"] ==
-                    DBNull.Value ? DateTime.Now : (DateTime)dt.Rows[i]["End"], s);
-                 dt.Rows[i]["Nop1"] = Nop1;
+                 
 
 
                  double LoadTime = GetLoadTime(machine, (DateTime)dt.Rows[i]["Start"],

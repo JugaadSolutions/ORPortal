@@ -22,7 +22,7 @@ namespace ManufactureMonitor
 
             DateTime fromDate = DateTime.Parse(Request.QueryString["datefrom"]);
             DateTime toDate = DateTime.Parse(Request.QueryString["dateto"]);
-            //toDate = toDate.AddDays(1);
+            toDate = toDate.AddDays(1);
             int ShiftId = Convert.ToInt32(Request.QueryString["ShiftId"]);
             ProblemAccumulation = new Dictionary<int,List<TimeSequence>>();
             while (fromDate < toDate)

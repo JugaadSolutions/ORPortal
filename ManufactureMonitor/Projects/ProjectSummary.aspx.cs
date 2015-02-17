@@ -155,10 +155,7 @@ namespace ManufactureMonitor
             }
         }
 
-        protected void ExcelImage_Click(object sender, ImageClickEventArgs e)
-        {
-
-        }
+       
 
         
 

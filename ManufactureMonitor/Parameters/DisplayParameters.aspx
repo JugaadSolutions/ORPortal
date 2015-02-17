@@ -4,7 +4,7 @@
         <tr>
             <td style="text-align: center; ">
                 &nbsp;&nbsp;
-                <asp:TextBox ID="TextBox1" runat="server" Width="762px" BorderColor="#333333" BorderStyle="Solid" BorderWidth="3px" Font-Bold="True" ForeColor="Black" Height="30px" style="font-size: medium; margin-left: 0px">                                                                     Representation of parameters</asp:TextBox>
+                <asp:TextBox ID="TextBox1" runat="server" Width="576px" BorderColor="#333333" BorderStyle="Solid" BorderWidth="3px" Font-Bold="True" ForeColor="Black" Height="30px" style="font-size: medium; margin-left: 298px">                                          Representation of parameters</asp:TextBox>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <asp:ImageButton ID="BackButton" runat="server" ImageUrl="~/Images/return.jpg" ImageAlign="Middle" OnClick="BackButton_Click" CssClass="auto-style4" Height="25px" Width="25px" style="margin-left: 0px" />
             

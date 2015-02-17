@@ -13,9 +13,9 @@
         </tr>
         <tr>
             <td style="width: 273px; height: 25px;"></td>
-            <td>
-                <asp:GridView ID="GridView1" runat="server" BackColor="White" BorderColor="#3366CC"
-                     BorderStyle="None" BorderWidth="1px" CellPadding="4" Width="809px" Height="179px" AutoGenerateColumns="false">
+            <td >
+                <asp:GridView ID="GridView1" runat="server"  style="margin-left: 108px; text-align:center;" BackColor="#DEBA84" BorderColor="#663300" BorderStyle="solid" BorderWidth="1px" 
+                    CellPadding="3" CellSpacing="2" Width="721px" Height="179px"  AutoGenerateColumns="false">
                     <Columns>
                         <asp:HyperLinkField Text="Update" DataNavigateUrlFields="ProblemCode,StopType,Machine_Id,SlNo" 
                             DataNavigateUrlFormatString =
@@ -27,15 +27,15 @@
                         <asp:BoundField HeaderText ="Problem" DataField="Problem" />
                         <asp:BoundField HeaderText ="Comment" DataField="Comment" />
                     </Columns>
-                    <FooterStyle BackColor="#99CCCC" ForeColor="#003399" />
-                    <HeaderStyle BackColor="#003399" Font-Bold="True" ForeColor="#CCCCFF" />
-                    <PagerStyle BackColor="#99CCCC" ForeColor="#003399" HorizontalAlign="Left" />
-                    <RowStyle BackColor="White" ForeColor="#003399" />
-                    <SelectedRowStyle BackColor="#009999" Font-Bold="True" ForeColor="#CCFF99" />
-                    <SortedAscendingCellStyle BackColor="#EDF6F6" />
-                    <SortedAscendingHeaderStyle BackColor="#0D4AC4" />
-                    <SortedDescendingCellStyle BackColor="#D6DFDF" />
-                    <SortedDescendingHeaderStyle BackColor="#002876" />
+                    <FooterStyle BackColor="#F7DFB5" ForeColor="#8C4510" />
+                    <HeaderStyle BackColor="#FF9966" Font-Bold="True" ForeColor="White" />
+                    <PagerStyle ForeColor="#8C4510" HorizontalAlign="Center" />
+                    <RowStyle BackColor="#FFF7E7" ForeColor="#8C4510" />
+                    <SelectedRowStyle BackColor="#738A9C" Font-Bold="True" ForeColor="White" />
+                    <SortedAscendingCellStyle BackColor="#FFF1D4" />
+                    <SortedAscendingHeaderStyle BackColor="#B95C30" />
+                    <SortedDescendingCellStyle BackColor="#F1E5CE" />
+                    <SortedDescendingHeaderStyle BackColor="#93451F" />
                 </asp:GridView>
             </td>
             <td style="height: 25px"></td>

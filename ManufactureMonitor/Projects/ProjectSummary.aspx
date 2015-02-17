@@ -69,7 +69,7 @@
                 <asp:Button ID="ProdProgress" runat="server" Text="Production Progress" OnClick="ProdProgress_Click"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <asp:Button ID="LossHour" runat="server" Text="Loss Hour" OnClick="LossHour_Click" />
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <asp:ImageButton ID="ExcelImage" runat="server" Height="40px" ImageAlign="AbsBottom" ImageUrl="~/Images/excelicon.jpg" OnClick="ExcelImage_Click" Width="40px" />
+                            
             </td>
         </tr>
     </table>

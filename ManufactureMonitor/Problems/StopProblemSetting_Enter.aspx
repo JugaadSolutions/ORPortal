@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="StopProblemSetting_Enter.aspx.cs" Inherits="ManufactureMonitor.StopProblemSetting_Enter" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-   <script type="text/javascript">
+    <script type="text/javascript">
        function alertRedirect() {
            alert("Alert");
            if (alert) {
@@ -15,39 +15,39 @@
                 <asp:TextBox ID="TextBox1" runat="server" BorderColor="Gray" BorderStyle="Solid" BorderWidth="3px" Font-Bold="True" Width="529px" Height="30px" style="font-size: medium">                                    Stop Problem Setting</asp:TextBox>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:ImageButton ID="ImageButton1" runat="server" Height="25px" ImageAlign="Middle" ImageUrl="~/Images/return.jpg" OnClick="ImageButton1_Click" Width="25px" />
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-            <td style="height: 51px; text-align: center">&nbsp;</td>
+            <td style="height: 51px; text-align: center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;</td>
         </tr>
         <tr>
-            <td style="text-align: center; width: 245px;">&nbsp;</td>
+            <td style="text-align: center; width: 545px;">&nbsp;</td>
             <td style="background-color: #FFAF37; color: #FFFFFF; font-size: medium; text-align: center; " colspan="2">Specific Problem Definition</td>
             <td style="background-color: #FFFFCC; ">&nbsp;</td>
         </tr>
         <tr>
-            <td style="background-color: #FFFFCC;"></td>
-            <td style="background-color: #FFFFCC; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-            <td style="background-color: #FFFFCC; "></td>
+            <td style="background-color: #FFFFCC; width: 545px;"></td>
+            <td style="background-color: #FFFFCC; width: 177px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td style="background-color: #FFFFCC; width: 77px;"></td>
             <td style="background-color: #FFFFCC; "></td>
         </tr>
         <tr>
-            <td style="background-color: #FFFFCC;"></td>
-            <td style="background-color: #FFFFCC; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Problem No:</td>
-            <td style="background-color: #FFFFCC; ">
+            <td style="background-color: #FFFFCC; width: 545px;"></td>
+            <td style="background-color: #FFFFCC; width: 177px;">&nbsp;&nbsp;Problem No:</td>
+            <td style="background-color: #FFFFCC; width: 77px;">
                 <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
             </td>
             <td style="background-color: #FFFFCC; "></td>
         </tr>
         <tr>
-            <td style="background-color: #FFFFCC;">&nbsp;&nbsp;</td>
-            <td style="background-color: #FFFFCC; ">      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      Problem Description:</td>
-            <td style="background-color: #FFFFCC; ">
+            <td style="background-color: #FFFFCC; width: 545px;">&nbsp;&nbsp;</td>
+            <td style="background-color: #FFFFCC; width: 177px;">      Problem Description:</td>
+            <td style="background-color: #FFFFCC; width: 77px;">
                 <asp:TextBox ID="TextBox3" runat="server" Width="582px"></asp:TextBox>
                 &nbsp;</td>
-            <td style="background-color: #FFFFCC;"></td>
+            <td style="background-color: #FFFFCC;">&nbsp;</td>
         </tr>
         <tr>
-            <td style="background-color: #FFFFCC;"></td>
-            <td style="background-color: #FFFFCC; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Type:</td>
-            <td style="background-color: #FFFFCC; ">
+            <td style="background-color: #FFFFCC; width: 545px;"></td>
+            <td style="background-color: #FFFFCC; width: 177px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Type:</td>
+            <td style="background-color: #FFFFCC; width: 77px;">
                 <asp:RadioButtonList ID="RadioButtonList1" runat="server" Width="497px" RepeatDirection="Horizontal"  AutoPostBack="true"
                     OnSelectedIndexChanged="RadioButtonList1_SelectedIndexChanged">
                     <asp:ListItem Value="1">Non-Operation time 1</asp:ListItem>
@@ -58,10 +58,10 @@
             <td style="background-color: #FFFFCC; "></td>
         </tr>
         <tr>
-            <td style="background-color: #FFFFCC;"></td>
-            <td style="background-color: #FFFFCC; ">
+            <td style="background-color: #FFFFCC; width: 545px;"></td>
+            <td style="background-color: #FFFFCC; width: 177px;">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-            <td style="background-color: #FFFFCC; ">
+            <td style="background-color: #FFFFCC; width: 77px;">
                 <asp:RadioButtonList ID="Operation2Selection" runat="server" style="margin-left: 148px" Width="212px" 
                     SelectionMode="Single" >
                     <asp:ListItem Text ="Unknown(Speed Loss)" />
@@ -74,7 +74,7 @@
             <td style="background-color: #FFFFCC;">&nbsp;</td>
         </tr>
         <tr>
-            <td style="background-color: #FFFFCC;">&nbsp;</td>
+            <td style="background-color: #FFFFCC; width: 545px;">&nbsp;</td>
             <td style="background-color: #FFFFCC; text-align: center; " colspan="2">
                 <asp:Button ID="Button1" runat="server" BorderColor="Gray" BorderStyle="Outset" BorderWidth="3px" Font-Names="Calibri" Font-Size="Medium" Height="45px" Text="Save" Width="103px" OnClick="Button1_Click"  />
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

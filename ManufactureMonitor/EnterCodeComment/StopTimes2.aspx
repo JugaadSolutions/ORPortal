@@ -3,8 +3,8 @@
     <table style="width: 100%; border-collapse: collapse; text-align: center;">
         <tr>
             <td style="width: 77px; height: 40px;"></td>
-            <td style="text-align: center; height: 40px;">
-                <asp:TextBox ID="TextBox1" runat="server" BorderColor="Gray" BorderStyle="Solid" BorderWidth="3px" Font-Bold="True" Width="493px" style="font-size: medium; margin-left: 336px;" Height="30px">                Stop times - enter problem code and comments</asp:TextBox>
+            <td style="text-align: center; height: 40px; width: 830px;">
+                <asp:TextBox ID="TextBox1" runat="server" BorderColor="Gray" BorderStyle="Solid" BorderWidth="3px" Font-Bold="True" Width="493px" style="font-size: medium; margin-left: 194px;" Height="30px">                Stop times - enter problem code and comments</asp:TextBox>
             </td>
             <td style="text-align: left; height: 40px;">&nbsp; 
                 <asp:ImageButton ID="ImageButton1" runat="server" Height="25px" ImageAlign="Middle" ImageUrl="~/Images/return.jpg" Width="25px" OnClick="ImageButton1_Click" />
@@ -12,10 +12,10 @@
         </tr>
         <tr>
             <td style="width: 77px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;</td>
-            <td style="background-color: #FFFFCC; color: #FFFFFF; font-size: medium; text-align: left; ">
-                <table  style="border: thin solid #FFAF37; width: 96%; text-align:center; height: 287px; margin-left: 150px; color: #000000;" align="left">
+            <td style="background-color: #FFFFCC; color: #FFFFFF; font-size: medium; text-align: left; width: 830px;">
+                <table  style="border: thin solid #FFAF37; width: 96%; text-align:center; height: 287px; margin-left: 91px; color: #000000;" align="left">
                     <tr>
-                        <td colspan="3" style="background-color: #FFAF37; height: 32px; text-align: left;"><strong style="text-align: left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Selection Parameters</strong></td>
+                        <td colspan="3" style="background-color: #FFAF37; height: 32px; text-align: left;"><strong style="text-align: left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Selection Parameters</strong></td>
                     </tr>
                     <tr>
                          <td style="height: 23px; width: 105px"><b>Machines:</b></td>
@@ -63,7 +63,7 @@
         </tr>
         <tr>
             <td style="width: 77px">&nbsp;</td>
-            <td>&nbsp;</td>
+            <td style="width: 830px">&nbsp;</td>
             <td>&nbsp;</td>
         </tr>
     </table>

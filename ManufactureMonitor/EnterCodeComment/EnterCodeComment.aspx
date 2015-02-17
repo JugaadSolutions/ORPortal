@@ -1,17 +1,17 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="EnterCodeComment.aspx.cs" Inherits="ManufactureMonitor.EnterCodeComment" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <table style="border: thin solid #FFAF37; width: 49%; border-collapse: collapse; height: 168px; margin-left: 262px; " border="1">
+    <table style="border: thin solid #FFAF37; width: 49%;  height: 168px; margin-left: 350px; " >
         <tr>
             <td style="background-color: #FFAF37; text-align: center;" colspan="2"><strong>Enter Code and Comment</strong></td>
         </tr>
         <tr>
-            <td style="text-align: center; width: 219px;"><strong>&nbsp;&nbsp; Problem No:</strong></td>
+            <td style="text-align: center; width: 219px;">Problem No:</td>
             <td style="text-align: left; width: 686px;">
                 <asp:DropDownList ID="CodeSelection" runat="server" ></asp:DropDownList>
             </td>
         </tr>
         <tr>
-            <td style="text-align: center; width: 219px;"><strong>Comment:</strong></td>
+            <td style="text-align: center; width: 219px;">Comment:</td>
             <td style="text-align: left; width: 686px;">
                 <asp:TextBox ID="TextBox2" runat="server" Height="20px" Width="500px"></asp:TextBox>
             </td>

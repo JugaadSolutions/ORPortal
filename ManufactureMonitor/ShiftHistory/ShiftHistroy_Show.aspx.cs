@@ -188,12 +188,91 @@ namespace ManufactureMonitor
                             Total.Text = "Shift Total";
 
                             MainPanel.Controls.Add(Total);
+                            BoundField b1;
+
+                            b1 = new BoundField();
+                            b1.DataField = "Date";
+                            b1.HeaderText = "Date";
+                            g.Columns.Add(b1);
+
+                            if (!summary)
+                            {
+
+                                b1 = new BoundField();
+                                b1.DataField = "From";
+                                b1.HeaderText = "From";
+                                g1.Columns.Add(b1);
+
+                                b1 = new BoundField();
+                                b1.DataField = "To";
+                                b1.HeaderText = "To";
+                                g1.Columns.Add(b1);
+                            }
+
+
+                            b1 = new BoundField();
+                            b1.DataField = "Project";
+                            b1.HeaderText = "Project/ Model";
+                            g1.Columns.Add(b1);
+
+                            b1 = new BoundField();
+                            b1.DataField = "CycleTime";
+                            b1.HeaderText = "Plan Cycle Time[s]";
+                            g1.Columns.Add(b1);
+
+
+                            b1 = new BoundField();
+                            b1.DataField = "Actual";
+                            b1.HeaderText = "OK Pieces";
+                            g1.Columns.Add(b1);
+
+                            b1 = new BoundField();
+                            b1.DataField = "Scraps";
+                            b1.HeaderText = "Scraps";
+                            g1.Columns.Add(b1);
+
+                            b1 = new BoundField();
+                            b1.DataField = "LoadTime";
+                            b1.HeaderText = "Load Time/ Available Time [s]";
+                            g1.Columns.Add(b1);
+
+
+                            b1 = new BoundField();
+                            b1.DataField = "Nop1";
+                            b1.HeaderText = "Non-Operation Time 1 / Machine Related [s] ";
+                            g1.Columns.Add(b1);
+
+                            b1 = new BoundField();
+                            b1.DataField = "Nop2";
+                            b1.HeaderText = "Non-Operation Time 2 / Other Than Machine Related [s] ";
+                            g1.Columns.Add(b1);
+
+                            b1 = new BoundField();
+                            b1.DataField = "Undefined";
+                            b1.HeaderText = "Undefined [s] ";
+                            g1.Columns.Add(b1);
+
+                            b1 = new BoundField();
+                            b1.DataField = "Idle";
+                            b1.HeaderText = "Idle Time/ Exclude Hour [s] ";
+                            g1.Columns.Add(b1);
+
+                            b1 = new BoundField();
+                            b1.DataField = "KR";
+                            b1.HeaderText = "KADOURITSU/ Operation Ratio [%] ";
+                            g1.Columns.Add(b1);
+
+                            b1 = new BoundField();
+                            b1.DataField = "BKR";
+                            b1.HeaderText = "BEKADOURITSU/ Operational Availability [%] ";
+                            g1.Columns.Add(b1);
                             if (!summary)
                             {
                                 tempList = new List<ShiftHistory>();
                                 ShiftHistory temp = new ShiftHistory();
                                 foreach (ShiftHistory sh in Sh)
                                 {
+                                    
                                     temp.Actual += sh.Actual;
                                     temp.Scraps += sh.Scraps;
                                     temp.LoadTime += sh.LoadTime;
@@ -215,13 +294,20 @@ namespace ManufactureMonitor
                                 g1.HorizontalAlign = HorizontalAlign.Center;
                                 g1.RowDataBound += g1_RowDataBound;
                                 g1.ShowHeader = false;
+                                
+
+                                g1.HorizontalAlign = HorizontalAlign.Center;
+                                g1.Style.Add(HtmlTextWriterStyle.Width, "100%");
+                                
+                                g1.AutoGenerateColumns = false;
+
+                                g1.RowDataBound += g1_RowDataBound;
+                                g1.ShowHeader = false;
                                 g1.DataSource = tempList;
+
                                 g1.DataBind();
+
                                 MainPanel.Controls.Add(g1);
-
-                                
-                                
-
 
                             }
                             else
@@ -235,10 +321,14 @@ namespace ManufactureMonitor
 
                                 g1.Style.Add(HtmlTextWriterStyle.Width, "100%");
                                 g1.HorizontalAlign = HorizontalAlign.Center;
+                                g1.AutoGenerateColumns = false;
+
                                 g1.RowDataBound += g1_RowDataBound;
                                 g1.ShowHeader = false;
                                 g1.DataSource = sList;
+
                                 g1.DataBind();
+
                                 MainPanel.Controls.Add(g1);
 
                                
@@ -276,6 +366,7 @@ namespace ManufactureMonitor
                 {
                     e.Row.Cells[11].Width = 100;
                     e.Row.Cells[12].Width = 100;
+                    e.Row.Cells[13].Width = 100;
                 }
 
 
@@ -301,10 +392,13 @@ namespace ManufactureMonitor
                 e.Row.Cells[8].Width = 100;
                 e.Row.Cells[9].Width = 100;
                 e.Row.Cells[10].Width = 100;
+
                 if (!summary)
                 {
                     e.Row.Cells[11].Width = 100;
                     e.Row.Cells[12].Width = 100;
+                    
+                    
                 }
                
 
