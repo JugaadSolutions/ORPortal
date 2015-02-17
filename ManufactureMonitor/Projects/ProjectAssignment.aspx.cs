@@ -31,6 +31,8 @@ namespace ManufactureMonitor
         {
             
             DataAccess da = new DataAccess();
+            if ((int)dt.Rows[ProjectSelectionListBox.SelectedIndex]["Id"] == -1)
+                return;
             int newProject=(int)dt.Rows[ProjectSelectionListBox.SelectedIndex]["Id"];
             curProject = (int)dt1.Rows[0][1];
             bool b = da.SetProject(Convert.ToInt32(Request.QueryString["MachineId"]),
@@ -39,7 +41,7 @@ namespace ManufactureMonitor
             {
                 updateProjectStatus();
 
-                Response.Write("<script>alert('Project Updated Successfully..');if(alert){ window.location='../Projects/ProjectAssignment1.aspx?MachineId='"+Request.QueryString["MachineId"]+";} </script>");
+                Response.Write("<script>alert('Project Updated Successfully..');if(alert){ window.location='../Projects/ProjectAssignment1.aspx?MachineId=" + Request.QueryString["MachineId"] + "';}</script>");
             }
             else
             {
@@ -62,10 +64,12 @@ namespace ManufactureMonitor
             ProjectSelectionListBox.DataSource = dt.DefaultView;
             ProjectSelectionListBox.DataValueField = "Projects";
             ProjectSelectionListBox.DataBind();
+            
+           
             dt1 = da.CurrentProject(Convert.ToInt32(Request.QueryString["MachineId"]));
             ProjectAssignedLabel.Text = (String)dt1.Rows[0][0];
             curProject = (int)dt1.Rows[0][1];
-            return;
+           
         }
        
     }

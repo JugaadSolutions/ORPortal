@@ -33,7 +33,7 @@ namespace ManufactureMonitor
                 int ShiftId = Convert.ToInt32(Request.QueryString["ShiftId"]);
                 String ShiftName = Request.QueryString["ShiftName"];
                 summary = Convert.ToBoolean(Request.QueryString["Summary"]);
-                
+                MainPanel.Width = new Unit("100%");
 
 
                 while (fromDate < toDate)
@@ -193,7 +193,7 @@ namespace ManufactureMonitor
                             b1 = new BoundField();
                             b1.DataField = "Date";
                             b1.HeaderText = "Date";
-                            g.Columns.Add(b1);
+                            g1.Columns.Add(b1);
 
                             if (!summary)
                             {
@@ -292,12 +292,6 @@ namespace ManufactureMonitor
 
                                 g1.Style.Add(HtmlTextWriterStyle.Width, "100%");
                                 g1.HorizontalAlign = HorizontalAlign.Center;
-                                g1.RowDataBound += g1_RowDataBound;
-                                g1.ShowHeader = false;
-                                
-
-                                g1.HorizontalAlign = HorizontalAlign.Center;
-                                g1.Style.Add(HtmlTextWriterStyle.Width, "100%");
                                 
                                 g1.AutoGenerateColumns = false;
 
@@ -397,7 +391,7 @@ namespace ManufactureMonitor
                 {
                     e.Row.Cells[11].Width = 100;
                     e.Row.Cells[12].Width = 100;
-                    
+                    e.Row.Cells[13].Width = 100;
                     
                 }
                
