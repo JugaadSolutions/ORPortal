@@ -31,21 +31,6 @@ namespace ManufactureMonitor
             Response.Redirect("~/Menu.aspx?MachineGroup=" + Request.QueryString["MachineGroupId"]);
         }
 
-        //protected void ImageButton2_Click(object sender, ImageClickEventArgs e)
-        //{
-        //    Response.ClearContent();
-        //    Response.Buffer = true;
-        //    Response.AddHeader("content-disposition", string.Format("attachment; filename={0}", "Inputs.xls"));
-        //    Response.ContentType = "application/ms-excel";
-        //    StringWriter sw = new StringWriter();
-        //    HtmlTextWriter htw = new HtmlTextWriter(sw);
-        //    GridView1.GridLines = GridLines.Both;
-        //    GridView1.HeaderStyle.Font.Bold = true; 
-        //    GridView1.RenderControl(htw);
-        //    Response.Write(sw.ToString());
-        //    Response.End();
-        //}
-
         public override void VerifyRenderingInServerForm(Control control)
         {
             /* Confirms that an HtmlForm control is rendered for the specified ASP.NET

@@ -167,7 +167,7 @@ namespace ManufactureMonitor
             }
             return true;
         }
-        void GenerateAccumulationReport(List<ShiftHistory> tempList)
+        void GenerateAccumulationReport(List<ShiftHistory>  tempList)
         {
             Response.Clear();
             Response.Buffer = true;
@@ -178,7 +178,7 @@ namespace ManufactureMonitor
             StringBuilder sBuilder = new System.Text.StringBuilder();
 
             sBuilder.Append("Date,OKPieces,Scraps,Load Time/ Available Time [s],Non-Operation Time 1 / Machine Related [s] ,Non-Operation Time 2 / Other Than Machine Related [s],Undefined [s],Idle Time/ Exclude Hour [s],KADOURITSU/ Operation Ratio [%] ,BEKADOURITSU/ Operational Availability [%] ");
-
+            
             sBuilder.Append("\r\n");
             for (int i = 0; i < tempList.Count; i++)
             {

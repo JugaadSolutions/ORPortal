@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -11,8 +12,9 @@ namespace ManufactureMonitor
 {
     public partial class InputFromMachines1 : System.Web.UI.Page
     {
-        static DataTable dt;
-        static DataTable dt1;
+        static DataTable dt,dt1,dt2;
+        static List<String> inputs;
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             ((Label)Master.FindControl("MasterPageLabel")).Text = "OR  " + Session["Machinegroupname"];
@@ -23,13 +25,14 @@ namespace ManufactureMonitor
                 MachineSelectionListBox.DataSource = dt.DefaultView;
                 MachineSelectionListBox.DataValueField = "Machines";
                 MachineSelectionListBox.DataBind();
-                
+
 
             }
         }
 
         protected void Button1_Click(object sender, EventArgs e)
         {
+
             if (validateSelection())
             {
 
@@ -47,7 +50,7 @@ namespace ManufactureMonitor
 
         protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
         {
-           
+
             Response.Redirect("../Menu.aspx");
         }
 
@@ -64,27 +67,57 @@ namespace ManufactureMonitor
 
         protected void ImageButton2_Click(object sender, ImageClickEventArgs e)
         {
-            //Response.ClearContent();
-            //Response.Buffer = true;
-            //Response.AddHeader("content-disposition", string.Format("attachment; filename={0}", "Inputs.xls"));
-            //Response.ContentType = "application/ms-excel";
-            //StringWriter sw = new StringWriter();
-            //HtmlTextWriter htw = new HtmlTextWriter(sw);
-            //GridView1.GridLines = GridLines.Both;
-            //GridView1.HeaderStyle.Font.Bold = true;
-            //GridView1.RenderControl(htw);
-            //Response.Write(sw.ToString());
-            //Response.End();
+            int machineId = (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"];
+            int ShiftId = (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"];
+            if (validateSelection())
+            {
+                DataAccess da = new DataAccess();
+                dt2 = da.GetMachineInputs((int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"],
+                          (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"], date.SelectedDate.ToString("dd-MMM-yyyy"));
+            }
+            
+            GenerateInputReport(dt2);
         }
         bool validateSelection()
         {
-
+            
+            
             if (date.SelectedDate == DateTime.MinValue)
             {
                 Response.Write("<script>alert('Please select From and To dates...');</script>");
                 return false;
             }
             return true;
+        }
+        void GenerateInputReport(DataTable dt2)
+        {
+            Response.Clear();
+            Response.Buffer = true;
+            Response.AddHeader("content-disposition", "attachment;filename=Inputs_from_Machines_"
+                + Session["MachineName"] + ".csv");
+            Response.Charset = "";
+            Response.ContentType = "application/text";
+            StringBuilder sBuilder = new System.Text.StringBuilder();
+
+            sBuilder.Append("TimeStamp,Time Between Pulses[s] ");
+            string[,] styles = { { "custom", "m/d/yyyy h:mm:ss;" } };
+            sBuilder.Append("\r\n");
+            
+            for (int i = 0; i < dt2.Rows.Count; i++)
+            {
+                for (int j = 0; j < dt2.Columns.Count; j++)
+                {
+
+                    sBuilder.Append(dt2.Rows[i][j] + ",");
+                    
+                }
+                
+                sBuilder.Append("\r\n");
+            }
+            
+            Response.Output.Write(sBuilder.ToString());
+            Response.Flush();
+            Response.End();
         }
     }
 }
