@@ -2389,7 +2389,7 @@ namespace ManufactureMonitor.DALayer
             SqlCommand cmd;
 
             cn = new SqlConnection(connection);
-            String query = @" Update Scraps SET Scraps={0} where SlNo={1}";
+            String query = @" Update Scraps SET Scraps={0} where ProjectTracker_id={1}";
             query = String.Format(query, p2, p1);
             cn.Open();
             cmd = new SqlCommand(query, cn);
