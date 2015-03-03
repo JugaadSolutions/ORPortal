@@ -52,7 +52,7 @@ namespace ManufactureMonitor.Scraps
             if (int.TryParse(sc.Text, out scrapvalue) == false) return;
 
 
-            da.updateScraps((int)dt.Rows[GridView1.EditIndex]["SlNo"], scrapvalue);
+            da.updateScraps((int)dt.Rows[GridView1.EditIndex]["ProjectTracker_Id"], scrapvalue);
             GridView1.EditIndex = -1;
             showGrid();
         }
