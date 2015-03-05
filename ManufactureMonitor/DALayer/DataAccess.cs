@@ -655,6 +655,40 @@ namespace ManufactureMonitor.DALayer
 
             return sessions;
         }
+        public bool GetSessionName(int machine, int shift, String name)
+        {
+            SqlConnection cn;
+            SqlCommand cmd;
+            try
+            {
+                cn = new SqlConnection(connection);
+                String query = @"select Name from Sessions where Machine_Id={0} and Shift_Id={1} and Name='{2}'";
+                query = String.Format(query,machine,shift,name);
+                
+                cn.Open();
+                cmd = new SqlCommand(query, cn);
+
+                SqlDataReader dr = cmd.ExecuteReader();
+                DataTable dt = new DataTable();
+                dt.Load(dr);
+                dr.Close();
+                cn.Close();
+                if (dt.Rows.Count > 0)
+                    return false;
+
+                else
+                {
+                    return true;
+                }
+                
+                
+            }
+            catch (Exception)
+            {
+                return false;
+
+            }
+        }
 
         public SessionCollection getBreaks(int shift, int machine)
         {
@@ -1019,7 +1053,8 @@ namespace ManufactureMonitor.DALayer
                             from 
                             Sessions 
                             where 
-                            Shift_Id={0} AND Machine_Id={1}";
+                            Shift_Id={0} AND Machine_Id={1}
+                            order by [End]";
             query = String.Format(query, Shift_Id, Machine_Id);
 
             cn.Open();
@@ -2876,6 +2911,48 @@ namespace ManufactureMonitor.DALayer
             }
             int OK = (int)dt.Rows[0][0];
             return OK;
+        }
+
+        public void DeleteTimepoints(int p1, int p2, int p3)
+        {
+            SqlConnection cn;
+            SqlCommand cmd;
+
+            cn = new SqlConnection(connection);
+            String query = @" Delete From Sessions 
+                            where Machine_Id={0} and Shift_Id={1} and Id={2} ";
+            query = String.Format(query, p1, p2, p3);
+            cn.Open();
+            cmd = new SqlCommand(query, cn);
+
+            cmd.ExecuteNonQuery();
+
+            cn.Close();
+        }
+
+        public bool AddSession(int p1, int p2, DateTime start, DateTime end,String name)
+        {
+            SqlConnection cn;
+            SqlCommand cmd;
+            try
+            {
+                cn = new SqlConnection(connection);
+                String query = @" Insert Into Sessions(Name,Start,[End],Shift_Id,Machine_Id)
+                                    Values('{4}','{2}','{3}',{1},{0})";
+                query = String.Format(query,p1,p2,start,end,name);
+                cn.Open();
+                cmd = new SqlCommand(query, cn);
+
+                cmd.ExecuteNonQuery();
+
+                cn.Close();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+
+            }
         }
     }
 

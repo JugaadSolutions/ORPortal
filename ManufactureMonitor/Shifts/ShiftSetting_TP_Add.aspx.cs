@@ -42,6 +42,8 @@ namespace ManufactureMonitor
 
         protected void Button1_Click(object sender, EventArgs e)
         {
+            if (SessionNameDropDown.SelectedIndex == 0 || TextBox2.Text==" " || TextBox3.Text==" " || TextBox4.Text==" " || TextBox5.Text==" ")
+                return;
               DataAccess da = new DataAccess();
 
             List<String> Start = new List<String>();
@@ -64,17 +66,33 @@ namespace ManufactureMonitor
                 if (end < start)
                     end = end.AddDays(1);
 
-                int Shift_Id;
-                if (IsEdit == false)     // if adding a new shift
+                int Shift_Id=0;
+                if (IsEdit == false)     // if adding a new session
                 {
 
-                    //if (Shift_Id == -1)
-                    //{
-                    //    Response.Write("<script>alert('Error while Adding Shift!!');</script>");
-                    //}
-                    //da.AddSession(Convert.ToInt32(Request.QueryString["MachineId"]),Convert.ToInt32( Request.QueryString["Shift_Id"])), 
-                    //    start,end);
-
+                    if (Shift_Id == -1)
+                    {
+                        Response.Write("<script>alert('Error while Adding Shift!!');</script>");
+                    }
+                    bool b1 = da.GetSessionName(Convert.ToInt32(Request.QueryString["MachineId"]),Convert.ToInt32( Request.QueryString["Shift_Id"]),SessionNameDropDown.SelectedValue);
+                    if(b1==true)
+                    {
+                        bool b2=da.AddSession(Convert.ToInt32(Request.QueryString["MachineId"]),Convert.ToInt32( Request.QueryString["Shift_Id"]),
+                            start, end, SessionNameDropDown.SelectedValue);
+                        if (b2 == true)
+                        {
+                            Response.Write("<script>alert('Action Completed Successfully..');if(alert){ window.location='../Menu.aspx';}</script>");
+                        }
+                        else
+                        {
+                            Response.Write("<script>alert('Action Failed..');if(alert){ window.location='../Menu.aspx';}</script>");
+                        }
+                    }
+                    else
+                    {
+                        
+                        Response.Write("<script>alert('Session already exists. Please use Edit option to make changes');if(alert){ window.location='../Menu.aspx';}</script>");
+                    }
                 }
 
                 else
@@ -86,12 +104,12 @@ namespace ManufactureMonitor
                     start.ToString("yyyy-MM-dd HH:mm:ss")
                         , end.ToString("yyyy-MM-dd HH:mm:ss"));
 
-
+                    Response.Write("<script>alert('Action Completed Successfully..');if(alert){ window.location='../Menu.aspx';}</script>");
                 }
 
             }
                
-                Response.Write("<script>alert('Action Completed Successfully..');if(alert){ window.location='../Menu.aspx';}</script>");
+                
 
 
         }

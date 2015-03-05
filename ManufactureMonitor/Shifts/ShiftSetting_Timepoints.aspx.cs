@@ -33,6 +33,8 @@ namespace ManufactureMonitor
 
         protected void Button4_Click(object sender, EventArgs e)
         {
+            if (SessionSelectionListBox.SelectedIndex == -1)
+                return;
             Response.Redirect("~/Shifts/ShiftSetting_TP_Add.aspx?MachineId=" + Request.QueryString["MachineId"] 
                 + "&ShiftId=" + Request.QueryString["ShiftId"] +"&Session=" +dt.Rows[SessionSelectionListBox.SelectedIndex]["Id"] );
         }
@@ -44,12 +46,18 @@ namespace ManufactureMonitor
 
         protected void Button3_Click(object sender, EventArgs e)
         {
+            if (SessionSelectionListBox.SelectedIndex == -1)
+                return;
+            DataAccess da = new DataAccess();
+            da.DeleteTimepoints(Convert.ToInt32(Request.QueryString["MachineId"]), Convert.ToInt32(Request.QueryString["ShiftId"]),(int) dt.Rows[SessionSelectionListBox.SelectedIndex]["Id"]);
             Response.Write("<script>alert('TimePoints Deleted Successfully..');if(alert){ window.location='../Menu.aspx';}</script>");
         }
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Shifts/ShiftSetting_TP_Add.aspx");
+            
+            Response.Redirect("~/Shifts/ShiftSetting_TP_Add.aspx?MachineId=" + Request.QueryString["MachineId"] 
+                + "&Shift_Id=" + Request.QueryString["ShiftId"]);
         }
     }
 }

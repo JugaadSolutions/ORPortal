@@ -30,8 +30,21 @@
                         </td>
                     </tr>
                     <tr>
-                        <td style="text-align: center" colspan="2">
-                            &nbsp;</td>
+                        <td style="text-align: center">
+                            <strong>Name:</strong></td>
+                        <td style="text-align: center">
+                            <asp:DropDownList ID="SessionNameDropDown" runat="server">
+                                <asp:ListItem Value="-1">SELECT</asp:ListItem>
+                                <asp:ListItem>FIRST</asp:ListItem>
+                                <asp:ListItem>SECOND</asp:ListItem>
+                                <asp:ListItem>THIRD</asp:ListItem>
+                                <asp:ListItem>FOURTH</asp:ListItem>
+                                <asp:ListItem>FIFTH</asp:ListItem>
+                                <asp:ListItem>SIXTH</asp:ListItem>
+                                <asp:ListItem>SEVENTH</asp:ListItem>
+                                <asp:ListItem>EIGHTH</asp:ListItem>
+                            </asp:DropDownList>
+                        </td>
                     </tr>
                     <tr>
                         <td style="text-align: center; width: 137px;">
