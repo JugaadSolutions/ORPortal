@@ -10,12 +10,12 @@
     $(function () {
         $("#<%=datepicker1.ClientID%>").datepicker({
             
-            dateFormat: "dd-mm-yy",
+            dateFormat: "dd-M-yy",
             
         });
         $("#<%=datepicker2.ClientID%>").datepicker({
             
-            dateFormat: "dd-mm-yy",
+            dateFormat: "dd-M-yy",
             
         });
     });

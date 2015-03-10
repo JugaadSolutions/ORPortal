@@ -47,8 +47,8 @@ namespace ManufactureMonitor
 
             if (validateSelection1())
             {
-                from = Convert.ToDateTime(From.ToString());
-                to = Convert.ToDateTime(To.ToString());
+                from = Convert.ToDateTime(From);
+                to = Convert.ToDateTime(To);
                 if (validateSelection2())
                 {
                     int ShiftId = -1;
@@ -91,8 +91,8 @@ namespace ManufactureMonitor
                 DataAccess da = new DataAccess();
                 String From = datepicker1.Text;
                 String To = datepicker2.Text;
-                DateTime from = Convert.ToDateTime(From.ToString());
-                DateTime to = Convert.ToDateTime(To.ToString());
+                DateTime from = Convert.ToDateTime(From);
+                DateTime to = Convert.ToDateTime(To);
                 if (validateSelection2())
                 {
                     to = to.AddDays(1);
