@@ -10,20 +10,18 @@
         </tr>
         <tr>
             <td colspan="7" style="background-color: #FFFFCC; height: 30px; text-align: left; color: #000000;">
-                <table  style="border: thin solid #FFAF37; width: 80%; text-align:center; height: 224px;" align="center">
+                <table  style="border: thin solid #FFAF37; width: 52%; text-align:center; height: 224px;" align="center">
                     <tr>
-                        <td colspan="4" style="background-color: #FFAF37; height: 32px; text-align: left;"><strong style="text-align: left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Selection Parameters</strong></td>
+                        <td colspan="3" style="background-color: #FFAF37; height: 32px; text-align: left;"><strong style="text-align: left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Selection Parameters</strong></td>
                     </tr>
                     <tr>
                          <td style="height: 23px; width: 296px; text-align: left;"><b>&nbsp;&nbsp; Machines:</b></td>
                          <td style="height: 23px; text-align: left; width: 321px;"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Date:</b></td>
-                         <td style="height: 23px; width: 289px; text-align: left;"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Shifts:</b></td>
-                         <td style="height: 23px; width: 322px;"></td>
+                         <td style="height: 23px; text-align: left;"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Shifts:</b></td>
                     </tr>
                     <tr>
                         <td style="width: 296px; height: 42px">
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <asp:ListBox ID="MachineSelectionListBox" runat="server" Height="150px" OnSelectedIndexChanged="MachineSelectionListBox_SelectedIndexChanged"
+                            &nbsp;<asp:ListBox ID="MachineSelectionListBox" runat="server" Height="150px" OnSelectedIndexChanged="MachineSelectionListBox_SelectedIndexChanged"
                                  Width="200px" AutoPostBack="true"></asp:ListBox>
                         </td>
                         <td style="height: 42px; width: 321px;">
@@ -39,25 +37,20 @@
                                 
                             </asp:Calendar>
                         </td>
-                        <td style="height: 42px; width: 289px;">
+                        <td style="height: 42px; ">
                            
                             <asp:ListBox ID="ShiftSelectionListBox" runat="server" Height="150px" Width="150px" style="margin-left: 0px"></asp:ListBox>
                         </td>
-                        <td style="height: 42px; width: 322px;">
-                            <asp:CheckBoxList ID="CheckBoxList1" runat="server" Height="16px" Width="166px">
-                                <asp:ListItem>Project Summary</asp:ListItem>
-                            </asp:CheckBoxList>
-                        </td>
                     </tr>
                     <tr>
-                        <td colspan="4" style="height: 76px">
+                        <td colspan="3" style="height: 76px">
                             <asp:Button ID="Button1" runat="server" BorderColor="Gray" BorderStyle="Outset" BorderWidth="2px" Text="Show" Height="45px" Width="80px" OnClick="Button1_Click" />
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <asp:ImageButton ID="ImageButton2" runat="server" Height="40px" ImageAlign="AbsBottom" ImageUrl="~/Images/excelicon.jpg" OnClick="ImageButton2_Click" Width="40px" />
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="4"></td>
+                        <td colspan="3"></td>
                     </tr>
                 </table>
             </td>

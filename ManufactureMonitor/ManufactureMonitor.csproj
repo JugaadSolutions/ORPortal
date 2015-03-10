@@ -144,6 +144,10 @@
     <Content Include="Images\RED_SMILEY.png" />
     <Content Include="Images\STOP.png" />
     <Content Include="Images\whiteTriangle .png" />
+    <Content Include="Scripts\Gruntfile.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-ui-1.10.4.custom.js" />
+    <Content Include="Scripts\jquery-ui-1.10.4.custom.min.js" />
     <Content Include="SummaryReport\StackedLossGraph.aspx" />
     <Content Include="Projects\ProjectAssignment1.aspx" />
     <Content Include="Shifts\DisplayShiftDefinition1.aspx" />

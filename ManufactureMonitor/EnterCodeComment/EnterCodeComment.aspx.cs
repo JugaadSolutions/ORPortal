@@ -42,7 +42,7 @@ namespace ManufactureMonitor
                 (int)dt.Rows[CodeSelection.SelectedIndex]["Code"],Request.QueryString["Type"],
                 TextBox2.Text, Convert.ToInt32(Request.QueryString["Machine_Id"]));
 
-            Response.Write("<script>alert('Action Completed Successfully..');if(alert){ window.location='../EnterCodeComment/StopTimes2.aspx';}</script>");
+            Response.Write("<script>alert('Action Completed Successfully..');if(alert){ window.location='../EnterCodeComment/StopTimes2_show.aspx';}</script>");
         }
     }
 }

@@ -30,6 +30,24 @@ a {
     a:hover {
         background-color: #c7d1d6;
     }
+    /* to avoid hightlight of current date*/
+
+
+    .ui-datepicker-today a.ui-state-highlight {
+        border-color: #c8c8c8;
+        background: #e6e6e6 url(..\Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
+        color: #0e7bc3;    
+    }
+    .ui-datepicker-today a.ui-state-highlight:hover {
+        border-color: #faa632;
+        background: #fff  50% 50% repeat-x;
+        color: #e0692d;    
+    }
+   
+
+
+   /*----------------------------------------------------*/
+
 
 header, footer, hgroup,
 nav, section {
@@ -736,5 +754,5 @@ tr.pager td {
     margin-left: 0px;
     margin-top: 0px;;;;;;;
     margin-left: 575px;;;;;;;;;
-    margin-left: 0px;;
+    margin-left: 0px;;;;
         

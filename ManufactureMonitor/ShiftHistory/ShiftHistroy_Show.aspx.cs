@@ -27,8 +27,8 @@ namespace ManufactureMonitor
                 DataAccess da = new DataAccess();
                 int machineId = Convert.ToInt32(Request.QueryString["MachineId"]);
 
-                DateTime fromDate = DateTime.Parse(Request.QueryString["datefrom"]);
-                DateTime toDate = DateTime.Parse(Request.QueryString["dateto"]);
+                DateTime fromDate = DateTime.Parse(Request.QueryString["from"]);
+                DateTime toDate = DateTime.Parse(Request.QueryString["to"]);
                 toDate = toDate.AddDays(1);
                 int ShiftId = Convert.ToInt32(Request.QueryString["ShiftId"]);
                 String ShiftName = Request.QueryString["ShiftName"];
@@ -52,7 +52,7 @@ namespace ManufactureMonitor
                         DateTime from = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + dt.Rows[i]["Start"]);
                         DateTime to = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + dt.Rows[i]["End"]);
 
-                        if (to < from)                      // this statement never be true
+                        if (to < from)                      
                             to = to.AddDays(1);
 
                         Duration.Text = fromDate.ToString("dd-MMM-yy") + ":" + (dt.Rows[i]["shifts"]).ToString();
@@ -129,12 +129,12 @@ namespace ManufactureMonitor
 
                         b = new BoundField();
                         b.DataField = "Nop1";
-                        b.HeaderText = "Non-Operation Time 1 / Machine Related [s] ";
+                        b.HeaderText = "Non-Operation Time 1 / Other Than Machine Related [s]";
                         g.Columns.Add(b);
 
                         b = new BoundField();
                         b.DataField = "Nop2";
-                        b.HeaderText = "Non-Operation Time 2 / Other Than Machine Related [s] ";
+                        b.HeaderText = "Non-Operation Time 2 / Machine Related [s]  ";
                         g.Columns.Add(b);
 
                         b = new BoundField();
@@ -239,12 +239,12 @@ namespace ManufactureMonitor
 
                             b1 = new BoundField();
                             b1.DataField = "Nop1";
-                            b1.HeaderText = "Non-Operation Time 1 / Machine Related [s] ";
+                            b1.HeaderText = "Non-Operation Time 1 /  Other Than Machine Related [s] ";
                             g1.Columns.Add(b1);
 
                             b1 = new BoundField();
                             b1.DataField = "Nop2";
-                            b1.HeaderText = "Non-Operation Time 2 / Other Than Machine Related [s] ";
+                            b1.HeaderText = "Non-Operation Time 2 / Machine Related [s]";
                             g1.Columns.Add(b1);
 
                             b1 = new BoundField();

@@ -12,19 +12,27 @@ namespace ManufactureMonitor
 {
     public partial class ProblemAccumulation_Show : System.Web.UI.Page
     {
-        static DataTable dt,dt1;
+        static DataTable dt, dt1;
         Dictionary<int, List<TimeSequence>> ProblemAccumulation;
         protected void Page_Load(object sender, EventArgs e)
         {
             ((Label)Master.FindControl("MasterPageLabel")).Text = "OR  " + Session["MachineName"];
             DataAccess da = new DataAccess();
             int machine = Convert.ToInt32(Request.QueryString["MachineId"]);
-
+            
             DateTime fromDate = DateTime.Parse(Request.QueryString["datefrom"]);
             DateTime toDate = DateTime.Parse(Request.QueryString["dateto"]);
             toDate = toDate.AddDays(1);
             int ShiftId = Convert.ToInt32(Request.QueryString["ShiftId"]);
             ProblemAccumulation = new Dictionary<int,List<TimeSequence>>();
+            TextBox Duration = new TextBox();
+            Duration.TextMode = TextBoxMode.SingleLine;
+            Duration.Style.Add(HtmlTextWriterStyle.BackgroundColor, "#FF9966");
+            Duration.Style.Add("text-align", "center");
+
+            Duration.Style.Add(HtmlTextWriterStyle.FontStyle, "Bold");
+            Duration.Width = new Unit("100%");
+            Duration.Height = new Unit("30px");
             while (fromDate < toDate)
             {
                 dt = da.GetShiftTimings(machine, ShiftId);
@@ -32,7 +40,9 @@ namespace ManufactureMonitor
                 {
                     DateTime from = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + dt.Rows[i]["Start"]);
                     DateTime to = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + dt.Rows[i]["End"]);
-
+                    String text = "StopTime Problem Accumulation " + fromDate.ToString("dd-MM-yyyy")+ " -Shift " + dt.Rows[i]["Start"].ToString() + " - " + dt.Rows[i]["End"].ToString();
+                    
+                    Duration.Text = text;
                     List<TimeSequence> ts = 
                         da.GetStopDetails(machine, ShiftId, from.ToString("yyyy-MM-dd HH:mm:ss"), to.ToString("yyyy-MM-dd HH:mm:ss"),true);
 
@@ -48,7 +58,6 @@ namespace ManufactureMonitor
                             ProblemAccumulation[t.ProblemCode].Add(t);
                         }
                     }
-
                 }
                 fromDate = fromDate.AddDays(1);
             }
@@ -119,7 +128,7 @@ namespace ManufactureMonitor
             g.HorizontalAlign = HorizontalAlign.Center;
             g.DataSource = PARList;
             g.DataBind();
-            
+            Panel1.Controls.Add(Duration);
             Panel1.Controls.Add(g);
         }
 
@@ -130,5 +139,5 @@ namespace ManufactureMonitor
         }
     }
 
-    
+
 }

@@ -39,6 +39,10 @@ namespace ManufactureMonitor
                 if (date.SelectedDate == DateTime.MinValue)
                     return;
                 Session["MachineName"] = dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"];
+                Session["Machine_Id"] = (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"];
+                Session["Shift_Id"] = (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"];
+                Session["ShiftName"] = (string)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Name"];
+                Session["date"] = date.SelectedDate.ToString("dd-MMM-yyyy");
                 Response.Redirect("~/EnterCodeComment/StopTimes2_show.aspx?MachineId=" + (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
                      + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]
 

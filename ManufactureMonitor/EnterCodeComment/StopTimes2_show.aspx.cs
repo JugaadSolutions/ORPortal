@@ -20,15 +20,15 @@ namespace ManufactureMonitor
             if (!Page.IsPostBack)
             {
                 DataAccess da = new DataAccess();
-                int machineId = Convert.ToInt32(Request.QueryString["MachineId"]);
+                int machineId = Convert.ToInt32(Session["Machine_Id"]);
 
 
 
 
-                DateTime fromDate = DateTime.Parse(Request.QueryString["date"]);
+                DateTime fromDate = DateTime.Parse(Session["date"].ToString());
              
                 
-                int ShiftId = Convert.ToInt32(Request.QueryString["ShiftId"]);
+                int ShiftId = Convert.ToInt32(Session["Shift_Id"]);
 
 
                 dt = da.GetShiftTimings(machineId, ShiftId);
