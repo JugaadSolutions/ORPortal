@@ -1563,7 +1563,7 @@ namespace ManufactureMonitor.DALayer
             cn = new SqlConnection(connection);
 
             query = @"  select Stops.SlNo, Stops.Code, CONVERT(TIME(0), [Start],20)  as [From], CONVERT(TIME(0),[End],20) as [To],
-                        datediff(second,0,[End]-[Start]) as 'Duration[s]',
+                        datediff(second,CONVERT(TIME(0), [Start],20),CONVERT(TIME(0),[End],20)) as 'Duration[s]',
                         (Case when CommonProblems.[Type]=3 then 'OFF' else 'STOP' end) as 'StopType',
                         Convert(nvarchar,CommonProblems.Code,0)+':'+[Description] as Problem,
                         Comment,
@@ -1571,36 +1571,36 @@ namespace ManufactureMonitor.DALayer
                         Stops.Machine_Id       
                         from Stops                           
                         inner join CommonProblems on CommonProblems.Code = Stops.Code
-                        where [Start] >= '{1}' and [End] < '{2}' 
+                        where [Start] >= '{1}' and [End] < '{2}' and Stops.Machine_Id = {0}
                         union
                         select Stops.SlNo, Stops.Code, CONVERT(TIME(0), [Start],20)  as [From], CONVERT(TIME(0),[End],20) as [To],
-                        datediff(second,0,[End]-[Start]) as 'Duration[s]', 
+                        datediff(second,CONVERT(TIME(0), [Start],20),CONVERT(TIME(0),[End],20)) as 'Duration[s]', 
                         (Case when SpecificProblems.[Type]=3 then 'OFF' else 'STOP' end) as 'StopType', 
                         Convert(nvarchar,SpecificProblems.Code,0)+':'+[Description] as Problem,
                         Comment ,
                         'Specific' as Source,
                         Stops.Machine_Id    
                         from Stops                               
-                        inner join SpecificProblems on SpecificProblems.Code = Stops.Code
+                        inner join SpecificProblems on SpecificProblems.Code = Stops.Code and Stops.Machine_Id = SpecificProblems.Machine_Id 
 
-                            where [Start] >= '{1}' and [End] < '{2}' and SpecificProblems.Machine_Id={0} 
+                            where [Start] >= '{1}' and [End] < '{2}' and Stops.Machine_Id={0} 
 
                             union
  
                             select OFFs.SlNo, OFFs.Code, CONVERT(TIME(0), [Start],20)  as [From], CONVERT(TIME(0),[End],20) as [To],
-                        datediff(second,0,[End]-[Start]) as 'Duration[s]', 
+                        datediff(second,CONVERT(TIME(0), [Start],20),CONVERT(TIME(0),[End],20)) as 'Duration[s]', 
                         (Case when SpecificProblems.[Type]=3 then 'OFF' else 'STOP' end) as 'StopType', 
                         Convert(nvarchar,SpecificProblems.Code,0)+':'+[Description] as Problem,
                         Comment ,
                         'Specific' as Source,
                         OFFs.Machine_Id    
                         from OFFs                               
-                        inner join SpecificProblems on SpecificProblems.Code = OFFs.Code
+                        inner join SpecificProblems on SpecificProblems.Code = OFFs.Code and OFFs.Machine_Id = SpecificProblems.Machine_Id 
 
-                            where [Start] >= '{1}' and [End] < '{2}' and SpecificProblems.Machine_Id={0}
+                            where [Start] >= '{1}' and [End] < '{2}' and OFFs.Machine_Id={0}
                             union
                             select OFFs.SlNo, OFFs.Code, CONVERT(TIME(0), [Start],20)  as [From], CONVERT(TIME(0),[End],20) as [To],
-                            datediff(second,0,[End]-[Start]) as 'Duration[s]', 
+                            datediff(second,CONVERT(TIME(0), [Start],20),CONVERT(TIME(0),[End],20)) as 'Duration[s]', 
                         (Case when CommonProblems.[Type]=3 then 'OFF' else 'STOP' end) as 'StopType', 
                         Convert(nvarchar,CommonProblems.Code,0)+':'+[Description] as Problem,
                         Comment ,
@@ -1609,15 +1609,15 @@ namespace ManufactureMonitor.DALayer
                         from OFFs                               
                         inner join CommonProblems on CommonProblems.Code = OFFs.Code
 
-                            where [Start] >= '{1}' and [End] < '{2}' ";
+                            where [Start] >= '{1}' and [End] < '{2}' and OFFs.Machine_Id = {0} ";
 
             if (Speedloss)
             {
-                query1 = @"
+                query1 = @" 
                             union
  
                             select Stops.SlNo, Stops.Code, CONVERT(TIME(0), [Start],20)  as [From], CONVERT(TIME(0),[End],20) as [To],
-                        datediff(second,0,[End]-[Start]) as 'Duration[s]',
+                        datediff(second,CONVERT(TIME(0), [Start],20),CONVERT(TIME(0),[End],20)) as 'Duration[s]',
                         
                         [Status] as 'StopType',
                         '' as Problem,
@@ -1626,7 +1626,7 @@ namespace ManufactureMonitor.DALayer
                         Stops.Machine_Id    
                         from Stops 
                         
-                        where [Start] >= '{1}' and [End] < '{2}' 
+                        where [Start] >= '{1}' and [End] < '{2}' and Stops.Machine_Id = {0}
                         and  [Status] ='SpeedLoss'";
                 query1 = String.Format(query1, machine, from,
                     to);
