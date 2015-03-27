@@ -1572,7 +1572,9 @@ namespace ManufactureMonitor.DALayer
                         from Stops                           
                         inner join CommonProblems on CommonProblems.Code = Stops.Code
                         where [Start] >= '{1}' and [End] < '{2}' and Stops.Machine_Id = {0}
+
                         union
+
                         select Stops.SlNo, Stops.Code, CONVERT(TIME(0), [Start],20)  as [From], CONVERT(TIME(0),[End],20) as [To],
                         datediff(second,CONVERT(TIME(0), [Start],20),CONVERT(TIME(0),[End],20)) as 'Duration[s]', 
                         (Case when SpecificProblems.[Type]=3 then 'OFF' else 'STOP' end) as 'StopType', 
@@ -1582,12 +1584,11 @@ namespace ManufactureMonitor.DALayer
                         Stops.Machine_Id    
                         from Stops                               
                         inner join SpecificProblems on SpecificProblems.Code = Stops.Code and Stops.Machine_Id = SpecificProblems.Machine_Id 
+                        where [Start] >= '{1}' and [End] < '{2}' and Stops.Machine_Id={0} 
 
-                            where [Start] >= '{1}' and [End] < '{2}' and Stops.Machine_Id={0} 
-
-                            union
+                        union
  
-                            select OFFs.SlNo, OFFs.Code, CONVERT(TIME(0), [Start],20)  as [From], CONVERT(TIME(0),[End],20) as [To],
+                        select OFFs.SlNo, OFFs.Code, CONVERT(TIME(0), [Start],20)  as [From], CONVERT(TIME(0),[End],20) as [To],
                         datediff(second,CONVERT(TIME(0), [Start],20),CONVERT(TIME(0),[End],20)) as 'Duration[s]', 
                         (Case when SpecificProblems.[Type]=3 then 'OFF' else 'STOP' end) as 'StopType', 
                         Convert(nvarchar,SpecificProblems.Code,0)+':'+[Description] as Problem,
@@ -1596,11 +1597,12 @@ namespace ManufactureMonitor.DALayer
                         OFFs.Machine_Id    
                         from OFFs                               
                         inner join SpecificProblems on SpecificProblems.Code = OFFs.Code and OFFs.Machine_Id = SpecificProblems.Machine_Id 
+                        where [Start] >= '{1}' and [End] < '{2}' and OFFs.Machine_Id={0}
 
-                            where [Start] >= '{1}' and [End] < '{2}' and OFFs.Machine_Id={0}
-                            union
-                            select OFFs.SlNo, OFFs.Code, CONVERT(TIME(0), [Start],20)  as [From], CONVERT(TIME(0),[End],20) as [To],
-                            datediff(second,CONVERT(TIME(0), [Start],20),CONVERT(TIME(0),[End],20)) as 'Duration[s]', 
+                        union
+
+                        select OFFs.SlNo, OFFs.Code, CONVERT(TIME(0), [Start],20)  as [From], CONVERT(TIME(0),[End],20) as [To],
+                        datediff(second,CONVERT(TIME(0), [Start],20),CONVERT(TIME(0),[End],20)) as 'Duration[s]', 
                         (Case when CommonProblems.[Type]=3 then 'OFF' else 'STOP' end) as 'StopType', 
                         Convert(nvarchar,CommonProblems.Code,0)+':'+[Description] as Problem,
                         Comment ,
@@ -1608,8 +1610,7 @@ namespace ManufactureMonitor.DALayer
                         OFFs.Machine_Id    
                         from OFFs                               
                         inner join CommonProblems on CommonProblems.Code = OFFs.Code
-
-                            where [Start] >= '{1}' and [End] < '{2}' and OFFs.Machine_Id = {0} ";
+                        where [Start] >= '{1}' and [End] < '{2}' and OFFs.Machine_Id = {0} ";
 
             if (Speedloss)
             {

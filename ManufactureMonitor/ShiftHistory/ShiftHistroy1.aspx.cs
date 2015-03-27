@@ -19,8 +19,7 @@ namespace ManufactureMonitor
         static bool summary;
         static String From;
         static String To;
-        static DateTime from;
-        static DateTime to;
+      
         protected void Page_Load(object sender, EventArgs e)
         {
             ((Label)Master.FindControl("MasterPageLabel")).Text = "OR  " + Session["Machinegroupname"];
@@ -45,12 +44,11 @@ namespace ManufactureMonitor
             From = datepicker1.Text;
             To = datepicker2.Text;
 
-            if (validateSelection1())
+            if (validateSelection())
             {
-                from = Convert.ToDateTime(From);
-                to = Convert.ToDateTime(To);
-                if (validateSelection2())
-                {
+                DateTime fromDate = Convert.ToDateTime(From);
+                DateTime toDate = Convert.ToDateTime(To);
+              
                     int ShiftId = -1;
                     String ShiftName = "All Shifts";
                     if (ShiftSelectionListBox.SelectedIndex != -1)
@@ -65,10 +63,10 @@ namespace ManufactureMonitor
                         + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"] + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]
                          + "&ShiftId=" + ShiftId
                          + "&ShiftName=" + ShiftName
-                         + "&from=" + from + "&to=" + to
+                         + "&from=" + fromDate + "&to=" + toDate
                          + "&Summary=" + Convert.ToBoolean(CheckBoxList1.Items[0].Selected));
                 }
-            }
+            
         }
 
         protected void MachineSelectionListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -85,28 +83,45 @@ namespace ManufactureMonitor
 
         protected void ImageButton2_Click(object sender, ImageClickEventArgs e)
         {
-            if (validateSelection1())
+            if (validateSelection())
             {
 
                 DataAccess da = new DataAccess();
                 String From = datepicker1.Text;
                 String To = datepicker2.Text;
-                DateTime from = Convert.ToDateTime(From);
-                DateTime to = Convert.ToDateTime(To);
-                if (validateSelection2())
+                DateTime fromDate = Convert.ToDateTime(From);
+                DateTime toDate = Convert.ToDateTime(To);
+
+                toDate = toDate.AddDays(1);
+                int machineId = (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"];
+                summary = CheckBoxList1.Items[0].Selected;
+
+
+                int ShiftId = -1;
+
+                if (ShiftSelectionListBox.SelectedIndex != -1)
                 {
-                    to = to.AddDays(1);
-                    int machineId = (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"];
-                    summary = CheckBoxList1.Items[0].Selected;
-                    while (from < to)
+                    ShiftId = (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"];
+
+                }
+
+                Sh = new List<ShiftHistory>();
+                shSummary = new List<ShiftHistory_Summary>();
+                while (fromDate < toDate)
+                {
+                    DataTable shiftTimingsTable = da.GetShiftTimings(machineId, ShiftId);
+
+                    for (int i = 0; i < shiftTimingsTable.Rows.Count; i++)
                     {
 
+                        DateTime from = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + shiftTimingsTable.Rows[i]["Start"]);
+                        DateTime to = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + shiftTimingsTable.Rows[i]["End"]);
                         if (!summary)
                         {
 
-                            Sh = da.GetShiftHistory(machineId, from.ToString("yyyy-MM-dd HH:mm:ss"),
+                            Sh.AddRange(da.GetShiftHistory(machineId, from.ToString("yyyy-MM-dd HH:mm:ss"),
                                 to.ToString("yyyy-MM-dd HH:mm:ss")
-                                );
+                                ));
 
                             GenerateShiftHistoryReport(Sh);
                         }
@@ -119,8 +134,25 @@ namespace ManufactureMonitor
                             GenerateShiftHistorySummaryReport(shSummary);
                         }
                     }
+
+                    if (!summary)
+                    {
+
+
+
+                        GenerateShiftHistoryReport(Sh);
+                    }
+                    else
+                    {
+
+
+                        GenerateShiftHistorySummaryReport(shSummary);
+                    }
+
                 }
             }
+                
+            
         }
 
         void GenerateShiftHistoryReport(List<ShiftHistory> sh)
@@ -157,8 +189,6 @@ namespace ManufactureMonitor
                 sBuilder.Append(s.BKR);
                 sBuilder.Append("\r\n");
             }
-
-
 
             Response.Output.Write(sBuilder.ToString());
             Response.Flush();
@@ -198,32 +228,32 @@ namespace ManufactureMonitor
                 sBuilder.Append("\r\n");
             }
 
-
-
             Response.Output.Write(sBuilder.ToString());
             Response.Flush();
             Response.End();
         }
-        bool validateSelection1()
+
+
+        bool validateSelection()
         {
+            
+            DateTime fromDate = Convert.ToDateTime(From);
+            DateTime toDate = Convert.ToDateTime(To);
+
 
             if (From == ""  || To == "")
             {
                 Response.Write("<script>alert('Please select From and To dates...');</script>");
                 return false;
             }
-
-            
-            return true;
-        }
-        bool validateSelection2()
-        {
-            if (to < from)
+            if ( toDate < fromDate)
             {
                 Response.Write("<script>alert('To Date should be greater than From Date.');</script>");
                 return false;
             }
+            
             return true;
         }
+        
     }
 }
