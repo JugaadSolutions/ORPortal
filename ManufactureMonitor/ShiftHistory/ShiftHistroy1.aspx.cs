@@ -115,7 +115,12 @@ namespace ManufactureMonitor
                     {
 
                         DateTime from = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + shiftTimingsTable.Rows[i]["Start"]);
+                       
                         DateTime to = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + shiftTimingsTable.Rows[i]["End"]);
+
+                        if (to < from)
+                            to = to.AddDays(1);
+
                         if (!summary)
                         {
 
@@ -123,7 +128,7 @@ namespace ManufactureMonitor
                                 to.ToString("yyyy-MM-dd HH:mm:ss")
                                 ));
 
-                            GenerateShiftHistoryReport(Sh);
+                            
                         }
                         else
                         {
@@ -131,24 +136,25 @@ namespace ManufactureMonitor
                                 to.ToString("yyyy-MM-dd HH:mm:ss")
                                 );
 
-                            GenerateShiftHistorySummaryReport(shSummary);
+                           
                         }
                     }
 
-                    if (!summary)
-                    {
+
+                    fromDate = fromDate.AddDays(1);
+                }
+                if (!summary)
+                {
 
 
 
-                        GenerateShiftHistoryReport(Sh);
-                    }
-                    else
-                    {
+                    GenerateShiftHistoryReport(Sh);
+                }
+                else
+                {
 
 
-                        GenerateShiftHistorySummaryReport(shSummary);
-                    }
-
+                    GenerateShiftHistorySummaryReport(shSummary);
                 }
             }
                 
