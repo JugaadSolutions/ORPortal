@@ -81,7 +81,13 @@ namespace ManufactureMonitor
                 DateTime fromDate = datefrom.SelectedDate;
                 DateTime toDate = dateto.SelectedDate;
                 toDate = toDate.AddDays(1);
-                int ShiftId = (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"];
+                int ShiftId = -1;
+
+                if (ShiftSelectionListBox.SelectedIndex != -1)
+                {
+                    ShiftId = (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"];
+
+                }
                 PAccumulation = new Dictionary<int, List<TimeSequence>>();
                 List<ProblemAccumulationRecord> PARList = new List<ProblemAccumulationRecord>();
                 while (fromDate < toDate)
