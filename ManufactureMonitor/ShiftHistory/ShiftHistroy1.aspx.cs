@@ -132,9 +132,9 @@ namespace ManufactureMonitor
                         }
                         else
                         {
-                            shSummary = da.GetShiftHistory_Summary(machineId, from.ToString("yyyy-MM-dd HH:mm:ss"),
+                            shSummary.AddRange( da.GetShiftHistory_Summary(machineId, from.ToString("yyyy-MM-dd HH:mm:ss"),
                                 to.ToString("yyyy-MM-dd HH:mm:ss")
-                                );
+                                ));
 
                            
                         }
