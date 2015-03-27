@@ -116,42 +116,47 @@ namespace ManufactureMonitor
                             }
                         }
 
+
+
+
+
+
+                        foreach (KeyValuePair<int, List<TimeSequence>> kv in PAccumulation)
+                        {
+                            double problemDuration = 0;
+
+                            foreach (TimeSequence tsq in kv.Value)
+                            {
+                                problemDuration += tsq.GetDuration();
+                            }
+
+                            ProblemAccumulationRecord par = new ProblemAccumulationRecord();
+                            par.TimeDuration = problemDuration;
+                            par.ProblemCode = kv.Value[0].ProblemCode;
+                            par.ProblemDescription = kv.Value[0].Problem;
+                            par.Count = kv.Value.Count;
+                            par.Date = from.ToString("dd-MM-yyyy");
+                            par.From = from.ToString("HH:mm:ss");
+                            par.To = to.ToString("HH:mm:ss");
+
+                            PARList.Add(par);
+                        }
+                        double TotalDuration = 0;
+                        foreach (ProblemAccumulationRecord p in PARList)
+                        {
+                            TotalDuration += p.TimeDuration;
+                        }
+
+                        foreach (ProblemAccumulationRecord p in PARList)
+                        {
+                            p.TimePercentage = Math.Round((p.TimeDuration / TotalDuration) * 100, 2);
+                        }
                     }
                     fromDate = fromDate.AddDays(1);
                 }
 
-                
-
-                foreach (KeyValuePair<int, List<TimeSequence>> kv in PAccumulation)
-                {
-                    double problemDuration = 0;
-
-                    foreach (TimeSequence ts in kv.Value)
-                    {
-                        problemDuration += ts.GetDuration();
-                    }
-
-                    ProblemAccumulationRecord par = new ProblemAccumulationRecord();
-                    par.TimeDuration = problemDuration;
-                    par.ProblemCode = kv.Value[0].ProblemCode;
-                    par.ProblemDescription = kv.Value[0].Problem;
-                    par.Count = kv.Value.Count;
-
-                    PARList.Add(par);
-                }
-                double TotalDuration = 0;
-                foreach (ProblemAccumulationRecord p in PARList)
-                {
-                    TotalDuration += p.TimeDuration;
-                }
-
-                foreach (ProblemAccumulationRecord p in PARList)
-                {
-                    p.TimePercentage = Math.Round((p.TimeDuration / TotalDuration) * 100, 2);
-                }
                 GenerateAccumulationReport(PARList);
             }
-
             
         }
         bool validateSelection()
@@ -185,6 +190,9 @@ namespace ManufactureMonitor
             sBuilder.Append("\r\n");
             for (int i = 0; i < PARList.Count; i++)
             {
+                sBuilder.Append(PARList[i].Date + ",");
+                sBuilder.Append(PARList[i].From + ",");
+                sBuilder.Append(PARList[i].To + ",");
                 sBuilder.Append(PARList[i].ProblemCode + ",");
                 sBuilder.Append(PARList[i].ProblemDescription+ ",");
                 sBuilder.Append(PARList[i].TimeDuration + ",");

@@ -35,5 +35,8 @@ namespace ManufactureMonitor.Entity
         public double TimeDuration { get; set; }
         public double TimePercentage { get; set; }
         public int Count { get; set; }
+        public String From { get; set; }
+        public String To { get; set; }
+        public String Date { get; set; }
     }
 }
