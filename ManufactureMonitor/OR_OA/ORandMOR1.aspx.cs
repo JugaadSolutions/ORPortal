@@ -93,7 +93,13 @@ namespace ManufactureMonitor
                 DateTime fromDate = datefrom.SelectedDate;
                 DateTime toDate = dateto.SelectedDate;
                 int machineId = (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"];
-                int ShiftId = (int)dt.Rows[ShiftSelectionListBox.SelectedIndex]["Id"];
+                int ShiftId = -1;
+
+                if (ShiftSelectionListBox.SelectedIndex != -1)
+                {
+                    ShiftId = (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"];
+
+                }
                 DataAccess da = new DataAccess();
                 while (fromDate <= toDate)
                 {
