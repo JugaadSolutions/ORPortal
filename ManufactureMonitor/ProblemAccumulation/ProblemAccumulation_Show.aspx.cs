@@ -44,7 +44,9 @@ namespace ManufactureMonitor
                     
                     Duration.Text = text;
                     List<TimeSequence> ts = 
-                        da.GetStopDetails(machine, ShiftId, from.ToString("yyyy-MM-dd HH:mm:ss"), to.ToString("yyyy-MM-dd HH:mm:ss"),true);
+                        da.GetStopDetails(machine, ShiftId, from.ToString("yyyy-MM-dd HH:mm:ss"), 
+                        to.ToString("yyyy-MM-dd HH:mm:ss"),from.ToString("dd-MM-yyyy"),
+                        true);
 
                     foreach (TimeSequence t in ts)
                     {

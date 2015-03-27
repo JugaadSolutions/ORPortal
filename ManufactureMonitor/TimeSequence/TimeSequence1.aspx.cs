@@ -22,7 +22,10 @@ namespace ManufactureMonitor
         static List<String> fileNames;
         static List<String> sheetNames;
         static bool SpeedLoss;
-        static int machineId;
+      
+        static String From;
+        static String To;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             ((Label)Master.FindControl("MasterPageLabel")).Text = "OR  " + Session["Machinegroupname"];
@@ -78,7 +81,7 @@ namespace ManufactureMonitor
                 if (MachineSelectionListBox.SelectedIndex == -1)
                     return;
                 Session["MachineName"] = dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"];
-                machineId = (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"];
+                int machineId = (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"];
                 Response.Redirect("~/TimeSequence/TimeSequence1_Show.aspx?MachineId="
                     + dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
                      + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]
@@ -114,30 +117,63 @@ namespace ManufactureMonitor
 
         protected void ImageButton2_Click(object sender, ImageClickEventArgs e)
         {
+            Ts = new List<TimeSequence>();
+
             if (validateSelection())
             {
                 DataAccess da = new DataAccess();
-                DateTime from = Calendar1.SelectedDate;
-                DateTime to = Calendar2.SelectedDate;
-                //int machineId = (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"];
-                int ShiftId = (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"];
+                
+                DateTime fromDate = DateTime.Parse(Calendar1.SelectedDate.ToString("dd-MMM-yyyy"));
+                DateTime toDate = DateTime.Parse(Calendar2.SelectedDate.ToString("dd-MMM-yyyy"));
+
+                
+
+                toDate = toDate.AddDays(1);
+
+
+                int machineId = (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"];
+
+                int ShiftId = -1;
+
+                if (ShiftSelectionListBox.SelectedIndex != -1)
+                {
+                    ShiftId = (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"];
+
+                }
+
+
+
                 SpeedLoss = CheckBoxList1.Items[0].Selected;
 
-                to = to.AddDays(1);
-                Ts= da.GetStopDetails(machineId, ShiftId, from.ToString("yyyy-MM-dd HH:mm:ss"),
-                            to.ToString("yyyy-MM-dd HH:mm:ss"),
-                            Convert.ToBoolean(Request.QueryString["SpeedLoss"]));
-                if (!SpeedLoss)
+                while (fromDate < toDate)
                 {
-                    GenerateTimeSequenceReport(Ts);
-                }
-                else
-                {
-                    GenerateTimeSequenceReport(Ts);
-                }
+                    DataTable shiftTimingsTable = da.GetShiftTimings(machineId, ShiftId);
 
+                    for (int i = 0; i < shiftTimingsTable.Rows.Count; i++)
+                    {
+
+                        DateTime from = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + shiftTimingsTable.Rows[i]["Start"]);
+
+                        DateTime to = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + shiftTimingsTable.Rows[i]["End"]);
+
+                        if (to < from)
+                            to = to.AddDays(1);
+
+                        Ts.AddRange(da.GetStopDetails(machineId, (int)shiftTimingsTable.Rows[i]["Id"],
+                            from.ToString("yyyy-MM-dd HH:mm:ss"),
+                            to.ToString("yyyy-MM-dd HH:mm:ss"), from.ToString("dd-MM-yyyy"),
+                            Convert.ToBoolean(Request.QueryString["SpeedLoss"])));
+
+                    }
+                    fromDate = fromDate.AddDays(1);
+                }
+               
+                GenerateTimeSequenceReport(Ts);
+                
             }
         }
+
+
         bool validateSelection()
         {
 
@@ -154,6 +190,8 @@ namespace ManufactureMonitor
             }
             return true;
         }
+
+
         void GenerateTimeSequenceReport(List<TimeSequence> Ts)
         {
             Response.Clear();
@@ -169,6 +207,7 @@ namespace ManufactureMonitor
             sBuilder.Append("\r\n");
             foreach (TimeSequence ts in Ts)
             {
+                sBuilder.Append(ts.Date + ",");
                 sBuilder.Append(ts.From + ",");
                 sBuilder.Append(ts.To + ",");
                 sBuilder.Append(ts.Duration + ",");

@@ -1075,7 +1075,8 @@ namespace ManufactureMonitor.DALayer
             cn = new SqlConnection(connection);
             String query = @" Select Machines.Name+'-'+' '+Convert(varchar(5),CONVERT(TIME(0),Shifts.Start,0),20)   
                                +'-'+Convert(varchar(5),CONVERT(TIME(0),Shifts.[End],0),20)
-                               as shifts, CONVERT(TIME(0),Shifts.Start,20) as [Start],CONVERT(TIME(0),Shifts.[End],20) as [End],Shifts.Name as [Name]
+                               as shifts, CONVERT(TIME(0),Shifts.Start,20) as [Start],CONVERT(TIME(0),Shifts.[End],20) as [End],
+                                Shifts.Name as [Name],Shifts.Id as [Id]
                                  from Machines
                                  Join ShiftMachines on Machines.Id=ShiftMachines.Machine_Id 
                                  Join Shifts on Shifts.Id=ShiftMachines.Shift_Id
@@ -1551,7 +1552,7 @@ namespace ManufactureMonitor.DALayer
             return dt;
         }
 
-        public List<TimeSequence> GetStopDetails(int machine, int Shift_Id, String from, String to, bool Speedloss)
+        public List<TimeSequence> GetStopDetails(int machine, int Shift_Id, String from, String to, String date, bool Speedloss)
         {
 
             SqlConnection cn;
@@ -1657,7 +1658,7 @@ namespace ManufactureMonitor.DALayer
                     ProblemCode = (int)dt.Rows[i]["Code"],
                     From = dt.Rows[i]["From"].ToString(),
                     To = dt.Rows[i]["To"].ToString(),
-
+                    Date = date,
                     Duration = (int)dt.Rows[i]["Duration[s]"],
                     StopType = (String)dt.Rows[i]["StopType"],
                     Problem = (String)dt.Rows[i]["Problem"],

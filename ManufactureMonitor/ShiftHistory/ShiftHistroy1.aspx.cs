@@ -83,12 +83,14 @@ namespace ManufactureMonitor
 
         protected void ImageButton2_Click(object sender, ImageClickEventArgs e)
         {
+            String From = datepicker1.Text;
+            String To = datepicker2.Text;
+
             if (validateSelection())
             {
 
                 DataAccess da = new DataAccess();
-                String From = datepicker1.Text;
-                String To = datepicker2.Text;
+                
                 DateTime fromDate = Convert.ToDateTime(From);
                 DateTime toDate = Convert.ToDateTime(To);
 

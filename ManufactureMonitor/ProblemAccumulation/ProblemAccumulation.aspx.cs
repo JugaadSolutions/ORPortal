@@ -93,7 +93,9 @@ namespace ManufactureMonitor
                         DateTime to = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + dt.Rows[i]["End"]);
 
                         List<TimeSequence> ts =
-                            da.GetStopDetails(machine, ShiftId, from.ToString("yyyy-MM-dd HH:mm:ss"), to.ToString("yyyy-MM-dd HH:mm:ss"), true);
+                            da.GetStopDetails(machine, ShiftId, from.ToString("yyyy-MM-dd HH:mm:ss"),
+                            to.ToString("yyyy-MM-dd HH:mm:ss"), from.ToString("dd-MM-yyyy"),
+                            true);
 
                         foreach (TimeSequence t in ts)
                         {

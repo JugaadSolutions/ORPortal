@@ -61,7 +61,7 @@ namespace ManufactureMonitor
 
                         Duration.Text = fromDate.ToShortDateString() + ":" + (dt.Rows[i]["shifts"]).ToString();
                         Ts = da.GetStopDetails(machineId, ShiftId, from.ToString("yyyy-MM-dd HH:mm:ss"),
-                            to.ToString("yyyy-MM-dd HH:mm:ss"),
+                            to.ToString("yyyy-MM-dd HH:mm:ss"),from.ToString("dd-MM-yyyy"),
                             Convert.ToBoolean(Request.QueryString["SpeedLoss"]));
 
                         //if (dt1.Rows.Count == 0) continue;
