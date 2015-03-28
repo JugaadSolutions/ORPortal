@@ -1552,6 +1552,47 @@ namespace ManufactureMonitor.DALayer
             return dt;
         }
 
+        public DataTable GetMachineInputs(int Machine_Id, String from,String to)
+        {
+            SqlConnection cn;
+            SqlCommand cmd;
+
+            cn = new SqlConnection(connection);
+
+            cn.Open();
+
+            String query = @"Select CONVERT(TIME(0), [Timestamp],20) as [Time],Timestamp from MachineInputs where Machine_Id = {0}  and Timestamp >= '{1}' and Timestamp < '{2}'
+                                 
+                                ";
+           query = String.Format(query, Machine_Id, from, to);
+
+            cmd = new SqlCommand(query, cn);
+
+            SqlDataReader dr = cmd.ExecuteReader();
+            DataTable dt = new DataTable();
+            dt.Load(dr);
+            dr.Close();
+
+            if (dt.Rows.Count > 0)
+                dt.Columns.Add("Duration", typeof(string));
+
+            DateTime temp = DateTime.Parse(from);
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+
+
+                TimeSpan ts = (DateTime)dt.Rows[i]["Timestamp"] - temp;
+                dt.Rows[i]["Duration"] = ts.TotalSeconds;
+
+                temp = (DateTime)dt.Rows[i]["Timestamp"];
+            }
+
+
+            dr.Close();
+            cn.Close();
+            return dt;
+        }
+
         public List<TimeSequence> GetStopDetails(int machine, int Shift_Id, String from, String to, String date, bool Speedloss)
         {
 

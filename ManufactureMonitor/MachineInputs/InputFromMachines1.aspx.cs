@@ -35,15 +35,21 @@ namespace ManufactureMonitor
 
             if (validateSelection())
             {
-
+                int ShiftId = -1;
+                string ShiftName = "All Shifts";
+                if (ShiftSelectionListBox.SelectedIndex != -1)
+                {
+                    ShiftId = (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"];
+                    ShiftName = (string)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Name"];
+                }
                 if (MachineSelectionListBox.SelectedIndex == -1)
                     return;
                 Session["MachineName"] = dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"];
                 Response.Redirect("~/MachineInputs/InputFromMachines_Show.aspx?MachineId="
                     + (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
                      + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]
-                     + "&ShiftId=" + (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"]
-                      + "&ShiftName=" + (string)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Name"]
+                     + "&ShiftId=" + ShiftId
+                      + "&ShiftName=" + ShiftName
                      + "&date=" + date.SelectedDate.ToString("dd-MMM-yyyy"));
             }
         }
@@ -68,15 +74,51 @@ namespace ManufactureMonitor
         protected void ImageButton2_Click(object sender, ImageClickEventArgs e)
         {
             int machineId = (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"];
-            int ShiftId = (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"];
+
+            int ShiftId = -1;
+            if (ShiftSelectionListBox.SelectedIndex != -1)
+            {
+                ShiftId = (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"];
+            }
+
+            DataAccess da = new DataAccess();
+            DataTable ShiftTable = da.GetShiftTimings(machineId, ShiftId);
+
             if (validateSelection())
             {
-                DataAccess da = new DataAccess();
-                dt2 = da.GetMachineInputs((int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"],
-                          (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"], date.SelectedDate.ToString("dd-MMM-yyyy"));
+                StringBuilder sBuilder = new System.Text.StringBuilder();
+                sBuilder.Append("Time,Time Between Pulses[s] ");
+
+                sBuilder.Append("\r\n");
+            
+
+                for (int i = 0; i < ShiftTable.Rows.Count; i++)
+                {
+                    String from = date.SelectedDate.ToString("dd-MMM-yyyy") + " " + ShiftTable.Rows[i]["Start"];
+                    String to = date.SelectedDate.ToString("dd-MMM-yyyy") + " " + ShiftTable.Rows[i]["End"];
+
+                     dt2 = da.GetMachineInputs(machineId,
+                        from, to);
+
+                     for (int k = 0; k < dt2.Rows.Count; k++)
+                     {
+
+                         sBuilder.Append(dt2.Rows[k]["Time"] + ",");
+                         sBuilder.Append(dt2.Rows[k]["Duration"] + ",");
+                         sBuilder.Append("\r\n");
+                     }
+
+                         
+
+                         
+                     
+                }
+
+               
+                GenerateInputReport(sBuilder);
             }
             
-            GenerateInputReport(dt2);
+           
         }
         bool validateSelection()
         {
@@ -89,7 +131,7 @@ namespace ManufactureMonitor
             }
             return true;
         }
-        void GenerateInputReport(DataTable dt2)
+        void GenerateInputReport(StringBuilder sBuilder)
         {
             Response.Clear();
             Response.Buffer = true;
@@ -97,23 +139,10 @@ namespace ManufactureMonitor
                 + Session["MachineName"] + ".csv");
             Response.Charset = "";
             Response.ContentType = "application/text";
-            StringBuilder sBuilder = new System.Text.StringBuilder();
-
-            sBuilder.Append("TimeStamp,Time Between Pulses[s] ");
-            string[,] styles = { { "custom", "m/d/yyyy h:mm:ss;" } };
-            sBuilder.Append("\r\n");
             
-            for (int i = 0; i < dt2.Rows.Count; i++)
-            {
-                for (int j = 0; j < dt2.Columns.Count; j++)
-                {
 
-                    sBuilder.Append(dt2.Rows[i][j] + ",");
-                    
-                }
-                
-                sBuilder.Append("\r\n");
-            }
+           
+            
             
             Response.Output.Write(sBuilder.ToString());
             Response.Flush();
