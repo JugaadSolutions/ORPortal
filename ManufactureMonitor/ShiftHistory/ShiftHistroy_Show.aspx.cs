@@ -61,13 +61,13 @@ namespace ManufactureMonitor
 
 
                             Sh = da.GetShiftHistory(machineId, from.ToString("yyyy-MM-dd HH:mm"),
-                                to.ToString("yyyy-MM-dd HH:mm:ss")
+                                to.ToString("yyyy-MM-dd HH:mm:ss"),from.ToString("dd-MM-yyyy")
                                 );
                         }
                         else
                         {
                             shSummary =  da.GetShiftHistory_Summary(machineId, from.ToString("yyyy-MM-dd HH:mm"),
-                                to.ToString("yyyy-MM-dd HH:mm:ss")
+                                to.ToString("yyyy-MM-dd HH:mm:ss"), from.ToString("dd-MM-yyyy")
                                 );
                         }
 

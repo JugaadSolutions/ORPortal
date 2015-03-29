@@ -663,8 +663,8 @@ namespace ManufactureMonitor.DALayer
             {
                 cn = new SqlConnection(connection);
                 String query = @"select Name from Sessions where Machine_Id={0} and Shift_Id={1} and Name='{2}'";
-                query = String.Format(query,machine,shift,name);
-                
+                query = String.Format(query, machine, shift, name);
+
                 cn.Open();
                 cmd = new SqlCommand(query, cn);
 
@@ -680,8 +680,8 @@ namespace ManufactureMonitor.DALayer
                 {
                     return true;
                 }
-                
-                
+
+
             }
             catch (Exception)
             {
@@ -1552,7 +1552,7 @@ namespace ManufactureMonitor.DALayer
             return dt;
         }
 
-        public DataTable GetMachineInputs(int Machine_Id, String from,String to)
+        public DataTable GetMachineInputs(int Machine_Id, String from, String to)
         {
             SqlConnection cn;
             SqlCommand cmd;
@@ -1564,7 +1564,7 @@ namespace ManufactureMonitor.DALayer
             String query = @"Select CONVERT(TIME(0), [Timestamp],20) as [Time],Timestamp from MachineInputs where Machine_Id = {0}  and Timestamp >= '{1}' and Timestamp < '{2}'
                                  
                                 ";
-           query = String.Format(query, Machine_Id, from, to);
+            query = String.Format(query, Machine_Id, from, to);
 
             cmd = new SqlCommand(query, cn);
 
@@ -1898,14 +1898,14 @@ namespace ManufactureMonitor.DALayer
         //         }
 
         #region SHIFT_HISTORY
-        public List<ShiftHistory> GetShiftHistory(int machine, String from, String to)
+        public List<ShiftHistory> GetShiftHistory(int machine, String from, String to, String date)
         {
             SqlConnection cn;
             SqlCommand cmd;
 
             cn = new SqlConnection(connection);
 
-            String query = @"select  distinct CONVERT(nvarchar(10),TimeStamp,105)as Date, Convert(Time(0),[From],20) as [From],
+            String query = @"select  distinct  Convert(Time(0),[From],20) as [From],
                                 Convert(Time(0),[To],20) as [To],
                                 Name as Project,CycleTime, ProjectTracker.[From] as 'Start',ProjectTracker.[To] as 'End',
                                 SessionActual - Scraps as [Actual],Scraps, Scraps.[timestamp] from ProjectTracker 
@@ -2004,7 +2004,7 @@ namespace ManufactureMonitor.DALayer
                 {
                     Project = (String)dt.Rows[i]["Project"],
                     CycleTime = (double)dt.Rows[i]["CycleTime"],
-                    Date = dt.Rows[i]["Date"].ToString(),
+                    Date = date,
                     From = dt.Rows[i]["From"].ToString(),
                     To = dt.Rows[i]["To"].ToString(),
                     Actual = (int)dt.Rows[i]["Actual"],
@@ -2024,10 +2024,10 @@ namespace ManufactureMonitor.DALayer
             return ShiftHistory;
         }
 
-        public List<ShiftHistory_Summary> GetShiftHistory_Summary(int machine, String from, String to)
+        public List<ShiftHistory_Summary> GetShiftHistory_Summary(int machine, String from, String to, String date)
         {
 
-            List<ShiftHistory> ShiftHistory = GetShiftHistory(machine, from, to);
+            List<ShiftHistory> ShiftHistory = GetShiftHistory(machine, from, to, date);
             Dictionary<String, List<ShiftHistory>> ShiftHistoryCollection = new Dictionary<string, List<ShiftHistory>>();
 
 
@@ -2419,27 +2419,31 @@ namespace ManufactureMonitor.DALayer
             return dt;
         }
 
-        public DataTable GetScrapsReport(int machine, int shift, DateTime from, DateTime to)
+        public DataTable GetScrapsReport(int machine,  DateTime from, DateTime to)
         {
             SqlConnection cn;
             SqlCommand cmd;
 
             cn = new SqlConnection(connection);
 
-            String query = @"select Scraps.SlNo, Convert(nvarchar(10),Scraps.Timestamp,105) as 'Date', SessionActual as Actual, Scraps,
-                            round(Convert(float(1),Scraps,0)/Convert(float(1),SessionActual,0)*100,2,1) as Rejection
+            String query = @"select Scraps.SlNo, Convert(nvarchar(10),Scraps.Timestamp,105) as 'Date', SessionActual as Actual, 
+                            Scraps,round(Convert(float(1),Scraps,0)/Convert(float(1),SessionActual,0)*100,2,1) as Rejection , 1 as Filter
                             from Scraps inner join ProjectTracker on Scraps.ProjectTracker_Id = ProjectTracker.SlNo
                             inner join Projects on Projects.Id = ProjectTracker.Project_Id and SessionActual > 0
-                            where Scraps.Machine_Id = {0} and Scraps.Timestamp >= '{1}' and Scraps.Timestamp < '{2}'";
+                            where Scraps.Machine_Id = {0} and Scraps.Timestamp >= '{1}' and Scraps.Timestamp < '{2}' 
+
+                            union
+
+                            select null, 'Total', Sum(SessionActual) as Actual , Sum(Scraps) as Scraps,
+                            round(Convert(float(1),Sum(Scraps),0)/Convert(float(1),Sum(SessionActual),0) * 100,2,1) as Rejection,2 as Filter
+                            from Scraps inner join ProjectTracker on Scraps.ProjectTracker_Id = ProjectTracker.SlNo
+                            inner join Projects on Projects.Id = ProjectTracker.Project_Id and SessionActual > 0 
+
+                            where Scraps.Machine_Id = {0} and Scraps.Timestamp >= '{1}' and Scraps.Timestamp < '{2}' order by Filter";
 
             query = String.Format(query, machine, from.ToString("yyyy-MM-dd HH:mm:ss"), to.ToString("yyyy-MM-dd HH:mm:ss"));
 
-            String filterShift = @"and Scraps.Shift_Id = '{0}'";
-            if (shift > 0)
-            {
-                query += filterShift;
-                query = String.Format(query, shift);
-            }
+
 
 
 
@@ -2449,13 +2453,9 @@ namespace ManufactureMonitor.DALayer
             SqlDataReader dr = cmd.ExecuteReader();
             DataTable dt = new DataTable();
             dt.Load(dr);
-            //
 
 
-            //for (int i = 0; i < dt.Rows.Count;i++ )
-            //{
 
-            //}
             dr.Close();
             cn.Close();
             return dt;
@@ -2943,15 +2943,12 @@ namespace ManufactureMonitor.DALayer
             dt.Load(dr);
             dr.Close();
             cn.Close();
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                if (dt.Rows[i]["OK"] ==
-                        DBNull.Value)
+            if (dt.Rows[0]["OK"] ==
+                          DBNull.Value)
 
-                    return 0;
-                else
-                    break;
-            }
+                return 0;
+
+
             int OK = (int)dt.Rows[0][0];
             return OK;
         }
@@ -2973,7 +2970,7 @@ namespace ManufactureMonitor.DALayer
             cn.Close();
         }
 
-        public bool AddSession(int p1, int p2, DateTime start, DateTime end,String name)
+        public bool AddSession(int p1, int p2, DateTime start, DateTime end, String name)
         {
             SqlConnection cn;
             SqlCommand cmd;
@@ -2982,7 +2979,7 @@ namespace ManufactureMonitor.DALayer
                 cn = new SqlConnection(connection);
                 String query = @" Insert Into Sessions(Name,Start,[End],Shift_Id,Machine_Id)
                                     Values('{4}','{2}','{3}',{1},{0})";
-                query = String.Format(query,p1,p2,start,end,name);
+                query = String.Format(query, p1, p2, start, end, name);
                 cn.Open();
                 cmd = new SqlCommand(query, cn);
 

@@ -30,8 +30,7 @@ namespace ManufactureMonitor
                 int machineId = Convert.ToInt32(Request.QueryString["MachineId"]);
 
                 dts = new List<DataTable>();
-                fileNames = new List<string>();
-                sheetNames = new List<string>();
+             
 
                 DateTime fromDate = DateTime.Parse(Request.QueryString["datefrom"]);
                 DateTime toDate = DateTime.Parse(Request.QueryString["dateto"]);
@@ -64,39 +63,17 @@ namespace ManufactureMonitor
                             to.ToString("yyyy-MM-dd HH:mm:ss"),from.ToString("dd-MM-yyyy"),
                             Convert.ToBoolean(Request.QueryString["SpeedLoss"]));
 
-                        //if (dt1.Rows.Count == 0) continue;
-
-                        //DataTable d = new DataTable();
-                        //d.Columns.Add("From", typeof(string));
-                        //d.Columns.Add("To", typeof(string));
-                        //d.Columns.Add("Duration[s]", typeof(string));
-                        //d.Columns.Add("Stop Type", typeof(string));
-                        //d.Columns.Add("Problem", typeof(string));
-                        //d.Columns.Add("Comment", typeof(string));
-
-                        //for (int j = 0; j < dt1.Rows.Count; j++)
-                        //{
-                        //    DataRow r = d.NewRow();
-
-                        //    r["From"] = dt1.Rows[j]["From"];
-                        //    r["To"] = dt1.Rows[j]["To"];
-                        //    r["Duration[s]"] = dt1.Rows[j]["Duration[s]"];
-                        //    r["Stop Type"] = dt1.Rows[j]["StopType"];
-                        //    r["Problem"] = dt1.Rows[j]["Problem"];
-                        //    r["Comment"] = dt1.Rows[j]["Comment"];
-                        //    d.Rows.Add(r);
-                        //}
-                        //dts.Add(d);
-                        //char[] c = { ':', '-' };
-                        //String[] f = Duration.Text.Split(c);
-                        //fileNames.Add(f[1]);
-                        //sheetNames.Add(f[0] + "-" + f[2] + ":" + f[3] + "-" + f[4] + ":" + f[5]);
+                     
                         
 
                         
 
                         GridView g = new GridView();
                         g.AutoGenerateColumns = false;
+                        g.HeaderStyle.BackColor = Color.OrangeRed;
+                        g.Style.Add(HtmlTextWriterStyle.Width, "50%");
+                        g.HorizontalAlign = HorizontalAlign.Center;
+
                         BoundField b = new BoundField();
                         b.DataField = "From";
                         b.HeaderText = "From";

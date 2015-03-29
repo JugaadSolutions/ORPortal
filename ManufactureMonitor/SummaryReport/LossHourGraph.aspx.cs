@@ -48,7 +48,8 @@ namespace ManufactureMonitor
 
 
                     ShiftHistoryList = da.GetShiftHistory(machine, from.ToString("yyyy-MM-dd HH:mm"),
-                               to.ToString("yyyy-MM-dd HH:mm:ss")
+                               to.ToString("yyyy-MM-dd HH:mm:ss"),from.ToString("dd-MM-yyyy")
+
                                );
                     foreach (TimeSequence t in ts)
                     {

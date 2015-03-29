@@ -14,7 +14,7 @@ namespace ManufactureMonitor
     public partial class ProblemAccumulation : System.Web.UI.Page
     {
         static DataTable dt,dt1,dt2;
-        Dictionary<int, List<TimeSequence>> PAccumulation;
+       
         protected void Page_Load(object sender, EventArgs e)
         {
             ((Label)Master.FindControl("MasterPageLabel")).Text = "OR  " + Session["Machinegroupname"];
@@ -88,13 +88,22 @@ namespace ManufactureMonitor
                     ShiftId = (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"];
 
                 }
-                PAccumulation = new Dictionary<int, List<TimeSequence>>();
-                List<ProblemAccumulationRecord> PARList = new List<ProblemAccumulationRecord>();
+                
+
+                StringBuilder sBuilder = new StringBuilder();
+                sBuilder.Append("Code,Problem,Time[s],Time[%],Count,");
+
+                sBuilder.Append("\r\n");
+
+
                 while (fromDate < toDate)
                 {
                     dt = da.GetShiftTimings(machine, ShiftId);
                     for (int i = 0; i < dt.Rows.Count; i++)
                     {
+                        List<ProblemAccumulationRecord> PARList = new List<ProblemAccumulationRecord>();
+                        Dictionary<int, List<TimeSequence>> PAccumulation = new Dictionary<int, List<TimeSequence>>() ;
+
                         DateTime from = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + dt.Rows[i]["Start"]);
                         DateTime to = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + dt.Rows[i]["End"]);
 
@@ -151,11 +160,25 @@ namespace ManufactureMonitor
                         {
                             p.TimePercentage = Math.Round((p.TimeDuration / TotalDuration) * 100, 2);
                         }
+
+                        for (int j = 0; j < PARList.Count; j++)
+                        {
+                            sBuilder.Append(PARList[j].Date + ",");
+                            sBuilder.Append(PARList[j].From + ",");
+                            sBuilder.Append(PARList[j].To + ",");
+                            sBuilder.Append(PARList[j].ProblemCode + ",");
+                            sBuilder.Append(PARList[j].ProblemDescription + ",");
+                            sBuilder.Append(PARList[j].TimeDuration + ",");
+                            sBuilder.Append(PARList[j].TimePercentage + ",");
+                            sBuilder.Append(PARList[j].Count + ",");
+
+                            sBuilder.Append("\r\n");
+                        }
                     }
                     fromDate = fromDate.AddDays(1);
                 }
 
-                GenerateAccumulationReport(PARList);
+                GenerateAccumulationReport(sBuilder);
             }
             
         }
@@ -175,7 +198,7 @@ namespace ManufactureMonitor
             }
             return true;
         }
-        void GenerateAccumulationReport(List<ProblemAccumulationRecord> PARList)
+        void GenerateAccumulationReport(StringBuilder sBuilder)
         {
             Response.Clear();
             Response.Buffer = true;
@@ -183,26 +206,6 @@ namespace ManufactureMonitor
                 + Session["MachineName"] + ".csv");
             Response.Charset = "";
             Response.ContentType = "application/text";
-            StringBuilder sBuilder = new System.Text.StringBuilder();
-
-            sBuilder.Append("Code,Problem,Time[s],Time[%],Count,");
-
-            sBuilder.Append("\r\n");
-            for (int i = 0; i < PARList.Count; i++)
-            {
-                sBuilder.Append(PARList[i].Date + ",");
-                sBuilder.Append(PARList[i].From + ",");
-                sBuilder.Append(PARList[i].To + ",");
-                sBuilder.Append(PARList[i].ProblemCode + ",");
-                sBuilder.Append(PARList[i].ProblemDescription+ ",");
-                sBuilder.Append(PARList[i].TimeDuration + ",");
-                sBuilder.Append(PARList[i].TimePercentage + ",");
-                sBuilder.Append(PARList[i].Count + ",");
-                
-                sBuilder.Append("\r\n");
-            }
-
-
 
             Response.Output.Write(sBuilder.ToString());
             Response.Flush();

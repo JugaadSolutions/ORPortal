@@ -56,7 +56,7 @@ namespace ManufactureMonitor
 
 
                         sh = da.GetShiftHistory(machineId, from.ToString("yyyy-MM-dd HH:mm:ss"),
-                                to.ToString("yyyy-MM-dd HH:mm:ss")
+                                to.ToString("yyyy-MM-dd HH:mm:ss"),from.ToString("dd-MM-yyyy")
                                 );
 
                         foreach (ShiftHistory s in sh)

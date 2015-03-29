@@ -42,7 +42,7 @@ namespace ManufactureMonitor
                 if (MachineSelectionListBox.SelectedIndex == -1)
                     return;
                 Session["MachineName"] = dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"];
-                shiftid = ShiftSelectionListBox.SelectedIndex == -1 ? 0 : Convert.ToInt32(dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"]);
+                shiftid = ShiftSelectionListBox.SelectedIndex == -1 ? -1 : Convert.ToInt32(dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"]);
 
 
                 Response.Redirect("~/Scraps/Scrap_entry.aspx?MachineId=" + (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
@@ -104,32 +104,58 @@ namespace ManufactureMonitor
         {
             if (validateSelection())
             {
-                DateTime from = DateTime.Parse(Calendar1.SelectedDate.ToString("dd-MMM-yyyy"));
-                DateTime to = DateTime.Parse(Calendar2.SelectedDate.ToString("dd-MMM-yyyy"));
-                shiftid = Convert.ToInt32(dt.Rows[ShiftSelectionListBox.SelectedIndex]["Id"]);
+                DateTime fromDate = DateTime.Parse(Calendar1.SelectedDate.ToString("dd-MMM-yyyy"));
+                DateTime toDate = DateTime.Parse(Calendar2.SelectedDate.ToString("dd-MMM-yyyy"));
+               
                 DataAccess da = new DataAccess();
-                to = to.AddDays(1);
-                //List<ShiftHistory> tempList = new List<ShiftHistory>();
-                dt = da.GetScrapsReport(machine,shiftid, from, to);
-                if (dt.Rows.Count > 0)
+                toDate = toDate.AddDays(1);
+
+                int ShiftId = -1;
+                if (ShiftSelectionListBox.SelectedIndex != -1)
                 {
-                    for (int j = 2; j < dt.Columns.Count; j++)
-                    {
-                        int i = dt.Rows.Count - 1;
-                        ActualTotal.Text += dt.Rows[i][j];
-                        j = j + 1;
-                        ScrapsTotal.Text += dt.Rows[i][j];
-                        j = j + 1;
-                        RejectionTotal.Text += dt.Rows[i][j];
-                    }
-
-
+                    ShiftId = (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"];
                 }
-                GenerateScrapReport(dt);
+
+                int machineId = Convert.ToInt32(dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]);
+                 StringBuilder sBuilder = new System.Text.StringBuilder();
+
+                 sBuilder.Append("Date,OKPieces,Rejection,[%]Rejection");
+
+                 sBuilder.Append("\r\n");
+            
+                 while (fromDate < toDate)
+                 {
+                     DataTable ShiftTimingsTable = da.GetShiftTimings(machineId, ShiftId);
+                     for (int j = 0; j < ShiftTimingsTable.Rows.Count; j++)
+                     {
+                         DateTime from = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + ShiftTimingsTable.Rows[j]["Start"]);
+                         DateTime to = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + ShiftTimingsTable.Rows[j]["End"]);
+
+                         if (to < from)
+                             to = to.AddDays(1);
+
+
+                         dt = da.GetScrapsReport(machineId,  from, to);
+
+                         for (int i = 0; i < dt.Rows.Count; i++)
+                         {
+                             sBuilder.Append(dt.Rows[i]["Date"] + ",");
+                             sBuilder.Append(dt.Rows[i]["Actual"] + ",");
+                             sBuilder.Append(dt.Rows[i]["Scraps"] + ",");
+                             sBuilder.Append(dt.Rows[i]["Rejection"] + ",");
+                             sBuilder.Append("\r\n");
+                             
+
+                         }
+                     }
+                     fromDate = fromDate.AddDays(1);
+                 }
+              
+                GenerateScrapReport( sBuilder );
             }
                 
         }
-        void GenerateScrapReport(DataTable dt)
+        void GenerateScrapReport(StringBuilder sBuilder )
         {
             Response.Clear();
             Response.Buffer = true;
@@ -137,24 +163,7 @@ namespace ManufactureMonitor
                 + Session["MachineName"] + ".csv");
             Response.Charset = "";
             Response.ContentType = "application/text";
-            StringBuilder sBuilder = new System.Text.StringBuilder();
-
-            sBuilder.Append("Date,OKPieces,Rejection,[%]Rejection");
-
-            sBuilder.Append("\r\n");
-            for (int i = 0; i < dt.Rows.Count;i++ )
-            {
-                sBuilder.Append(dt.Rows[i]["Date"] + ",");
-                sBuilder.Append(dt.Rows[i]["Actual"] + ",");
-                sBuilder.Append(dt.Rows[i]["Scraps"] + ",");
-                sBuilder.Append(dt.Rows[i]["Rejection"] + ",");
-                sBuilder.Append("\r\n");
-                sBuilder.Append(TotalLabel.Text + ",");
-                sBuilder.Append(ActualTotal.Text + ",");
-                sBuilder.Append(ScrapsTotal.Text + ",");
-                sBuilder.Append(RejectionTotal.Text + ",");
-                
-            }
+            
 
 
 

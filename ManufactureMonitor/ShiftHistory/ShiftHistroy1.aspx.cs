@@ -127,7 +127,7 @@ namespace ManufactureMonitor
                         {
 
                             Sh.AddRange(da.GetShiftHistory(machineId, from.ToString("yyyy-MM-dd HH:mm:ss"),
-                                to.ToString("yyyy-MM-dd HH:mm:ss")
+                                to.ToString("yyyy-MM-dd HH:mm:ss"), from.ToString("dd-MM-yyyy")
                                 ));
 
                             
@@ -135,7 +135,7 @@ namespace ManufactureMonitor
                         else
                         {
                             shSummary.AddRange( da.GetShiftHistory_Summary(machineId, from.ToString("yyyy-MM-dd HH:mm:ss"),
-                                to.ToString("yyyy-MM-dd HH:mm:ss")
+                                to.ToString("yyyy-MM-dd HH:mm:ss"), from.ToString("dd-MM-yyyy")
                                 ));
 
                            

@@ -89,7 +89,7 @@ namespace ManufactureMonitor
         {
             if (validateSelection())
             {
-                List<ShiftHistory> tempList = new List<ShiftHistory>();
+               
                 DateTime fromDate = datefrom.SelectedDate;
                 DateTime toDate = dateto.SelectedDate;
                 int machineId = (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"];
@@ -101,8 +101,19 @@ namespace ManufactureMonitor
 
                 }
                 DataAccess da = new DataAccess();
+
+                StringBuilder sBuilder = new System.Text.StringBuilder();
+
+                sBuilder.Append("Date,OKPieces,Scraps,Load Time/ Available Time [s],Non-Operation Time 1 / Machine Related [s] ,Non-Operation Time 2 / Other Than Machine Related [s],Undefined [s],Idle Time/ Exclude Hour [s],KADOURITSU/ Operation Ratio [%] ,BEKADOURITSU/ Operational Availability [%] ");
+
+                sBuilder.Append("\r\n");
+
+
                 while (fromDate <= toDate)
                 {
+                    List<ShiftHistory> tempList = new List<ShiftHistory>();
+                    sh = new List<ShiftHistory>();
+
                     ShiftHistory temp = new ShiftHistory();
                     dt = da.GetShiftTimings(machineId, ShiftId);
 
@@ -120,41 +131,61 @@ namespace ManufactureMonitor
                         temp.Date = from.ToString("dd-MMM-yyyy");
 
 
-                        sh = da.GetShiftHistory(machineId, from.ToString("yyyy-MM-dd HH:mm:ss"),
-                                to.ToString("yyyy-MM-dd HH:mm:ss")
-                                );
+                        sh.AddRange( da.GetShiftHistory(machineId, from.ToString("yyyy-MM-dd HH:mm:ss"),
+                                to.ToString("yyyy-MM-dd HH:mm:ss"), from.ToString("dd-MM-yyyy")
+                                ));
 
-                        foreach (ShiftHistory s in sh)
-                        {
-                            if (Project != "")
-                            {
-                                if (s.Project != Project)
-                                    continue;
-                            }
-                            temp.CycleTime += s.CycleTime;
-                            temp.Actual += s.Actual;
-                            temp.Scraps += s.Scraps;
-                            temp.LoadTime += s.LoadTime;
-                            temp.Nop1 += s.Nop1;
-                            temp.Nop2 += s.Nop2;
-                            temp.Idle += s.Idle;
-                            temp.Undefined += s.Undefined;
-
-                        }
-                        double kr = ((temp.CycleTime * temp.Actual) / temp.LoadTime) * 100;
-
-                        temp.KR = Math.Round(kr, 2);
-
-                        double bkr = ((temp.LoadTime - temp.Nop1) / temp.LoadTime) * 100;
-                        temp.BKR = Math.Round(bkr, 2);
-
-                        tempList.Add(temp);
+                      
 
                     }
+
+                    foreach (ShiftHistory s in sh)
+                    {
+                        if (Project != "")
+                        {
+                            if (s.Project != Project)
+                                continue;
+                        }
+                        temp.CycleTime += s.CycleTime;
+                        temp.Actual += s.Actual;
+                        temp.Scraps += s.Scraps;
+                        temp.LoadTime += s.LoadTime;
+                        temp.Nop1 += s.Nop1;
+                        temp.Nop2 += s.Nop2;
+                        temp.Idle += s.Idle;
+                        temp.Undefined += s.Undefined;
+
+                    }
+                    double kr = ((temp.CycleTime * temp.Actual) / temp.LoadTime) * 100;
+
+                    temp.KR = Math.Round(kr, 2);
+
+                    double bkr = ((temp.LoadTime - temp.Nop1) / temp.LoadTime) * 100;
+                    temp.BKR = Math.Round(bkr, 2);
+
+                    tempList.Add(temp);
+
                     fromDate = fromDate.AddDays(1);
 
+
+                    
+                    for (int i = 0; i < tempList.Count; i++)
+                    {
+                        sBuilder.Append(tempList[i].Date + ",");
+                        sBuilder.Append(tempList[i].OK + ",");
+                        sBuilder.Append(tempList[i].Scraps + ",");
+                        sBuilder.Append(tempList[i].LoadTime + ",");
+                        sBuilder.Append(tempList[i].Nop1 + ",");
+                        sBuilder.Append(tempList[i].Nop2 + ",");
+                        sBuilder.Append(tempList[i].Undefined + ",");
+                        sBuilder.Append(tempList[i].Idle + ",");
+                        sBuilder.Append(tempList[i].KR + ",");
+                        sBuilder.Append(tempList[i].BKR + ",");
+                        sBuilder.Append("\r\n");
+                    }
+
                 }
-                GenerateAccumulationReport(tempList);
+                GenerateAccumulationReport(sBuilder);
             }
         }
         bool validateSelection()
@@ -173,7 +204,7 @@ namespace ManufactureMonitor
             }
             return true;
         }
-        void GenerateAccumulationReport(List<ShiftHistory>  tempList)
+        void GenerateAccumulationReport(StringBuilder sBuilder)
         {
             Response.Clear();
             Response.Buffer = true;
@@ -181,25 +212,7 @@ namespace ManufactureMonitor
                 + Session["MachineName"] + ".csv");
             Response.Charset = "";
             Response.ContentType = "application/text";
-            StringBuilder sBuilder = new System.Text.StringBuilder();
-
-            sBuilder.Append("Date,OKPieces,Scraps,Load Time/ Available Time [s],Non-Operation Time 1 / Machine Related [s] ,Non-Operation Time 2 / Other Than Machine Related [s],Undefined [s],Idle Time/ Exclude Hour [s],KADOURITSU/ Operation Ratio [%] ,BEKADOURITSU/ Operational Availability [%] ");
-            
-            sBuilder.Append("\r\n");
-            for (int i = 0; i < tempList.Count; i++)
-            {
-                sBuilder.Append(tempList[i].Date + ",");
-                sBuilder.Append(tempList[i].OK + ",");
-                sBuilder.Append(tempList[i].Scraps + ",");
-                sBuilder.Append(tempList[i].LoadTime + ",");
-                sBuilder.Append(tempList[i].Nop1 + ",");
-                sBuilder.Append(tempList[i].Nop2 + ",");
-                sBuilder.Append(tempList[i].Undefined + ",");
-                sBuilder.Append(tempList[i].Idle + ",");
-                sBuilder.Append(tempList[i].KR + ",");
-                sBuilder.Append(tempList[i].BKR + ",");
-                sBuilder.Append("\r\n");
-            }
+           
             Response.Output.Write(sBuilder.ToString());
             Response.Flush();
             Response.End();
