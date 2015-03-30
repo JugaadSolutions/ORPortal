@@ -66,7 +66,7 @@ namespace ManufactureMonitor
 
                         b = new BoundField();
                         b.DataField = "Actual";
-                        b.HeaderText = "OK Pieces";
+                        b.HeaderText = "Total Pieces";
 
 
                         g.Columns.Add(b);

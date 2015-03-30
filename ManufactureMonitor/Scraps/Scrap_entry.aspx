@@ -41,6 +41,11 @@
                         <HeaderStyle HorizontalAlign="Center" />
                         <ItemStyle HorizontalAlign="Center" />
                         </asp:BoundField>
+                           <asp:BoundField DataField="Actual"  HeaderStyle-HorizontalAlign="Center" HeaderText="Total Pieces" 
+                               ItemStyle-HorizontalAlign="Center" ReadOnly="true" ShowHeader="true">
+                        <HeaderStyle HorizontalAlign="Center" />
+                        <ItemStyle HorizontalAlign="Center" />
+                        </asp:BoundField>
                         <asp:TemplateField HeaderStyle-HorizontalAlign="Center" HeaderText="Scraps" ItemStyle-HorizontalAlign="Center" ShowHeader="true">
                             <ItemTemplate>
                                 <%#Eval("Scraps") %>

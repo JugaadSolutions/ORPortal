@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <parameters>
-  <parameter name="DefaultConnection-Web.config Connection String" description="DefaultConnection Connection String used in web.config by the application to access the database." defaultValue="Data Source=.\SQLEXPRESS;Initial Catalog=IOR;Persist Security Info=True;User ID=sa;Password=ide123$%^;" tags="SqlConnectionString">
-    <parameterEntry kind="XmlFile" scope="C:\\Ideonics\\Dev_proj\\ORPortal\\ManufactureMonitor\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+  <parameter name="DefaultConnection-Web.config Connection String" description="DefaultConnection Connection String used in web.config by the application to access the database." defaultValue="Data Source=.\SQLEXPRESS;Initial Catalog=IOR_V1;Persist Security Info=True;User ID=sa;Password=ide123$%^;Pooling=true;Max Pool Size=1000;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Sagar\\Repository\\ORPortal\\ManufactureMonitor\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+  </parameter>
+  <parameter name="IOR_V1ConnectionString-Web.config Connection String" description="IOR_V1ConnectionString Connection String used in web.config by the application to access the database." defaultValue="Data Source=.\SQLEXPRESS;Initial Catalog=IOR_V1;Persist Security Info=True;User ID=sa;Password=ide123$%^;Pooling=true;Max Pool Size=1000;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Sagar\\Repository\\ORPortal\\ManufactureMonitor\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='IOR_V1ConnectionString']/@connectionString" />
   </parameter>
 </parameters>

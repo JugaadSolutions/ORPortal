@@ -91,7 +91,7 @@ namespace ManufactureMonitor
                 
 
                 StringBuilder sBuilder = new StringBuilder();
-                sBuilder.Append("Code,Problem,Time[s],Time[%],Count,");
+                sBuilder.Append("Date,From,To,Code,Problem,Time[s],Time[%],Count,");
 
                 sBuilder.Append("\r\n");
 
