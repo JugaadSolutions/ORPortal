@@ -24,8 +24,6 @@ namespace ManufactureMonitor
 
             ((Label)Master.FindControl("MasterPageLabel")).Text = "OR  "+Session["MachineName"];
             
-            
-            
             if (!Page.IsPostBack)
             {
                 DataAccess da = new DataAccess();
@@ -37,13 +35,6 @@ namespace ManufactureMonitor
                 int ShiftId = Convert.ToInt32(Request.QueryString["ShiftId"]);
                 String ShiftName = Request.QueryString["ShiftName"];
                 Project = Request.QueryString["Project"];
-
-                
-
-
-
-                
-
 
                 while (fromDate <= toDate)
                 {
@@ -131,8 +122,6 @@ namespace ManufactureMonitor
 
                     for (int i = 0; i < dt.Rows.Count; i++)
                     {
-
-                       
 
                         DateTime from = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + dt.Rows[i]["Start"]);
                         DateTime to = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + dt.Rows[i]["End"]);
