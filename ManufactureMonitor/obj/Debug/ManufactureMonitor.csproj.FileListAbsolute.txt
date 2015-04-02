@@ -159,11 +159,3 @@ J:\ideonics\Repository\ORPortal\ManufactureMonitor\bin\EPPlus.xml
 J:\ideonics\Repository\ORPortal\ManufactureMonitor\bin\Microsoft.Web.Infrastructure.xml
 J:\ideonics\Repository\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.dll
 J:\ideonics\Repository\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.pdb
-C:\Sagar\Repository\ORPortal\ManufactureMonitor\bin\ManufactureMonitor.dll
-C:\Sagar\Repository\ORPortal\ManufactureMonitor\bin\ManufactureMonitor.pdb
-C:\Sagar\Repository\ORPortal\ManufactureMonitor\bin\EPPlus.dll
-C:\Sagar\Repository\ORPortal\ManufactureMonitor\bin\Microsoft.Web.Infrastructure.dll
-C:\Sagar\Repository\ORPortal\ManufactureMonitor\bin\EPPlus.xml
-C:\Sagar\Repository\ORPortal\ManufactureMonitor\bin\Microsoft.Web.Infrastructure.xml
-C:\Sagar\Repository\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.dll
-C:\Sagar\Repository\ORPortal\ManufactureMonitor\obj\Debug\ManufactureMonitor.pdb
