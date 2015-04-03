@@ -114,7 +114,7 @@ namespace ManufactureMonitor
                 cumulativeList.Add(cumulative);
                
                 Chart1 = new Chart();
-                Chart1.ImageLocation = @"~/Charts/OROAGraph";
+                Chart1.ImageLocation = @"~/Images/OROAGraph";
                 Chart1.ImageStorageMode = ImageStorageMode.UseImageLocation;
                 Chart1.ImageType = ChartImageType.Png;
                 Chart1.Width = 1000;

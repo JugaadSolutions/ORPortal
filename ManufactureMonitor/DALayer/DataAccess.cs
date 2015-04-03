@@ -11,7 +11,7 @@ namespace ManufactureMonitor.DALayer
     public class DataAccess
     {
         String connection = System.Configuration.ConfigurationManager.
-    ConnectionStrings["DefaultConnection"].ConnectionString;
+        ConnectionStrings["DefaultConnection"].ConnectionString;
 
 
 

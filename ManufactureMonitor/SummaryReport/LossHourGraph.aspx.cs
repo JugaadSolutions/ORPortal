@@ -17,6 +17,7 @@ namespace ManufactureMonitor
         static List<ShiftHistory> ShiftHistoryList;
         Dictionary<int, List<TimeSequence>> ProblemAccumulation;
         Chart Chart1,Chart2;
+        string chartPath;
         protected void Page_Load(object sender, EventArgs e)
         {
             ((Label)Master.FindControl("MasterPageLabel")).Text = "OR  " + Session["MachineName"];
@@ -31,7 +32,7 @@ namespace ManufactureMonitor
             ProblemAccumulation = new Dictionary<int, List<TimeSequence>>();
 
             List<ShiftHistory> tempList;
-            
+            chartPath = System.Configuration.ConfigurationManager.AppSettings["CHARTS_PATH"];
 
             while (fromDate <= toDate)
             {
@@ -121,7 +122,7 @@ namespace ManufactureMonitor
             /*Graph of Detail Column Chart*/
 
             Chart1 = new Chart();
-            Chart1.ImageLocation = @"~/Charts/LossHour";
+            Chart1.ImageLocation = @"~/Images/LossHour";
             Chart1.ImageStorageMode = ImageStorageMode.UseImageLocation;
             Chart1.ImageType = ChartImageType.Png;
             Chart1.Width = 1000;
