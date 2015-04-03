@@ -122,9 +122,6 @@ namespace ManufactureMonitor
             /*Graph of Detail Column Chart*/
 
             Chart1 = new Chart();
-            Chart1.ImageLocation = @"~/Images/LossHour";
-            Chart1.ImageStorageMode = ImageStorageMode.UseImageLocation;
-            Chart1.ImageType = ChartImageType.Png;
             Chart1.Width = 1000;
             Chart1.Height = 500;
             
