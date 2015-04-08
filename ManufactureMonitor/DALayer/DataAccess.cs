@@ -1987,7 +1987,7 @@ namespace ManufactureMonitor.DALayer
                     / LoadTime) * 100;
                 dt.Rows[i]["KR"] = Math.Round(Kadouritsu, 2);
 
-                double Bekadouritsu = ((LoadTime - Nop1) / LoadTime) * 100;
+                double Bekadouritsu = ((LoadTime - Nop2) / LoadTime) * 100;
                 dt.Rows[i]["BKR"] = Math.Round(Bekadouritsu, 2);
 
 
