@@ -1552,6 +1552,35 @@ namespace ManufactureMonitor.DALayer
             return dt;
         }
 
+
+        public int GetMachineInputCount(int Machine_Id, DateTime from, DateTime to)
+        {
+            SqlConnection cn;
+            SqlCommand cmd;
+
+            cn = new SqlConnection(connection);
+            String query = @"Select count(*) as Actual from MachineInputs 
+                             where Machine_Id = {0}  and Timestamp >= '{1}' and Timestamp < '{2}' and Valid = 1
+                                ";
+
+
+            query = String.Format(query, Machine_Id,from.ToString("yyyy-MM-dd HH:mm:ss"),to.ToString("yyyy-MM-dd HH:mm:ss"));
+
+            cn.Open();
+            cmd = new SqlCommand(query, cn);
+
+            SqlDataReader dr = cmd.ExecuteReader();
+            DataTable dt = new DataTable();
+            dt.Load(dr);
+            dr.Close();
+
+            if (dt.Rows.Count > 0)
+                return dt.Rows[0][0] == DBNull.Value ? 0 : (int)dt.Rows[0][0];
+            else return 0;
+
+            
+        }
+
         public DataTable GetMachineInputs(int Machine_Id, String from, String to)
         {
             SqlConnection cn;
@@ -1561,7 +1590,8 @@ namespace ManufactureMonitor.DALayer
 
             cn.Open();
 
-            String query = @"Select CONVERT(TIME(0), [Timestamp],20) as [Time],Timestamp from MachineInputs where Machine_Id = {0}  and Timestamp >= '{1}' and Timestamp < '{2}'
+            String query = @"Select CONVERT(TIME(0), [Timestamp],20) as [Time],Timestamp from MachineInputs where Machine_Id = {0}  
+                            and Timestamp >= '{1}' and Timestamp < '{2}'
                                  
                                 ";
             query = String.Format(query, Machine_Id, from, to);
@@ -1859,44 +1889,7 @@ namespace ManufactureMonitor.DALayer
             return dt;
         }
 
-        //         public List<OR> GetOR(int MachineId, DateTime from, DateTime to)
-        //         {
-
-        //             List<OR> ORList = new List<OR>();
-
-        //             List<Session> ORSessions = new List<Session>();
-
-        //             SqlConnection cn;
-        //             SqlCommand cmd;
-
-        //             cn = new SqlConnection(connection);
-        //             String query = @" Select * from ProjectTracker where Machine_Id = {0} 
-        //                and Timestamp > '{1}' and Timestamp < '{2}' ";
-        //             query = String.Format(query, MachineId,from.ToString("yyyy-MM-dd HH:mm:ss"), to.ToString("yyyy-MM-dd HH:mm:ss"));
-
-        //             cn.Open();
-        //             cmd = new SqlCommand(query, cn);
-
-        //             SqlDataReader dr = cmd.ExecuteReader();
-        //             DataTable dt = new DataTable();
-        //             dt.Load(dr);
-        //             dr.Close();
-
-        //             DateTime startPoint = from;
-        //             for (int i = 0; i < dt.Rows.Count; i++)
-        //             {
-        //                 OR or = new OR();
-        //                 or.From = startPoint;
-        //                 or.To = DateTime.Parse((string)dt.Rows[i]["Timestamp"]);
-        //                 ORList.Add(or);
-
-        //                 startPoint = or.To;
-        //             }
-
-
-
-        //         }
-
+       
         #region SHIFT_HISTORY
         public List<ShiftHistory> GetShiftHistory(int machine, String from, String to, String date)
         {
@@ -1905,10 +1898,23 @@ namespace ManufactureMonitor.DALayer
 
             cn = new SqlConnection(connection);
 
+//            String query = @"select  distinct  Convert(Time(0),[From],20) as [From],
+//                                Convert(Time(0),[To],20) as [To],
+//                                Name as Project,CycleTime, ProjectTracker.[From] as 'Start',ProjectTracker.[To] as 'End',
+//                                SessionActual - Scraps as [Actual],Scraps, Scraps.[timestamp] from ProjectTracker 
+//                                inner join Projects on ProjectTracker.Project_Id = Projects.Id 
+//                                inner join Scraps on ProjectTracker.SlNo = Scraps.ProjectTracker_Id 
+//                                 where [From]>='{1}' and ([From]<'{2}' or [To] is null) and
+//                                  ProjectTracker.Machine_Id={0} and Scraps.Machine_Id={0} 
+//                                   and Timestamp >='{1}' 
+//                                   and Timestamp<='{2}'
+//                                order by Timestamp asc";
+
             String query = @"select  distinct  Convert(Time(0),[From],20) as [From],
                                 Convert(Time(0),[To],20) as [To],
                                 Name as Project,CycleTime, ProjectTracker.[From] as 'Start',ProjectTracker.[To] as 'End',
-                                SessionActual - Scraps as [Actual],Scraps, Scraps.[timestamp] from ProjectTracker 
+                                
+                                Scraps, Scraps.[timestamp] from ProjectTracker 
                                 inner join Projects on ProjectTracker.Project_Id = Projects.Id 
                                 inner join Scraps on ProjectTracker.SlNo = Scraps.ProjectTracker_Id 
                                  where [From]>='{1}' and ([From]<'{2}' or [To] is null) and
@@ -1916,7 +1922,6 @@ namespace ManufactureMonitor.DALayer
                                    and Timestamp >='{1}' 
                                    and Timestamp<='{2}'
                                 order by Timestamp asc";
-
 
 
             query = String.Format(query, machine, from, to);
@@ -1930,6 +1935,7 @@ namespace ManufactureMonitor.DALayer
             dr.Close();
             cn.Close();
 
+            dt.Columns.Add("Actual", typeof(int));
             dt.Columns.Add("LoadTime", typeof(double));
             dt.Columns.Add("Nop1", typeof(double));
             dt.Columns.Add("Nop2", typeof(double));
@@ -1948,6 +1954,12 @@ namespace ManufactureMonitor.DALayer
                         DBNull.Value ? DateTime.Now : (DateTime)dt.Rows[i]["End"]);
                 s.Sessions = getSessions(s.ID, machine);
                 s.Breaks = getBreaks(s.ID, machine);
+
+                int actual = GetMachineInputCount(machine, (DateTime)dt.Rows[i]["Start"],
+                   dt.Rows[i]["End"] ==
+                   DBNull.Value ? DateTime.Now : (DateTime)dt.Rows[i]["End"]);
+
+                dt.Rows[i]["Actual"] = actual;
 
                 double OK = (int)dt.Rows[i]["Actual"] - (int)dt.Rows[i]["Scraps"];
                 dt.Rows[i]["OK"] = OK;
@@ -2105,108 +2117,7 @@ namespace ManufactureMonitor.DALayer
             return duration;
         }
 
-        public double GetNop2_TypeDuration(int machine, DateTime start, DateTime end, int type, ShiftCollection shifts)
-        {
-
-
-            Shift s = shifts.getShift(start, end);
-            s.Sessions = getSessions(s.ID, machine);
-            s.Breaks = getBreaks(s.ID, machine);
-
-            double duration = 0;
-            SqlConnection cn;
-            SqlCommand cmd;
-
-            String query = @"select  {0} as Start,[END], Stops.Code, 1 as C1
-
-                            from Stops 
-                            inner join CommonProblems on Stops.Code = CommonProblems.code
-
-                            where 
-                            [Start] <={0} and [Start] <={1} and
-                            [End] >={0}  and [End] <={1}
-                            and Stops.Code<> 0 and CommonProblems.Type=2  
-                            and CommonProblems.SubType = {2} and Stops.Machine_Id = {3}
-                            union
-                            select  {0} as Start,[END],Stops.Code, 1 as C1
-                                                                from Stops 
-                                                                inner join SpecificProblems on Stops.Code = SpecificProblems.Code
-
-                                                                where  
-                            [Start] <={0} and [Start] <={1} and
-                            [End] >={0}  and [End] <={1}
-                            and Stops.Code <> 0  and SpecificProblems.Type=2 
-                            and SpecificProblems.SubType = {2} and Stops.Machine_Id = {3}
-
-                            union
-
-                            select  [START] as Start,[END], Stops.Code,2 as C1
-
-                            from Stops 
-                            inner join CommonProblems on Stops.Code = CommonProblems.code
-
-                            where  
-                             [Start] >={0} and [Start] <={1} and
-                            [End] >={0}  and [End] <={1}
-                            and Stops.Code <> 0 and CommonProblems.Type=2 
-                            and CommonProblems.SubType = {2} and Stops.Machine_Id = {3}
-                            union
-                            select  [START] as Start,[END],Stops.Code, 2 as C1
-                                                                from Stops 
-                                                                inner join SpecificProblems on Stops.Code = SpecificProblems.Code
-
-                                                                where  
-                             [Start] >={0} and [Start] <={1} and
-                            [End] >={0}  and [End] <={1}
-                            and Stops.Code <> 0 and SpecificProblems.Type=2 
-                            and SpecificProblems.SubType = {2} and Stops.Machine_Id = {3}
-
-                            union
-                            select  [START] as Start,{1}, Stops.Code, 3 as C1
-
-                            from Stops 
-                            inner join CommonProblems on Stops.Code = CommonProblems.code
-
-                            where  
-                             [Start] >={0} and [Start] <={1} and
-                            [End] >={0}  and [End] >={1}
-                            and Stops.Code <> 0 and CommonProblems.Type=2  
-                            and CommonProblems.SubType = {2} and Stops.Machine_Id = {3}
-                            union
-                            select  [START] as Start,{1},Stops.Code, 3 as C1
-                             from Stops 
-                            inner join SpecificProblems on Stops.Code = SpecificProblems.Code
-                            where  
-                             [Start] >={0} and [Start] <={1} and
-                            [End] >={0}  and [End] >={1} 
-                            and Stops.Code <> 0 and SpecificProblems.Type=2  
-                            and SpecificProblems.SubType = {2} and Stops.Machine_Id = {3}
-
-                            order by C1";
-
-
-
-            query = String.Format(query, machine, start, end);
-
-            cn = new SqlConnection(connection);
-            cn.Open();
-            cmd = new SqlCommand(query, cn);
-
-            SqlDataReader dr = cmd.ExecuteReader();
-
-
-            DataTable dt = new DataTable();
-            dt.Load(dr);
-            if (dt.Rows.Count <= 0) return 0;
-            if (dt.Rows[0][0] == DBNull.Value) return 0;
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                duration += s.getActiveDuration((DateTime)dt.Rows[i]["Start"], (DateTime)dt.Rows[i]["END"]);
-            }
-
-            cn.Close();
-            return duration;
-        }
+     
 
         public double GetNop1Duration(int machine, DateTime start, DateTime end, Shift s)
         {
