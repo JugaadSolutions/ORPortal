@@ -2805,7 +2805,7 @@ namespace ManufactureMonitor.DALayer
             cn = new SqlConnection(connection);
             String query = @" Update MachineInputs SET Valid='0'
                             where (Machine_Id={0} and (timestamp>='{1}' and timestamp<='{2}'))";
-            query = String.Format(query, machine, from, to);
+            query = String.Format(query, machine, from.ToString("yyyy-MM-dd HH:mm:ss"), to.ToString("yyyy-MM-dd HH:mm:ss"));
             cn.Open();
             cmd = new SqlCommand(query, cn);
 
@@ -2822,7 +2822,7 @@ namespace ManufactureMonitor.DALayer
             cn = new SqlConnection(connection);
             String query = @" Update MachineInputs SET Valid='1'
                             where (Machine_Id={0} and (timestamp>='{1}' and timestamp<='{2}'))";
-            query = String.Format(query, MId, from, to);
+            query = String.Format(query, MId, from.ToString("yyyy-MM-dd HH:mm:ss"), to.ToString("yyyy-MM-dd HH:mm:ss"));
             cn.Open();
             cmd = new SqlCommand(query, cn);
 
