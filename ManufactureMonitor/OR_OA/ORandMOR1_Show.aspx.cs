@@ -118,6 +118,9 @@ namespace ManufactureMonitor
                     ShiftHistory temp = new ShiftHistory();
                     sh = new List<ShiftHistory>();
 
+                    ShiftHistory cumulative = new ShiftHistory();
+                    List<ShiftHistory> cumulativeList = new List<ShiftHistory>();
+
                     dt = da.GetShiftTimings(machineId, ShiftId);
 
                     for (int i = 0; i < dt.Rows.Count; i++)
@@ -149,8 +152,9 @@ namespace ManufactureMonitor
                             if (s.Project != Project)
                                 continue;
                         }
-                        temp.CycleTime += s.CycleTime;
-                        temp.Actual += s.Actual;
+                        //temp.CycleTime += s.CycleTime;
+                        //temp.Actual += s.Actual;
+                        temp.KR += s.CycleTime * s.Actual;
                         temp.Scraps += s.Scraps;
                         temp.LoadTime += s.LoadTime;
                         temp.Nop1 += s.Nop1;
@@ -158,12 +162,21 @@ namespace ManufactureMonitor
                         temp.Idle += s.Idle;
                         temp.Undefined += s.Undefined;
 
+                        cumulative.KR += s.CycleTime * s.Actual;
+                        cumulative.Scraps += s.Scraps;
+                        cumulative.LoadTime += s.LoadTime;
+                        cumulative.Nop1 += s.Nop1;
+                        cumulative.Nop2 += s.Nop2;
+                        cumulative.Idle += s.Idle;
+                        cumulative.Undefined += s.Undefined;
+                       
+
                     }
-                    double kr = ((temp.CycleTime * temp.Actual) / temp.LoadTime) * 100;
+                    double kr = (temp.KR / temp.LoadTime) * 100;
 
                     temp.KR = Math.Round(kr, 2);
 
-                    double bkr = ((temp.LoadTime - temp.Nop1) / temp.LoadTime) * 100;
+                    double bkr = ((temp.LoadTime - temp.Nop2) / temp.LoadTime) * 100;
                     temp.BKR = Math.Round(bkr, 2);
 
 
@@ -177,7 +190,6 @@ namespace ManufactureMonitor
                     g.DataBind();
 
                     MainPanel.Controls.Add(g);
-
 
 
                     TextBox Total = new TextBox();
@@ -251,24 +263,11 @@ namespace ManufactureMonitor
                     g1.Columns.Add(b1);
                     #endregion
 
-                    ShiftHistory cumulative = new ShiftHistory();
-                    List<ShiftHistory> cumulativeList = new List<ShiftHistory>();
+                   
 
-                    foreach (ShiftHistory s in tempList)
-                    {
-                        cumulative.CycleTime += s.CycleTime;
-                        cumulative.Actual += s.Actual;
-                        cumulative.Scraps += s.Scraps;
-                        cumulative.LoadTime += s.LoadTime;
-                        cumulative.Nop1 += s.Nop1;
-                        cumulative.Nop2 += s.Nop2;
-                        cumulative.Idle += s.Idle;
-                        cumulative.Undefined += s.Undefined;
-                        cumulative.KR += ((s.Actual * s.CycleTime));
-                        cumulative.BKR += ((s.LoadTime - s.Nop1));
-                    }
-                    cumulative.KR = Math.Round(((cumulative.CycleTime * cumulative.Actual) / cumulative.LoadTime) * 100, 2);
-                    cumulative.BKR = Math.Round(((cumulative.LoadTime - cumulative.Nop1) / cumulative.LoadTime) * 100, 2);
+
+                    cumulative.KR = Math.Round((cumulative.KR/cumulative.LoadTime)  * 100, 2);
+                    cumulative.BKR = Math.Round(((cumulative.LoadTime - cumulative.Nop2) / cumulative.LoadTime) * 100, 2);
 
                     cumulativeList.Add(cumulative);
 
