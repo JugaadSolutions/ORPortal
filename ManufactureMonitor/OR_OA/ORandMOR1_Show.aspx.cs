@@ -38,7 +38,33 @@ namespace ManufactureMonitor
 
                 while (fromDate <= toDate)
                 {
-                    List<ShiftHistory> tempList = new List<ShiftHistory>();
+                    
+
+
+
+                    TextBox Duration = new TextBox();
+                    Duration.TextMode = TextBoxMode.SingleLine;
+                    Duration.BackColor = Color.LightGray;
+
+                    Duration.Style.Add("text-align", "center");
+                    Duration.Font.Bold = true;
+                    Duration.Font.Name = "Arial";
+                    Duration.Font.Size = 12;
+                    Duration.Style.Add("margin", "10px");
+                    Duration.Width = new Unit("60%");
+                    Duration.Height = new Unit("60px");
+                    Duration.Text = "OR and OA Accumulation- " + ((Project == String.Empty) ? "" : "Project" + Project)
+                                + " ShiftDate: " + fromDate.ToString("dd-MMM-yyyy") + Environment.NewLine
+                                + "  Shift:  " + ShiftName;
+
+
+                    
+                    sh = new List<ShiftHistory>();
+
+                    ShiftHistory cumulative = new ShiftHistory();
+                    List<ShiftHistory> cumulativeList = new List<ShiftHistory>();
+
+                    dt = da.GetShiftTimings(machineId, ShiftId);
 
                     #region GRID_COLUMNS
                     GridView g = new GridView();
@@ -98,33 +124,12 @@ namespace ManufactureMonitor
                     b.HeaderText = "BEKADOURITSU/ Operational Availability [%] ";
                     g.Columns.Add(b);
                     #endregion
-
-                    TextBox Duration = new TextBox();
-                    Duration.TextMode = TextBoxMode.SingleLine;
-                    Duration.BackColor = Color.LightGray;
-
-                    Duration.Style.Add("text-align", "center");
-                    Duration.Font.Bold = true;
-                    Duration.Font.Name = "Arial";
-                    Duration.Font.Size = 12;
-                    Duration.Style.Add("margin", "10px");
-                    Duration.Width = new Unit("60%");
-                    Duration.Height = new Unit("60px");
-                    Duration.Text = "OR and OA Accumulation- "  + ((Project == String.Empty) ? "" : "Project" + Project)
-                                + " ShiftDate: " + fromDate.ToString("dd-MMM-yyyy") + Environment.NewLine
-                                + "  Shift:  " + ShiftName;
-
-
-                    ShiftHistory temp = new ShiftHistory();
-                    sh = new List<ShiftHistory>();
-
-                    ShiftHistory cumulative = new ShiftHistory();
-                    List<ShiftHistory> cumulativeList = new List<ShiftHistory>();
-
-                    dt = da.GetShiftTimings(machineId, ShiftId);
-
+                    List<ShiftHistory> tempList = new List<ShiftHistory>();
                     for (int i = 0; i < dt.Rows.Count; i++)
                     {
+
+                        ShiftHistory temp = new ShiftHistory();
+                        
 
                         DateTime from = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + dt.Rows[i]["Start"]);
                         DateTime to = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + dt.Rows[i]["End"]);
@@ -135,55 +140,49 @@ namespace ManufactureMonitor
                         temp.Date = from.ToString("dd-MMM-yyyy");
 
 
-                        sh.AddRange(da.GetShiftHistory(machineId, from.ToString("yyyy-MM-dd HH:mm:ss"),
+                        sh = da.GetShiftHistory(machineId, from.ToString("yyyy-MM-dd HH:mm:ss"),
                                 to.ToString("yyyy-MM-dd HH:mm:ss"), from.ToString("dd-MM-yyyy")
-                                ));
+                                );
+
+                        cumulativeList.AddRange(sh);
+
+                        foreach (ShiftHistory s in sh)
+                        {
+                            if (Project != "")
+                            {
+                                if (s.Project != Project)
+                                    continue;
+                            }
+                            //temp.CycleTime += s.CycleTime;
+                            temp.Actual += s.Actual;
+                            temp.KR += s.CycleTime * s.Actual;
+                            temp.Scraps += s.Scraps;
+                            temp.LoadTime += s.LoadTime;
+                            temp.Nop1 += s.Nop1;
+                            temp.Nop2 += s.Nop2;
+                            temp.Idle += s.Idle;
+                            temp.Undefined += s.Undefined;
+                        }
+
+                        double kr = (temp.KR / temp.LoadTime) * 100;
+
+                        temp.KR = Math.Round(kr, 2);
+
+                        double bkr = ((temp.LoadTime - temp.Nop2) / temp.LoadTime) * 100;
+                        temp.BKR = Math.Round(bkr, 2);
+
+
+                        tempList.Add(temp);
 
                       
 
-                       
+
+
 
                     }
-
-                    foreach (ShiftHistory s in sh)
-                    {
-                        if (Project != "")
-                        {
-                            if (s.Project != Project)
-                                continue;
-                        }
-                        //temp.CycleTime += s.CycleTime;
-                        //temp.Actual += s.Actual;
-                        temp.KR += s.CycleTime * s.Actual;
-                        temp.Scraps += s.Scraps;
-                        temp.LoadTime += s.LoadTime;
-                        temp.Nop1 += s.Nop1;
-                        temp.Nop2 += s.Nop2;
-                        temp.Idle += s.Idle;
-                        temp.Undefined += s.Undefined;
-
-                        cumulative.KR += s.CycleTime * s.Actual;
-                        cumulative.Scraps += s.Scraps;
-                        cumulative.LoadTime += s.LoadTime;
-                        cumulative.Nop1 += s.Nop1;
-                        cumulative.Nop2 += s.Nop2;
-                        cumulative.Idle += s.Idle;
-                        cumulative.Undefined += s.Undefined;
-                       
-
-                    }
-                    double kr = (temp.KR / temp.LoadTime) * 100;
-
-                    temp.KR = Math.Round(kr, 2);
-
-                    double bkr = ((temp.LoadTime - temp.Nop2) / temp.LoadTime) * 100;
-                    temp.BKR = Math.Round(bkr, 2);
-
-
-                    tempList.Add(temp);
 
                     MainPanel.Controls.Add(Duration);
-                    
+
 
                     g.RowDataBound += g_RowDataBound;
                     g.DataSource = tempList;
@@ -191,18 +190,23 @@ namespace ManufactureMonitor
 
                     MainPanel.Controls.Add(g);
 
-
-                    TextBox Total = new TextBox();
-                    Total.TextMode = TextBoxMode.SingleLine;
-                    Total.Style.Add(HtmlTextWriterStyle.BackgroundColor, "#FF9966");
-                    Total.Style.Add("text-align", "center");
-
-                    Total.Style.Add(HtmlTextWriterStyle.FontStyle, "Bold");
-                    Total.Width = new Unit("100%");
-                    Total.Height = new Unit("30px");
-                    Total.Text = "Cumulative";
-
-                    MainPanel.Controls.Add(Total);
+                    foreach (ShiftHistory s in cumulativeList)
+                    {
+                        if (Project != "")
+                        {
+                            if (s.Project != Project)
+                                continue;
+                        }
+                        //temp.CycleTime += s.CycleTime;
+                        cumulative.Actual += s.Actual;
+                        cumulative.KR += s.CycleTime * s.Actual;
+                        cumulative.Scraps += s.Scraps;
+                        cumulative.LoadTime += s.LoadTime;
+                        cumulative.Nop1 += s.Nop1;
+                        cumulative.Nop2 += s.Nop2;
+                        cumulative.Idle += s.Idle;
+                        cumulative.Undefined += s.Undefined;
+                    }
 
                     #region GRID_COLUMNS
 
@@ -262,14 +266,47 @@ namespace ManufactureMonitor
                     b1.HeaderText = "BEKADOURITSU/ Operational Availability [%] ";
                     g1.Columns.Add(b1);
                     #endregion
+                  
+                    cumulative.KR = (cumulative.KR / cumulative.LoadTime) * 100;
+
+                    cumulative.KR = Math.Round(cumulative.KR, 2);
+
+                    cumulative.BKR = ((cumulative.LoadTime - cumulative.Nop2) / cumulative.LoadTime) * 100;
+                    cumulative.BKR = Math.Round(cumulative.BKR, 2);
+
+
+
+
+
+
+                    cumulativeList.Clear();
+                    cumulativeList.Add(cumulative);
+                   
+
+
+
+
+
+
+
+                    TextBox Total = new TextBox();
+                    Total.TextMode = TextBoxMode.SingleLine;
+                    Total.Style.Add(HtmlTextWriterStyle.BackgroundColor, "#FF9966");
+                    Total.Style.Add("text-align", "center");
+
+                    Total.Style.Add(HtmlTextWriterStyle.FontStyle, "Bold");
+                    Total.Width = new Unit("100%");
+                    Total.Height = new Unit("30px");
+                    Total.Text = "Cumulative";
+
+                    MainPanel.Controls.Add(Total);
 
                    
 
 
-                    cumulative.KR = Math.Round((cumulative.KR/cumulative.LoadTime)  * 100, 2);
-                    cumulative.BKR = Math.Round(((cumulative.LoadTime - cumulative.Nop2) / cumulative.LoadTime) * 100, 2);
 
-                    cumulativeList.Add(cumulative);
+
+
 
                     g1.AutoGenerateColumns = false;
 

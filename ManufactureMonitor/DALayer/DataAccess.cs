@@ -1623,7 +1623,8 @@ namespace ManufactureMonitor.DALayer
             return dt;
         }
 
-        public List<TimeSequence> GetStopDetails(int machine, int Shift_Id, String from, String to, String date, bool Speedloss)
+        public List<TimeSequence> GetStopDetails(int machine, int Shift_Id, String from, String to, 
+            String date, bool Speedloss)
         {
 
             SqlConnection cn;
@@ -1643,7 +1644,7 @@ namespace ManufactureMonitor.DALayer
                         Stops.Machine_Id       
                         from Stops                           
                         inner join CommonProblems on CommonProblems.Code = Stops.Code
-                        where [Start] >= '{1}' and [End] < '{2}' and Stops.Machine_Id = {0}
+                        where [Start] >= '{1}' and [Start] <= '{2}' and [End] >='{1}' and [End] < '{2}' and Stops.Machine_Id = {0}
 
                         union
 
@@ -1656,7 +1657,7 @@ namespace ManufactureMonitor.DALayer
                         Stops.Machine_Id    
                         from Stops                               
                         inner join SpecificProblems on SpecificProblems.Code = Stops.Code and Stops.Machine_Id = SpecificProblems.Machine_Id 
-                        where [Start] >= '{1}' and [End] < '{2}' and Stops.Machine_Id={0} 
+                        where [Start] >= '{1}' and [Start] <= '{2}' and [End] >='{1}' and [End] < '{2}' and Stops.Machine_Id={0} 
 
                         union
  
@@ -1669,7 +1670,7 @@ namespace ManufactureMonitor.DALayer
                         OFFs.Machine_Id    
                         from OFFs                               
                         inner join SpecificProblems on SpecificProblems.Code = OFFs.Code and OFFs.Machine_Id = SpecificProblems.Machine_Id 
-                        where [Start] >= '{1}' and [End] < '{2}' and OFFs.Machine_Id={0}
+                        where [Start] >= '{1}' and [Start] <= '{2}' and [End] >='{1}' and [End] < '{2}' and OFFs.Machine_Id={0}
 
                         union
 
@@ -1682,7 +1683,7 @@ namespace ManufactureMonitor.DALayer
                         OFFs.Machine_Id    
                         from OFFs                               
                         inner join CommonProblems on CommonProblems.Code = OFFs.Code
-                        where [Start] >= '{1}' and [End] < '{2}' and OFFs.Machine_Id = {0} ";
+                        where [Start] >= '{1}' and [Start] <= '{2}' and [End] >='{1}' and [End] < '{2}' and OFFs.Machine_Id = {0} ";
 
             if (Speedloss)
             {
