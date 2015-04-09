@@ -113,7 +113,7 @@ namespace ManufactureMonitor
 
                         b = new BoundField();
                         b.DataField = "Actual";
-                        b.HeaderText = "OK Pieces";
+                        b.HeaderText = "Actual Pieces";
                         g.Columns.Add(b);
 
                         b = new BoundField();
@@ -223,7 +223,7 @@ namespace ManufactureMonitor
 
                             b1 = new BoundField();
                             b1.DataField = "Actual";
-                            b1.HeaderText = "OK Pieces";
+                            b1.HeaderText = "Actual Pieces";
                             g1.Columns.Add(b1);
 
                             b1 = new BoundField();

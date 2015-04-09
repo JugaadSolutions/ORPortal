@@ -104,7 +104,7 @@ namespace ManufactureMonitor
 
                 StringBuilder sBuilder = new System.Text.StringBuilder();
 
-                sBuilder.Append("Date,OK Pieces,Scraps,Load Time/ Available Time [s],Non-Operation Time 1 / Machine Related [s] ,Non-Operation Time 2 / Other Than Machine Related [s],Undefined [s],Idle Time/ Exclude Hour [s],KADOURITSU/ Operation Ratio [%] ,BEKADOURITSU/ Operational Availability [%] ");
+                sBuilder.Append("Date,Actual Pieces,Scraps,Load Time/ Available Time [s],Non-Operation Time 1 / Machine Related [s] ,Non-Operation Time 2 / Other Than Machine Related [s],Undefined [s],Idle Time/ Exclude Hour [s],KADOURITSU/ Operation Ratio [%] ,BEKADOURITSU/ Operational Availability [%] ");
 
                 sBuilder.Append("\r\n");
 

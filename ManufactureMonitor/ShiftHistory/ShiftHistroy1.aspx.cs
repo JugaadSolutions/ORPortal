@@ -173,7 +173,7 @@ namespace ManufactureMonitor
             Response.ContentType = "application/text";
             StringBuilder sBuilder = new System.Text.StringBuilder();
 
-            sBuilder.Append("Date,From,To,Project/Model,Plan Cycle Time[s],OK Pieces,Scraps,Load Time/Available Time[s], Non-Operation Time 1/Other than Machine[s],"
+            sBuilder.Append("Date,From,To,Project/Model,Plan Cycle Time[s],Actual Pieces,Scraps,Load Time/Available Time[s], Non-Operation Time 1/Other than Machine[s],"
                 + "Non-Operation Time 2/Machine Related[s], Undefined, Idle Time/Exclude Hour[s], KADOURITSU/Operation Ratio[%],"
             + "Bekadouritsu/Operational Availability[s]");
 
@@ -213,7 +213,7 @@ namespace ManufactureMonitor
             Response.ContentType = "application/text";
             StringBuilder sBuilder = new System.Text.StringBuilder();
 
-            sBuilder.Append("Date,Project/Model,Plan Cycle Time[s],OK Pieces,Scraps,Load Time/Available Time[s], Non-Operation Time 1/Machine Related[s],"
+            sBuilder.Append("Date,Project/Model,Plan Cycle Time[s],Actual Pieces,Scraps,Load Time/Available Time[s], Non-Operation Time 1/Machine Related[s],"
                 + "Non-Operation Time 2/Other than Machine[s], Undefined, Idle Time/Exclude Hour[s], KADOURITSU/Operation Ratio[%],"
             + "Bekadouritsu/Operational Availability[s]");
 
