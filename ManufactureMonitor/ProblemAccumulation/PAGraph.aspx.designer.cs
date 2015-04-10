@@ -10,7 +10,7 @@
 namespace ManufactureMonitor {
     
     
-    public partial class OR_OAGraph {
+    public partial class PAGraph {
         
         /// <summary>
         /// Div1 control.
@@ -22,12 +22,12 @@ namespace ManufactureMonitor {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div1;
         
         /// <summary>
-        /// ReportDataPlaceHolder control.
+        /// PieChartPlaceHolder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder ReportDataPlaceHolder;
+        protected global::System.Web.UI.WebControls.PlaceHolder PieChartPlaceHolder;
     }
 }

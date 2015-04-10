@@ -139,11 +139,13 @@
     <Content Include="Images\OrangeSmiley_small.PNG" />
     <Content Include="Images\OrangeTriangle.PNG" />
     <Content Include="Images\ORANGE_SmiLEY.png" />
+    <Content Include="Images\pie_chart_yellow.png" />
     <Content Include="Images\REDSMILEY_small.PNG" />
     <Content Include="Images\redTriangle.PNG" />
     <Content Include="Images\RED_SMILEY.png" />
     <Content Include="Images\STOP.png" />
     <Content Include="Images\whiteTriangle .png" />
+    <Content Include="ProblemAccumulation\PAGraph.aspx" />
     <Content Include="Scripts\Gruntfile.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.custom.js" />
@@ -350,6 +352,13 @@
     <Compile Include="Entity\Stop.cs" />
     <Compile Include="Entity\StopTimeoutArgs.cs" />
     <Compile Include="Entity\TimeSequence.cs" />
+    <Compile Include="ProblemAccumulation\PAGraph.aspx.cs">
+      <DependentUpon>PAGraph.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProblemAccumulation\PAGraph.aspx.designer.cs">
+      <DependentUpon>PAGraph.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Projects\ProjectAssignment1.aspx.cs">
       <DependentUpon>ProjectAssignment1.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

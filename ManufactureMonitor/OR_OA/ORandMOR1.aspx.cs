@@ -182,8 +182,40 @@ namespace ManufactureMonitor
 
                     }
 
+                    foreach (ShiftHistory s in cumulativeList)
+                    {
+                        if (Project != "")
+                        {
+                            if (s.Project != Project)
+                                continue;
+                        }
+                        //temp.CycleTime += s.CycleTime;
+                        cumulative.Actual += s.Actual;
+                        cumulative.KR += s.CycleTime * s.Actual;
+                        cumulative.Scraps += s.Scraps;
+                        cumulative.LoadTime += s.LoadTime;
+                        cumulative.Nop1 += s.Nop1;
+                        cumulative.Nop2 += s.Nop2;
+                        cumulative.Idle += s.Idle;
+                        cumulative.Undefined += s.Undefined;
+                    }
 
 
+
+                    cumulative.KR = (cumulative.KR / cumulative.LoadTime) * 100;
+
+                    cumulative.KR = Math.Round(cumulative.KR, 2);
+
+                    cumulative.BKR = ((cumulative.LoadTime - cumulative.Nop2) / cumulative.LoadTime) * 100;
+                    cumulative.BKR = Math.Round(cumulative.BKR, 2);
+
+
+
+
+
+
+                    cumulativeList.Clear();
+                    cumulativeList.Add(cumulative);
 
 
                     
@@ -201,7 +233,7 @@ namespace ManufactureMonitor
                         sBuilder.Append(tempList[i].BKR + ",");
                         sBuilder.Append("\r\n");
                     }
-                    fromDate = fromDate.AddDays(1);
+
                 }
                 GenerateAccumulationReport(sBuilder);
             }

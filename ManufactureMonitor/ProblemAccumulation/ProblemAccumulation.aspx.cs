@@ -212,5 +212,30 @@ namespace ManufactureMonitor
             Response.End();
         }
 
+        protected void PieGraph_Click(object sender, ImageClickEventArgs e)
+        {
+
+            if (validateSelection())
+            {
+                int ShiftId = -1;
+                String ShiftName = "All Shifts";
+                if (ShiftSelectionListBox.SelectedIndex != -1)
+                {
+                    ShiftId = (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"];
+                    ShiftName = (string)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Name"];
+                }
+                if (MachineSelectionListBox.SelectedIndex == -1)
+                    return;
+                Session["MachineName"] = dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"];
+                Response.Redirect("~/ProblemAccumulation/PAGraph.aspx?MachineGroupId=" + Session["MachineGroup"]
+                     + "&MachineId=" + (int)dt.Rows[MachineSelectionListBox.SelectedIndex]["Id"]
+                      + "&MachineName=" + dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"]
+                     + "&ShiftId=" + ShiftId
+                      + "&ShiftName=" + ShiftName
+                       + "&datefrom=" + datefrom.SelectedDate.ToShortDateString()
+                      + "&dateto=" + dateto.SelectedDate.ToShortDateString());
+            }
+        }
+
     }
 }
