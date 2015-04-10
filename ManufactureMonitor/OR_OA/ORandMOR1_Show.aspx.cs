@@ -208,6 +208,27 @@ namespace ManufactureMonitor
                         cumulative.Undefined += s.Undefined;
                     }
 
+                    
+                  
+                    cumulative.KR = (cumulative.KR / cumulative.LoadTime) * 100;
+
+                    cumulative.KR = Math.Round(cumulative.KR, 2);
+
+                    cumulative.BKR = ((cumulative.LoadTime - cumulative.Nop2) / cumulative.LoadTime) * 100;
+                    cumulative.BKR = Math.Round(cumulative.BKR, 2);
+
+
+
+
+
+
+                    cumulativeList.Clear();
+                    cumulativeList.Add(cumulative);
+
+
+
+
+
                     #region GRID_COLUMNS
 
                     GridView g1 = new GridView();
@@ -266,27 +287,6 @@ namespace ManufactureMonitor
                     b1.HeaderText = "BEKADOURITSU/ Operational Availability [%] ";
                     g1.Columns.Add(b1);
                     #endregion
-                  
-                    cumulative.KR = (cumulative.KR / cumulative.LoadTime) * 100;
-
-                    cumulative.KR = Math.Round(cumulative.KR, 2);
-
-                    cumulative.BKR = ((cumulative.LoadTime - cumulative.Nop2) / cumulative.LoadTime) * 100;
-                    cumulative.BKR = Math.Round(cumulative.BKR, 2);
-
-
-
-
-
-
-                    cumulativeList.Clear();
-                    cumulativeList.Add(cumulative);
-                   
-
-
-
-
-
 
 
                     TextBox Total = new TextBox();

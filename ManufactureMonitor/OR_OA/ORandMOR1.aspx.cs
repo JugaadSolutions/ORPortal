@@ -111,15 +111,25 @@ namespace ManufactureMonitor
 
                 while (fromDate <= toDate)
                 {
-                    List<ShiftHistory> tempList = new List<ShiftHistory>();
+
+
+
+
+                   
+
                     sh = new List<ShiftHistory>();
 
-                    ShiftHistory temp = new ShiftHistory();
+                    ShiftHistory cumulative = new ShiftHistory();
+                    List<ShiftHistory> cumulativeList = new List<ShiftHistory>();
+
                     dt = da.GetShiftTimings(machineId, ShiftId);
 
+                   
+                    List<ShiftHistory> tempList = new List<ShiftHistory>();
                     for (int i = 0; i < dt.Rows.Count; i++)
                     {
 
+                        ShiftHistory temp = new ShiftHistory();
 
 
                         DateTime from = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + dt.Rows[i]["Start"]);
@@ -131,41 +141,49 @@ namespace ManufactureMonitor
                         temp.Date = from.ToString("dd-MMM-yyyy");
 
 
-                        sh.AddRange( da.GetShiftHistory(machineId, from.ToString("yyyy-MM-dd HH:mm:ss"),
+                        sh = da.GetShiftHistory(machineId, from.ToString("yyyy-MM-dd HH:mm:ss"),
                                 to.ToString("yyyy-MM-dd HH:mm:ss"), from.ToString("dd-MM-yyyy")
-                                ));
+                                );
 
-                      
+                        cumulativeList.AddRange(sh);
 
-                    }
-
-                    foreach (ShiftHistory s in sh)
-                    {
-                        if (Project != "")
+                        foreach (ShiftHistory s in sh)
                         {
-                            if (s.Project != Project)
-                                continue;
+                            if (Project != "")
+                            {
+                                if (s.Project != Project)
+                                    continue;
+                            }
+                            //temp.CycleTime += s.CycleTime;
+                            temp.Actual += s.Actual;
+                            temp.KR += s.CycleTime * s.Actual;
+                            temp.Scraps += s.Scraps;
+                            temp.LoadTime += s.LoadTime;
+                            temp.Nop1 += s.Nop1;
+                            temp.Nop2 += s.Nop2;
+                            temp.Idle += s.Idle;
+                            temp.Undefined += s.Undefined;
                         }
-                        temp.CycleTime += s.CycleTime;
-                        temp.Actual += s.Actual;
-                        temp.Scraps += s.Scraps;
-                        temp.LoadTime += s.LoadTime;
-                        temp.Nop1 += s.Nop1;
-                        temp.Nop2 += s.Nop2;
-                        temp.Idle += s.Idle;
-                        temp.Undefined += s.Undefined;
+
+                        double kr = (temp.KR / temp.LoadTime) * 100;
+
+                        temp.KR = Math.Round(kr, 2);
+
+                        double bkr = ((temp.LoadTime - temp.Nop2) / temp.LoadTime) * 100;
+                        temp.BKR = Math.Round(bkr, 2);
+
+
+                        tempList.Add(temp);
+
+
+
+
+
 
                     }
-                    double kr = ((temp.CycleTime * temp.Actual) / temp.LoadTime) * 100;
 
-                    temp.KR = Math.Round(kr, 2);
 
-                    double bkr = ((temp.LoadTime - temp.Nop1) / temp.LoadTime) * 100;
-                    temp.BKR = Math.Round(bkr, 2);
 
-                    tempList.Add(temp);
-
-                    fromDate = fromDate.AddDays(1);
 
 
                     
@@ -183,7 +201,7 @@ namespace ManufactureMonitor
                         sBuilder.Append(tempList[i].BKR + ",");
                         sBuilder.Append("\r\n");
                     }
-
+                    fromDate = fromDate.AddDays(1);
                 }
                 GenerateAccumulationReport(sBuilder);
             }
