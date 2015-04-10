@@ -1996,15 +1996,12 @@ namespace ManufactureMonitor.DALayer
 
                 dt.Rows[i]["LoadTime"] = LoadTime - OffDuration;
 
-                double Kadouritsu = (((int)dt.Rows[i]["OK"] * (double)dt.Rows[i]["CycleTime"])
+                double Kadouritsu = (((double)dt.Rows[i]["OK"] * (double)dt.Rows[i]["CycleTime"])
                     / LoadTime) * 100;
                 dt.Rows[i]["KR"] = Math.Round(Kadouritsu, 2);
 
                 double Bekadouritsu = ((LoadTime - Nop2) / LoadTime) * 100;
                 dt.Rows[i]["BKR"] = Math.Round(Bekadouritsu, 2);
-
-
-
 
             }
 
