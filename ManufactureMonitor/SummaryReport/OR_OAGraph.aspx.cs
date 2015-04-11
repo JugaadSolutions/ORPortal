@@ -17,9 +17,9 @@ namespace ManufactureMonitor
         //static DataTable dt;
         Chart Chart1;
         static String Project = "";
-        static DataTable dt, dt1;
-        static List<ShiftHistory> sh;
-        static List<ShiftHistory_Summary> shProject;
+        static DataTable dt;
+        DataAnalyzer DZ;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             ((Label)Master.FindControl("MasterPageLabel")).Text = "OR  " + Session["MachineName"];
@@ -36,6 +36,16 @@ namespace ManufactureMonitor
                 Project = Request.QueryString["Project"];
 
                 List<ShiftHistory> tempList = new List<ShiftHistory>();
+
+                 DZ = new DataAnalyzer(machineId);
+
+                ShiftCollection Shifts = da.getShifts(machineId);
+                foreach (Shift shift in Shifts)
+                {
+                    shift.Breaks = da.GetBreaks(shift.ID, machineId);
+                    shift.Sessions = da.getSessions(shift.ID, machineId);
+                }
+
                 while (fromDate <= toDate)
                 {
                     ShiftHistory temp = new ShiftHistory();
@@ -54,38 +64,39 @@ namespace ManufactureMonitor
 
                         temp.Date = from.ToString("dd-MMM-yyyy");
 
+                         Shift Shift = Shifts.getShift(from, to);
+                        Shift.StartTime = from.ToString("yyyy-MM-dd HH:mm:ss");
+                        Shift.EndTime = to.ToString("yyyy-MM-dd HH:mm:ss");
+                        Shift.Date = from;
 
-                        sh = da.GetShiftHistory(machineId, from.ToString("yyyy-MM-dd HH:mm:ss"),
-                                to.ToString("yyyy-MM-dd HH:mm:ss"),from.ToString("dd-MM-yyyy")
-                                );
+                        DZ.CalculateShiftHistory(Shift);
 
-                        foreach (ShiftHistory s in sh)
+                        foreach (ShiftHistory s in DZ.ShiftHistoryList)
                         {
                             if (Project != "")
                             {
                                 if (s.Project != Project)
                                     continue;
                             }
-                            temp.CycleTime += s.CycleTime;
+                            //temp.CycleTime += s.CycleTime;
                             temp.Actual += s.Actual;
+                            temp.Scraps += s.Scraps;
+                            temp.OK += s.Actual - s.Scraps;
+                            temp.KR += s.CycleTime * (s.Actual - s.Scraps) ;
                             temp.Scraps += s.Scraps;
                             temp.LoadTime += s.LoadTime;
                             temp.Nop1 += s.Nop1;
                             temp.Nop2 += s.Nop2;
                             temp.Idle += s.Idle;
                             temp.Undefined += s.Undefined;
-
                         }
-                        double kr = ((temp.CycleTime * temp.Actual) / temp.LoadTime) * 100;
+
+                        double kr = (temp.KR / temp.LoadTime) * 100;
 
                         temp.KR = Math.Round(kr, 2);
 
-                        double bkr = ((temp.LoadTime - temp.Nop1) / temp.LoadTime) * 100;
+                        double bkr = ((temp.LoadTime - temp.Nop2) / temp.LoadTime) * 100;
                         temp.BKR = Math.Round(bkr, 2);
-
-
-
-
 
                         tempList.Add(temp);
 
@@ -107,10 +118,10 @@ namespace ManufactureMonitor
                     cumulative.Idle += s.Idle;
                     cumulative.Undefined += s.Undefined;
                     cumulative.KR += ((s.Actual * s.CycleTime));
-                    cumulative.BKR += ((s.LoadTime - s.Nop1));
+                   
                 }
                 cumulative.KR = Math.Round(((cumulative.CycleTime * cumulative.Actual) / cumulative.LoadTime) * 100, 2);
-                cumulative.BKR = Math.Round(((cumulative.LoadTime - cumulative.Nop1) / cumulative.LoadTime) * 100, 2);
+                cumulative.BKR = Math.Round(((cumulative.LoadTime - cumulative.Nop2) / cumulative.LoadTime) * 100, 2);
                 cumulativeList.Add(cumulative);
                
                 Chart1 = new Chart();

@@ -60,7 +60,7 @@ namespace ManufactureMonitor.Entity
                 
             }
             su.KR = Math.Round((su.KR / su.LoadTime )* 100, 2);
-            su.BKR = Math.Round((su.BKR / su.LoadTime) * 100, 2);
+            su.BKR = Math.Round(((su.LoadTime - su.Nop2) / su.LoadTime) * 100, 2);
 
             return su;
         }
@@ -94,7 +94,7 @@ namespace ManufactureMonitor.Entity
             }
             
             KR = Math.Round(((Actual * CycleTime) / LoadTime) * 100,2);
-            BKR = Math.Round(((LoadTime - Nop1) / LoadTime) * 100,2);
+            BKR = Math.Round(((LoadTime - Nop2) / LoadTime) * 100,2);
         }
         public string Project { get; set; }
         public double CycleTime { get; set; }

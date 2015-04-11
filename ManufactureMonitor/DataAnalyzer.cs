@@ -12,13 +12,15 @@ namespace ManufactureMonitor
     {
         DataAccess da;
 
-        DataTable OffSessions;
+        List<Session> OffSessions;
         DataTable ProjectSessions;
         
         
 
         public List<ShiftHistory> ShiftHistoryList;
         public List<ShiftHistory_Summary> ShSummary;
+
+        public List<ProblemAccumulationRecord> ProblemAccumulationList;
 
         List<Session> OnSessions;
         int machine;
@@ -27,7 +29,6 @@ namespace ManufactureMonitor
         {
             da = new DataAccess();
 
-            
             this.machine = machine;
         }
 
@@ -51,46 +52,12 @@ namespace ManufactureMonitor
                 DateTime ProjectSessionStart = (DateTime)ProjectSessions.Rows[i]["Start"];
                 DateTime ProjectSessionEnd = (DateTime)ProjectSessions.Rows[i]["End"];
 
-                OffSessions = da.GetOffs(machine, Shift, ProjectSessionStart, ProjectSessionEnd);
-                OnSessions = new List<Session>();
+                CalculateOffOnSessions(ProjectSessionStart, ProjectSessionEnd);
 
-                Session FirstSession = new Session();
-                FirstSession.StartTime = ProjectSessionStart.ToString("yyyy-MM-dd HH:mm:ss");
-
-                if (OffSessions.Rows.Count > 0)
-                {
-                    FirstSession.EndTime = ((DateTime)OffSessions.Rows[i]["Start"]).ToString("yyyy-MM-dd HH:mm:ss");
-
-                    OnSessions.Add(FirstSession);
-
-                    for (int k = 0; k < OffSessions.Rows.Count; k++)
-                    {
-                        ShiftHistory.Idle += Shift.getActiveDuration((DateTime)OffSessions.Rows[i]["Start"],
-                            ((DateTime)OffSessions.Rows[i]["End"]));
-                    }
-
-                    for (int j = 1; j < OffSessions.Rows.Count; j++)
-                    {
-                        Session OnSession = new Session();
-                        OnSession.StartTime = ((DateTime)OffSessions.Rows[j - 1]["End"]).ToString("yyyy-MM-dd HH:mm:ss");
-                        OnSession.EndTime = ((DateTime)OffSessions.Rows[j]["Start"]).ToString("yyyy-MM-dd HH:mm:ss");
-
-                        OnSessions.Add(OnSession);
-                    }
-
-                    Session LastSession = new Session();
-                    LastSession.StartTime = ((DateTime)OffSessions.Rows[i - 1]["End"]).ToString("yyyy-MM-dd HH:mm:ss");
-                    LastSession.EndTime = ProjectSessionEnd.ToString("yyyy-MM-dd HH:mm:ss");
-
-                    OnSessions.Add(LastSession);
-                }
-                else
-                {
-                    FirstSession.EndTime = ProjectSessionEnd.ToString("yyyy-MM-dd HH:mm:ss");
-                    OnSessions.Add(FirstSession);
-                }
-
-
+                 foreach( Session session in OffSessions )
+                 {
+                     ShiftHistory.Idle += Shift.getActiveDuration(DateTime.Parse(session.StartTime), DateTime.Parse(session.EndTime));
+                 }
                 foreach( Session se in OnSessions)
                 {
                     DateTime start = DateTime.Parse(se.StartTime);
@@ -105,8 +72,6 @@ namespace ManufactureMonitor
                 ShiftHistory.OK = ShiftHistory.Actual - ShiftHistory.Scraps;
                 ShiftHistory.KR = Math.Round(((ShiftHistory.OK * ShiftHistory.CycleTime) / ShiftHistory.LoadTime) * 100,2);
                 ShiftHistory.BKR = Math.Round(((ShiftHistory.LoadTime - ShiftHistory.Nop2) / ShiftHistory.LoadTime) * 100,2);
-
-
 
                 ShiftHistoryList.Add(ShiftHistory);
                 
@@ -141,7 +106,77 @@ namespace ManufactureMonitor
             }
         }
 
+        public void CalculateProblemAccumulation(Shift Shift)
+        {
+            ProblemAccumulationList = new List<ProblemAccumulationRecord>();
 
+            ProjectSessions = da.GetProjectSessions(machine, Shift);
+
+            for (int i = 0; i < ProjectSessions.Rows.Count; i++)
+            {
+                DateTime ProjectSessionStart = (DateTime)ProjectSessions.Rows[i]["Start"];
+                DateTime ProjectSessionEnd = (DateTime)ProjectSessions.Rows[i]["End"];
+
+                CalculateOffOnSessions(ProjectSessionStart, ProjectSessionEnd);
+
+
+            }
+        }
+
+        void CalculateOffOnSessions(DateTime ProjectSessionStart, DateTime ProjectSessionEnd)
+        {
+
+              OffSessions = da.GetOffs(machine,  ProjectSessionStart, ProjectSessionEnd);
+              OnSessions = new List<Session>();
+
+                foreach (Session session in OffSessions)
+                {
+                    if (DateTime.Parse(session.StartTime) < ProjectSessionStart)
+                        session.StartTime = ProjectSessionStart.ToString("yyyy-MM-dd HH:mm:ss");
+
+
+                    if (DateTime.Parse(session.EndTime) > ProjectSessionEnd)
+                        session.EndTime = ProjectSessionEnd.ToString("yyyy-MM-dd HH:mm:ss");
+                }
+
+                Session FirstSession = new Session();
+                FirstSession.StartTime = ProjectSessionStart.ToString("yyyy-MM-dd HH:mm:ss");
+
+                if (OffSessions.Count > 0)
+                {
+
+
+                    FirstSession.EndTime = (DateTime.Parse(OffSessions[0].StartTime)).ToString("yyyy-MM-dd HH:mm:ss");
+
+                    OnSessions.Add(FirstSession);
+
+
+                    int j;
+                    for (j = 1; j < OffSessions.Count; j++)
+                    {
+                        Session OnSession = new Session();
+                        OnSession.StartTime = (DateTime.Parse(OffSessions[j - 1].EndTime).ToString("yyyy-MM-dd HH:mm:ss"));
+                        OnSession.EndTime = (DateTime.Parse(OffSessions[j - 1].StartTime).ToString("yyyy-MM-dd HH:mm:ss"));
+
+                        OnSessions.Add(OnSession);
+                    }
+
+                    Session LastSession = new Session();
+                    LastSession.StartTime = (DateTime.Parse(OffSessions[j - 1].EndTime).ToString("yyyy-MM-dd HH:mm:ss"));
+                    LastSession.EndTime = ProjectSessionEnd.ToString("yyyy-MM-dd HH:mm:ss");
+
+
+                    OnSessions.Add(LastSession);
+                }
+                else
+                {
+                    FirstSession.EndTime = ProjectSessionEnd.ToString("yyyy-MM-dd HH:mm:ss");
+                    OnSessions.Add(FirstSession);
+                }
+
+
+
+        }
 
 
 

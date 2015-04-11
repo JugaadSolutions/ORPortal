@@ -13,9 +13,7 @@ namespace ManufactureMonitor
 {
     public partial class ShiftHistroy_Show : System.Web.UI.Page
     {
-        static DataTable dt,dt1;
-        static List<ShiftHistory> Sh;
-        static List<ShiftHistory_Summary> shSummary;
+        DataTable dt;
         static bool summary;
         
         List<ShiftHistory> tempList;
@@ -315,11 +313,11 @@ namespace ManufactureMonitor
                                     temp.Idle += sh.Idle;
                                     temp.Undefined += sh.Undefined;
                                     temp.KR += ((sh.Actual * sh.CycleTime));
-                                    temp.BKR += ((sh.LoadTime - sh.Nop1));
+                                    
                                 }
 
                                 temp.KR = Math.Round((temp.KR / temp.LoadTime) * 100, 2);
-                                temp.BKR = Math.Round((temp.BKR / temp.LoadTime) * 100, 2);
+                                temp.BKR = Math.Round(((temp.LoadTime - temp.Nop2) / temp.LoadTime) * 100, 2);
                                 tempList.Add(temp);
 
                                 
@@ -340,10 +338,30 @@ namespace ManufactureMonitor
                             }
                             else
                             {
-                                ShiftHistory_Summary sTemp = ShiftHistory_Summary.ShiftHistory_SummaryTotal(DZ.ShSummary);
+                                ShiftHistory_Summary sTemp = new ShiftHistory_Summary();
                                 List<ShiftHistory_Summary> sList = new List<ShiftHistory_Summary>();
 
+                                
+
+                                foreach (ShiftHistory sh in DZ.ShiftHistoryList)
+                                {
+
+                                    sTemp.Actual += sh.Actual;
+                                    sTemp.Scraps += sh.Scraps;
+                                    sTemp.LoadTime += sh.LoadTime;
+                                    sTemp.Nop1 += sh.Nop1;
+                                    sTemp.Nop2 += sh.Nop2;
+                                    sTemp.Idle += sh.Idle;
+                                    sTemp.Undefined += sh.Undefined;
+                                    sTemp.KR += ((sh.Actual * sh.CycleTime));
+
+                                }
+
+                                sTemp.KR = Math.Round((sTemp.KR / sTemp.LoadTime) * 100, 2);
+                                sTemp.BKR = Math.Round(((sTemp.LoadTime - sTemp.Nop2) / sTemp.LoadTime) * 100, 2);
                                 sList.Add(sTemp);
+
+                               
 
                                 
 

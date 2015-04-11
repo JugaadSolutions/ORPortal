@@ -79,12 +79,12 @@ namespace ManufactureMonitor
                         temp.Nop2 += sh.Nop2;
                         temp.Idle += sh.Idle;
                         temp.Undefined += sh.Undefined;
-                        temp.KR += ((sh.Actual * sh.CycleTime));
-                        temp.BKR += ((sh.LoadTime - sh.Nop1));
+                        temp.KR += ((sh.Actual - sh.Scraps) * sh.CycleTime);
+                       
                     }
 
                     temp.KR = Math.Round((temp.KR / temp.LoadTime) * 100, 2);
-                    temp.BKR = Math.Round((temp.BKR / temp.LoadTime) * 100, 2);
+                    temp.BKR = Math.Round(((temp.LoadTime - temp.Nop2) / temp.LoadTime) * 100, 2);
                     tempList.Add(temp);
 
 
@@ -168,44 +168,7 @@ namespace ManufactureMonitor
             
             
             
-            /*Graph of  Stacked column*/
-            
-            //Chart2 = new Chart();
-            //Chart2.ImageLocation = @"~/Charts_1";
-            //Chart2.ImageStorageMode = ImageStorageMode.UseImageLocation;
-            //Chart2.ImageType = ChartImageType.Png;
-            //Chart2.Width = 500;
-            //Chart2.Height = 500;
-
-            //ChartArea area1 = new ChartArea("MainArea1");
-            //Series series1 = new Series("Series2");
-
-            //series1.ChartType = SeriesChartType.StackedColumn;
-            //series1.ChartArea = "MainArea1";
-            //series1.IsValueShownAsLabel = true;
-            //DateTime day = DateTime.Parse(Request.QueryString["datefrom"]);
-
-            //series1.Points.AddXY("", 100);
           
-
-            //Chart2.ChartAreas.Add(area1);
-            //Chart2.Series.Add(series1);
-            //Chart2.ChartAreas["MainArea1"].AxisX.Interval = 1;
-
-            //Chart2.ChartAreas["MainArea1"].AxisX.Title = (String)Session["MachineName"];
-            //Chart2.ChartAreas["MainArea1"].AxisX.IsLabelAutoFit = true;
-
-            //Chart2.ChartAreas["MainArea1"].AxisY.Interval = 10;
-
-            //Chart2.ChartAreas["MainArea1"].AxisY.Title = " ";
-
-            //Chart2.ChartAreas["MainArea1"].AxisX.LabelStyle.Angle = -45;
-
-            //Chart2.ChartAreas["MainArea1"].AxisX.MajorGrid.Enabled = false;
-            //Chart2.ChartAreas["MainArea1"].AxisY.MajorGrid.Enabled = false;
-            //Chart2.Legends.Add(new Legend("Default") { Docking = Docking.Right });
-            //StackedDataPlaceHolder.Controls.Add(Chart2);
-            
            
         }
         

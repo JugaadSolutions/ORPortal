@@ -118,7 +118,7 @@ namespace ManufactureMonitor
             DateTime Time1 = DateTime.Parse(Date.SelectedDate.ToString("yyyy-MM-dd") + " " + from);
             DateTime Time2 = DateTime.Parse(Date.SelectedDate.ToString("yyyy-MM-dd") + " " + to);
             DataAccess da = new DataAccess();
-            da.SetM_Off_Retro(MachineId,Time1,Time2);
+            da.SetM_Off_Retro(MachineId,Time1,Time2,Code);
             from1.Text = "";
             from2.Text = "";
             To1.Text = "";

@@ -1643,7 +1643,7 @@ namespace ManufactureMonitor.DALayer
                         'Common' as Source,
                         Stops.Machine_Id       
                         from Stops                           
-                        inner join CommonProblems on CommonProblems.Code = Stops.Code
+                        inner join CommonProblems on CommonProblems.Code = Stops.Code 
                         where [Start] >= '{1}' and [Start] <= '{2}' and [End] >='{1}' and [End] < '{2}' and Stops.Machine_Id = {0}
 
                         union
@@ -1656,7 +1656,8 @@ namespace ManufactureMonitor.DALayer
                         'Specific' as Source,
                         Stops.Machine_Id    
                         from Stops                               
-                        inner join SpecificProblems on SpecificProblems.Code = Stops.Code and Stops.Machine_Id = SpecificProblems.Machine_Id 
+                        inner join SpecificProblems on SpecificProblems.Code = Stops.Code 
+                         and Stops.Machine_Id = SpecificProblems.Machine_Id  
                         where [Start] >= '{1}' and [Start] <= '{2}' and [End] >='{1}' and [End] < '{2}' and Stops.Machine_Id={0} 
 
                         union
@@ -1670,7 +1671,8 @@ namespace ManufactureMonitor.DALayer
                         OFFs.Machine_Id    
                         from OFFs                               
                         inner join SpecificProblems on SpecificProblems.Code = OFFs.Code and OFFs.Machine_Id = SpecificProblems.Machine_Id 
-                        where [Start] >= '{1}' and [Start] <= '{2}' and [End] >='{1}' and [End] < '{2}' and OFFs.Machine_Id={0}
+                        where [Start] >= '{1}' and [Start] <= '{2}' and [End] >='{1}' and [End] < '{2}' 
+                        and OFFs.Machine_Id={0}
 
                         union
 
@@ -1683,7 +1685,8 @@ namespace ManufactureMonitor.DALayer
                         OFFs.Machine_Id    
                         from OFFs                               
                         inner join CommonProblems on CommonProblems.Code = OFFs.Code
-                        where [Start] >= '{1}' and [Start] <= '{2}' and [End] >='{1}' and [End] < '{2}' and OFFs.Machine_Id = {0} ";
+                        where [Start] >= '{1}' and [Start] <= '{2}' and [End] >='{1}' and [End] < '{2}' 
+                        and OFFs.Machine_Id = {0} ";
 
             if (Speedloss)
             {
@@ -2797,19 +2800,48 @@ namespace ManufactureMonitor.DALayer
 
             cn.Close();
         }
-        public void SetM_Off_Retro(int machine, DateTime from, DateTime to)
+        public void SetM_Off_Retro(int machine, DateTime from, DateTime to,int Code)
         {
             SqlConnection cn;
             SqlCommand cmd;
 
-            cn = new SqlConnection(connection);
-            String query = @" Update MachineInputs SET Valid='0'
-                            where (Machine_Id={0} and (timestamp>='{1}' and timestamp<='{2}'))";
-            query = String.Format(query, machine, from.ToString("yyyy-MM-dd HH:mm:ss"), to.ToString("yyyy-MM-dd HH:mm:ss"));
-            cn.Open();
-            cmd = new SqlCommand(query, cn);
+            List<Session> Offs = GetOffs(machine, from, to);
 
-            cmd.ExecuteNonQuery();
+            cn = new SqlConnection(connection);
+            cn.Open();
+
+            if (Offs.Count > 0)
+            {
+                String StartTime = from.ToString("yyyy-MM-dd HH:mm:ss"), EndTime = Offs[0].StartTime;
+                int i = 0;
+                do
+                {
+
+                    if (DateTime.Parse(Offs[i].StartTime) < from)
+                    {
+                        StartTime = Offs[i].EndTime;
+                        EndTime = Offs[i + 1].StartTime;
+                        i++;
+                        continue;
+                    }
+
+                    String query = @" Update MachineInputs SET Valid='0'
+                            where (Machine_Id={0} and (timestamp>='{1}' and timestamp<='{2}'))
+                            Insert into OFFs([Start],[End],Code,Status,Comment,Machine_Id)
+                            values('{1}','{2}',{3},'CLOSED','RETROACTIVE',{0})";
+                    query = String.Format(query, machine, StartTime, EndTime, Code);
+
+                    cmd = new SqlCommand(query, cn);
+
+                    cmd.ExecuteNonQuery();
+
+                    StartTime = Offs[i + 1].EndTime;
+                    //EndTime = Offs
+                }while(i < Offs.Count );
+            }
+
+
+
 
             cn.Close();
         }
@@ -2905,15 +2937,26 @@ namespace ManufactureMonitor.DALayer
             }
         }
 
-        public DataTable GetOffs(int machine, Shift Shift, DateTime ProjectSessionStart, DateTime ProjectSessionEnd)
+        public List<Session> GetOffs(int machine,  DateTime ProjectSessionStart, DateTime ProjectSessionEnd)
         {
             SqlConnection cn;
             SqlCommand cmd;
 
             cn = new SqlConnection(connection);
             String query = @"Select * from OFFs where Machine_Id = {0} 
-                            and [Start] >= '{2}' and [End] < '{3}'";
-            query = String.Format(query, machine, Shift, Shift.StartTime, Shift.EndTime);
+                         and [Start] <= '{1}' and [End] > '{1}' and [End] < '{2}'
+ 
+                         union
+ 
+                         Select * from OFFs where Machine_Id = 2 
+                         and [Start] > '{1}'  and [End] < '{2}'
+                         union
+ 
+                         select * from OFFs where Machine_Id = 2
+                         and [Start]> '{1}' and [Start] < '{2}' and [End] > '{2}'";
+
+            query = String.Format(query, machine, 
+                ProjectSessionStart.ToString("yyyy-MM-dd HH:mm:ss"), ProjectSessionEnd.ToString("yyyy-MM-dd HH:mm:ss"));
 
             cn.Open();
             cmd = new SqlCommand(query, cn);
@@ -2924,7 +2967,18 @@ namespace ManufactureMonitor.DALayer
             dr.Close();
             cn.Close();
 
-            return dt;
+            List<Session> OffSessions = new List<Session>();
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                Session s = new Session();
+                s.StartTime = ((DateTime)dt.Rows[i]["Start"]).ToString("yyyy-MM-dd HH:mm:ss");
+                s.EndTime = ((DateTime)dt.Rows[i]["End"]).ToString("yyyy-MM-dd HH:mm:ss");
+
+                OffSessions.Add(s);
+            }
+
+            return OffSessions;
         }
 
         public DataTable GetProjectSessions(int machine, Shift Shift )

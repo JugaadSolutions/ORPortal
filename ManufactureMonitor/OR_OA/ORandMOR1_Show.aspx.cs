@@ -16,9 +16,11 @@ namespace ManufactureMonitor
     public partial class ORandMOR1_Show : System.Web.UI.Page
     {
         static String Project = "";
-          static DataTable dt,dt1;
-        static List<ShiftHistory> sh;
-        static List<ShiftHistory_Summary> shProject;
+          static DataTable dt;
+     
+
+
+        DataAnalyzer DZ;
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -35,6 +37,16 @@ namespace ManufactureMonitor
                 int ShiftId = Convert.ToInt32(Request.QueryString["ShiftId"]);
                 String ShiftName = Request.QueryString["ShiftName"];
                 Project = Request.QueryString["Project"];
+
+
+                DZ = new DataAnalyzer(machineId);
+
+                ShiftCollection Shifts = da.getShifts(machineId);
+                foreach (Shift shift in Shifts)
+                {
+                    shift.Breaks = da.GetBreaks(shift.ID, machineId);
+                    shift.Sessions = da.getSessions(shift.ID, machineId);
+                }
 
                 while (fromDate <= toDate)
                 {
@@ -59,7 +71,7 @@ namespace ManufactureMonitor
 
 
                     
-                    sh = new List<ShiftHistory>();
+                   
 
                     ShiftHistory cumulative = new ShiftHistory();
                     List<ShiftHistory> cumulativeList = new List<ShiftHistory>();
@@ -124,6 +136,8 @@ namespace ManufactureMonitor
                     b.HeaderText = "BEKADOURITSU/ Operational Availability [%] ";
                     g.Columns.Add(b);
                     #endregion
+
+
                     List<ShiftHistory> tempList = new List<ShiftHistory>();
                     for (int i = 0; i < dt.Rows.Count; i++)
                     {
@@ -137,16 +151,20 @@ namespace ManufactureMonitor
                         if (to < from)
                             to = to.AddDays(1);
 
+                        Shift Shift = Shifts.getShift(from, to);
+                        Shift.StartTime = from.ToString("yyyy-MM-dd HH:mm:ss");
+                        Shift.EndTime = to.ToString("yyyy-MM-dd HH:mm:ss");
+                        Shift.Date = from;
+
                         temp.Date = from.ToString("dd-MMM-yyyy");
 
+                        DZ.CalculateShiftHistory(Shift);
 
-                        sh = da.GetShiftHistory(machineId, from.ToString("yyyy-MM-dd HH:mm:ss"),
-                                to.ToString("yyyy-MM-dd HH:mm:ss"), from.ToString("dd-MM-yyyy")
-                                );
+                       
 
-                        cumulativeList.AddRange(sh);
+                        cumulativeList.AddRange(DZ.ShiftHistoryList);
 
-                        foreach (ShiftHistory s in sh)
+                        foreach (ShiftHistory s in DZ.ShiftHistoryList)
                         {
                             if (Project != "")
                             {
@@ -155,7 +173,9 @@ namespace ManufactureMonitor
                             }
                             //temp.CycleTime += s.CycleTime;
                             temp.Actual += s.Actual;
-                            temp.KR += s.CycleTime * s.Actual;
+                            temp.Scraps += s.Scraps;
+                            temp.OK += s.Actual - s.Scraps;
+                            temp.KR += s.CycleTime * (s.Actual - s.Scraps);
                             temp.Scraps += s.Scraps;
                             temp.LoadTime += s.LoadTime;
                             temp.Nop1 += s.Nop1;
@@ -171,13 +191,7 @@ namespace ManufactureMonitor
                         double bkr = ((temp.LoadTime - temp.Nop2) / temp.LoadTime) * 100;
                         temp.BKR = Math.Round(bkr, 2);
 
-
                         tempList.Add(temp);
-
-                      
-
-
-
 
                     }
 

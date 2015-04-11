@@ -14,8 +14,8 @@ namespace ManufactureMonitor
     public partial class ShiftHistroy1 : System.Web.UI.Page
     {
         static DataTable dt, dt1;
-        static List<ShiftHistory> Sh;
-        static List<ShiftHistory_Summary> shSummary;
+
+        DataAnalyzer DZ;
         static bool summary;
         static String From;
         static String To;
@@ -30,6 +30,8 @@ namespace ManufactureMonitor
                 MachineSelectionListBox.DataSource = dt.DefaultView;
                 MachineSelectionListBox.DataValueField = "Machines";
                 MachineSelectionListBox.DataBind();
+
+                
 
             }
         }
@@ -106,9 +108,34 @@ namespace ManufactureMonitor
                     ShiftId = (int)dt1.Rows[ShiftSelectionListBox.SelectedIndex]["Id"];
 
                 }
+                DZ = new DataAnalyzer(machineId);
 
-                Sh = new List<ShiftHistory>();
-                shSummary = new List<ShiftHistory_Summary>();
+                ShiftCollection Shifts = da.getShifts(machineId);
+                foreach (Shift shift in Shifts)
+                {
+                    shift.Breaks = da.GetBreaks(shift.ID, machineId);
+                    shift.Sessions = da.getSessions(shift.ID, machineId);
+                }
+
+                StringBuilder sBuilder = new System.Text.StringBuilder();
+
+                if (!summary)
+                {
+
+                    sBuilder.Append("Date,From,To,Project/Model,Plan Cycle Time[s],Actual Pieces,Scraps,Load Time/Available Time[s], Non-Operation Time 1/Other than Machine[s],"
+                     + "Non-Operation Time 2/Machine Related[s], Undefined, Idle Time/Exclude Hour[s], KADOURITSU/Operation Ratio[%],"
+                     + "Bekadouritsu/Operational Availability[s]");
+                }
+                else
+                {
+                    sBuilder.Append("Date,Project/Model,Plan Cycle Time[s],Actual Pieces,Scraps,Load Time/Available Time[s], Non-Operation Time 1/Other than Machine[s],"
+                    + "Non-Operation Time 2/Machine Related[s], Undefined, Idle Time/Exclude Hour[s], KADOURITSU/Operation Ratio[%],"
+                    + "Bekadouritsu/Operational Availability[s]");
+                }
+
+
+                sBuilder.Append("\r\n");
+
                 while (fromDate < toDate)
                 {
                     DataTable shiftTimingsTable = da.GetShiftTimings(machineId, ShiftId);
@@ -122,48 +149,73 @@ namespace ManufactureMonitor
 
                         if (to < from)
                             to = to.AddDays(1);
+                        Shift Shift = Shifts.getShift(from, to);
+                        Shift.StartTime = from.ToString("yyyy-MM-dd HH:mm:ss");
+                        Shift.EndTime = to.ToString("yyyy-MM-dd HH:mm:ss");
+                        Shift.Date = from;
 
                         if (!summary)
                         {
+                            DZ.CalculateShiftHistory(Shift);
+                            foreach (ShiftHistory s in DZ.ShiftHistoryList)
+                            {
+                                sBuilder.Append(s.Date + ",");
+                                sBuilder.Append(s.From + ",");
+                                sBuilder.Append(s.To + ",");
+                                sBuilder.Append(s.Project + ",");
+                                sBuilder.Append(s.CycleTime + ",");
+                                sBuilder.Append(s.Actual + ",");
+                                sBuilder.Append(s.Scraps + ",");
+                                sBuilder.Append(s.LoadTime + ",");
+                                sBuilder.Append(s.Nop1 + ",");
+                                sBuilder.Append(s.Nop2 + ",");
+                                sBuilder.Append(s.Undefined + ",");
 
-                            Sh.AddRange(da.GetShiftHistory(machineId, from.ToString("yyyy-MM-dd HH:mm:ss"),
-                                to.ToString("yyyy-MM-dd HH:mm:ss"), from.ToString("dd-MM-yyyy")
-                                ));
-
-                            
+                                sBuilder.Append(s.Idle + ",");
+                                sBuilder.Append(s.KR + ",");
+                                sBuilder.Append(s.BKR);
+                                sBuilder.Append("\r\n");
+                            }
+                           
                         }
                         else
                         {
-                            shSummary.AddRange( da.GetShiftHistory_Summary(machineId, from.ToString("yyyy-MM-dd HH:mm:ss"),
-                                to.ToString("yyyy-MM-dd HH:mm:ss"), from.ToString("dd-MM-yyyy")
-                                ));
+                            DZ.CalculateShiftHistorySummary(Shift);
+                            foreach (ShiftHistory_Summary s in DZ.ShSummary)
+                            {
+                                sBuilder.Append(s.Date + ",");
+                              
+                                sBuilder.Append(s.Project + ",");
+                                sBuilder.Append(s.CycleTime + ",");
+                                sBuilder.Append(s.Actual + ",");
+                                sBuilder.Append(s.Scraps + ",");
+                                sBuilder.Append(s.LoadTime + ",");
+                                sBuilder.Append(s.Nop1 + ",");
+                                sBuilder.Append(s.Nop2 + ",");
+                                sBuilder.Append(s.Undefined + ",");
 
-                           
+                                sBuilder.Append(s.Idle + ",");
+                                sBuilder.Append(s.KR + ",");
+                                sBuilder.Append(s.BKR);
+                                sBuilder.Append("\r\n");
+                            }
                         }
+
+                        
                     }
 
 
                     fromDate = fromDate.AddDays(1);
                 }
-                if (!summary)
-                {
 
-
-
-                    GenerateShiftHistoryReport(Sh);
-                }
-                else
-                {
-
-
-                    GenerateShiftHistorySummaryReport(shSummary);
-                }
+                GenerateShiftHistoryReport(sBuilder);
+               
             }
                 
             
         }
 
-        void GenerateShiftHistoryReport(List<ShiftHistory> sh)
+        void GenerateShiftHistoryReport(StringBuilder sBuilder)
         {
             Response.Clear();
             Response.Buffer = true;
@@ -171,77 +223,17 @@ namespace ManufactureMonitor
                 + (String)dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"] + ".csv");
             Response.Charset = "";
             Response.ContentType = "application/text";
-            StringBuilder sBuilder = new System.Text.StringBuilder();
+          
 
-            sBuilder.Append("Date,From,To,Project/Model,Plan Cycle Time[s],Actual Pieces,Scraps,Load Time/Available Time[s], Non-Operation Time 1/Other than Machine[s],"
-                + "Non-Operation Time 2/Machine Related[s], Undefined, Idle Time/Exclude Hour[s], KADOURITSU/Operation Ratio[%],"
-            + "Bekadouritsu/Operational Availability[s]");
-
-            sBuilder.Append("\r\n");
-            foreach (ShiftHistory s in sh)
-            {
-                sBuilder.Append(s.Date + ",");
-                sBuilder.Append(s.From + ",");
-                sBuilder.Append(s.To + ",");
-                sBuilder.Append(s.Project + ",");
-                sBuilder.Append(s.CycleTime + ",");
-                sBuilder.Append(s.Actual + ",");
-                sBuilder.Append(s.Scraps + ",");
-                sBuilder.Append(s.LoadTime + ",");
-                sBuilder.Append(s.Nop1 + ",");
-                sBuilder.Append(s.Nop2 + ",");
-                sBuilder.Append(s.Undefined + ",");
-
-                sBuilder.Append(s.Idle + ",");
-                sBuilder.Append(s.KR + ",");
-                sBuilder.Append(s.BKR);
-                sBuilder.Append("\r\n");
-            }
+          
+            
 
             Response.Output.Write(sBuilder.ToString());
             Response.Flush();
             Response.End();
         }
 
-        void GenerateShiftHistorySummaryReport(List<ShiftHistory_Summary> Sh_Su)
-        {
-            Response.Clear();
-            Response.Buffer = true;
-            Response.AddHeader("content-disposition", "attachment;filename=ShiftHistoryProjectSummary"
-                + (String)dt.Rows[MachineSelectionListBox.SelectedIndex]["Machines"] + ".csv");
-            Response.Charset = "";
-            Response.ContentType = "application/text";
-            StringBuilder sBuilder = new System.Text.StringBuilder();
-
-            sBuilder.Append("Date,Project/Model,Plan Cycle Time[s],Actual Pieces,Scraps,Load Time/Available Time[s], Non-Operation Time 1/Machine Related[s],"
-                + "Non-Operation Time 2/Other than Machine[s], Undefined, Idle Time/Exclude Hour[s], KADOURITSU/Operation Ratio[%],"
-            + "Bekadouritsu/Operational Availability[s]");
-
-            sBuilder.Append("\r\n");
-            foreach (ShiftHistory_Summary s in Sh_Su)
-            {
-                sBuilder.Append(s.Date + ",");
-                sBuilder.Append(s.Project + ",");
-                sBuilder.Append(s.CycleTime + ",");
-                sBuilder.Append(s.Actual + ",");
-                sBuilder.Append(s.Scraps + ",");
-                sBuilder.Append(s.LoadTime + ",");
-                sBuilder.Append(s.Nop1 + ",");
-                sBuilder.Append(s.Nop2 + ",");
-                sBuilder.Append(s.Undefined + ",");
-
-                sBuilder.Append(s.Idle + ",");
-                sBuilder.Append(s.KR + ",");
-                sBuilder.Append(s.BKR);
-                sBuilder.Append("\r\n");
-            }
-
-            Response.Output.Write(sBuilder.ToString());
-            Response.Flush();
-            Response.End();
-        }
-
-
+      
         bool validateSelection()
         {
             

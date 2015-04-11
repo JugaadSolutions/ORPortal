@@ -94,6 +94,11 @@ namespace ManufactureMonitor
 
                             PARList.Add(par);
                         }
+
+                        ProblemAccumulationRecord pr = new ProblemAccumulationRecord();
+
+
+
                         double TotalDuration = 0;
                         foreach (ProblemAccumulationRecord p in PARList)
                         {

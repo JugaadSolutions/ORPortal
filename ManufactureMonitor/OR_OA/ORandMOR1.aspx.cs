@@ -14,7 +14,9 @@ namespace ManufactureMonitor
     public partial class ORandMOR1 : System.Web.UI.Page
     {
         static DataTable dt, dt1,dt2;
-        static List<ShiftHistory> sh;
+
+        DataAnalyzer DZ;
+
         static String Project = "";
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -109,15 +111,17 @@ namespace ManufactureMonitor
                 sBuilder.Append("\r\n");
 
 
+                DZ = new DataAnalyzer(machineId);
+
+                ShiftCollection Shifts = da.getShifts(machineId);
+                foreach (Shift shift in Shifts)
+                {
+                    shift.Breaks = da.GetBreaks(shift.ID, machineId);
+                    shift.Sessions = da.getSessions(shift.ID, machineId);
+                }
+
                 while (fromDate <= toDate)
                 {
-
-
-
-
-                   
-
-                    sh = new List<ShiftHistory>();
 
                     ShiftHistory cumulative = new ShiftHistory();
                     List<ShiftHistory> cumulativeList = new List<ShiftHistory>();
@@ -138,16 +142,20 @@ namespace ManufactureMonitor
                         if (to < from)
                             to = to.AddDays(1);
 
+                        Shift Shift = Shifts.getShift(from, to);
+                        Shift.StartTime = from.ToString("yyyy-MM-dd HH:mm:ss");
+                        Shift.EndTime = to.ToString("yyyy-MM-dd HH:mm:ss");
+                        Shift.Date = from;
+ 
+
                         temp.Date = from.ToString("dd-MMM-yyyy");
 
 
-                        sh = da.GetShiftHistory(machineId, from.ToString("yyyy-MM-dd HH:mm:ss"),
-                                to.ToString("yyyy-MM-dd HH:mm:ss"), from.ToString("dd-MM-yyyy")
-                                );
+                        DZ.CalculateShiftHistory(Shift);
 
-                        cumulativeList.AddRange(sh);
+                        cumulativeList.AddRange(DZ.ShiftHistoryList);
 
-                        foreach (ShiftHistory s in sh)
+                        foreach (ShiftHistory s in DZ.ShiftHistoryList)
                         {
                             if (Project != "")
                             {
@@ -156,7 +164,9 @@ namespace ManufactureMonitor
                             }
                             //temp.CycleTime += s.CycleTime;
                             temp.Actual += s.Actual;
-                            temp.KR += s.CycleTime * s.Actual;
+                            temp.Scraps += s.Scraps;
+                            temp.OK += s.Actual - s.Scraps;
+                            temp.KR += s.CycleTime * (s.Actual - s.Scraps);
                             temp.Scraps += s.Scraps;
                             temp.LoadTime += s.LoadTime;
                             temp.Nop1 += s.Nop1;
@@ -172,6 +182,7 @@ namespace ManufactureMonitor
                         double bkr = ((temp.LoadTime - temp.Nop2) / temp.LoadTime) * 100;
                         temp.BKR = Math.Round(bkr, 2);
 
+                        
 
                         tempList.Add(temp);
 
