@@ -34,6 +34,8 @@ namespace ManufactureMonitor
 
                 List<ProblemAccumulationRecord> PARList = new List<ProblemAccumulationRecord>();
                 ProblemAccumulation = new Dictionary<int, List<TimeSequence>>();
+
+                ShiftCollection shifts = da.getShifts(machine);
                 while (fromDate < toDate)
                 {
                     dt = da.GetShiftTimings(machine, ShiftId);
@@ -42,10 +44,13 @@ namespace ManufactureMonitor
                         
                         DateTime from = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + dt.Rows[i]["Start"]);
                         DateTime to = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + dt.Rows[i]["End"]);
-                        
+
+                        Shift shift = shifts.getShift(from, to);
+                        shift.Breaks = da.getBreaks(shift.ID, machine);
+                        shift.Sessions = da.getSessions(shift.ID, machine);
 
                         List<TimeSequence> ts =
-                            da.GetStopDetails(machine, ShiftId, from.ToString("yyyy-MM-dd HH:mm:ss"),
+                            da.GetStopDetails(machine, shift, from.ToString("yyyy-MM-dd HH:mm:ss"),
                             to.ToString("yyyy-MM-dd HH:mm:ss"), from.ToString("dd-MM-yyyy"),
                             true);
 
@@ -100,7 +105,7 @@ namespace ManufactureMonitor
 
                     foreach (ProblemAccumulationRecord p in PARList)
                     {
-                        p.TimePercentage = Math.Round((p.TimeDuration / TotalDuration) * 100, 2);
+                        p.TimePercentage = (p.TimeDuration / TotalDuration) ;
                     }
 
 
@@ -118,6 +123,7 @@ namespace ManufactureMonitor
 
                 series.ChartArea = "MainArea";
                 series.IsValueShownAsLabel = true;
+                series.LabelFormat = "0.00%";
                 Random r = new Random(1);
                 foreach (ProblemAccumulationRecord p in PARList)
                 {
@@ -126,7 +132,7 @@ namespace ManufactureMonitor
                     
 
 
-                    series.Points.AddXY(p.ProblemDescription, p.TimePercentage);
+                    series.Points.AddXY(p.ProblemDescription + " -- " + Math.Round((p.TimePercentage)*100,2).ToString()+"%" , p.TimePercentage);
                 }
 
                 Chart1.ChartAreas.Add(area);

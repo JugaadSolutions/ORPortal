@@ -10,6 +10,8 @@ namespace ManufactureMonitor.Entity
     {
         public int ID { get; set; }
         public string Name { get; set; }
+        public DateTime Date;
+
         DateTime startTime;
         public string StartTime
         {

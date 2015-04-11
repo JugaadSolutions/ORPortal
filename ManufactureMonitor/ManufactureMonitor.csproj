@@ -366,6 +366,7 @@
     <Compile Include="Projects\ProjectAssignment1.aspx.designer.cs">
       <DependentUpon>ProjectAssignment1.aspx</DependentUpon>
     </Compile>
+    <Compile Include="DataAnalyzer.cs" />
     <Compile Include="Shifts\DisplayShiftDefinition1.aspx.cs">
       <DependentUpon>DisplayShiftDefinition1.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

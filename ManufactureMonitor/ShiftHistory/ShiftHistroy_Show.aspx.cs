@@ -19,12 +19,18 @@ namespace ManufactureMonitor
         static bool summary;
         
         List<ShiftHistory> tempList;
+
+        DataAnalyzer DZ;
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
             ((Label)Master.FindControl("MasterPageLabel")).Text = "OR  " + Session["MachineName"];
             if (!Page.IsPostBack)
             {
                 DataAccess da = new DataAccess();
+             
+
                 int machineId = Convert.ToInt32(Request.QueryString["MachineId"]);
 
                 DateTime fromDate = DateTime.Parse(Request.QueryString["from"]);
@@ -34,6 +40,15 @@ namespace ManufactureMonitor
                 String ShiftName = Request.QueryString["ShiftName"];
                 summary = Convert.ToBoolean(Request.QueryString["Summary"]);
                 MainPanel.Width = new Unit("100%");
+
+                DZ = new DataAnalyzer(machineId);
+
+                ShiftCollection Shifts = da.getShifts(machineId);
+                foreach (Shift shift in Shifts)
+                {
+                    shift.Breaks = da.GetBreaks(shift.ID, machineId);
+                    shift.Sessions = da.getSessions(shift.ID, machineId);
+                }
 
 
                 while (fromDate < toDate)
@@ -51,29 +66,35 @@ namespace ManufactureMonitor
 
                         DateTime from = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + dt.Rows[i]["Start"]);
                         DateTime to = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + dt.Rows[i]["End"]);
-
-                        if (to < from)                      
+                        if (to < from)
                             to = to.AddDays(1);
 
+                        Shift Shift = Shifts.getShift(from, to);
+                        Shift.StartTime = from.ToString("yyyy-MM-dd HH:mm:ss");
+                        Shift.EndTime = to.ToString("yyyy-MM-dd HH:mm:ss");
+                        Shift.Date = from;
+ 
                         Duration.Text = fromDate.ToString("dd-MMM-yy") + ":" + (dt.Rows[i]["shifts"]).ToString();
                         if (!summary)
                         {
+                            DZ.CalculateShiftHistory(Shift);
 
-
-                            Sh = da.GetShiftHistory(machineId, from.ToString("yyyy-MM-dd HH:mm"),
-                                to.ToString("yyyy-MM-dd HH:mm:ss"),from.ToString("dd-MM-yyyy")
-                                );
+                            //Sh = da.GetShiftHistory(machineId, from.ToString("yyyy-MM-dd HH:mm"),
+                            //    to.ToString("yyyy-MM-dd HH:mm:ss"),from.ToString("dd-MM-yyyy")
+                            //    );
                         }
                         else
                         {
-                            shSummary =  da.GetShiftHistory_Summary(machineId, from.ToString("yyyy-MM-dd HH:mm"),
-                                to.ToString("yyyy-MM-dd HH:mm:ss"), from.ToString("dd-MM-yyyy")
-                                );
+                            DZ.CalculateShiftHistorySummary(Shift);
+
+                            //shSummary =  da.GetShiftHistory_Summary(machineId, from.ToString("yyyy-MM-dd HH:mm"),
+                            //    to.ToString("yyyy-MM-dd HH:mm:ss"), from.ToString("dd-MM-yyyy")
+                            //    );
                         }
 
+                        #region GRID_COLUMNS
                         GridView g = new GridView();
-                        GridView g1 = new GridView();
-                        //g.RowDataBound += g_RowDataBound;
+                       
                         g.AutoGenerateColumns = false;
                         g.HeaderStyle.BackColor = Color.OrangeRed;
                         
@@ -159,18 +180,22 @@ namespace ManufactureMonitor
 
                         g.HorizontalAlign = HorizontalAlign.Center;
                         g.Style.Add(HtmlTextWriterStyle.Width, "100%");
+                        #endregion
+
                         if (!summary)
                         {
-                            g.DataSource = Sh;
+                            //g.DataSource = Sh;
+                            g.DataSource = DZ.ShiftHistoryList;
                         }
                         else
-                            g.DataSource = shSummary;
+                        {
+                            //g.DataSource = shSummary;
+                            g.DataSource = DZ.ShSummary;
+                        }
+
                         g.RowDataBound += g_RowDataBound;
                         g.DataBind();
-                        //for (int a = 0; a < g.Columns.Count; a++)
-                        //{
-                        //    g.Columns[a].ItemStyle.Width = 200;
-                        //}
+                    
                         MainPanel.Controls.Add(Duration);
                         MainPanel.Controls.Add(g);
 
@@ -188,6 +213,12 @@ namespace ManufactureMonitor
                             Total.Text = "Shift Total";
 
                             MainPanel.Controls.Add(Total);
+
+                            #region TOTAL_GRID_COLUMNS
+
+                            GridView g1 = new GridView();
+                       
+
                             BoundField b1;
 
                             b1 = new BoundField();
@@ -266,11 +297,14 @@ namespace ManufactureMonitor
                             b1.DataField = "BKR";
                             b1.HeaderText = "BEKADOURITSU/ Operational Availability [%] ";
                             g1.Columns.Add(b1);
+                            #endregion
+
+
                             if (!summary)
                             {
                                 tempList = new List<ShiftHistory>();
                                 ShiftHistory temp = new ShiftHistory();
-                                foreach (ShiftHistory sh in Sh)
+                                foreach (ShiftHistory sh in DZ.ShiftHistoryList)
                                 {
                                     
                                     temp.Actual += sh.Actual;
@@ -306,7 +340,7 @@ namespace ManufactureMonitor
                             }
                             else
                             {
-                                ShiftHistory_Summary sTemp = ShiftHistory_Summary.ShiftHistory_SummaryTotal(shSummary);
+                                ShiftHistory_Summary sTemp = ShiftHistory_Summary.ShiftHistory_SummaryTotal(DZ.ShSummary);
                                 List<ShiftHistory_Summary> sList = new List<ShiftHistory_Summary>();
 
                                 sList.Add(sTemp);

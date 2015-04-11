@@ -145,6 +145,8 @@ namespace ManufactureMonitor
 
                 SpeedLoss = CheckBoxList1.Items[0].Selected;
 
+                ShiftCollection shifts = new ShiftCollection();
+
                 while (fromDate < toDate)
                 {
                     DataTable shiftTimingsTable = da.GetShiftTimings(machineId, ShiftId);
@@ -156,10 +158,15 @@ namespace ManufactureMonitor
 
                         DateTime to = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + shiftTimingsTable.Rows[i]["End"]);
 
+
+                        Shift shift = shifts.getShift(from, to);
+                        shift.Breaks = da.getBreaks(shift.ID, machineId);
+                        shift.Sessions = da.getSessions(shift.ID, machineId);
+
                         if (to < from)
                             to = to.AddDays(1);
 
-                        Ts.AddRange(da.GetStopDetails(machineId, (int)shiftTimingsTable.Rows[i]["Id"],
+                        Ts.AddRange(da.GetStopDetails(machineId, shift,
                             from.ToString("yyyy-MM-dd HH:mm:ss"),
                             to.ToString("yyyy-MM-dd HH:mm:ss"), from.ToString("dd-MM-yyyy"),
                             Convert.ToBoolean(Request.QueryString["SpeedLoss"])));

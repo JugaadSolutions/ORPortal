@@ -1623,7 +1623,7 @@ namespace ManufactureMonitor.DALayer
             return dt;
         }
 
-        public List<TimeSequence> GetStopDetails(int machine, int Shift_Id, String from, String to, 
+        public List<TimeSequence> GetStopDetails(int machine, Shift Shift, String from, String to, 
             String date, bool Speedloss)
         {
 
@@ -1636,7 +1636,7 @@ namespace ManufactureMonitor.DALayer
             cn = new SqlConnection(connection);
 
             query = @"  select Stops.SlNo, Stops.Code, CONVERT(TIME(0), [Start],20)  as [From], CONVERT(TIME(0),[End],20) as [To],
-                        datediff(second,CONVERT(TIME(0), [Start],20),CONVERT(TIME(0),[End],20)) as 'Duration[s]',
+                         [Start],[End] ,
                         (Case when CommonProblems.[Type]=3 then 'OFF' else 'STOP' end) as 'StopType',
                         Convert(nvarchar,CommonProblems.Code,0)+':'+[Description] as Problem,
                         Comment,
@@ -1649,7 +1649,7 @@ namespace ManufactureMonitor.DALayer
                         union
 
                         select Stops.SlNo, Stops.Code, CONVERT(TIME(0), [Start],20)  as [From], CONVERT(TIME(0),[End],20) as [To],
-                        datediff(second,CONVERT(TIME(0), [Start],20),CONVERT(TIME(0),[End],20)) as 'Duration[s]', 
+                        [Start],[End] , 
                         (Case when SpecificProblems.[Type]=3 then 'OFF' else 'STOP' end) as 'StopType', 
                         Convert(nvarchar,SpecificProblems.Code,0)+':'+[Description] as Problem,
                         Comment ,
@@ -1662,7 +1662,7 @@ namespace ManufactureMonitor.DALayer
                         union
  
                         select OFFs.SlNo, OFFs.Code, CONVERT(TIME(0), [Start],20)  as [From], CONVERT(TIME(0),[End],20) as [To],
-                        datediff(second,CONVERT(TIME(0), [Start],20),CONVERT(TIME(0),[End],20)) as 'Duration[s]', 
+                        [Start],[End] , 
                         (Case when SpecificProblems.[Type]=3 then 'OFF' else 'STOP' end) as 'StopType', 
                         Convert(nvarchar,SpecificProblems.Code,0)+':'+[Description] as Problem,
                         Comment ,
@@ -1675,7 +1675,7 @@ namespace ManufactureMonitor.DALayer
                         union
 
                         select OFFs.SlNo, OFFs.Code, CONVERT(TIME(0), [Start],20)  as [From], CONVERT(TIME(0),[End],20) as [To],
-                        datediff(second,CONVERT(TIME(0), [Start],20),CONVERT(TIME(0),[End],20)) as 'Duration[s]', 
+                        [Start],[End] ,
                         (Case when CommonProblems.[Type]=3 then 'OFF' else 'STOP' end) as 'StopType', 
                         Convert(nvarchar,CommonProblems.Code,0)+':'+[Description] as Problem,
                         Comment ,
@@ -1691,7 +1691,7 @@ namespace ManufactureMonitor.DALayer
                             union
  
                             select Stops.SlNo, Stops.Code, CONVERT(TIME(0), [Start],20)  as [From], CONVERT(TIME(0),[End],20) as [To],
-                        datediff(second,CONVERT(TIME(0), [Start],20),CONVERT(TIME(0),[End],20)) as 'Duration[s]',
+                        [Start],[End] ,
                         
                         [Status] as 'StopType',
                         '' as Problem,
@@ -1721,6 +1721,8 @@ namespace ManufactureMonitor.DALayer
             cn.Close();
             List<TimeSequence> TimeSequence = new List<TimeSequence>();
 
+            
+
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 TimeSequence.Add(new TimeSequence
@@ -1731,7 +1733,7 @@ namespace ManufactureMonitor.DALayer
                     From = dt.Rows[i]["From"].ToString(),
                     To = dt.Rows[i]["To"].ToString(),
                     Date = date,
-                    Duration = (int)dt.Rows[i]["Duration[s]"],
+                    Duration =  Shift.getActiveDuration((DateTime)dt.Rows[i]["Start"],(DateTime)dt.Rows[i]["End"]),
                     StopType = (String)dt.Rows[i]["StopType"],
                     Problem = (String)dt.Rows[i]["Problem"],
                     Comment = (dt.Rows[i]["Comment"] == DBNull.Value) ? "" : (String)dt.Rows[i]["Comment"]
@@ -2901,6 +2903,60 @@ namespace ManufactureMonitor.DALayer
                 return false;
 
             }
+        }
+
+        public DataTable GetOffs(int machine, Shift Shift, DateTime ProjectSessionStart, DateTime ProjectSessionEnd)
+        {
+            SqlConnection cn;
+            SqlCommand cmd;
+
+            cn = new SqlConnection(connection);
+            String query = @"Select * from OFFs where Machine_Id = {0} 
+                            and [Start] >= '{2}' and [End] < '{3}'";
+            query = String.Format(query, machine, Shift, Shift.StartTime, Shift.EndTime);
+
+            cn.Open();
+            cmd = new SqlCommand(query, cn);
+
+            SqlDataReader dr = cmd.ExecuteReader();
+            DataTable dt = new DataTable();
+            dt.Load(dr);
+            dr.Close();
+            cn.Close();
+
+            return dt;
+        }
+
+        public DataTable GetProjectSessions(int machine, Shift Shift )
+        {
+            SqlConnection cn;
+            SqlCommand cmd;
+
+            cn = new SqlConnection(connection);
+            String query = @"select  distinct  Convert(Time(0),[From],20) as [From],
+                                Convert(Time(0),[To],20) as [To],
+                                Name as Project,CycleTime, ProjectTracker.[From] as 'Start',ProjectTracker.[To] as 'End',
+                                
+                                Scraps, Scraps.[timestamp] from ProjectTracker 
+                                inner join Projects on ProjectTracker.Project_Id = Projects.Id 
+                                inner join Scraps on ProjectTracker.SlNo = Scraps.ProjectTracker_Id 
+                                 where [From]>='{1}' and ([From]<'{2}' or [To] is null) and
+                                  ProjectTracker.Machine_Id={0} and Scraps.Machine_Id={0} 
+                                   and Timestamp >='{1}' 
+                                   and Timestamp<='{2}'
+                                order by Timestamp asc";
+            query = String.Format(query, machine, Shift.StartTime, Shift.EndTime);
+
+            cn.Open();
+            cmd = new SqlCommand(query, cn);
+
+            SqlDataReader dr = cmd.ExecuteReader();
+            DataTable dt = new DataTable();
+            dt.Load(dr);
+            dr.Close();
+            cn.Close();
+
+            return dt;
         }
     }
 

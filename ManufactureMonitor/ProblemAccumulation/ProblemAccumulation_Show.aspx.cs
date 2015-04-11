@@ -27,6 +27,7 @@ namespace ManufactureMonitor
                 toDate = toDate.AddDays(1);
                 int ShiftId = Convert.ToInt32(Request.QueryString["ShiftId"]);
 
+                ShiftCollection shifts = da.getShifts(machine);
 
                 while (fromDate < toDate)
                 {
@@ -49,8 +50,12 @@ namespace ManufactureMonitor
 
                         Panel1.Controls.Add(Duration);
 
+                        Shift shift = shifts.getShift(from, to);
+                        shift.Breaks = da.getBreaks(shift.ID, machine);
+                        shift.Sessions = da.getSessions(shift.ID, machine);
+
                         List<TimeSequence> ts =
-                            da.GetStopDetails(machine, ShiftId, from.ToString("yyyy-MM-dd HH:mm:ss"),
+                            da.GetStopDetails(machine, shift, from.ToString("yyyy-MM-dd HH:mm:ss"),
                             to.ToString("yyyy-MM-dd HH:mm:ss"), from.ToString("dd-MM-yyyy"),
                             true);
 
@@ -78,7 +83,7 @@ namespace ManufactureMonitor
 
                             foreach (TimeSequence tsq in kv.Value)
                             {
-                                problemDuration += tsq.GetDuration();
+                                problemDuration += tsq.Duration;
                             }
 
                             ProblemAccumulationRecord par = new ProblemAccumulationRecord();

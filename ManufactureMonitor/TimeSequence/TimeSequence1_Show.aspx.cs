@@ -37,6 +37,8 @@ namespace ManufactureMonitor
                 toDate = toDate.AddDays(1);
                 int ShiftId = Convert.ToInt32(Request.QueryString["ShiftId"]);
 
+                ShiftCollection shifts = new ShiftCollection();
+
                 while (fromDate < toDate)
                 {
                     dt = da.GetShiftTimings(machineId, ShiftId);
@@ -52,6 +54,10 @@ namespace ManufactureMonitor
                         DateTime from = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + dt.Rows[i]["Start"]);
                         DateTime to = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + dt.Rows[i]["End"]);
 
+                        Shift shift = shifts.getShift(from, to);
+                        shift.Breaks = da.getBreaks(shift.ID, machineId);
+                        shift.Sessions = da.getSessions(shift.ID, machineId);
+
                         if (to < from)
                             to = to.AddDays(1);
 
@@ -59,7 +65,7 @@ namespace ManufactureMonitor
 
 
                         Duration.Text = fromDate.ToShortDateString() + ":" + (dt.Rows[i]["shifts"]).ToString();
-                        Ts = da.GetStopDetails(machineId, ShiftId, from.ToString("yyyy-MM-dd HH:mm:ss"),
+                        Ts = da.GetStopDetails(machineId, shift, from.ToString("yyyy-MM-dd HH:mm:ss"),
                             to.ToString("yyyy-MM-dd HH:mm:ss"),from.ToString("dd-MM-yyyy"),
                             Convert.ToBoolean(Request.QueryString["SpeedLoss"]));
 

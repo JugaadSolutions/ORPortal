@@ -11,7 +11,7 @@ namespace ManufactureMonitor.Entity
         public int Machine_Id { get; set; }
         public String From { get; set; }
         public String To { get; set; }
-        public int Duration { get; set; }
+        public double Duration { get; set; }
         public String StopType { get; set; }
         public String Problem { get; set; }
         public String Comment { get; set; }

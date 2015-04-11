@@ -95,6 +95,9 @@ namespace ManufactureMonitor
 
                 sBuilder.Append("\r\n");
 
+                ShiftCollection shifts = da.getShifts(machine);
+
+
 
                 while (fromDate < toDate)
                 {
@@ -107,8 +110,12 @@ namespace ManufactureMonitor
                         DateTime from = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + dt.Rows[i]["Start"]);
                         DateTime to = DateTime.Parse(fromDate.ToString("yyyy-MM-dd") + " " + dt.Rows[i]["End"]);
 
+                        Shift shift = shifts.getShift(from, to);
+                        shift.Breaks = da.getBreaks(shift.ID, machine);
+                        shift.Sessions = da.getSessions(shift.ID, machine);
+
                         List<TimeSequence> ts =
-                            da.GetStopDetails(machine, ShiftId, from.ToString("yyyy-MM-dd HH:mm:ss"),
+                            da.GetStopDetails(machine, shift, from.ToString("yyyy-MM-dd HH:mm:ss"),
                             to.ToString("yyyy-MM-dd HH:mm:ss"), from.ToString("dd-MM-yyyy"),
                             true);
 
